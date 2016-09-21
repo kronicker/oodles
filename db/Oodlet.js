@@ -1,12 +1,12 @@
 /**
  * Created by toma on 21.09.16..
  */
-var thinky = require('thinky')();
-var type = thinky.type;
-var Thingy = require('./Thingy');
-var Oodler = require('./Oodler');
+const thinky = require('thinky')();
+const type = thinky.type;
+const Thingy = require('./Thingy');
+const Oodler = require('./Oodler');
 
-var schema = {
+const schema = {
     id: type.string(),
     date: type.date().default(r.now()),
     oodler: type.object().schema(Oodler.schema),

@@ -1,10 +1,10 @@
 /**
  * Created by toma on 21.09.16..
  */
-var thinky = require('thinky')();
-var type = thinky.type;
+const thinky = require('thinky')();
+const type = thinky.type;
 
-var schema = {
+const schema = {
     id: type.string(),
     name: type.string().min(1),
     price: type.number().min(0.01),
