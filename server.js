@@ -12,31 +12,31 @@ server.connection({ port : 3000 });
 
 server.register([db], (err) => {
 
-    // //Create a new entry
-    // server.route({
-    //     method: 'GET',
-    //     path: '/test',
-    //     handler: function (request, reply) {
-    //
-    //         var thingy = {
-    //             name: 'Banana',
-    //             price: 'deset',
-    //             unit: 'kg',
-    //             pictureUrl: Date().toString()
-    //         };
-    //
-    //
-    //         server.methods.Thingy.create(thingy, (result, err) => {
-    //
-    //             if (err) {
-    //                 console.dir(err);
-    //                 return reply().code(500);
-    //             }
-    //
-    //             return reply(result).code(204);
-    //         });
-    //     }
-    // });
+    server.route({
+        method: 'POST',
+        path: '/newThingy',
+        handler: (request, reply) => {
+
+            var entry = {
+                name: request.payload.name,
+                price: request.payload.price,
+                unit: request.payload.unit,
+                pictureUrl: request.payload.pictureUrl
+            };
+
+            server.methods.Thingy.create(entry, (err) => {
+                if (err) {
+                    return reply().code(500);
+                }
+                console.log('did it!');
+
+                return reply().code(204);
+            });
+
+        }
+    });
+
+
 
 
     server.start(function(err){
