@@ -1,6 +1,6 @@
 'use strict';
 
-const Thingy = require('../db/thingy');
+const Thingy = require('../models/thingy');
 
 function create(request, response) {
 	var thingy = new Thingy({

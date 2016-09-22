@@ -3,7 +3,7 @@
  */
 'use strict';
 
-const thinky = require('./thinky');
+const thinky = require('../db/thinky');
 const type = thinky.type;
 
 const schema = {

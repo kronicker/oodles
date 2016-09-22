@@ -5,9 +5,9 @@
 
 exports.register = function (server, options, next) {
 
-    let Thingy = require('./thingy');
-    let Oodler = require('./oodler');
-    let Oodlet = require('./oodlet');
+    let Thingy = require('../models/thingy');
+    let Oodler = require('../models/oodler');
+    let Oodlet = require('../models/oodlet');
 
     return next();
 };
