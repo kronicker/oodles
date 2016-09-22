@@ -7,14 +7,18 @@ function create(request, response) {
     name: request.payload.name,
     price: request.payload.price,
     unit: request.payload.unit,
-    pictureUrl: Date().toString(),
-    bla: 'bla'
+    pictureUrl: Date().toString()
 	});
 
-	thingy.save().then((result) => {
-		console.log(result);
-		return response(thingy).code(204);
-	});
+	thingy
+		.save()
+		.then((result) => {
+			console.log(result);
+			return response(thingy).code(204);
+		})
+		.catch((err) => {
+			return response(err).code(500);
+		});
 }
 
 let routes = [{
