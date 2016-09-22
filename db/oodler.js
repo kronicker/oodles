@@ -1,6 +1,8 @@
 /**
  * Created by toma on 21.09.16..
  */
+'use strict';
+
 const thinky = require('./thinky');
 const type = thinky.type;
 
@@ -12,9 +14,10 @@ const schema = {
     office: type.string().min(1)
 };
 
-function create() {
-    thinky.createModel("Oodler", schema);
-}
+module.exports = () => {
+	var model = thinky.createModel("Oodler", schema);
 
-module.exports.schema = schema;
-module.exports.create = create;
+	model.schema = schema;
+
+	return model;
+}();
