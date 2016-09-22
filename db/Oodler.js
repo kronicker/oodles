@@ -1,7 +1,7 @@
 /**
  * Created by toma on 21.09.16..
  */
-const thinky = require('../util/thinky');
+const thinky = require('./thinky');
 const type = thinky.type;
 
 const schema = {
@@ -17,4 +17,4 @@ function create() {
 }
 
 module.exports.schema = schema;
-module.exports.create = create();
+module.exports.create = create;

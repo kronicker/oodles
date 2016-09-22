@@ -1,14 +1,14 @@
 /**
  * Created by toma on 21.09.16..
  */
-const thinky = require('../util/thinky');
+const thinky = require('./thinky');
 const type = thinky.type;
 const Thingy = require('./Thingy');
 const Oodler = require('./Oodler');
 
 const schema = {
     id: type.string(),
-    date: type.date().default(r.now()),
+    date: type.date().default(new Date()),
     oodler: type.object().schema(Oodler.schema),
     thingies: [type.object().schema(Thingy.schema)],
     total: type.number()
@@ -19,4 +19,4 @@ function create() {
 }
 
 module.exports.schema = schema;
-module.exports.create = create();
+module.exports.create = create;
