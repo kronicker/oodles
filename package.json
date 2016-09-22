@@ -9,6 +9,7 @@
   "author": "Toma Zelic & Ante Borzic",
   "dependencies": {
     "hapi": "^15.0.3",
+    "rethinkdb": "^2.3.3",
     "thinky": "^2.3.6"
   }
 }

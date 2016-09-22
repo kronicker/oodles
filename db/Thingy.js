@@ -1,7 +1,7 @@
 /**
  * Created by toma on 21.09.16..
  */
-const thinky = require('thinky')();
+const thinky = require('../util/thinky');
 const type = thinky.type;
 
 const schema = {
