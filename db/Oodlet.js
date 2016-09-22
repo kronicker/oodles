@@ -12,11 +12,11 @@ const schema = {
     oodler: type.object().schema(Oodler.schema),
     thingies: [type.object().schema(Thingy.schema)],
     total: type.number()
-});
+};
 
 function create() {
     thinky.createModel("Oodlet", schema);
-};
+}
 
 module.exports.schema = schema;
 module.exports.create = create();

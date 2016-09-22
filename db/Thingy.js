@@ -14,7 +14,7 @@ const schema = {
 
 function create() {
     thinky.createModel("Thingy", schema);
-};
+}
 
 module.exports.schema = schema;
 module.exports.create = create();
