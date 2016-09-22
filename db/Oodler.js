@@ -13,7 +13,7 @@ const schema = {
 };
 
 function create() {
-    thinky.createModel("Oodler", schema);
+    return thinky.createModel("Oodler", schema);
 }
 
 module.exports.schema = schema;
