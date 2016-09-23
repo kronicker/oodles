@@ -4,35 +4,47 @@
 'use strict'
 
 const Oodlet = require('../models/oodlet');
-// const Oodler = require('../models/oodler');
-// const Thingy = require('../models/thingy');
+const Oodler = require('../models/oodler');
+const Thingy = require('../models/thingy');
 
 function create(request, response) {
-    //Not sure how to make this work in non-blocking way and be pretty
-    //
-    // Oodler.sample(1).run().then(function(result) {
-    //     console.log(result[0]);
-    // });
-    //
-    // Thingy.sample(5).run().then(function(result) {
-    //     console.log(result);
-    // });
 
-    var oodlet = new Oodlet({
-        date: request.payload.date,
-        //oodler:
-        //thingies:
-        total: request.payload.total
-    });
+    Oodler
+        .sample(1)
+        .run()
+        .then(function(result) {
+            return result[0];
+        })
+        .then(function (oodler) {
+            return Thingy.sample(5).run().then(function(thingies) {
+                return {
+                    oodler: oodler,
+                    thingies: thingies
+                };
+            });
+        })
+        .then(function (composite) {
+            var oodlet = new Oodlet({
+                date: request.payload.date,
+                oodler: composite.oodler,
+                thingies: composite.thingies,
+                total: request.payload.total
+            });
 
-    oodlet
-        .save()
-        .then((result) => {
-            return response(oodlet).code(204);
+            oodlet
+                .save()
+                .then((result) => {
+                    return response(oodlet).code(201);
+                })
+                .catch((err) => {
+                    return response(err).code(500);
+                });
+
         })
         .catch((err) => {
             return response(err).code(500);
         });
+
 }
 
 let routes = [{

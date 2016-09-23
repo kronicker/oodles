@@ -3,6 +3,7 @@
 const Thingy = require('../models/thingy');
 
 function create(request, response) {
+    // response('bla sra').code(200);
 
 	var thingy = new Thingy({
 		name: request.payload.name,
@@ -11,7 +12,7 @@ function create(request, response) {
 		pictureUrl: request.payload.pictureUrl
 	});
 
-	thingy
+	return thingy
 		.save()
 		.then((result) => {
 			console.log(result);
