@@ -9,18 +9,18 @@ const Oodler = require('./oodler');
 const type = thinky.type;
 
 const schema = {
-	id: type.string(),
-	date: type.date().default(new Date()),
-	oodler: type.object().schema(Oodler.schema),
-	thingies: [type.object().schema(Thingy.schema)],
-	total: type.number()
+  id: type.string(),
+  date: type.date().default(new Date()),
+  oodler: type.object().schema(Oodler.schema),
+  thingies: [type.object().schema(Thingy.schema)],
+  total: type.number()
 };
 
 module.exports = () => {
-	var model = thinky.createModel("Oodlet", schema);
-	
-	model.schema = schema;
-	
-	return model;
+  var model = thinky.createModel("Oodlet", schema);
+
+  model.schema = schema;
+
+  return model;
 }
 ();
