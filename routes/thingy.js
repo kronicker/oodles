@@ -3,11 +3,12 @@
 const Thingy = require('../models/thingy');
 
 function create(request, response) {
+
 	var thingy = new Thingy({
-    name: request.payload.name,
-    price: request.payload.price,
-    unit: request.payload.unit,
-    pictureUrl: Date().toString()
+		name: request.payload.name,
+		price: request.payload.price,
+		unit: request.payload.unit,
+		pictureUrl: Date().toString()
 	});
 
 	thingy
