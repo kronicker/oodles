@@ -18,7 +18,7 @@ function create (request, response) {
         .save()
         .then((result) => {
             console.log(result);
-            return response(oodler).code(204);
+            return response(oodler).code(201);
         })
         .catch((err) => {
             return resposnse(err).code(500);

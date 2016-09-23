@@ -16,7 +16,7 @@ function create(request, response) {
 		.save()
 		.then((result) => {
 			console.log(result);
-			return response(thingy).code(204);
+			return response(thingy).code(201);
 		})
 		.catch((err) => {
 			return response(err).code(500);
