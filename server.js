@@ -10,6 +10,9 @@ const server = new Hapi.Server();
 
 server.connection({ port : 3000 });
 
+// Add all routes
+require('./routes/all')(server);
+
 server.register([db], (err) => {
 
     server.route({
