@@ -3,7 +3,7 @@
 const Thingy = require('../models/thingy');
 
 function create(request, response) {
-    // response('bla sra').code(200);
+  // response('bla sra').code(200);
 
 	var thingy = new Thingy({
 		name: request.payload.name,
@@ -13,14 +13,14 @@ function create(request, response) {
 	});
 
 	return thingy
-		.save()
-		.then((result) => {
-			console.log(result);
-			return response(thingy).code(201);
-		})
-		.catch((err) => {
-			return response(err).code(500);
-		});
+					.save()
+					.then((result) => {
+						console.log(result);
+						return response(thingy).code(201);
+					})
+					.catch((err) => {
+						return response(err).code(500);
+					});
 }
 
 let routes = [{
