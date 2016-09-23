@@ -3,8 +3,6 @@
 const Thingy = require('../models/thingy');
 
 function create(request, response) {
-  // response('bla sra').code(200);
-
 	var thingy = new Thingy({
 		name: request.payload.name,
 		price: request.payload.price,
@@ -29,6 +27,6 @@ let routes = [{
 	handler: create
 }];
 
-module.exports = function(server) {
+module.exports = function (server) {
 	server.route(routes);
 };
