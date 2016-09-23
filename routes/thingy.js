@@ -8,7 +8,7 @@ function create(request, response) {
 		name: request.payload.name,
 		price: request.payload.price,
 		unit: request.payload.unit,
-		pictureUrl: Date().toString()
+		pictureUrl: request.payload.pictureUrl
 	});
 
 	thingy
