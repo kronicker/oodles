@@ -19,7 +19,7 @@ function create(request, response) {
 			return response(thingy).code(201);
 		})
 		.catch((err) => {
-			return response(err).code(500);
+			return response(err.message).code(500);
 		});
 }
 
