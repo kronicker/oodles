@@ -4,15 +4,20 @@
 'use strict';
 
 const Hapi = require('hapi');
+const db = require('./db/db')
 
 const server = new Hapi.Server();
 
-server.connection({ port : 3000});
+server.connection({port: 3000});
 
-server.start(function(err){
+// Add all routes
+require('./routes/all')(server);
 
-    if(err){
-        throw err;
-    }
+server.register([db], (err) => {
+
+  server.start(function (err) {
+    if (err) { throw err; }
+
     console.log(`Server running at : ${server.info.uri}`);
+  });
 });
