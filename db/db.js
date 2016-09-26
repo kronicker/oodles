@@ -5,9 +5,11 @@
 
 exports.register = function (server, options, next) {
 
-	return next();
+  require('./seeds')();
+
+  return next();
 };
 
 exports.register.attributes = {
-	name: 'db'
+  name: 'db'
 };
