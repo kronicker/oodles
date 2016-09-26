@@ -15,9 +15,10 @@ const schema = {
 };
 
 module.exports = () => {
-	var model = thinky.createModel("Thingy", schema);
+  var model = thinky.createModel("Thingy", schema);
 
-	model.schema = schema;
+  model.schema = schema;
 
-	return model;
-}();
+  return model;
+}
+();

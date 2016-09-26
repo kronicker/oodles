@@ -8,8 +8,12 @@
   "main": "server.js",
   "author": "Toma Zelic & Ante Borzic",
   "dependencies": {
+    "faker": "^3.1.0",
     "hapi": "^15.0.3",
     "rethinkdb": "^2.3.3",
     "thinky": "^2.3.6"
+  },
+  "devDependencies": {
+    "faker": "^3.1.0"
   }
 }

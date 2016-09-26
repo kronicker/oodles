@@ -1,3 +1,5 @@
 module.exports = (server) => {
-	require('./thingy.js')(server);
+  require('./thingy')(server);
+  require('./oodler')(server);
+  require('./oodlet')(server);
 };
