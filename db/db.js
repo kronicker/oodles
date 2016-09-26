@@ -4,9 +4,11 @@
 'use strict';
 
 exports.register = function (server, options, next) {
-
-  require('./seeds')();
-
+  
+  require('../models/thingy');
+  require('../models/oodler');
+  require('../models/oodlet');
+  
   return next();
 };
 

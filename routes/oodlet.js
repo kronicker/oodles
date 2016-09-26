@@ -7,22 +7,24 @@ const Oodlet = require('../models/oodlet');
 const Oodler = require('../models/oodler');
 const Thingy = require('../models/thingy');
 
-function create(request, response) {
+function getSampleOodler() {
+  return Oodler.sample(1).run().then((result) => {
+    return result[0];
+  });
+}
+function getSampleThingies(oodler){
+  return Thingy.sample(5).run().then((thingies) => {
+    return {
+      oodler: oodler,
+      thingies: thingies
+    };
+  });
+}
 
-  Oodler
-    .sample(1)
-    .run()
-    .then(function getSampleOodler (result) {
-      return result[0];
-    })
-    .then(function getSampleThingies(oodler) {
-      return Thingy.sample(5).run().then(function (thingies) {
-        return {
-          oodler: oodler,
-          thingies: thingies
-        };
-      });
-    })
+function create(request, response) {
+  
+  getSampleOodler()
+    .then(getSampleThingies)
     .then((composite) => {
       var oodlet = new Oodlet({
         date: request.payload.date,
