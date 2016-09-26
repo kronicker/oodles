@@ -12,10 +12,10 @@ function create(request, response) {
   Oodler
     .sample(1)
     .run()
-    .then(function (result) {
+    .then(function getSampleOodler (result) {
       return result[0];
     })
-    .then(function (oodler) {
+    .then(function getSampleThingies(oodler) {
       return Thingy.sample(5).run().then(function (thingies) {
         return {
           oodler: oodler,
@@ -23,7 +23,7 @@ function create(request, response) {
         };
       });
     })
-    .then(function (composite) {
+    .then((composite) => {
       var oodlet = new Oodlet({
         date: request.payload.date,
         oodler: composite.oodler,
@@ -34,15 +34,15 @@ function create(request, response) {
       oodlet
         .save()
         .then((result) => {
-          return response(oodlet).code(201);
+          response(result).code(201);
         })
         .catch((err) => {
-          return response(err).code(500);
+          response(err.message).code(500);
         });
 
     })
     .catch((err) => {
-      return response(err).code(500);
+      response(err.message).code(500);
     });
 
 }

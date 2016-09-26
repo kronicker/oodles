@@ -13,11 +13,10 @@ function create(request, response) {
   return thingy
           .save()
           .then((result) => {
-            console.log(result);
-            return response(thingy).code(201);
+            response(result).code(201);
           })
           .catch((err) => {
-            return response(err).code(500);
+            response(err.message).code(500);
           });
 }
 

@@ -17,11 +17,10 @@ function create(request, response) {
   oodler
     .save()
     .then((result) => {
-      console.log(result);
-      return response(oodler).code(201);
+      response(result).code(201);
     })
     .catch((err) => {
-      return response(err).code(500);
+      response(err.message).code(500);
     });
 }
 
