@@ -8,5 +8,7 @@ module.exports = (PORT) => {
       "*" : `http://localhost:${PORT - 1}`
     }
   });
-  server.listen(PORT, 'localhost');
+  server.listen(PORT, 'localhost', function() {
+    console.log(`Webpack dev server listening on http://localhost:${PORT - 1}`);
+  });
 };

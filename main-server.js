@@ -1,4 +1,4 @@
-var appServer = require("./webpack-server");
+var webpackServer = require("./webpack-server");
 var apiServer = require("./api-server");
 
 const PORT = process.env.PORT || 8080;
@@ -8,5 +8,5 @@ if (PROD) {
   apiServer(PORT);
 } else {
   apiServer(PORT - 1);
-  appServer(PORT);
+  webpackServer(PORT);
 }
