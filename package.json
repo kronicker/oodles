@@ -4,7 +4,7 @@
   "scripts": {
     "start": "node api-server.js",
     "dev": "webpack-dev-server --inline --hot",
-    "start-dev": "node main-server --inline --hot",
+    "start-dev": "node main-server",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "description": "Ordering stuff for office",
@@ -13,6 +13,7 @@
   "dependencies": {
     "faker": "^3.1.0",
     "hapi": "^15.0.3",
+    "inert": "^4.0.2",
     "package-merge": "^0.1.2",
     "rethinkdb": "^2.3.3",
     "thinky": "^2.3.6",
@@ -31,5 +32,3 @@
     "webpack-dev-server": "^2.1.0-beta.0"
   }
 }
-
-
