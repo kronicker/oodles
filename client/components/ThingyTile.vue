@@ -1,7 +1,7 @@
 <template>
-  <div id="thingyTile">
+  <div class="thingyTile">
     <img :src=thingy.pictureUrl>
-    <span>{{ thingy.name | capitalize}}</span>
+    <span>{{ thingy.name | uppercase}}</span>
     <input v-model.number="qty" type="number">
     <button @click="addThingy">Add</button>
   </div>
@@ -13,17 +13,15 @@
 
 <script>
   export default{
-//    props:{thingy},
+    props: ['thingy'],
     data(){
       return {
-        qty : 1,
-        thingy : {
-          id: "9940988f-deaa-401d-a221-c4342282d754",
-          name: "Fish",
-          pictureUrl: "http://leda.org",
-          price: 575,
-          unit : "kg"
-        }
+        qty : 1
+      }
+    },
+    methods:{
+      addThingy : function () {
+        this.$emit('thingyTileAdd', this.thingy.id, this.qty)
       }
     }
   }
