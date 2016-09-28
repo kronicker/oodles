@@ -2,7 +2,10 @@
   "name": "oodles",
   "version": "0.0.1",
   "scripts": {
-    "start": "node server.js"
+    "start": "node api-server.js",
+    "dev": "webpack-dev-server --inline --hot",
+    "start-dev": "node main-server",
+    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "description": "Ordering stuff for office",
   "main": "server.js",
@@ -10,10 +13,22 @@
   "dependencies": {
     "faker": "^3.1.0",
     "hapi": "^15.0.3",
+    "inert": "^4.0.2",
+    "package-merge": "^0.1.2",
     "rethinkdb": "^2.3.3",
-    "thinky": "^2.3.6"
+    "thinky": "^2.3.6",
+    "vue": "^2.0.0-rc.1"
   },
   "devDependencies": {
-    "faker": "^3.1.0"
+    "faker": "^3.1.0",
+    "babel-core": "^6.0.0",
+    "babel-loader": "^6.0.0",
+    "babel-preset-es2015": "^6.13.2",
+    "cross-env": "^1.0.6",
+    "css-loader": "^0.23.1",
+    "file-loader": "^0.8.4",
+    "vue-loader": "^9.2.2",
+    "webpack": "2.1.0-beta.22",
+    "webpack-dev-server": "^2.1.0-beta.0"
   }
 }
