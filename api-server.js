@@ -5,14 +5,14 @@
 
 const Hapi = require('hapi');
 const Inert = require('inert');
-const db = require('./db/db');
+const db = require('./server/db/');
 const server = new Hapi.Server();
 
 module.exports = (PORT) => {
   server.connection({ port: PORT });
 
   // Add all routes
-  require('./routes/all')(server);
+  require('./server/routes')(server);
 
   server.register([Inert, db], (err) => {
 
