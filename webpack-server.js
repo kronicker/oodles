@@ -1,9 +1,9 @@
 'use strict';
 
-let webpack = require("webpack");
-let config = require("./webpack.config");
-let WebpackDevServer = require("webpack-dev-server");
-let path = require('path');
+const webpack = require("webpack");
+const config = require("./webpack.config");
+const WebpackDevServer = require("webpack-dev-server");
+const path = require('path');
 
 module.exports = (PORT) => {
   const server = new WebpackDevServer(webpack(config), {
