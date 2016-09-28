@@ -7,7 +7,7 @@ module.exports = {
   entry: './client/main.js',
   output: {
     path: path.resolve(__dirname, './client/dist/'),
-    publicPath: 'http://localhost:8080/dist/',
+    publicPath: '/dist/',
     filename: 'build.js'
   },
   resolveLoader: {
