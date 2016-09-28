@@ -1,9 +1,10 @@
 <template>
   <div id="oodletView">
     <h1>Oodlet View</h1>
+    <thingy-finder v-on:thingyFinderUpdate="thingyFinderUpdate"></thingy-finder>
     <ul>
-      <li v-for="thingy in thingies">
-        <thingy-tile v-on:thingyTileAdd="handleShit" :thingy="thingy"></thingy-tile>
+      <li v-for="thingy in thingies" >
+        <thingy-tile v-on:thingyTileAdd="handleShit"  :thingy="thingy"></thingy-tile>
       </li>
     </ul>
   </div>
@@ -105,6 +106,9 @@
         console.log(a);
         console.log(b);
 
+      },
+      thingyFinderUpdate: function (a) {
+        console.log(a);
       }
     },
     components: {
