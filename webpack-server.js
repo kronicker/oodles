@@ -1,18 +1,18 @@
 var webpack = require("webpack");
 var config = require("./webpack.config");
 var WebpackDevServer = require("webpack-dev-server");
+var path = require('path');
 
 module.exports = (PORT) => {
-  console.log(config);
   const server = new WebpackDevServer(webpack(config), {
+    path: path.resolve(__dirname, './client/dist/'),
+    publicPath: '/dist/',
     proxy: {
-      "*" : `http://localhost:${PORT - 1}`
+      "**" : `http://localhost:${PORT - 1}`
     }
   });
 
-  console.log(server);
-
-  server.listen(PORT, 'localhost', function(a) {
+  server.listen(PORT, 'localhost', function() {
     console.log(`Webpack dev server listening on http://localhost:${PORT}`);
   });
 };
