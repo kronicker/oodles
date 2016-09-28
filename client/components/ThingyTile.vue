@@ -1,7 +1,7 @@
 <template>
   <div class="thingyTile">
     <img :src=thingy.pictureUrl>
-    <span>{{ thingy.name | uppercase}}</span>
+    <span>{{ thingy.name | capitalize}}</span>
     <input v-model.number="qty" type="number">
     <button @click="addThingy">Add</button>
   </div>
