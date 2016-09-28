@@ -1,5 +1,7 @@
-var path = require('path');
-var webpack = require('webpack');
+'use strict';
+
+let path = require('path');
+let webpack = require('webpack');
 
 module.exports = {
   entry: './client/main.js',

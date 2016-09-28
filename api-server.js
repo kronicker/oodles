@@ -24,7 +24,6 @@ module.exports = (PORT) => {
       }
     });
 
-
     server.start(function (err) {
       if (err) { throw err; }
 
