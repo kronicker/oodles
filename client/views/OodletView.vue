@@ -121,14 +121,10 @@
     },
     methods: {
       thingyTileAdd: function (thingy, qty) {
-
         if (this.oodlet[thingy.id])
           this.$set(this.oodlet[thingy.id], qty, this.oodlet[thingy.id].qty += qty);
         else
           this.$set(this.oodlet, thingy.id, {thingy: thingy, qty: qty});
-
-        console.log(this.oodlet);
-
       },
       oodletThingyRemoved: function (id) {
         this.$delete(this.oodlet, id);
