@@ -2,7 +2,7 @@
   <div class="oodlet">
     <h1>Oodlet</h1>
     <ol>
-      <li v-for="key in oodleb">
+      <li v-for="key in oodlet">
         <oodlet-thingy v-on:oodletThingyRemoved="oodletThingyRemoved" :thingy="key.thingy"
                        :qty="key.qty"></oodlet-thingy>
       </li>
