@@ -1,7 +1,7 @@
 <template>
   <div class="thingyFinder">
     <h1>Thingy Finder</h1>
-    <input type="text" v-model="searchString" v-on:keyup="updateQuery" placeholder="Find your thingy"/>
+    <input @keyup="updateQuery" v-model="searchString" type="text" placeholder="Find your thingy"/>
   </div>
 </template>
 
@@ -15,9 +15,10 @@
         searchString: ''
       }
     },
+
     methods: {
       updateQuery: function () {
-        this.$emit('thingyFinderUpdate', this.searchString.toLowerCase())
+        this.$emit('thingyFinderUpdate', this.searchString)
       }
     }
   }

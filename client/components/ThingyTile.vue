@@ -12,12 +12,14 @@
 
 <script>
   export default{
-    props: ['thingy'],
     data(){
       return {
         qty: 1
       }
     },
+
+    props: ['thingy'],
+
     methods: {
       addThingy: function () {
         this.$emit('thingyTileAdd', this.thingy, this.qty);

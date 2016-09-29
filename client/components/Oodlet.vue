@@ -2,9 +2,11 @@
   <div class="oodlet">
     <h1>Oodlet</h1>
     <ol>
-      <li v-for="key in oodlet">
-        <oodlet-thingy v-on:oodletThingyRemoved="oodletThingyRemoved" :thingy="key.thingy"
-                       :qty="key.qty"></oodlet-thingy>
+      <li v-for="item in oodlet">
+        <oodlet-thingy @oodletThingyRemoved="oodletThingyRemoved"
+                       :thingy="item.thingy"
+                       :qty="item.qty">
+        </oodlet-thingy>
       </li>
     </ol>
     <button @click="confirmOodlet">Confirm</button>
@@ -19,23 +21,24 @@
   import OodletThingy from './OodletThingy.vue'
 
   export default{
-    data(){
-      return {}
-    },
     props: ['oodlet'],
+
     methods: {
       confirmOodlet: function () {
-        if (confirm('Are you sure you want to remove this thingy from your oodlet?'))
+        if (confirm('Are you sure you want to confirm this oodlet?')) {
           this.$emit('oodletConfirm');
+        }
       },
       resetOodlet: function () {
-        if (confirm('Are you sure you want to remove this thingy from your oodlet?'))
+        if (confirm('Are you sure you want to reset this oodlet?')) {
           this.$emit('oodletReset');
+        }
       },
       oodletThingyRemoved: function (id) {
         this.$emit('oodletThingyRemoved', id);
       }
     },
+
     components: {
       'oodlet-thingy': OodletThingy
     }

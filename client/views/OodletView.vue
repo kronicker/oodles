@@ -1,13 +1,17 @@
 <template>
   <div id="oodletView">
     <h1>Oodlet View</h1>
-    <thingy-finder v-on:thingyFinderUpdate="thingyFinderUpdate"></thingy-finder>
+    <thingy-finder @thingyFinderUpdate="thingyFinderUpdate"></thingy-finder>
     <ul>
       <li v-for="thingy in filteredThingies">
-        <thingy-tile v-on:thingyTileAdd="thingyTileAdd" :thingy="thingy"></thingy-tile>
+        <thingy-tile @thingyTileAdd="thingyTileAdd" :thingy="thingy"></thingy-tile>
       </li>
     </ul>
-    <oodlet v-on:oodletThingyRemoved="oodletThingyRemoved" :oodlet="oodlet"></oodlet>
+    <oodlet @oodletThingyRemoved="oodletThingyRemoved"
+            @oodletReset="oodletReset"
+            @oodletConfirmed="oodletConfirmed"
+            :oodlet="oodlet">
+    </oodlet>
   </div>
 </template>
 
@@ -106,33 +110,41 @@
         ]
       }
     },
+
     computed: {
       filteredThingies: function () {
-        var searchString = this.searchString && this.searchString.toLowerCase();
-        var data = this.thingies;
-        if (searchString) {
-          data = data.filter(function (item) {
-            if (item.name.toLowerCase().indexOf(searchString) !== -1)
-              return item;
-          });
+        if(this.searchString.length < 1){
+          return this.thingies;
         }
-        return data;
+
+        var searchString = this.searchString.toLowerCase();
+        return this.thingies.filter(item => {
+          return item.name.toLowerCase().indexOf(searchString) !== -1
+        });
       }
     },
+
     methods: {
       thingyTileAdd: function (thingy, qty) {
-        if (this.oodlet[thingy.id])
+        if (this.oodlet[thingy.id]) {
           this.$set(this.oodlet[thingy.id], qty, this.oodlet[thingy.id].qty += qty);
-        else
+        }
+        else {
           this.$set(this.oodlet, thingy.id, {thingy: thingy, qty: qty});
+        }
       },
       oodletThingyRemoved: function (id) {
         this.$delete(this.oodlet, id);
+      },
+      oodletConfirmed: function () {
+      },
+      oodletReset: function () {
       },
       thingyFinderUpdate: function (query) {
         this.searchString = query;
       }
     },
+
     components: {
       'oodlet': Oodlet,
       'thingy-finder': ThingyFinder,
