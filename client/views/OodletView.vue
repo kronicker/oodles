@@ -3,15 +3,17 @@
     <h1>Oodlet View</h1>
     <thingy-finder v-on:thingyFinderUpdate="thingyFinderUpdate"></thingy-finder>
     <ul>
-      <li v-for="thingy in filteredThingies" >
-        <thingy-tile v-on:thingyTileAdd="thingyTileAdd"  :thingy="thingy"></thingy-tile>
+      <li v-for="thingy in filteredThingies">
+        <thingy-tile v-on:thingyTileAdd="thingyTileAdd" :thingy="thingy"></thingy-tile>
       </li>
     </ul>
-    <oodlet v-on:oodletThingyRemoved="oodletThingyRemoved" :oodleb="oodlet"></oodlet>
+    <oodlet v-on:oodletThingyRemoved="oodletThingyRemoved" :oodlet="oodlet"></oodlet>
   </div>
 </template>
+
 <style>
 </style>
+
 <script>
   import Oodlet from '../components/Oodlet.vue'
   import ThingyFinder from '../components/ThingyFinder.vue'
@@ -100,7 +102,7 @@
             pictureUrl: "http://mazie.net",
             price: 488,
             unit: "kg"
-          }          
+          }
         ]
       }
     },
@@ -109,8 +111,8 @@
         var searchString = this.searchString && this.searchString.toLowerCase();
         var data = this.thingies;
         if (searchString) {
-          data = data.filter(function(item){
-            if(item.name.toLowerCase().indexOf(searchString) !== -1)
+          data = data.filter(function (item) {
+            if (item.name.toLowerCase().indexOf(searchString) !== -1)
               return item;
           });
         }
@@ -120,12 +122,12 @@
     methods: {
       thingyTileAdd: function (thingy, qty) {
 
-        if(this.oodlet[thingy.id])
-          this.$set(this.oodlet[thingy.id], qty, this.oodlet[thingy.id].qty+= qty);
+        if (this.oodlet[thingy.id])
+          this.$set(this.oodlet[thingy.id], qty, this.oodlet[thingy.id].qty += qty);
         else
           this.$set(this.oodlet, thingy.id, {thingy: thingy, qty: qty});
 
-          console.log(this.oodlet);
+        console.log(this.oodlet);
 
       },
       oodletThingyRemoved: function (id) {

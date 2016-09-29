@@ -8,7 +8,6 @@
 </template>
 
 <style>
-
 </style>
 
 <script>
@@ -16,11 +15,11 @@
     props: ['thingy'],
     data(){
       return {
-        qty : 1
+        qty: 1
       }
     },
-    methods:{
-      addThingy : function (){
+    methods: {
+      addThingy: function () {
         this.$emit('thingyTileAdd', this.thingy, this.qty);
       }
     }

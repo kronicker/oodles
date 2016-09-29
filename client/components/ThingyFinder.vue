@@ -4,14 +4,15 @@
     <input type="text" v-model="searchString" v-on:keyup="updateQuery" placeholder="Find your thingy"/>
   </div>
 </template>
-<style>
 
+<style>
 </style>
+
 <script>
   export default{
     data(){
       return {
-        searchString : ''
+        searchString: ''
       }
     },
     methods: {

@@ -2,14 +2,14 @@
   <div>
   </div>
 </template>
-<style>
 
+<style>
 </style>
+
 <script>
   export default{
     data(){
-      return {
-      }
+      return {}
     }
   }
 </script>
