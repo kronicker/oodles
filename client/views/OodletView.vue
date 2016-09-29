@@ -7,7 +7,7 @@
         <thingy-tile v-on:thingyTileAdd="thingyTileAdd"  :thingy="thingy"></thingy-tile>
       </li>
     </ul>
-    <oodlet :oodleb="oodlet"></oodlet>
+    <oodlet v-on:oodletThingyRemoved="oodletThingyRemoved" :oodleb="oodlet"></oodlet>
   </div>
 </template>
 <style>
@@ -127,6 +127,9 @@
 
           console.log(this.oodlet);
 
+      },
+      oodletThingyRemoved: function (id) {
+        this.$delete(this.oodlet, id);
       },
       thingyFinderUpdate: function (query) {
         this.searchString = query;

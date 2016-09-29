@@ -16,7 +16,7 @@
     props: ['thingy', 'qty'],
     methods:{
       removeOodletThingy: function () {
-        this.$emit('oodletThingyRemoved', this.thingy.id, this.qty);
+        this.$emit('oodletThingyRemoved', this.thingy.id);
       }
     }
   }

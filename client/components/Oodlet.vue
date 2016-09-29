@@ -28,8 +28,8 @@
       resetOodlet: function () {
         this.$emit('oodletReset')
       },
-      oodletThingyRemoved: function (id, qty) {
-        this.$emit('oodletThingyRemoved', id, qty);
+      oodletThingyRemoved: function (id) {
+        this.$emit('oodletThingyRemoved', id);
       }
     },
     components:{
