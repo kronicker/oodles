@@ -1,7 +1,7 @@
 <template>
   <div class="thingyTile">
     <img :src=thingy.pictureUrl>
-    <span>{{ thingy.name | capitalize}}</span>
+    <span>{{ thingy.name }}</span>
     <input v-model.number="qty" type="number">
     <button @click="addThingy">Add</button>
   </div>
@@ -20,8 +20,8 @@
       }
     },
     methods:{
-      addThingy : function () {
-        this.$emit('thingyTileAdd', this.thingy.id, this.qty)
+      addThingy : function (){
+        this.$emit('thingyTileAdd', this.thingy.id, this.qty);
       }
     }
   }

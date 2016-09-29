@@ -3,7 +3,7 @@
     <h1>Oodlet View</h1>
     <thingy-finder v-on:thingyFinderUpdate="thingyFinderUpdate"></thingy-finder>
     <ul>
-      <li v-for="thingy in thingies" >
+      <li v-for="thingy in filteredThingies" >
         <thingy-tile v-on:thingyTileAdd="handleShit"  :thingy="thingy"></thingy-tile>
       </li>
     </ul>
@@ -15,9 +15,11 @@
   import Oodler from '../components/Oodlet.vue'
   import ThingyFinder from '../components/ThingyFinder.vue'
   import ThingyTile from '../components/ThingyTile.vue'
+
   export default{
     data(){
       return {
+        searchString: "",
         thingies: [
           {
             id: "9940988f-deaa-401d-a221-c4342282d754",
@@ -100,6 +102,19 @@
         ]
       }
     },
+    computed: {
+      filteredThingies: function () {
+        var searchString = this.searchString && this.searchString.toLowerCase();
+        var data = this.thingies;
+        if (searchString) {
+          data = data.filter(function(item){
+            if(item.name.toLowerCase().indexOf(searchString) !== -1)
+              return item;
+          });
+        }
+        return data;
+      }
+    },
     methods: {
       handleShit: function (a, b) {
 
@@ -107,8 +122,8 @@
         console.log(b);
 
       },
-      thingyFinderUpdate: function (a) {
-        console.log(a);
+      thingyFinderUpdate: function (query) {
+        this.searchString = query;
       }
     },
     components: {
