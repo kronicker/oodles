@@ -4,15 +4,16 @@
     <thingy-finder v-on:thingyFinderUpdate="thingyFinderUpdate"></thingy-finder>
     <ul>
       <li v-for="thingy in filteredThingies" >
-        <thingy-tile v-on:thingyTileAdd="handleShit"  :thingy="thingy"></thingy-tile>
+        <thingy-tile v-on:thingyTileAdd="thingyTileAdd"  :thingy="thingy"></thingy-tile>
       </li>
     </ul>
+    <oodlet :oodleb="oodlet"></oodlet>
   </div>
 </template>
 <style>
 </style>
 <script>
-  import Oodler from '../components/Oodlet.vue'
+  import Oodlet from '../components/Oodlet.vue'
   import ThingyFinder from '../components/ThingyFinder.vue'
   import ThingyTile from '../components/ThingyTile.vue'
 
@@ -20,6 +21,7 @@
     data(){
       return {
         searchString: "",
+        oodlet: {},
         thingies: [
           {
             id: "9940988f-deaa-401d-a221-c4342282d754",
@@ -116,10 +118,14 @@
       }
     },
     methods: {
-      handleShit: function (a, b) {
+      thingyTileAdd: function (thingy, qty) {
 
-        console.log(a);
-        console.log(b);
+        if(this.oodlet[thingy.id])
+          this.$set(this.oodlet[thingy.id], qty, this.oodlet[thingy.id].qty+= qty);
+        else
+          this.$set(this.oodlet, thingy.id, {thingy: thingy, qty: qty});
+
+          console.log(this.oodlet);
 
       },
       thingyFinderUpdate: function (query) {
@@ -127,9 +133,9 @@
       }
     },
     components: {
-      'other-component': Oodler,
-      ThingyFinder,
-      ThingyTile
+      'oodlet': Oodlet,
+      'thingy-finder': ThingyFinder,
+      'thingy-tile': ThingyTile,
     }
   }
 </script>

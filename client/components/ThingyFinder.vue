@@ -1,5 +1,6 @@
 <template>
   <div class="thingyFinder">
+    <h1>Thingy Finder</h1>
     <input type="text" v-model="searchString" v-on:keyup="updateQuery" placeholder="Find your thingy"/>
   </div>
 </template>

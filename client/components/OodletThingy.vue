@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <span>{{ thingy.name | capitalize}}  {{ thingy.unit }}  {{ qty }}</span>
+  <div class="oodletThingy">
+    <span>{{ thingy.name}}  {{ thingy.unit }}  {{ qty }}</span>
     <button @click="removeOodletThingy">X</button>
   </div>
 </template>
@@ -13,6 +13,11 @@
       return {
       }
     },
-    props: ['thingy', 'qty']
+    props: ['thingy', 'qty'],
+    methods:{
+      removeOodletThingy: function () {
+        this.$emit('oodletThingyRemoved', this.thingy.id, this.qty);
+      }
+    }
   }
 </script>

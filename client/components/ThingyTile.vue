@@ -21,7 +21,7 @@
     },
     methods:{
       addThingy : function (){
-        this.$emit('thingyTileAdd', this.thingy.id, this.qty);
+        this.$emit('thingyTileAdd', this.thingy, this.qty);
       }
     }
   }
