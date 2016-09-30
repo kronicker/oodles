@@ -15,6 +15,10 @@
 </template>
 
 <style>
+  .oodlet{
+    background-color: blueviolet;
+    display: inline-block;
+  }
 </style>
 
 <script>

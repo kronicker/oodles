@@ -1,12 +1,14 @@
 <template>
   <div id="oodletView">
     <h1>Oodlet View</h1>
-    <thingy-finder @thingyFinderUpdate="thingyFinderUpdate"></thingy-finder>
-    <ul>
-      <li v-for="thingy in filteredThingies">
-        <thingy-tile @thingyTileAdd="thingyTileAdd" :thingy="thingy"></thingy-tile>
-      </li>
-    </ul>
+    <div id="thingiesDisplay">
+      <thingy-finder @thingyFinderUpdate="thingyFinderUpdate"></thingy-finder>
+      <ul>
+        <li v-for="thingy in filteredThingies">
+          <thingy-tile @thingyTileAdd="thingyTileAdd" :thingy="thingy"></thingy-tile>
+        </li>
+      </ul>
+    </div>
     <oodlet @oodletThingyRemoved="oodletThingyRemoved"
             @oodletReset="oodletReset"
             @oodletConfirmed="oodletConfirmed"
@@ -16,6 +18,12 @@
 </template>
 
 <style>
+  #oodletView{
+    background-color: bisque;
+  }
+  #thingiesDisplay{
+    display: inline-block;
+  }
 </style>
 
 <script>

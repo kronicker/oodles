@@ -4,9 +4,10 @@
     <button @click="removeOodletThingy">X</button>
   </div>
 </template>
-<style>
 
+<style>
 </style>
+
 <script>
   export default{
     props: ['thingy', 'qty'],
