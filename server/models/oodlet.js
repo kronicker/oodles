@@ -10,10 +10,14 @@ const type = thinky.type;
 
 const schema = {
   id: type.string(),
-  date: type.date().default(new Date()),
+  createdAt: type.date().default(new Date()),
+  updatedAt: type.date().default(new Date()),
+  dueDate: type.date().default(new Date() + 60*60*24*7*1000),
   oodler: type.object().schema(Oodler.schema),
-  thingies: [type.object().schema(Thingy.schema)],
-  total: type.number()
+  thingies: [type.object().schema({
+    thingy: type.object(),
+    qty: type.number()
+  })]
 };
 
 module.exports = () => {

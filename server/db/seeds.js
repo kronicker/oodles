@@ -38,7 +38,7 @@ function generateThingies(quantity, callback) {
     })
     .save()
     .then((thingy) => {
-      thingies.push(thingy);
+      thingies.push({ thingy, qty: faker.random.number() });
       if(i+1 === quantity){ callback(thingies); }
     });
   }
@@ -53,7 +53,7 @@ function generateOodlets(quantity, oodlers, thingies) {
       date: faker.date.future(),
       oodler: oodlers[Math.floor(Math.random() * oodlers.length)],
       thingies: thingies,
-      total: faker.random.number()
+      total: faker.random.number(10)
     })
     .save();
   }

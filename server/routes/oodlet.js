@@ -22,7 +22,6 @@ function getSampleThingies(oodler){
 }
 
 function create(request, response) {
-  
   getSampleOodler()
     .then(getSampleThingies)
     .then((composite) => {
@@ -46,14 +45,32 @@ function create(request, response) {
     .catch((err) => {
       response(err.message).code(500);
     });
-
 }
 
-let routes = [{
-  method: 'POST',
-  path: '/oodlet',
-  handler: create
-}];
+function list(request, response) {
+  let limit = request.query.limit || 5;
+  let offset = request.query.offset || 0;
+
+  Oodlet.skip(offset)
+        .limit(parseInt(limit))
+        .run()
+        .then((result) => {
+          return response(result).code(200);
+        });
+}
+
+let routes = [
+  {
+    method: 'GET',
+    path: '/oodlet',
+    handler: list
+  },
+  {
+    method: 'POST',
+    path: '/oodlet',
+    handler: create
+  }
+];
 
 module.exports = function (server) {
   server.route(routes);
