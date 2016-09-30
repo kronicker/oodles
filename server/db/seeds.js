@@ -34,7 +34,7 @@ function generateThingies(quantity, callback) {
       name: faker.commerce.product(),
       price: faker.commerce.price(),
       unit: ['kg', 'kom'][Math.floor(Math.random() * 2)],
-      pictureUrl: faker.internet.url()
+      pictureUrl: 'https://unsplash.it/40/40?random'
     })
     .save()
     .then((thingy) => {
