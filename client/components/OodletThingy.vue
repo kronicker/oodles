@@ -13,7 +13,7 @@
     props: ['thingy', 'qty'],
 
     methods: {
-      removeOodletThingy: function () {
+      removeOodletThingy() {
         if (confirm('Are you sure you want to remove this thingy from your oodlet?')) {
           this.$emit('oodletThingyRemoved', this.thingy.id);
         }

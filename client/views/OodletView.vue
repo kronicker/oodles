@@ -120,7 +120,7 @@
     },
 
     computed: {
-      filteredThingies: function () {
+      filteredThingies() {
         if(this.searchString.length < 1){
           return this.thingies;
         }
@@ -133,7 +133,7 @@
     },
 
     methods: {
-      thingyTileAdd: function (thingy, qty) {
+      thingyTileAdd(thingy, qty) {
         if (this.oodlet[thingy.id]) {
           this.$set(this.oodlet[thingy.id], qty, this.oodlet[thingy.id].qty += qty);
         }
@@ -141,14 +141,14 @@
           this.$set(this.oodlet, thingy.id, {thingy: thingy, qty: qty});
         }
       },
-      oodletThingyRemoved: function (id) {
+      oodletThingyRemoved(id) {
         this.$delete(this.oodlet, id);
       },
-      oodletConfirmed: function () {
+      oodletConfirmed() {
       },
-      oodletReset: function () {
+      oodletReset() {
       },
-      thingyFinderUpdate: function (query) {
+      thingyFinderUpdate(query) {
         this.searchString = query;
       }
     },

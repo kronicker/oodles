@@ -28,17 +28,17 @@
     props: ['oodlet'],
 
     methods: {
-      confirmOodlet: function () {
+      confirmOodlet() {
         if (confirm('Are you sure you want to confirm this oodlet?')) {
           this.$emit('oodletConfirm');
         }
       },
-      resetOodlet: function () {
+      resetOodlet() {
         if (confirm('Are you sure you want to reset this oodlet?')) {
           this.$emit('oodletReset');
         }
       },
-      oodletThingyRemoved: function (id) {
+      oodletThingyRemoved(id) {
         this.$emit('oodletThingyRemoved', id);
       }
     },

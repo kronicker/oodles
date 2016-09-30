@@ -21,7 +21,7 @@
     props: ['thingy'],
 
     methods: {
-      addThingy: function () {
+      addThingy() {
         this.$emit('thingyTileAdd', this.thingy, this.qty);
       }
     }
