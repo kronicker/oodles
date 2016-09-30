@@ -51,7 +51,7 @@ function list(request, response) {
   let limit = request.query.limit || 5;
   let offset = request.query.offset || 0;
 
-  Oodlet.skip(offset)
+  Oodlet.skip(parseInt(offset))
         .limit(parseInt(limit))
         .run()
         .then((result) => {
