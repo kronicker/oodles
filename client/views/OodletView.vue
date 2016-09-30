@@ -6,14 +6,12 @@
       <h1>Thingies</h1>
       <ul>
         <li v-for="thingy in filteredThingies">
-          <thingy-tile @thingyTileAdd="thingyTileAdd" :thingy="thingy"></thingy-tile>
+          <thingy-tile :thingy="thingy"></thingy-tile>
         </li>
       </ul>
     </div>
-    <oodlet @oodletThingyRemoved="oodletThingyRemoved"
-            @oodletReset="oodletReset"
-            @oodletConfirmed="oodletConfirmed"
-            :oodlet="oodlet">
+    <oodlet @oodletReset="oodletReset"
+            @oodletConfirmed="oodletConfirmed">
     </oodlet>
   </div>
 </template>
@@ -44,7 +42,6 @@
     data(){
       return {
         searchString: "",
-        oodlet: {},
         thingies: [
           {
             id: "9940988f-deaa-401d-a221-c4342282d754",
@@ -142,17 +139,6 @@
     },
 
     methods: {
-      thingyTileAdd(thingy, qty) {
-        if (this.oodlet[thingy.id]) {
-          this.$set(this.oodlet[thingy.id], qty, this.oodlet[thingy.id].qty += qty);
-        }
-        else {
-          this.$set(this.oodlet, thingy.id, {thingy: thingy, qty: qty});
-        }
-      },
-      oodletThingyRemoved(id) {
-        this.$delete(this.oodlet, id);
-      },
       oodletConfirmed() {
       },
       oodletReset() {

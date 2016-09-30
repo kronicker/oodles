@@ -3,8 +3,7 @@
     <h1>Oodlet</h1>
     <ol>
       <li v-for="item in oodlet">
-        <oodlet-thingy @oodletThingyRemoved="oodletThingyRemoved"
-                       :thingy="item.thingy"
+        <oodlet-thingy :thingy="item.thingy"
                        :qty="item.qty">
         </oodlet-thingy>
       </li>
@@ -30,7 +29,11 @@
   import OodletThingy from './OodletThingy.vue'
 
   export default{
-    props: ['oodlet'],
+    computed: {
+      oodlet(){
+        return this.$store.state.oodlet;
+      }
+    },
 
     methods: {
       confirmOodlet() {
@@ -42,9 +45,6 @@
         if (confirm('Are you sure you want to reset this oodlet?')) {
           this.$emit('oodletReset');
         }
-      },
-      oodletThingyRemoved(id) {
-        this.$emit('oodletThingyRemoved', id);
       }
     },
 

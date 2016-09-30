@@ -11,6 +11,7 @@
 </style>
 
 <script>
+
   export default{
     data(){
       return {
@@ -22,7 +23,7 @@
 
     methods: {
       addThingy() {
-        this.$emit('thingyTileAdd', this.thingy, this.qty);
+        this.$store.commit('thingyTileAdd', {thingy : this.thingy, qty : this.qty});
       }
     }
   }
