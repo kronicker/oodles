@@ -13,8 +13,14 @@
   }
 </script>
 
-<style>
+<style lang="sass">
   body {
+    background-color: #35405b;
     font-family: Helvetica, sans-serif;
+
+    h1 {
+      color: #f5f5f5;
+      text-align: center
+    }
   }
 </style>

@@ -1,11 +1,19 @@
 <template>
   <div class="thingyFinder">
-    <h1>Thingy Finder</h1>
     <input @keyup="updateQuery" v-model="searchString" type="text" placeholder="Find your thingy"/>
   </div>
 </template>
 
-<style>
+<style lang="sass" scoped>
+  input {
+    width: 1170px;
+    height: 50px;
+    padding: 0 15px;
+    font-size: 18px;
+    color: #54508a;
+    border: 0px;
+    margin: 10px 0;
+  }
 </style>
 
 <script>
