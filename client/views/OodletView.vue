@@ -1,8 +1,9 @@
 <template>
   <div id="oodletView">
-    <h1>Oodlet View</h1>
-    <div id="thingiesDisplay">
-      <thingy-finder @thingyFinderUpdate="thingyFinderUpdate"></thingy-finder>
+    <h1>Oodles</h1>
+    <thingy-finder @thingyFinderUpdate="thingyFinderUpdate"></thingy-finder>
+    <div class="filtered-thingies">
+      <h1>Thingies</h1>
       <ul>
         <li v-for="thingy in filteredThingies">
           <thingy-tile @thingyTileAdd="thingyTileAdd" :thingy="thingy"></thingy-tile>
@@ -17,12 +18,20 @@
   </div>
 </template>
 
-<style>
-  #oodletView{
-    background-color: bisque;
-  }
-  #thingiesDisplay{
-    display: inline-block;
+<style lang="sass" scoped>
+  #oodletView {
+    width: 1200px;
+    margin: 0 auto;
+
+    .filtered-thingies {
+      width: 795px;
+      min-height: 500px;
+      display: inline-block;
+      background-color: bisque;
+      vertical-align: top;
+
+      h1 { color: #545454; }
+    }
   }
 </style>
 

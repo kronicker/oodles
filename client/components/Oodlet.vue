@@ -14,10 +14,15 @@
   </div>
 </template>
 
-<style>
+<style lang="sass" scoped>
   .oodlet{
-    background-color: blueviolet;
+    width: 400px;
+    min-height: 500px;
     display: inline-block;
+    background-color: #d2b8ea;
+    vertical-align: top;
+
+    h1 { color: #545454; }
   }
 </style>
 
