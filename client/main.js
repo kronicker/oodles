@@ -1,12 +1,9 @@
 import Vue from 'vue';
 import App from './App.vue';
-import OodletView from './views/OodletView.vue';
-
+import store from './store';
+  
 new Vue({
   el: '#app',
+  store,
   render: h => h(App),
-  
-  components: {
-    'oodlet-view': OodletView
-  }
 });
