@@ -1,22 +1,20 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <h1>{{ msg }}</h1>
+    <oodlet-view></oodlet-view>
   </div>
 </template>
 
 <script>
-export default {
-  data () {
-    return {
-      msg: 'Hello Vue, working!'
+  import OodletView from './views/OodletView.vue'
+  export default {
+    components: {
+      'oodlet-view': OodletView
     }
   }
-}
 </script>
 
 <style>
-body {
-  font-family: Helvetica, sans-serif;
-}
+  body {
+    font-family: Helvetica, sans-serif;
+  }
 </style>

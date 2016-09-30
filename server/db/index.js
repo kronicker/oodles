@@ -9,6 +9,8 @@ exports.register = function (server, options, next) {
   require('../models/oodler');
   require('../models/oodlet');
   
+  require('./seeds.js')();
+  
   return next();
 };
 
