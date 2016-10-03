@@ -8,8 +8,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    oodlet: {},
-    shit : 'bla'
+    oodlet: {}
   },
   mutations:{
     thingyTileAdd(state, oodletThingy){
@@ -24,5 +23,11 @@ export default new Vuex.Store({
     oodletThingyRemoved(state, id) {
       Vue.delete(state.oodlet, id);
     },
+    incrementOodletThingy(state, id) {
+      Vue.set(state.oodlet[id], 'qty', state.oodlet[id].qty+1);
+    },
+    decrementOodletThingy(state, id) {
+      Vue.set(state.oodlet[id], 'qty', state.oodlet[id].qty-1);
+    }
   }
 });
