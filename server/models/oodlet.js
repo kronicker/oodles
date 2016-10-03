@@ -3,6 +3,7 @@
  */
 'use strict';
 
+const object = require('lodash/object');
 const thinky = require('../db/thinky');
 const Thingy = require('./thingy');
 const Oodler = require('./oodler');
@@ -14,10 +15,7 @@ const schema = {
   updatedAt: type.date().default(new Date()),
   dueDate: type.date().default(new Date() + 60*60*24*7*1000),
   oodler: type.object().schema(Oodler.schema),
-  thingies: [type.object().schema({
-    thingy: type.object(),
-    qty: type.number()
-  })]
+  thingies: [type.object().schema(object.merge(Thingy.schema, { qty: type.number() }))]
 };
 
 module.exports = () => {
