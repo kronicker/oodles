@@ -1,5 +1,6 @@
 'use strict';
 const faker = require('faker');
+const object = require('lodash/object');
 let Thingy = require('../models/thingy');
 let Oodler = require('../models/oodler');
 let Oodlet = require('../models/oodlet');
@@ -34,12 +35,11 @@ function generateQuantifiedThingies(quantity, callback) {
       name: faker.commerce.product(),
       price: faker.commerce.price(60),
       unit: ['kg', 'kom'][Math.floor(Math.random() * 2)],
-      pictureUrl: 'https://unsplash.it/40/40?random',
-      qty: faker.random.number(10)
+      pictureUrl: 'https://unsplash.it/40/40?random'
     })
     .save()
-    .then((quantifiedThingy) => {
-      quantifiedThingies.push(quantifiedThingy);
+    .then((thingy) => {
+      quantifiedThingies.push(object.merge(thingy, { qty: faker.random.number(10) }));
       if(i+1 === quantity){ callback(quantifiedThingies); }
     });
   }

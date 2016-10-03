@@ -15,7 +15,7 @@ const schema = {
   updatedAt: type.date().default(new Date()),
   dueDate: type.date().default(new Date() + 60*60*24*7*1000),
   oodler: type.object().schema(Oodler.schema),
-  thingies: [type.object().schema(object.merge(Thingy.schema, { qty: type.number() }))]
+  quantifiedThingies: [type.object().schema(object.merge(Thingy.schema, { qty: type.number() }))]
 };
 
 module.exports = () => {
@@ -24,5 +24,4 @@ module.exports = () => {
   model.schema = schema;
 
   return model;
-}
-();
+}();

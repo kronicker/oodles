@@ -4,51 +4,70 @@
 'use strict';
 
 const Oodlet = require('../models/oodlet');
-const Oodler = require('../models/oodler');
-const Thingy = require('../models/thingy');
 
-function getSampleOodler() {
-  return Oodler.sample(1).run().then((result) => {
-    return result[0];
-  });
-}
-function getSampleThingies(oodler){
-  return Thingy.sample(5).run().then((thingies) => {
-    return {
-      oodler: oodler,
-      thingies: thingies
-    };
-  });
-}
-
-function create(request, response) {
-  return getSampleOodler()
-          .then(getSampleThingies)
-          .then((composite) => {
-            Oodlet({
-              date: request.payload.date,
-              oodler: composite.oodler,
-              thingies: composite.thingies,
-              total: request.payload.total
-            })
-            .save()
-            .then((result) => {
-              response(result).code(201);
-            });
-          });
-}
-
-function list(request, response) {
+function list(request, reply) {
   let limit = request.query.limit || 5;
   let offset = request.query.offset || 0;
-
+  
   return Oodlet
-          .skip(parseInt(offset))
-          .limit(parseInt(limit))
-          .run()
-          .then((result) => {
-            response(result).code(200);
-          });
+    .skip(parseInt(offset))
+    .limit(parseInt(limit))
+    .run()
+    .then((result) => {
+      reply(result).code(200);
+    });
+}
+
+function get(request, reply) {
+  let oodletId = request.params.id;
+  
+  return Oodlet.get(oodletId)
+    .run()
+    .then((result) => {
+      reply(result).code(200);
+    });
+}
+
+function create(request, reply) {
+  return Oodlet({
+    createdAt: request.payload.createdAt,
+    updatedAt: request.payload.updatedAt,
+    dueDate: request.payload.dueDate,
+    oodler: request.payload.oodler,
+    quantifiedThingies: request.payload.quantifiedThingies
+    })
+    .save()
+    .then((result) => {
+      reply(result).code(201);
+    });
+}
+
+function update(request, reply) {
+  let oodletId = request.params.id;
+  
+  return Oodlet.get(oodletId)
+    .update(Oodlet({
+      createdAt: request.payload.createdAt,
+      updatedAt: request.payload.updatedAt,
+      dueDate: request.payload.dueDate,
+      oodler: request.payload.oodler,
+      quantifiedThingies: request.payload.quantifiedThingies
+    }))
+    .run()
+    .then((result) => {
+      reply(result).code(200);
+    });
+}
+
+function remove(request, reply) {
+  let oodletId = request.params.id;
+  
+  return Oodlet.get(oodletId)
+    .delete()
+    .run()
+    .then((result) => {
+      reply(result).code(200);
+    });
 }
 
 let routes = [
@@ -58,9 +77,24 @@ let routes = [
     handler: list
   },
   {
+    method: 'GET',
+    path: '/oodlet/{id}',
+    handler: get
+  },
+  {
     method: 'POST',
     path: '/oodlet',
     handler: create
+  },
+  {
+    method: 'PUT',
+    path: '/oodlet/{id}',
+    handler: update
+  },
+  {
+    method: 'DELETE',
+    path: '/oodlet/{id}',
+    handler: remove
   }
 ];
 
