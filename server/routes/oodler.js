@@ -14,14 +14,12 @@ function create(request, response) {
     office: request.payload.office
   });
 
-  oodler
-    .save()
-    .then((result) => {
-      response(result).code(201);
-    })
-    .catch((err) => {
-      response(err.message).code(500);
-    });
+  return oodler
+          .save()
+          .then((result) => {
+            response(result).code(201);
+          });
+
 }
 
 let routes = [{

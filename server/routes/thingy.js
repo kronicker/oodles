@@ -14,9 +14,6 @@ function create(request, response) {
           .save()
           .then((result) => {
             response(result).code(201);
-          })
-          .catch((err) => {
-            response(err.message).code(500);
           });
 }
 

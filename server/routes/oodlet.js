@@ -22,41 +22,33 @@ function getSampleThingies(oodler){
 }
 
 function create(request, response) {
-  getSampleOodler()
-    .then(getSampleThingies)
-    .then((composite) => {
-      var oodlet = new Oodlet({
-        date: request.payload.date,
-        oodler: composite.oodler,
-        thingies: composite.thingies,
-        total: request.payload.total
-      });
-
-      oodlet
-        .save()
-        .then((result) => {
-          response(result).code(201);
-        })
-        .catch((err) => {
-          response(err.message).code(500);
-        });
-
-    })
-    .catch((err) => {
-      response(err.message).code(500);
-    });
+  return getSampleOodler()
+          .then(getSampleThingies)
+          .then((composite) => {
+            Oodlet({
+              date: request.payload.date,
+              oodler: composite.oodler,
+              thingies: composite.thingies,
+              total: request.payload.total
+            })
+            .save()
+            .then((result) => {
+              response(result).code(201);
+            });
+          });
 }
 
 function list(request, response) {
   let limit = request.query.limit || 5;
   let offset = request.query.offset || 0;
 
-  Oodlet.skip(parseInt(offset))
-        .limit(parseInt(limit))
-        .run()
-        .then((result) => {
-          return response(result).code(200);
-        });
+  return Oodlet
+          .skip(parseInt(offset))
+          .limit(parseInt(limit))
+          .run()
+          .then((result) => {
+            response(result).code(200);
+          });
 }
 
 let routes = [
