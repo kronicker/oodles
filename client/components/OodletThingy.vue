@@ -24,7 +24,12 @@
         this.$store.commit('incrementOodletThingy', this.thingy.id);
       },
       decrementOodletThingy() {
-        this.$store.commit('decrementOodletThingy', this.thingy.id);
+        if(this.qty == 1){
+          this.$store.commit('oodletThingyRemoved', this.thingy.id);
+        }
+        else {
+          this.$store.commit('decrementOodletThingy', this.thingy.id);
+        }
       }
     }
   }
