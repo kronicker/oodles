@@ -16,9 +16,7 @@
 
     methods: {
       removeOodletThingy() {
-        if (confirm('Are you sure you want to remove this thingy from your oodlet?')) {
-          this.$store.commit('oodletThingyRemoved', this.thingy.id);
-        }
+        this.$store.commit('oodletThingyRemoved', this.thingy.id);
       },
       incrementOodletThingy() {
         this.$store.commit('incrementOodletThingy', this.thingy.id);
