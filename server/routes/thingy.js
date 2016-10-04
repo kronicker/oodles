@@ -26,14 +26,14 @@ function get(request, reply) {
 
 function create(request, reply) {
   return Thingy({
-    name: request.payload.name,
-    price: request.payload.price,
-    unit: request.payload.unit,
-    pictureUrl: request.payload.pictureUrl
+      name: request.payload.name,
+      price: request.payload.price,
+      unit: request.payload.unit,
+      pictureUrl: request.payload.pictureUrl
     })
     .save()
     .then((result) => {
-      return reply(result).code(201);
+      reply(result).code(201);
     });
 }
 
