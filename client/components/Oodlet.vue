@@ -3,18 +3,16 @@
     <h1>Oodlet</h1>
     <ol>
       <li v-for="item in oodlet">
-        <oodlet-thingy :thingy="item.thingy"
-                       :qty="item.qty">
-        </oodlet-thingy>
+        <quantified-thingy :thingy="item"></quantified-thingy>
       </li>
     </ol>
-    <button @click="confirmOodlet">Confirm</button>
-    <button @click="resetOodlet">Reset</button>
+    <button @click="confirm">Confirm</button>
+    <button @click="reset">Reset</button>
   </div>
 </template>
 
 <style lang="sass" scoped>
-  .oodlet{
+  .oodlet {
     width: 400px;
     min-height: 500px;
     display: inline-block;
@@ -26,7 +24,7 @@
 </style>
 
 <script>
-  import OodletThingy from './OodletThingy.vue'
+  import QuantifiedThingy from './QuantifiedThingy.vue'
 
   export default{
     computed: {
@@ -36,20 +34,18 @@
     },
 
     methods: {
-      confirmOodlet() {
+      confirm() {
         if (confirm('Are you sure you want to confirm this oodlet?')) {
           this.$emit('oodletConfirm');
         }
       },
-      resetOodlet() {
+      reset() {
         if (confirm('Are you sure you want to reset this oodlet?')) {
           this.$emit('oodletReset');
         }
       }
     },
 
-    components: {
-      'oodlet-thingy': OodletThingy
-    }
+    components: { QuantifiedThingy }
   }
 </script>

@@ -3,31 +3,41 @@
  */
 import Vue from 'vue';
 import Vuex from 'vuex';
+import array from 'lodash/array';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    oodlet: {}
+    oodlet: []
   },
-  mutations:{
-    thingyTileAdd(state, oodletThingy){
-      if (state.oodlet[oodletThingy.thingy.id]) {
-        Vue.set(state.oodlet[oodletThingy.thingy.id], 'qty', state.oodlet[oodletThingy.thingy.id].qty + oodletThingy.qty);
-        console.log(state.oodlet[oodletThingy.thingy.id].qty);
-       }
-       else {
-        Vue.set(state.oodlet, oodletThingy.thingy.id, oodletThingy);
-       }
+  mutations: {
+    thingyTileAdd(state, quantifiedThingy){
+      let index = array.findIndex(state.oodlet, ['id', quantifiedThingy.id]);
+
+      if (index > -1) {
+        state.oodlet[index].qty += quantifiedThingy.qty;
+      }
+      else {
+        state.oodlet.push(quantifiedThingy);
+      }
     },
-    oodletThingyRemoved(state, id) {
-      Vue.delete(state.oodlet, id);
+    quantifiedThingyRemove(state, id) {
+      let index = array.findIndex(state.oodlet, ['id', id]);
+      state.oodlet.splice(index, 1);
     },
-    incrementOodletThingy(state, id) {
-      Vue.set(state.oodlet[id], 'qty', state.oodlet[id].qty+1);
+    quantifiedThingyIncrement(state, id) {
+      let index = array.findIndex(state.oodlet, ['id', id]);
+      state.oodlet[index].qty++;
     },
-    decrementOodletThingy(state, id) {
-      Vue.set(state.oodlet[id], 'qty', state.oodlet[id].qty-1);
+    quantifiedThingyDecrement(state, id) {
+      let index = array.findIndex(state.oodlet, ['id', id]);
+
+      if(state.oodlet[index].qty === 1){
+        return state.oodlet.splice(index, 1);
+      }
+
+      state.oodlet[index].qty--;
     }
   }
 });
