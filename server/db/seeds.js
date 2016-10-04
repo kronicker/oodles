@@ -1,5 +1,6 @@
 'use strict';
 const faker = require('faker');
+const object = require('lodash/object');
 let Thingy = require('../models/thingy');
 let Oodler = require('../models/oodler');
 let Oodlet = require('../models/oodlet');
@@ -24,50 +25,48 @@ function generateOodlers(quantity, callback) {
   }
 }
 
-function generateThingies(quantity, callback) {
-  console.log(`Generating ${quantity} Thingies...`);
+function generateQuantifiedThingies(quantity, callback) {
+  console.log(`Generating ${quantity} quantifiedThingies...`);
 
-  let thingies = [];
+  let quantifiedThingies = [];
 
   for (let i = 0; i < quantity; i++) {
     Thingy({
       name: faker.commerce.product(),
-      price: faker.commerce.price(),
+      price: faker.commerce.price(60),
       unit: ['kg', 'kom'][Math.floor(Math.random() * 2)],
       pictureUrl: 'https://unsplash.it/40/40?random'
     })
     .save()
     .then((thingy) => {
-      thingies.push(thingy);
-      if(i+1 === quantity){ callback(thingies); }
+      quantifiedThingies.push(object.merge(thingy, { qty: faker.random.number(10) }));
+      if(i+1 === quantity){ callback(quantifiedThingies); }
     });
   }
 }
 
 
-function generateOodlets(quantity, oodlers, thingies) {
+function generateOodlets(quantity, oodlers, quantifiedThingies) {
   console.log(`Generating ${quantity} Oodlets...`);
 
   for (let i = 0; i < quantity; i++) {
     Oodlet({
-      date: faker.date.future(),
+      dueDate: faker.date.future(),
       oodler: oodlers[Math.floor(Math.random() * oodlers.length)],
-      thingies: thingies,
-      total: faker.random.number()
+      quantifiedThingies: quantifiedThingies,
+      total: faker.random.number(10)
     })
     .save();
   }
 }
 
 module.exports = () => {
-  // Only seed if explicitly stated
-  if (process.env.SEED !== 'true'){ return true; }
 
   console.log('Started seeding');
 
   generateOodlers(10, (oodlers) => {
-    generateThingies(10, (thingies) => {
-      generateOodlets(10, oodlers, thingies);
+    generateQuantifiedThingies(10, (quantifiedThingies) => {
+      generateOodlets(10, oodlers, quantifiedThingies);
     });
   });
 };

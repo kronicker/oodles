@@ -20,5 +20,4 @@ module.exports = () => {
   model.schema = schema;
 
   return model;
-}
-();
+}();
