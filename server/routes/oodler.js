@@ -8,7 +8,7 @@ const Oodler = require('../models/oodler');
 function list(request, reply) {
   let limit = request.query.limit || 20;
   let offset = request.query.offset || 0;
-  
+
   return Oodler.skip(parseInt(offset))
     .limit(parseInt(limit))
     .run()
@@ -19,7 +19,7 @@ function list(request, reply) {
 
 function get(request, reply) {
   let oodlerId = request.params.id;
-  
+
   return Oodler.get(oodlerId)
     .run()
     .then((result) => {
@@ -42,7 +42,7 @@ function create(request, reply) {
 
 function update(request, reply) {
   let oodlerId = request.params.id;
-  
+
   return Oodler.get(oodlerId)
     .update(Oodler({
       firstName: request.payload.firstName,
@@ -58,7 +58,7 @@ function update(request, reply) {
 
 function remove(request, reply) {
   let oodlerId = request.params.id;
-  
+
   return Oodler.get(oodlerId)
     .delete()
     .run()
@@ -95,6 +95,9 @@ let routes = [
   }
 ];
 
-module.exports = function (server) {
-  server.route(routes);
+module.exports = function(server, errorHandler) {
+  for (let route of routes) {
+    route.handler = errorHandler(route.handler);
+    server.route(route);
+  }
 };

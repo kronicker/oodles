@@ -5,7 +5,7 @@ const Thingy = require('../models/thingy');
 function list(request, reply) {
   let limit = request.query.limit || 50;
   let offset = request.query.offset || 0;
-  
+
   return Thingy.skip(parseInt(offset))
     .limit(parseInt(limit))
     .run()
@@ -16,7 +16,7 @@ function list(request, reply) {
 
 function get(request, reply) {
   let thingyId = request.params.id;
-  
+
   return Thingy.get(thingyId)
     .run()
     .then((result) => {
@@ -33,7 +33,7 @@ function create(request, reply) {
     })
     .save()
     .then((result) => {
-      reply(result).code(201);
+      return reply(result).code(201);
     });
 }
 
@@ -55,7 +55,7 @@ function update(request, reply) {
 
 function remove(request, reply) {
   let thingyId = request.params.id;
-  
+
   return Thingy.get(thingyId)
     .delete()
     .run()
@@ -92,6 +92,9 @@ let routes = [
   }
 ];
 
-module.exports = function (server) {
-  server.route(routes);
+module.exports = function (server, errorHandler) {
+  for (let route of routes) {
+    route.handler = errorHandler(route.handler);
+    server.route(route);
+  }
 };

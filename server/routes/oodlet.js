@@ -8,7 +8,7 @@ const Oodlet = require('../models/oodlet');
 function list(request, reply) {
   let limit = request.query.limit || 5;
   let offset = request.query.offset || 0;
-  
+
   return Oodlet
     .skip(parseInt(offset))
     .limit(parseInt(limit))
@@ -20,7 +20,7 @@ function list(request, reply) {
 
 function get(request, reply) {
   let oodletId = request.params.id;
-  
+
   return Oodlet.get(oodletId)
     .run()
     .then((result) => {
@@ -44,7 +44,7 @@ function create(request, reply) {
 
 function update(request, reply) {
   let oodletId = request.params.id;
-  
+
   return Oodlet.get(oodletId)
     .update(Oodlet({
       createdAt: request.payload.createdAt,
@@ -61,7 +61,7 @@ function update(request, reply) {
 
 function remove(request, reply) {
   let oodletId = request.params.id;
-  
+
   return Oodlet.get(oodletId)
     .delete()
     .run()
@@ -98,6 +98,9 @@ let routes = [
   }
 ];
 
-module.exports = function (server) {
-  server.route(routes);
+module.exports = function(server, errorHandler) {
+  for (let route of routes) {
+    route.handler = errorHandler(route.handler);
+    server.route(route);
+  }
 };
