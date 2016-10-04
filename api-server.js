@@ -14,6 +14,19 @@ module.exports = (PORT) => {
   // Add all routes
   require('./server/routes')(server);
 
+  // Error handling
+  server.ext('onPreResponse', (request, reply) => {
+    let response = request.response;
+
+    if (!response.isBoom) {
+      return reply.continue();
+    }
+
+    // TODO: Add 4xx, 5xx error pages
+    return reply(response);
+  });
+
+
   server.register([Inert, db], (err) => {
 
     server.route({

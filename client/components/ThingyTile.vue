@@ -7,7 +7,14 @@
   </div>
 </template>
 
-<style>
+<style lang="sass" scoped>
+  .thingyTile{
+    margin: 5px 0;
+
+    img { vertical-align: middle; }
+
+    input[type="number"]{ width: 30px; }
+  }
 </style>
 
 <script>
