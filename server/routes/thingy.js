@@ -15,9 +15,7 @@ function list(request, reply) {
 }
 
 function get(request, reply) {
-  let thingyId = request.params.id;
-
-  return Thingy.get(thingyId)
+  return Thingy.get(request.params.id)
     .run()
     .then((result) => {
       reply(result).code(200);
@@ -38,15 +36,13 @@ function create(request, reply) {
 }
 
 function update(request, reply) {
-  let thingyId = request.params.id;
-
-  return Thingy.get(thingyId)
-    .update(Thingy({
+  return Thingy.get(request.params.id)
+    .update({
       name: request.payload.name,
       price: request.payload.price,
       unit: request.payload.unit,
       pictureUrl: request.payload.pictureUrl
-    }))
+    })
     .run()
     .then((result) => {
       reply(result).code(200);
@@ -54,9 +50,7 @@ function update(request, reply) {
 }
 
 function remove(request, reply) {
-  let thingyId = request.params.id;
-
-  return Thingy.get(thingyId)
+  return Thingy.get(request.params.id)
     .delete()
     .run()
     .then((result) => {

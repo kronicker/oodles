@@ -19,9 +19,7 @@ function list(request, reply) {
 }
 
 function get(request, reply) {
-  let oodletId = request.params.id;
-
-  return Oodlet.get(oodletId)
+  return Oodlet.get(request.params.id)
     .run()
     .then((result) => {
       reply(result).code(200);
@@ -43,16 +41,14 @@ function create(request, reply) {
 }
 
 function update(request, reply) {
-  let oodletId = request.params.id;
-
-  return Oodlet.get(oodletId)
-    .update(Oodlet({
+  return Oodlet.get(request.params.id)
+    .update({
       createdAt: request.payload.createdAt,
       updatedAt: request.payload.updatedAt,
       dueDate: request.payload.dueDate,
       oodler: request.payload.oodler,
       quantifiedThingies: request.payload.quantifiedThingies
-    }))
+    })
     .run()
     .then((result) => {
       reply(result).code(200);
@@ -60,9 +56,7 @@ function update(request, reply) {
 }
 
 function remove(request, reply) {
-  let oodletId = request.params.id;
-
-  return Oodlet.get(oodletId)
+  return Oodlet.get(request.params.id)
     .delete()
     .run()
     .then((result) => {

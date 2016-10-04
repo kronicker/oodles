@@ -18,9 +18,7 @@ function list(request, reply) {
 }
 
 function get(request, reply) {
-  let oodlerId = request.params.id;
-
-  return Oodler.get(oodlerId)
+  return Oodler.get(request.params.id)
     .run()
     .then((result) => {
       reply(result).code(200);
@@ -44,12 +42,12 @@ function update(request, reply) {
   let oodlerId = request.params.id;
 
   return Oodler.get(oodlerId)
-    .update(Oodler({
+    .update({
       firstName: request.payload.firstName,
       lastName: request.payload.lastName,
       email: request.payload.email,
       office: request.payload.office
-    }))
+    })
     .run()
     .then((result) => {
       reply(result).code(200);
@@ -57,9 +55,7 @@ function update(request, reply) {
 }
 
 function remove(request, reply) {
-  let oodlerId = request.params.id;
-
-  return Oodler.get(oodlerId)
+  return Oodler.get(request.params.id)
     .delete()
     .run()
     .then((result) => {
