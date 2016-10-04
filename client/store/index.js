@@ -7,8 +7,11 @@ import array from 'lodash/array';
 
 Vue.use(Vuex);
 
+
+
 export default new Vuex.Store({
   state: {
+    oodletId: '',
     oodlet: []
   },
   mutations: {
@@ -38,6 +41,19 @@ export default new Vuex.Store({
       }
 
       state.oodlet[index].qty--;
+    },
+    oodletSave(state){
+      if(!state.oodletId) {
+        Vue.http.post('/oodlet', {quantifiedThingies: state.oodlet}).then((response) => {
+          console.log(response.body);
+          state.oodletId = response.body.id;
+        });
+      }
+      else {
+        Vue.http.put('/oodlet/'+state.oodletId, {quantifiedThingies: state.oodlet}).then((response)=>{
+          console.log(response.body);
+        });
+      }
     }
   }
 });

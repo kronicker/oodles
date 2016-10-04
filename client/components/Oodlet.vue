@@ -6,7 +6,7 @@
         <quantified-thingy :thingy="item"></quantified-thingy>
       </li>
     </ol>
-    <button @click="confirm">Confirm</button>
+    <button @click="save">Save</button>
     <button @click="reset">Reset</button>
   </div>
 </template>
@@ -34,9 +34,9 @@
     },
 
     methods: {
-      confirm() {
+      save() {
         if (confirm('Are you sure you want to confirm this oodlet?')) {
-          this.$emit('oodletConfirm');
+          this.$store.commit('oodletSave');
         }
       },
       reset() {
