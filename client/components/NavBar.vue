@@ -1,29 +1,14 @@
 <template>
   <div id="navBar">
     <ul>
-      <li><router-link to="/oodletView">Go to Foo</router-link></li>
-      <li><router-link to="/historyView">Go to Foo</router-link></li>
-      <li><router-link to="/settingsView">Go to Foo</router-link></li>
+      <li><router-link to="/oodletView">Oodlet</router-link></li>
+      <li><router-link to="/historyView">History</router-link></li>
+      <li><router-link to="/settingsView">Settings</router-link></li>
     </ul>
   </div>
 </template>
 
 <script>
-  export default{
-    methods:{
-      oodletView(){
-        this.$emit('navOodletView');
-      },
-
-      historyView(){
-        this.$emit('navHistoryView');
-      },
-
-      settingsView(){
-        this.$emit('navSettingsView');
-      },
-    }
-  }
 </script>
 
 <style lang="sass">

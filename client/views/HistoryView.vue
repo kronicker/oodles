@@ -9,7 +9,6 @@
         <history-oodlet :oodlet="oodlet"></history-oodlet>
       </li>
     </ul>
-
   </div>
 </template>
 
@@ -22,12 +21,14 @@
         oodlets: []
       }
     },
+
     created(){
       this.$http.get('/oodlet').then((response) => {
         console.log(response.body);
         this.oodlets = response.body;
       });
     },
+
     components:{ HistoryOodlet }
   }
 </script>
@@ -45,11 +46,17 @@
       img { width: 250px; }
     }
 
-    ul {
-    list-style: none;
-    padding: 0;
-    }
 
-    li { float : left; }
+    ul {
+      list-style: none;
+      width: 1200px;
+      display: block;
+      white-space: nowrap;
+      overflow: auto;
+      padding: 0;
+    }
+    li {
+      display: inline-block;
+    }
   }
 </style>
