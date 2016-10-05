@@ -7,16 +7,6 @@
   </div>
 </template>
 
-<style lang="sass" scoped>
-  .thingyTile{
-    margin: 5px 0;
-    &:hover{ background-color: #92FF8B; }
-    img { vertical-align: middle; }
-
-    input[type="number"]{ width: 30px; }
-  }
-</style>
-
 <script>
   import object from 'lodash/object';
 
@@ -40,3 +30,13 @@
     }
   }
 </script>
+
+<style lang="sass" scoped>
+  .thingyTile{
+    margin: 5px 0;
+    &:hover{ background-color: #92FF8B; }
+    img { vertical-align: middle; }
+
+    input[type="number"]{ width: 30px; }
+  }
+</style>

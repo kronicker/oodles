@@ -7,9 +7,6 @@
   </div>
 </template>
 
-<style>
-</style>
-
 <script>
   export default{
     props: ['quantifiedThingy'],
@@ -29,3 +26,6 @@
     }
   }
 </script>
+
+<style>
+</style>

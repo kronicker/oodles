@@ -1,7 +1,5 @@
 <template>
   <div id="oodletView">
-    <h1>Oodles</h1>
-
     <div class="logo">
       <img src="../assets/ee-labs.png">
     </div>
@@ -19,33 +17,6 @@
     <oodlet></oodlet>
   </div>
 </template>
-
-<style lang="sass" scoped>
-  #oodletView {
-    width: 1200px;
-    margin: 0 auto;
-
-    .logo {
-      position: absolute;
-      top: 10px;
-      left: 30px;
-
-      img { width: 250px; }
-    }
-
-    .filtered-thingies {
-      width: 795px;
-      min-height: 500px;
-      display: inline-block;
-      background-color: bisque;
-      vertical-align: top;
-
-      h1 { color: #545454; }
-
-      ul { list-style: none; }
-    }
-  }
-</style>
 
 <script>
   import Oodlet from '../components/Oodlet.vue'
@@ -92,3 +63,30 @@
     }
   }
 </script>
+
+<style lang="sass" scoped>
+  #oodletView {
+    width: 1200px;
+    margin: 0 auto;
+
+    .logo {
+      position: absolute;
+      top: 10px;
+      left: 30px;
+
+      img { width: 250px; }
+    }
+
+    .filtered-thingies {
+      width: 795px;
+      min-height: 500px;
+      display: inline-block;
+      background-color: bisque;
+      vertical-align: top;
+
+      h1 { color: #545454; }
+
+      ul { list-style: none; }
+    }
+  }
+</style>
