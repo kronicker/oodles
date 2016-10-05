@@ -1,15 +1,15 @@
 <template>
   <div id="app">
-    <oodlet-view></oodlet-view>
+    <nav-bar></nav-bar>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-  import OodletView from './views/OodletView.vue'
+  import NavBar from './components/NavBar.vue'
+
   export default {
-    components: {
-      'oodlet-view': OodletView
-    }
+    components: { NavBar }
   }
 </script>
 

@@ -7,17 +7,9 @@
   </div>
 </template>
 
-<style lang="sass" scoped>
-  .thingyTile{
-    margin: 5px 0;
-
-    img { vertical-align: middle; }
-
-    input[type="number"]{ width: 30px; }
-  }
-</style>
-
 <script>
+  import object from 'lodash/object';
+
   export default{
     data(){
       return {
@@ -29,8 +21,22 @@
 
     methods: {
       addThingy() {
-        this.$emit('thingyTileAdd', this.thingy, this.qty);
+        // GOTCHA:
+        // The object payload gets saved as a reference,
+        // so we have to commit a new object, else we
+        // mutate the Vuex store directly
+        this.$store.commit('thingyTileAdd', object.merge({}, this.thingy, { qty : this.qty }));
       }
     }
   }
 </script>
+
+<style lang="sass" scoped>
+  .thingyTile{
+    margin: 5px 0;
+    &:hover{ background-color: #92FF8B; }
+    img { vertical-align: middle; }
+
+    input[type="number"]{ width: 30px; }
+  }
+</style>

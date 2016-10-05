@@ -4,18 +4,6 @@
   </div>
 </template>
 
-<style lang="sass" scoped>
-  input {
-    width: 1170px;
-    height: 50px;
-    padding: 0 15px;
-    font-size: 18px;
-    color: #54508a;
-    border: 0px;
-    margin: 10px 0;
-  }
-</style>
-
 <script>
   export default{
     data(){
@@ -32,3 +20,14 @@
   }
 </script>
 
+<style lang="sass" scoped>
+  input {
+    width: 1170px;
+    height: 50px;
+    padding: 0 15px;
+    font-size: 18px;
+    color: #54508a;
+    border: 0px;
+    margin: 10px 0;
+  }
+</style>

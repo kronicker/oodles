@@ -2,20 +2,45 @@
   <div class="oodlet">
     <h1>Oodlet</h1>
     <ol>
-      <li v-for="item in oodlet">
-        <oodlet-thingy @oodletThingyRemoved="oodletThingyRemoved"
-                       :thingy="item.thingy"
-                       :qty="item.qty">
-        </oodlet-thingy>
+      <li v-for="quantifiedThingy in quantifiedThingies">
+        <quantified-thingy :quantifiedThingy="quantifiedThingy"></quantified-thingy>
       </li>
     </ol>
-    <button @click="confirmOodlet">Confirm</button>
-    <button @click="resetOodlet">Reset</button>
+    <button @click="save">Save</button>
+    <button @click="reset">Reset</button>
   </div>
 </template>
 
+<script>
+  import QuantifiedThingy from './QuantifiedThingy.vue'
+
+  export default{
+    computed: {
+      quantifiedThingies(){
+        return this.$store.state.quantifiedThingies;
+      }
+    },
+
+    methods: {
+      save() {
+        if (confirm('Are you sure you want to confirm this oodlet?')) {
+          this.$store.commit('oodletSave');
+        }
+      },
+
+      reset() {
+        if (confirm('Are you sure you want to reset this oodlet?')) {
+          this.$store.commit('oodletReset');
+        }
+      }
+    },
+
+    components: { QuantifiedThingy }
+  }
+</script>
+
 <style lang="sass" scoped>
-  .oodlet{
+  .oodlet {
     width: 400px;
     min-height: 500px;
     display: inline-block;
@@ -25,31 +50,3 @@
     h1 { color: #545454; }
   }
 </style>
-
-<script>
-  import OodletThingy from './OodletThingy.vue'
-
-  export default{
-    props: ['oodlet'],
-
-    methods: {
-      confirmOodlet() {
-        if (confirm('Are you sure you want to confirm this oodlet?')) {
-          this.$emit('oodletConfirm');
-        }
-      },
-      resetOodlet() {
-        if (confirm('Are you sure you want to reset this oodlet?')) {
-          this.$emit('oodletReset');
-        }
-      },
-      oodletThingyRemoved(id) {
-        this.$emit('oodletThingyRemoved', id);
-      }
-    },
-
-    components: {
-      'oodlet-thingy': OodletThingy
-    }
-  }
-</script>
