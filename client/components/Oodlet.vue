@@ -17,7 +17,7 @@
   export default{
     computed: {
       quantifiedThingies(){
-        return this.$store.state.quantifiedThingies;
+        return this.$store.getters.quantifiedThingies;
       }
     },
 

@@ -11,7 +11,7 @@ import HistoryView from '../views/HistoryView.vue';
 import SettingsView from '../views/SettingsView.vue';
 
 const routes = [
-  { path: '/oodletview', component: OodletView },
+  { path: '/', component: OodletView },
   { path: '/historyview', component: HistoryView },
   { path: '/settingsview', component: SettingsView }
 ];
