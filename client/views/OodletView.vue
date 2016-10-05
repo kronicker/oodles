@@ -16,9 +16,7 @@
         </li>
       </ul>
     </div>
-    <oodlet @oodletReset="oodletReset"
-            @oodletConfirmed="oodletConfirmed">
-    </oodlet>
+    <oodlet></oodlet>
   </div>
 </template>
 
@@ -68,7 +66,7 @@
           return this.thingies;
         }
 
-        var searchString = this.searchString.toLowerCase();
+        let searchString = this.searchString.toLowerCase();
         return this.thingies.filter(item => {
           return item.name.toLowerCase().indexOf(searchString) !== -1
         });
@@ -76,10 +74,6 @@
     },
 
     methods: {
-      oodletConfirmed() {
-      },
-      oodletReset() {
-      },
       thingyFinderUpdate(query) {
         this.searchString = query;
       }
@@ -92,9 +86,9 @@
     },
 
     components: {
-      'oodlet': Oodlet,
-      'thingy-finder': ThingyFinder,
-      'thingy-tile': ThingyTile,
+      Oodlet,
+      ThingyFinder,
+      ThingyTile,
     }
   }
 </script>

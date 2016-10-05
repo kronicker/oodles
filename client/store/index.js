@@ -14,26 +14,29 @@ export default new Vuex.Store({
     oodletId: '',
     quantifiedThingies: []
   },
+
   mutations: {
     thingyTileAdd(state, quantifiedThingy){
       let index = array.findIndex(state.quantifiedThingies, ['id', quantifiedThingy.id]);
 
       if (index > -1) {
-        console.log('here');
         state.quantifiedThingies[index].qty += quantifiedThingy.qty;
       }
       else {
         state.quantifiedThingies.push(quantifiedThingy);
       }
     },
+
     quantifiedThingyRemove(state, id) {
       let index = array.findIndex(state.quantifiedThingies, ['id', id]);
       state.quantifiedThingies.splice(index, 1);
     },
+
     quantifiedThingyIncrement(state, id) {
       let index = array.findIndex(state.quantifiedThingies, ['id', id]);
       state.quantifiedThingies[index].qty++;
     },
+
     quantifiedThingyDecrement(state, id) {
       let index = array.findIndex(state.quantifiedThingies, ['id', id]);
 
@@ -43,18 +46,31 @@ export default new Vuex.Store({
 
       state.quantifiedThingies[index].qty--;
     },
-    oodletSave(state){
-      if(!state.quantifiedThingiesId) {
-        Vue.http.post('/oodlet', {quantifiedThingies: state.quantifiedThingies}).then((response) => {
-          console.log(response.body);
-          state.oodletId = response.body.id;
+
+    oodletSave(state) {
+      if(!state.oodletId) {
+        Vue.http.post('/oodlet', {
+            quantifiedThingies: state.quantifiedThingies
+          })
+          .then((response) => {
+            console.log(response.body);
+            state.oodletId = response.body.id;
         });
       }
       else {
-        Vue.http.put('/oodlet/'+state.oodletId, {quantifiedThingies: state.quantifiedThingies}).then((response)=>{
-          console.log(response.body);
+        Vue.http.put('/oodlet/'+state.oodletId,
+          {
+            quantifiedThingies: state.quantifiedThingies,
+            // updatedAt : new Date()
+          })
+          .then((response)=>{
+            console.log(response.body);
         });
       }
+    },
+
+    oodletReset(state) {
+      state.quantifiedThingies = [];
     }
   }
 });

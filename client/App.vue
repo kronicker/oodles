@@ -6,10 +6,9 @@
 
 <script>
   import OodletView from './views/OodletView.vue'
+
   export default {
-    components: {
-      'oodlet-view': OodletView
-    }
+    components: { OodletView }
   }
 </script>
 

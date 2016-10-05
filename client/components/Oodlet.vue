@@ -39,9 +39,10 @@
           this.$store.commit('oodletSave');
         }
       },
+
       reset() {
         if (confirm('Are you sure you want to reset this oodlet?')) {
-          this.$emit('oodletReset');
+          this.$store.commit('oodletReset');
         }
       }
     },

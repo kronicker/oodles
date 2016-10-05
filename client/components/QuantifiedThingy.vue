@@ -18,9 +18,11 @@
       remove() {
         this.$store.commit('quantifiedThingyRemove', this.quantifiedThingy.id);
       },
+
       increment() {
         this.$store.commit('quantifiedThingyIncrement', this.quantifiedThingy.id);
       },
+
       decrement() {
         this.$store.commit('quantifiedThingyDecrement', this.quantifiedThingy.id);
       }
