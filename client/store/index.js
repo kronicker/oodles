@@ -47,11 +47,11 @@ export default new Vuex.Store({
       if(!state.quantifiedThingiesId) {
         Vue.http.post('/oodlet', {quantifiedThingies: state.quantifiedThingies}).then((response) => {
           console.log(response.body);
-          state.quantifiedThingiesId = response.body.id;
+          state.oodletId = response.body.id;
         });
       }
       else {
-        Vue.http.put('/oodlet/'+state.quantifiedThingiesId, {quantifiedThingies: state.quantifiedThingies}).then((response)=>{
+        Vue.http.put('/oodlet/'+state.oodletId, {quantifiedThingies: state.quantifiedThingies}).then((response)=>{
           console.log(response.body);
         });
       }
