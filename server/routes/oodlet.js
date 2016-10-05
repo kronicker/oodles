@@ -28,9 +28,6 @@ function get(request, reply) {
 
 function create(request, reply) {
   return Oodlet({
-    createdAt: request.payload.createdAt,
-    updatedAt: request.payload.updatedAt,
-    dueDate: request.payload.dueDate,
     oodler: request.payload.oodler,
     quantifiedThingies: request.payload.quantifiedThingies
     })
@@ -43,10 +40,7 @@ function create(request, reply) {
 function update(request, reply) {
   return Oodlet.get(request.params.id)
     .update({
-      createdAt: request.payload.createdAt,
-      updatedAt: request.payload.updatedAt,
-      dueDate: request.payload.dueDate,
-      oodler: request.payload.oodler,
+      updatedAt: new Date(),
       quantifiedThingies: request.payload.quantifiedThingies
     })
     .run()
