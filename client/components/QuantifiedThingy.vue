@@ -1,6 +1,6 @@
 <template>
   <div class="oodletThingy">
-    <span>{{ thingy.name}}  {{ thingy.unit }}  {{ thingy.qty }}</span>
+    <span>{{ quantifiedThingy.name}}  {{ quantifiedThingy.unit }}  {{ quantifiedThingy.qty }}</span>
     <button @click="remove">X</button>
     <button @click="increment">+</button>
     <button @click="decrement">-</button>
@@ -12,17 +12,17 @@
 
 <script>
   export default{
-    props: ['thingy'],
+    props: ['quantifiedThingy'],
 
     methods: {
       remove() {
-        this.$store.commit('quantifiedThingyRemove', this.thingy.id);
+        this.$store.commit('quantifiedThingyRemove', this.quantifiedThingy.id);
       },
       increment() {
-        this.$store.commit('quantifiedThingyIncrement', this.thingy.id);
+        this.$store.commit('quantifiedThingyIncrement', this.quantifiedThingy.id);
       },
       decrement() {
-        this.$store.commit('quantifiedThingyDecrement', this.thingy.id);
+        this.$store.commit('quantifiedThingyDecrement', this.quantifiedThingy.id);
       }
     }
   }

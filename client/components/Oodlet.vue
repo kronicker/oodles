@@ -2,8 +2,8 @@
   <div class="oodlet">
     <h1>Oodlet</h1>
     <ol>
-      <li v-for="item in oodlet">
-        <quantified-thingy :thingy="item"></quantified-thingy>
+      <li v-for="quantifiedThingy in quantifiedThingies">
+        <quantified-thingy :quantifiedThingy="quantifiedThingy"></quantified-thingy>
       </li>
     </ol>
     <button @click="save">Save</button>
@@ -28,8 +28,8 @@
 
   export default{
     computed: {
-      oodlet(){
-        return this.$store.state.oodlet;
+      quantifiedThingies(){
+        return this.$store.state.quantifiedThingies;
       }
     },
 

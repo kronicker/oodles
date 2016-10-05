@@ -1,5 +1,5 @@
 /**
- * Created by toma on 30.09.16..
+ * Created by toma on 30.09.16.
  */
 import Vue from 'vue';
 import Vuex from 'vuex';
@@ -12,45 +12,46 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     oodletId: '',
-    oodlet: []
+    quantifiedThingies: []
   },
   mutations: {
     thingyTileAdd(state, quantifiedThingy){
-      let index = array.findIndex(state.oodlet, ['id', quantifiedThingy.id]);
+      let index = array.findIndex(state.quantifiedThingies, ['id', quantifiedThingy.id]);
 
       if (index > -1) {
-        state.oodlet[index].qty += quantifiedThingy.qty;
+        console.log('here');
+        state.quantifiedThingies[index].qty += quantifiedThingy.qty;
       }
       else {
-        state.oodlet.push(quantifiedThingy);
+        state.quantifiedThingies.push(quantifiedThingy);
       }
     },
     quantifiedThingyRemove(state, id) {
-      let index = array.findIndex(state.oodlet, ['id', id]);
-      state.oodlet.splice(index, 1);
+      let index = array.findIndex(state.quantifiedThingies, ['id', id]);
+      state.quantifiedThingies.splice(index, 1);
     },
     quantifiedThingyIncrement(state, id) {
-      let index = array.findIndex(state.oodlet, ['id', id]);
-      state.oodlet[index].qty++;
+      let index = array.findIndex(state.quantifiedThingies, ['id', id]);
+      state.quantifiedThingies[index].qty++;
     },
     quantifiedThingyDecrement(state, id) {
-      let index = array.findIndex(state.oodlet, ['id', id]);
+      let index = array.findIndex(state.quantifiedThingies, ['id', id]);
 
-      if(state.oodlet[index].qty === 1){
-        return state.oodlet.splice(index, 1);
+      if(state.quantifiedThingies[index].qty === 1){
+        return state.quantifiedThingies.splice(index, 1);
       }
 
-      state.oodlet[index].qty--;
+      state.quantifiedThingies[index].qty--;
     },
     oodletSave(state){
-      if(!state.oodletId) {
-        Vue.http.post('/oodlet', {quantifiedThingies: state.oodlet}).then((response) => {
+      if(!state.quantifiedThingiesId) {
+        Vue.http.post('/oodlet', {quantifiedThingies: state.quantifiedThingies}).then((response) => {
           console.log(response.body);
-          state.oodletId = response.body.id;
+          state.quantifiedThingiesId = response.body.id;
         });
       }
       else {
-        Vue.http.put('/oodlet/'+state.oodletId, {quantifiedThingies: state.oodlet}).then((response)=>{
+        Vue.http.put('/oodlet/'+state.quantifiedThingiesId, {quantifiedThingies: state.quantifiedThingies}).then((response)=>{
           console.log(response.body);
         });
       }
