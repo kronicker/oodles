@@ -21,7 +21,7 @@ module.exports = (PORT) => {
     if (!response.isBoom) {
       return reply.continue();
     }
-
+   console.log(response);
     // TODO: Add 4xx, 5xx error pages
     return reply(response);
   });

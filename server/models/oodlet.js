@@ -11,9 +11,9 @@ const type = thinky.type;
 
 const schema = {
   id: type.string(),
-  createdAt: type.date().default(new Date()),
-  updatedAt: type.date().default(new Date()),
-  dueDate: type.date().default(new Date() + 60*60*24*7*1000),
+  createdAt: type.date().default(() => new Date()),
+  updatedAt: type.date().default(() => new Date()),
+  dueDate: type.date().default(() => new Date(Date.now() + 60*60*24*7*1000)),
   oodler: type.object().schema(Oodler.schema),
   quantifiedThingies: [type.object().schema(object.merge(Thingy.schema, { qty: type.number() }))]
 };
