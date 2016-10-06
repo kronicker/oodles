@@ -1,10 +1,10 @@
-const boom = require('boom');
+const Boom = require('boom');
 const Glob = require('glob');
 const Path = require('path');
 
 function errorHandler(defaultHandler) {
   return (request, reply) => {
-    return defaultHandler(request, reply).catch(err => reply(boom.wrap(err)));
+    return defaultHandler(request, reply).catch(err => reply(Boom.wrap(err)));
   };
 }
 
