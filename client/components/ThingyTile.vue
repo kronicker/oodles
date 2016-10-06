@@ -25,7 +25,7 @@
         // The object payload gets saved as a reference,
         // so we have to commit a new object, else we
         // mutate the Vuex store directly
-        this.$store.commit('thingyTileAdd', object.merge({}, this.thingy, { qty : this.qty }));
+        this.$store.dispatch('thingyTileAdd', object.merge({}, this.thingy, { qty : this.qty }));
       }
     }
   }

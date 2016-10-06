@@ -13,15 +13,28 @@
 
     methods: {
       remove() {
-        this.$store.commit('quantifiedThingyRemove', this.quantifiedThingy.id);
+        let payload = {
+          id: this.quantifiedThingy.id,
+          qty: 0
+        }
+        this.$store.dispatch('quantifiedThingyChange', payload);
       },
 
       increment() {
-        this.$store.commit('quantifiedThingyIncrement', this.quantifiedThingy.id);
+        let payload = {
+          id: this.quantifiedThingy.id,
+          qty: ++this.quantifiedThingy.qty
+        }
+        this.$store.dispatch('quantifiedThingyChange', payload);
       },
 
       decrement() {
-        this.$store.commit('quantifiedThingyDecrement', this.quantifiedThingy.id);
+        let payload = {
+          id: this.quantifiedThingy.id,
+          qty: --this.quantifiedThingy.qty
+        }
+
+        this.$store.dispatch('quantifiedThingyChange', payload);
       }
     }
   }

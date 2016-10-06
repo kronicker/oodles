@@ -1,6 +1,7 @@
 <template>
   <div class="oodlet">
     <h1>Oodlet</h1>
+    <span class="due-date">Due: </span>{{ dueDate }}
     <ol>
       <li v-for="quantifiedThingy in quantifiedThingies">
         <quantified-thingy :quantifiedThingy="quantifiedThingy"></quantified-thingy>
@@ -17,8 +18,11 @@
   export default{
     computed: {
       quantifiedThingies(){
-        return this.$store.state.quantifiedThingies;
-      }
+        return this.$store.getters.quantifiedThingies;
+      },
+      dueDate(){
+        return this.$store.getters.dueDate;
+      },
     },
 
     methods: {
@@ -30,7 +34,7 @@
 
       reset() {
         if (confirm('Are you sure you want to reset this oodlet?')) {
-          this.$store.commit('oodletReset');
+          this.$store.dispatch('oodletReset');
         }
       }
     },
@@ -41,12 +45,17 @@
 
 <style lang="sass" scoped>
   .oodlet {
-    width: 400px;
+    width: 360px;
     min-height: 500px;
     display: inline-block;
     background-color: #d2b8ea;
     vertical-align: top;
+    padding: 0 20px;
 
     h1 { color: #545454; }
+
+    .due-date {
+      font-weight: bold;
+    }
   }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div id="navBar">
     <ul>
-      <li><router-link to="/oodletView">Oodlet</router-link></li>
+      <li><router-link to="/">Oodlet</router-link></li>
       <li><router-link to="/historyView">History</router-link></li>
       <li><router-link to="/settingsView">Settings</router-link></li>
     </ul>

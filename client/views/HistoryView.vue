@@ -29,7 +29,7 @@
       });
     },
 
-    components:{ HistoryOodlet }
+    components: { HistoryOodlet }
   }
 </script>
 
@@ -45,7 +45,6 @@
 
       img { width: 250px; }
     }
-
 
     ul {
       list-style: none;
