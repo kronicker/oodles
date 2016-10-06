@@ -29,7 +29,7 @@
       });
     },
 
-    components:{ HistoryOodlet }
+    components: { HistoryOodlet }
   }
 </script>
 

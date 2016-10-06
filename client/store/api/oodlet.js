@@ -14,5 +14,5 @@ function save(oodlet) {
 
 export default {
   save
-}
+};
 
