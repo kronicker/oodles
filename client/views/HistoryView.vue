@@ -1,9 +1,6 @@
 <template>
   <div id="historyView">
-    <div class="logo">
-      <img src="../assets/ee-labs.png">
-    </div>
-
+    <h1>History</h1>
     <ul>
       <li v-for="oodlet in oodlets">
         <history-oodlet :oodlet="oodlet"></history-oodlet>
@@ -37,14 +34,10 @@
   #historyView {
     width: 1200px;
     margin: 0 auto;
+    padding-top: 10px;
+    background-color: #f1ac2f;
 
-    .logo {
-      position: absolute;
-      top: 10px;
-      left: 30px;
-
-      img { width: 250px; }
-    }
+    h1 { color: #545454; }
 
     ul {
       list-style: none;
