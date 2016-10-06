@@ -33,7 +33,7 @@
 <style lang="sass" scoped>
   #historyView {
     width: 1200px;
-    margin: 0 auto;
+    margin: 10px auto;
     padding-top: 10px;
     background-color: #f1ac2f;
 
