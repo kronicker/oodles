@@ -1,6 +1,14 @@
 <template>
   <div id="historyView">
     <h1>History</h1>
+    <form>
+      <p>
+        <span>From: </span>
+        <input type="date" @change="load" v-model="fromDate"/>
+        <span>To: </span>
+        <input type="date" @change="load" v-model="toDate"/>
+      </p>
+    </form>
     <ul>
       <li v-for="oodlet in oodlets">
         <history-oodlet :oodlet="oodlet"></history-oodlet>
@@ -15,16 +23,45 @@
   export default{
     data(){
       return{
-        oodlets: []
+        oodlets: [],
+        fromDate: '2016-01-01',
+        toDate: '2016-10-30'
+      }
+    },
+
+    methods: {
+      load(){
+        this.$http.get('/oodlet', {
+          params: {
+            fromDate: new Date(this.fromDate).toISOString(),
+            toDate: new Date(this.toDate).toISOString()
+          }})
+          .then((response) => {
+            console.log('Success!!');
+            this.oodlets = response.body;
+          },
+          (err)=>console.log('Error!!'));
       }
     },
 
     created(){
-      this.$http.get('/oodlet').then((response) => {
-        console.log(response.body);
-        this.oodlets = response.body;
-      });
+      this.load();
     },
+
+//    methods:{
+//      shit(){
+//        console.log(
+//                new Date(this.fromDate).toISOString()
+//        );
+//        console.log(
+//                new Date(this.toDate).toLocaleDateString('hr-HR', {
+//                  day : 'numeric',
+//                  month : 'short',
+//                  year : 'numeric'
+//                })
+//        );
+//      }
+//    },
 
     components: { HistoryOodlet }
   }
@@ -36,6 +73,8 @@
     margin: 10px auto;
     padding-top: 10px;
     background-color: #f1ac2f;
+
+    input { display: inline; }
 
     h1 { color: #545454; }
 

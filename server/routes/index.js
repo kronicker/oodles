@@ -3,6 +3,7 @@ const boom = require('boom');
 function errorHandler(defaultHandler) {
   return function(request, reply) {
     return defaultHandler(request, reply).catch((err) => {
+      console.log(err);
       reply(boom.wrap(err));
     });
   };

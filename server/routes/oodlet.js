@@ -6,12 +6,16 @@
 const Oodlet = require('../models/oodlet');
 
 function list(request, reply) {
-  let limit = request.query.limit || 5;
-  let offset = request.query.offset || 0;
+  let fromDate = new Date(request.query.fromDate) || new Date(Date.now()-1000*60*60*24*7*20);
+  let toDate = new Date(request.query.toDate) || new Date(Date.now());
+  console.log(fromDate);
+  console.log(toDate);
 
   return Oodlet
-    .skip(parseInt(offset))
-    .limit(parseInt(limit))
+    .between(fromDate, toDate, { index : 'dueDate' })
+    // .orderBy('dueDate')
+    // .filter(
+    //   r.row('dueDate').during(r.time(2013, 12, 1, "Z"), r.time(2013, 12, 10, "Z")))
     .run()
     .then((result) => {
       reply(result).code(200);
