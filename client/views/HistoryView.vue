@@ -46,7 +46,6 @@
       img { width: 250px; }
     }
 
-
     ul {
       list-style: none;
       width: 1200px;

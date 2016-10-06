@@ -1,25 +1,13 @@
-import array from 'lodash/array'
-import Vue from 'vue';
+import array from 'lodash/array';
 
 const state = {
   id: '',
+  dueDate: undefined,
   quantifiedThingies: []
-}
+};
 
 const mutations = {
-  saved(state, oodlet) {
-    if(!state.id){
-      console.log('Oodlet created');
-      console.log(oodlet);
-      return state.id = oodlet.id;
-    }
-
-    console.log('Oodlet updated');
-    console.log(oodlet);
-  },
-
   thingyTileAdd(state, quantifiedThingy) {
-
     let index = array.findIndex(state.quantifiedThingies, ['id', quantifiedThingy.id]);
 
     if (index > -1) {
@@ -35,27 +23,29 @@ const mutations = {
     state.quantifiedThingies.splice(index, 1);
   },
 
-  quantifiedThingyIncrement(state, id) {
-    let index = array.findIndex(state.quantifiedThingies, ['id', id]);
-    state.quantifiedThingies[index].qty++;
+  quantifiedThingyUpdate(state, payload) {
+    let index = array.findIndex(state.quantifiedThingies, ['id', payload.id]);
+    state.quantifiedThingies[index].qty = payload.qty;
   },
 
-  quantifiedThingyDecrement(state, id) {
-    let index = array.findIndex(state.quantifiedThingies, ['id', id]);
-
-    if(state.quantifiedThingies[index].qty === 1){
-      return state.quantifiedThingies.splice(index, 1);
+  oodletSave(state, oodlet) {
+    if(!state.id){
+      console.log('Oodlet created');
+      console.log(oodlet);
+      state.dueDate = oodlet.dueDate;
+      return state.id = oodlet.id;
     }
 
-    state.quantifiedThingies[index].qty--;
+    console.log('Oodlet updated');
+    console.log(oodlet);
   },
 
   oodletReset(state) {
     state.quantifiedThingies = [];
   }
-}
+};
 
 export default {
   state,
   mutations
-}
+};
