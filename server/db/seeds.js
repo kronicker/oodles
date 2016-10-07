@@ -56,7 +56,7 @@ function generateOodlets(quantity, oodlers, quantifiedThingies) {
     Oodlet({
       createdAt: createDate,
       updatedAt: createDate,
-      dueDate: new Date(createDate.getTime()+1000*60*60*24*14),
+      dueDate: moment(createDate).add(2, 'weeks').toDate(),
       oodler: oodlers[Math.floor(Math.random() * oodlers.length)],
       quantifiedThingies: quantifiedThingies,
       total: faker.random.number(10)
