@@ -39,7 +39,7 @@ function generateQuantifiedThingies(quantity, callback) {
     })
     .save()
     .then((thingy) => {
-      quantifiedThingies.push(object.merge(thingy, { qty: faker.random.number(10) }));
+      quantifiedThingies.push(object.merge(thingy, { qty: faker.random.number({ 'min': 1,'max': 30 })}));
       if(i+1 === quantity){ callback(quantifiedThingies); }
     });
   }
@@ -50,8 +50,11 @@ function generateOodlets(quantity, oodlers, quantifiedThingies) {
   console.log(`Generating ${quantity} Oodlets...`);
 
   for (let i = 0; i < quantity; i++) {
+    let randCreateDate = faker.date.past();
     Oodlet({
-      dueDate: faker.date.future(),
+      createdAt: randCreateDate,
+      updatedAt: randCreateDate,
+      dueDate: new Date(randCreateDate.getTime()+1000*60*60*24*14),
       oodler: oodlers[Math.floor(Math.random() * oodlers.length)],
       quantifiedThingies: quantifiedThingies,
       total: faker.random.number(10)
