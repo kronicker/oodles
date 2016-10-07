@@ -9,10 +9,11 @@ module.exports = (PORT) => {
   const server = new WebpackDevServer(webpack(config), {
     path: path.resolve(__dirname, './client/dist/'),
     publicPath: '/dist/',
-    hot:true,
+    hot: true,
     proxy: {
       "**" : `http://localhost:${PORT - 1}`
-    }
+    },
+    noInfo: true,
   });
 
   server.listen(PORT, 'localhost', function() {

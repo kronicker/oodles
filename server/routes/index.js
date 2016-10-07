@@ -1,16 +1,18 @@
-const boom = require('boom');
+const Boom = require('boom');
+const Glob = require('glob');
+const Path = require('path');
 
 function errorHandler(defaultHandler) {
   return function(request, reply) {
     return defaultHandler(request, reply).catch(err => {
       console.log(err);
-      reply(boom.wrap(err));
+      reply(Boom.wrap(err));
     });
   };
 }
 
 module.exports = server => {
-  require('./thingy')(server, errorHandler);
-  require('./oodler')(server, errorHandler);
-  require('./oodlet')(server, errorHandler);
+  Glob.sync('./server/routes/!(index.js)').forEach(file => {
+    require(Path.resolve(file))(server, errorHandler);
+  });
 };
