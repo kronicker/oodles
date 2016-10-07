@@ -14,7 +14,7 @@
 
     methods: {
       updateQuery() {
-        this.$emit('thingyFinderUpdate', this.searchString)
+        this.$emit('thingyFinderUpdate', this.searchString);
       }
     }
   }

@@ -1,9 +1,5 @@
 <template>
   <div id="oodletView">
-    <div class="logo">
-      <img src="../assets/ee-labs.png">
-    </div>
-
     <thingy-finder @thingyFinderUpdate="thingyFinderUpdate"></thingy-finder>
 
     <div class="filtered-thingies">
@@ -68,14 +64,6 @@
   #oodletView {
     width: 1200px;
     margin: 0 auto;
-
-    .logo {
-      position: absolute;
-      top: 10px;
-      left: 30px;
-
-      img { width: 250px; }
-    }
 
     .filtered-thingies {
       width: 795px;

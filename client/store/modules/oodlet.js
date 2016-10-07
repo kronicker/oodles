@@ -40,6 +40,10 @@ const mutations = {
     console.log(oodlet);
   },
 
+  oodletSet(state, quantifiedThingies) {
+    state.quantifiedThingies = quantifiedThingies;
+  },
+
   oodletReset(state) {
     state.quantifiedThingies = [];
   }

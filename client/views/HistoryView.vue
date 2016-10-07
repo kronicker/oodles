@@ -1,9 +1,14 @@
 <template>
   <div id="historyView">
-    <div class="logo">
-      <img src="../assets/ee-labs.png">
-    </div>
-
+    <h1>History</h1>
+    <form>
+      <p>
+        <span>From: </span>
+        <input type="date" @change="load" v-model="fromDate"/>
+        <span>To: </span>
+        <input type="date" @change="load" v-model="toDate"/>
+      </p>
+    </form>
     <ul>
       <li v-for="oodlet in oodlets">
         <history-oodlet :oodlet="oodlet"></history-oodlet>
@@ -13,20 +18,33 @@
 </template>
 
 <script>
-  import HistoryOodlet from '../components/HistoryOodlet.vue'
+  import HistoryOodlet from '../components/HistoryOodlet.vue';
+  import moment from 'moment';
 
   export default{
     data(){
       return{
-        oodlets: []
+        oodlets: [],
+        fromDate: moment().subtract(3, 'months').format('YYYY-MM-DD'),
+        toDate: moment().format('YYYY-MM-DD')
+      }
+    },
+
+    methods: {
+      load(){
+        this.$http.get('/oodlet', {
+          params: {
+            fromDate: moment(this.fromDate).format(),
+            toDate: moment(this.toDate).format()
+          }})
+          .then(response => {
+            this.oodlets = response.body;
+          });
       }
     },
 
     created(){
-      this.$http.get('/oodlet').then((response) => {
-        console.log(response.body);
-        this.oodlets = response.body;
-      });
+      this.load();
     },
 
     components: { HistoryOodlet }
@@ -36,15 +54,13 @@
 <style lang="sass" scoped>
   #historyView {
     width: 1200px;
-    margin: 0 auto;
+    margin: 10px auto;
+    padding-top: 10px;
+    background-color: #f1ac2f;
 
-    .logo {
-      position: absolute;
-      top: 10px;
-      left: 30px;
+    input { display: inline; }
 
-      img { width: 250px; }
-    }
+    h1 { color: #545454; }
 
     ul {
       list-style: none;

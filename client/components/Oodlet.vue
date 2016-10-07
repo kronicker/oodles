@@ -13,7 +13,7 @@
 </template>
 
 <script>
-  import QuantifiedThingy from './QuantifiedThingy.vue'
+  import QuantifiedThingy from './QuantifiedThingy.vue';
 
   export default{
     computed: {
@@ -22,7 +22,7 @@
       },
       dueDate(){
         return this.$store.getters.dueDate;
-      },
+      }
     },
 
     methods: {

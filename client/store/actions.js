@@ -21,6 +21,14 @@ function quantifiedThingyChange({ commit, state }, payload) {
   });
 }
 
+function oodletSet({ commit, state }, quantifiedThingies) {
+  commit('oodletSet', quantifiedThingies);
+
+  oodletApi.save(state.oodlet).then(response => {
+    commit('oodletSave', response.body);
+  });
+}
+
 function oodletReset({ commit, state }) {
   commit('oodletReset');
 
@@ -32,5 +40,6 @@ function oodletReset({ commit, state }) {
 export {
   thingyTileAdd,
   quantifiedThingyChange,
+  oodletSet,
   oodletReset
 };

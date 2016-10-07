@@ -1,6 +1,7 @@
 'use strict';
 const faker = require('faker');
 const object = require('lodash/object');
+const moment = require('moment');
 let Thingy = require('../models/thingy');
 let Oodler = require('../models/oodler');
 let Oodlet = require('../models/oodlet');
@@ -18,7 +19,7 @@ function generateOodlers(quantity, callback) {
       office: faker.random.word().toUpperCase().slice(-1) + faker.random.number(10)
     })
     .save()
-    .then((oodler) => {
+    .then(oodler => {
       oodlers.push(oodler);
       if(i+1 === quantity){ callback(oodlers); }
     });
@@ -38,8 +39,8 @@ function generateQuantifiedThingies(quantity, callback) {
       pictureUrl: 'https://unsplash.it/40/40?random'
     })
     .save()
-    .then((thingy) => {
-      quantifiedThingies.push(object.merge(thingy, { qty: faker.random.number(10) }));
+    .then(thingy => {
+      quantifiedThingies.push(object.merge(thingy, { qty: faker.random.number({ 'min': 1,'max': 30 })}));
       if(i+1 === quantity){ callback(quantifiedThingies); }
     });
   }
@@ -50,8 +51,12 @@ function generateOodlets(quantity, oodlers, quantifiedThingies) {
   console.log(`Generating ${quantity} Oodlets...`);
 
   for (let i = 0; i < quantity; i++) {
+    let createDate = moment().subtract(2*i, 'weeks').toDate();
+
     Oodlet({
-      dueDate: faker.date.future(),
+      createdAt: createDate,
+      updatedAt: createDate,
+      dueDate: moment(createDate).add(2, 'weeks').toDate(),
       oodler: oodlers[Math.floor(Math.random() * oodlers.length)],
       quantifiedThingies: quantifiedThingies,
       total: faker.random.number(10)
@@ -64,7 +69,7 @@ module.exports = () => {
 
   console.log('Started seeding');
 
-  generateOodlers(10, (oodlers) => {
+  generateOodlers(10, oodlers => {
     generateQuantifiedThingies(10, (quantifiedThingies) => {
       generateOodlets(10, oodlers, quantifiedThingies);
     });
