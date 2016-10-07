@@ -18,14 +18,15 @@
 </template>
 
 <script>
-  import HistoryOodlet from '../components/HistoryOodlet.vue'
+  import HistoryOodlet from '../components/HistoryOodlet.vue';
+  import moment from 'moment';
 
   export default{
     data(){
       return{
         oodlets: [],
-        fromDate: '2016-01-01',
-        toDate: '2016-10-30'
+        fromDate: moment().subtract(3, 'months').format('YYYY-MM-DD'),
+        toDate: moment().format('YYYY-MM-DD')
       }
     },
 
@@ -33,11 +34,10 @@
       load(){
         this.$http.get('/oodlet', {
           params: {
-            fromDate: new Date(this.fromDate).toISOString(),
-            toDate: new Date(this.toDate).toISOString()
+            fromDate: moment(this.fromDate).format(),
+            toDate: moment(this.toDate).format()
           }})
           .then((response) => {
-            console.log('Success!!');
             this.oodlets = response.body;
           },
           (err)=>console.log('Error!!'));
@@ -47,21 +47,6 @@
     created(){
       this.load();
     },
-
-//    methods:{
-//      shit(){
-//        console.log(
-//                new Date(this.fromDate).toISOString()
-//        );
-//        console.log(
-//                new Date(this.toDate).toLocaleDateString('hr-HR', {
-//                  day : 'numeric',
-//                  month : 'short',
-//                  year : 'numeric'
-//                })
-//        );
-//      }
-//    },
 
     components: { HistoryOodlet }
   }

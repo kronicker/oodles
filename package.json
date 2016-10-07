@@ -15,6 +15,7 @@
     "hapi": "^15.0.3",
     "inert": "^4.0.2",
     "lodash": "^4.16.2",
+    "moment": "^2.15.1",
     "package-merge": "^0.1.2",
     "rethinkdb": "^2.3.3",
     "thinky": "^2.3.6",

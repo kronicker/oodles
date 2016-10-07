@@ -4,18 +4,14 @@
 'use strict';
 
 const Oodlet = require('../models/oodlet');
+const moment = require('moment');
 
 function list(request, reply) {
-  let fromDate = new Date(request.query.fromDate) || new Date(Date.now()-1000*60*60*24*7*20);
-  let toDate = new Date(request.query.toDate) || new Date(Date.now());
-  console.log(fromDate);
-  console.log(toDate);
+  let fromDate = moment(request.query.fromDate).toDate() || moment().subtract(3, 'months').toDate();
+  let toDate = moment(request.query.toDate).add(1, 'days').toDate() || moment().toDate();
 
   return Oodlet
     .between(fromDate, toDate, { index : 'dueDate' })
-    // .orderBy('dueDate')
-    // .filter(
-    //   r.row('dueDate').during(r.time(2013, 12, 1, "Z"), r.time(2013, 12, 10, "Z")))
     .run()
     .then((result) => {
       reply(result).code(200);
