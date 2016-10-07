@@ -18,10 +18,11 @@ const schema = {
   quantifiedThingies: [type.object().schema(object.merge(Thingy.schema, { qty: type.number() }))]
 };
 
-module.exports = () => {
+module.exports = (() => {
   var model = thinky.createModel("Oodlet", schema);
 
+  model.ensureIndex('dueDate');
   model.schema = schema;
 
   return model;
-}();
+})();

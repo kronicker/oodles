@@ -1,19 +1,15 @@
-/**
- * Created by toma on 23.09.16..
- */
 'use strict';
-
 const Oodlet = require('../models/oodlet');
+const moment = require('moment');
 
 function list(request, reply) {
-  let limit = request.query.limit || 5;
-  let offset = request.query.offset || 0;
+  let fromDate = moment(request.query.fromDate).toDate() || moment().subtract(3, 'months').toDate();
+  let toDate = moment(request.query.toDate).add(1, 'days').toDate() || moment().toDate();
 
   return Oodlet
-    .skip(parseInt(offset))
-    .limit(parseInt(limit))
+    .between(fromDate, toDate, { index : 'dueDate' })
     .run()
-    .then((result) => {
+    .then(result => {
       reply(result).code(200);
     });
 }
@@ -21,7 +17,7 @@ function list(request, reply) {
 function get(request, reply) {
   return Oodlet.get(request.params.id)
     .run()
-    .then((result) => {
+    .then(result => {
       reply(result).code(200);
     });
 }
@@ -32,7 +28,7 @@ function create(request, reply) {
     quantifiedThingies: request.payload.quantifiedThingies
     })
     .save()
-    .then((result) => {
+    .then(result => {
       reply(result).code(201);
     });
 }
@@ -44,7 +40,7 @@ function update(request, reply) {
       quantifiedThingies: request.payload.quantifiedThingies
     })
     .run()
-    .then((result) => {
+    .then(result => {
       reply(result).code(200);
     });
 }
@@ -53,7 +49,7 @@ function remove(request, reply) {
   return Oodlet.get(request.params.id)
     .delete()
     .run()
-    .then((result) => {
+    .then(result => {
       reply(result).code(200);
     });
 }

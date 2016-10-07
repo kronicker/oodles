@@ -3,8 +3,11 @@ const Glob = require('glob');
 const Path = require('path');
 
 function errorHandler(defaultHandler) {
-  return (request, reply) => {
-    return defaultHandler(request, reply).catch(err => reply(Boom.wrap(err)));
+  return function(request, reply) {
+    return defaultHandler(request, reply).catch(err => {
+      console.log(err);
+      reply(Boom.wrap(err));
+    });
   };
 }
 
