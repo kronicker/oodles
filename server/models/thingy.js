@@ -14,10 +14,10 @@ const schema = {
   pictureUrl: type.string()
 };
 
-module.exports = () => {
+module.exports = (() => {
   var model = thinky.createModel("Thingy", schema);
 
   model.schema = schema;
 
   return model;
-}();
+})();
