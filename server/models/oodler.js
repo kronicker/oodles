@@ -14,11 +14,11 @@ const schema = {
   office: type.string().min(1)
 };
 
-module.exports = () => {
+module.exports = (() => {
   var model = thinky.createModel("Oodler", schema);
 
   model.schema = schema;
 
   return model;
-}();
+})();
 
