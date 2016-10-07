@@ -1,5 +1,4 @@
 'use strict';
-
 const Thingy = require('../models/thingy');
 
 function list(request, reply) {
@@ -9,7 +8,7 @@ function list(request, reply) {
   return Thingy.skip(parseInt(offset))
     .limit(parseInt(limit))
     .run()
-    .then((result) => {
+    .then(result => {
       reply(result).code(200);
     });
 }
@@ -17,7 +16,7 @@ function list(request, reply) {
 function get(request, reply) {
   return Thingy.get(request.params.id)
     .run()
-    .then((result) => {
+    .then(result => {
       reply(result).code(200);
     });
 }
@@ -30,7 +29,7 @@ function create(request, reply) {
       pictureUrl: request.payload.pictureUrl
     })
     .save()
-    .then((result) => {
+    .then(result => {
       reply(result).code(201);
     });
 }
@@ -44,7 +43,7 @@ function update(request, reply) {
       pictureUrl: request.payload.pictureUrl
     })
     .run()
-    .then((result) => {
+    .then(result => {
       reply(result).code(200);
     });
 }
@@ -53,7 +52,7 @@ function remove(request, reply) {
   return Thingy.get(request.params.id)
     .delete()
     .run()
-    .then((result) => {
+    .then(result => {
       reply(result).code(200);
     });
 }

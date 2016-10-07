@@ -1,8 +1,4 @@
-/**
- * Created by toma on 23.09.16..
- */
 'use strict';
-
 const Oodler = require('../models/oodler');
 
 function list(request, reply) {
@@ -12,7 +8,7 @@ function list(request, reply) {
   return Oodler.skip(parseInt(offset))
     .limit(parseInt(limit))
     .run()
-    .then((result) => {
+    .then(result => {
       reply(result).code(200);
     });
 }
@@ -20,7 +16,7 @@ function list(request, reply) {
 function get(request, reply) {
   return Oodler.get(request.params.id)
     .run()
-    .then((result) => {
+    .then(result => {
       reply(result).code(200);
     });
 }
@@ -33,7 +29,7 @@ function create(request, reply) {
     office: request.payload.office
     })
     .save()
-    .then((result) => {
+    .then(result => {
       reply(result).code(201);
     });
 }
@@ -49,7 +45,7 @@ function update(request, reply) {
       office: request.payload.office
     })
     .run()
-    .then((result) => {
+    .then(result => {
       reply(result).code(200);
     });
 }
@@ -58,7 +54,7 @@ function remove(request, reply) {
   return Oodler.get(request.params.id)
     .delete()
     .run()
-    .then((result) => {
+    .then(result => {
       reply(result).code(200);
     });
 }

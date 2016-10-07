@@ -18,7 +18,7 @@
       load(){
         this.$store.dispatch('oodletSet', this.oodlet.quantifiedThingies);
       }
-    },
+    }
   }
 </script>
 

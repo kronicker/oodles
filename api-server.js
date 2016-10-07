@@ -1,14 +1,10 @@
-/**
- * Created by toma on 20.09.16..
- */
 'use strict';
-
 const Hapi = require('hapi');
 const Inert = require('inert');
 const db = require('./server/db/');
 const server = new Hapi.Server();
 
-module.exports = (PORT) => {
+module.exports = PORT => {
   server.connection({ port: PORT });
 
   // Add all routes

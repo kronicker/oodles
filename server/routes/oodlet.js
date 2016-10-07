@@ -1,8 +1,4 @@
-/**
- * Created by toma on 23.09.16..
- */
 'use strict';
-
 const Oodlet = require('../models/oodlet');
 const moment = require('moment');
 
@@ -13,7 +9,7 @@ function list(request, reply) {
   return Oodlet
     .between(fromDate, toDate, { index : 'dueDate' })
     .run()
-    .then((result) => {
+    .then(result => {
       reply(result).code(200);
     });
 }
@@ -21,7 +17,7 @@ function list(request, reply) {
 function get(request, reply) {
   return Oodlet.get(request.params.id)
     .run()
-    .then((result) => {
+    .then(result => {
       reply(result).code(200);
     });
 }
@@ -32,7 +28,7 @@ function create(request, reply) {
     quantifiedThingies: request.payload.quantifiedThingies
     })
     .save()
-    .then((result) => {
+    .then(result => {
       reply(result).code(201);
     });
 }
@@ -44,7 +40,7 @@ function update(request, reply) {
       quantifiedThingies: request.payload.quantifiedThingies
     })
     .run()
-    .then((result) => {
+    .then(result => {
       reply(result).code(200);
     });
 }
@@ -53,7 +49,7 @@ function remove(request, reply) {
   return Oodlet.get(request.params.id)
     .delete()
     .run()
-    .then((result) => {
+    .then(result => {
       reply(result).code(200);
     });
 }

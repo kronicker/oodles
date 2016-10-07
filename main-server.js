@@ -8,7 +8,8 @@ const PROD = process.env.NODE_ENV === "production";
 
 if (PROD) {
   apiServer(PORT);
-} else {
+}
+else {
   apiServer(PORT - 1);
   webpackServer(PORT);
 }

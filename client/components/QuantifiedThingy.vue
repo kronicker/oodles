@@ -16,7 +16,8 @@
         let payload = {
           id: this.quantifiedThingy.id,
           qty: 0
-        }
+        };
+
         this.$store.dispatch('quantifiedThingyChange', payload);
       },
 
@@ -24,7 +25,8 @@
         let payload = {
           id: this.quantifiedThingy.id,
           qty: ++this.quantifiedThingy.qty
-        }
+        };
+
         this.$store.dispatch('quantifiedThingyChange', payload);
       },
 
@@ -32,7 +34,7 @@
         let payload = {
           id: this.quantifiedThingy.id,
           qty: --this.quantifiedThingy.qty
-        }
+        };
 
         this.$store.dispatch('quantifiedThingyChange', payload);
       }

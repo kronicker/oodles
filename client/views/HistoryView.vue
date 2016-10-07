@@ -37,10 +37,9 @@
             fromDate: moment(this.fromDate).format(),
             toDate: moment(this.toDate).format()
           }})
-          .then((response) => {
+          .then(response => {
             this.oodlets = response.body;
-          },
-          (err)=>console.log('Error!!'));
+          });
       }
     },
 
