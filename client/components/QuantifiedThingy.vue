@@ -1,10 +1,14 @@
 <template>
-  <div class="oodletThingy">
-    <span>{{ quantifiedThingy.name}}  {{ quantifiedThingy.unit }}  {{ quantifiedThingy.qty }}</span>
-    <button @click="remove">X</button>
-    <button @click="increment">+</button>
-    <button @click="decrement">-</button>
-  </div>
+  <tr class="oodletThingy">
+    <td>{{ quantifiedThingy.name}}</td>
+    <td>{{ quantifiedThingy.qty }}</td>
+    <td>{{ quantifiedThingy.unit }}</td>
+    <td>
+      <button class="btn btn-xs btn-danger" @click="remove">X</button>
+      <button class="btn btn-xs btn-success" @click="increment">+</button>
+      <button class="btn btn-xs btn-warning" @click="decrement">-</button>
+    </td>
+  </tr>
 </template>
 
 <script>

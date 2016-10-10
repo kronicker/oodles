@@ -36,7 +36,7 @@ function generateQuantifiedThingies(quantity, callback) {
       name: faker.commerce.product(),
       price: faker.commerce.price(60),
       unit: ['kg', 'kom'][Math.floor(Math.random() * 2)],
-      pictureUrl: 'https://unsplash.it/40/40?random'
+      pictureUrl: 'https://unsplash.it/242/200/?random'
     })
     .save()
     .then(thingy => {

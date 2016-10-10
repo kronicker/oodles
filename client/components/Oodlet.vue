@@ -1,14 +1,20 @@
 <template>
   <div class="oodlet">
-    <h1>Oodlet</h1>
-    <span class="due-date">Due: </span>{{ dueDate }}
-    <ol>
-      <li v-for="quantifiedThingy in quantifiedThingies">
-        <quantified-thingy :quantifiedThingy="quantifiedThingy"></quantified-thingy>
-      </li>
-    </ol>
-    <button @click="save">Save</button>
-    <button @click="reset">Reset</button>
+    <div >
+      <h1>Oodlet</h1>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">Due: {{ dueDate }}</div>
+      <div class="panel-body">
+        <table class="table table-striped table-hover ">
+          <tbody>
+            <quantified-thingy v-for="quantifiedThingy in quantifiedThingies" :quantifiedThingy="quantifiedThingy"></quantified-thingy>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <button v-show="quantifiedThingies.length > 0" class="btn btn-danger" @click="reset">Reset</button>
   </div>
 </template>
 
@@ -45,17 +51,9 @@
 
 <style lang="sass" scoped>
   .oodlet {
-    width: 360px;
-    min-height: 500px;
-    display: inline-block;
-    background-color: #d2b8ea;
-    vertical-align: top;
-    padding: 0 20px;
-
-    h1 { color: #545454; }
-
-    .due-date {
-      font-weight: bold;
+    .affix{
+      top: 10px;
     }
+
   }
 </style>
