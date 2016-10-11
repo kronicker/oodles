@@ -48,9 +48,7 @@
           margin-top: 0;
           text-align: center;
         }
-        .input-group-addon {
-          background-color: #2b3e50;
-        }
+        .input-group-addon { background-color: #2b3e50; }
       }
     }
   }

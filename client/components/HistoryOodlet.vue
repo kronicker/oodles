@@ -1,14 +1,17 @@
 <template>
-  <div class="historyOodlet">
+  <div class="history-oodlet">
     <div class="panel panel-default">
-      <div class="panel-heading"><span class="bold">Created:</span> <span>{{ oodlet.createdAt }}</span></div>
+      <div class="panel-heading">
+        <strong>Created: </strong>
+        <span>{{ createdAt }}</span>
+      </div>
       <div class="panel-body">
         <table class="table table-striped table-hover">
           <tbody>
             <tr v-for="quantifiedThingy in oodlet.quantifiedThingies">
               <td>{{ quantifiedThingy.name }}</td>
-              <td class="table-col-2">{{ quantifiedThingy.qty }}</td>
-              <td class="table-col-3">{{ quantifiedThingy.unit }}</td>
+              <td class="col-md-2 right">{{ quantifiedThingy.qty }}</td>
+              <td class="col-md-2">{{ quantifiedThingy.unit }}</td>
             </tr>
           </tbody>
         </table>
@@ -22,8 +25,16 @@
 </template>
 
 <script>
+  import moment from 'moment';
+
   export default{
     props: ['oodlet'],
+
+    computed: {
+      createdAt(){
+        return moment(this.oodlet.createdAt).locale('hr').format('LL');
+      }
+    },
 
     methods: {
       load(){
@@ -34,22 +45,11 @@
 </script>
 
 <style lang="sass" scoped>
-  .historyOodlet {
-    width: 100%;
+  .history-oodlet {
 
-    span.bold{
-      font-weight: bold;
-    }
-
-    .created-at {
-      font-weight: bold;
+    .col-md-2 {
+      &.right { text-align: right; }
     }
 
-    .table-col-2, .table-col-4 {
-      text-align: right;
-    }
-    .table-col-3 {
-      text-align: left;
-    }
   }
 </style>

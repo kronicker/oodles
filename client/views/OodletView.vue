@@ -61,8 +61,5 @@
 </script>
 
 <style lang="sass" scoped>
-  .filtered-thingies ul{
-    list-style: none;
-  }
-
+  .filtered-thingies ul{ list-style: none; }
 </style>

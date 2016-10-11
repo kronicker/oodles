@@ -5,7 +5,11 @@
     </div>
 
     <div class="panel panel-default">
-      <div class="panel-heading"><span class="bold">Due in:</span> <span v-if="dueDate" :class=dueInClass>{{ dueIn }}</span></div>
+      <div class="panel-heading">
+        <strong>Due in: </strong>
+        <span v-if="dueDate" class="due-in-countdown" :class=dueInClass>{{ dueIn }}</span>
+        <span v-else class="due-in-countdown red">Expired</span>
+      </div>
       <div class="panel-body">
         <table class="table table-striped table-hover ">
           <tbody>
@@ -88,26 +92,18 @@
 
 <style lang="sass" scoped>
   .oodlet {
+
     h1 {
       border-bottom: 1px solid #4E5D6C;
       margin-top: 10px;
       padding-bottom: 7px;
     }
 
-    span.bold {
-      font-weight: bold;
+    .due-in-countdown {
+      &.green { color: #5cb85c; }
+      &.orange { color: #f0ad4e; }
+      &.red { color: #d9534f; }
     }
 
-    span.green {
-      color: #5cb85c;
-    }
-
-    span.orange {
-      color: #f0ad4e;
-    }
-
-    span.red {
-      color: #d9534f;
-    }
   }
 </style>

@@ -1,30 +1,32 @@
 <template>
   <div id="historyView">
-    <div class="row header page-header">
-      <div class="col-md-3">
-        <h1>History</h1>
-      </div>
-
-      <div class="form-group col-md-offset-3 col-md-2">
-        <div class="input-group">
-          <span class="input-group-addon">From: </span>
-          <input type="date" class="form-control"  @change="load" v-model="fromDate">
+    <div class="header page-header">
+      <div class="row">
+        <div class="col-md-3">
+          <h1>History</h1>
         </div>
-      </div>
 
-      <div class="form-group col-md-2">
-        <div class="input-group">
-          <span class="input-group-addon">To: </span>
-          <input type="date" class="form-control" @change="load" v-model="toDate">
+        <div class="form-group col-md-offset-5 col-md-2">
+          <div class="input-group">
+            <span class="input-group-addon">From: </span>
+            <input type="date" class="form-control"  @change="load" v-model="fromDate">
+          </div>
+        </div>
+
+        <div class="form-group col-md-2">
+          <div class="input-group">
+            <span class="input-group-addon">To: </span>
+            <input type="date" class="form-control" @change="load" v-model="toDate">
+          </div>
         </div>
       </div>
     </div>
 
     <div class="row" id="historyOodlets">
-      <div class="col-md-10">
+      <div class="col-md-12">
         <div class="row">
           <ul class="list">
-            <li class="col-md-3 list__item" v-for="oodlet in oodlets">
+            <li class="col-md-2 list__item" v-for="oodlet in oodlets">
               <history-oodlet :oodlet="oodlet"></history-oodlet>
             </li>
           </ul>

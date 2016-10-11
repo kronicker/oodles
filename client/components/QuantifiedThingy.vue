@@ -1,9 +1,9 @@
 <template>
   <tr class="quantifiedThingy">
     <td>{{ quantifiedThingy.name}}</td>
-    <td class="table-col-2">{{ quantifiedThingy.qty }}</td>
-    <td class="table-col-3">{{ quantifiedThingy.unit }}</td>
-    <td class="table-col-4">
+    <td class="right">{{ quantifiedThingy.qty }}</td>
+    <td>{{ quantifiedThingy.unit }}</td>
+    <td class="right">
       <button class="btn btn-xs btn-danger" @click="remove"><span class="glyphicon glyphicon-remove"></span></button>
       <button class="btn btn-xs btn-success" @click="increment"><span class="glyphicon glyphicon-plus"></span></button>
       <button class="btn btn-xs btn-warning" @click="decrement"><span class="glyphicon glyphicon-minus"></span></button>
@@ -48,11 +48,8 @@
 
 <style lang="sass" scoped>
   .quantifiedThingy {
-    .table-col-2, .table-col-4 {
-      text-align: right;
-    }
-    .table-col-3 {
-      text-align: left;
-    }
+
+    .right { text-align: right; }
+
   }
 </style>

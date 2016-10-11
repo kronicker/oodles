@@ -13,16 +13,12 @@
 
 <style lang="sass">
   #navBar{
-    .affix{
-      top: 300px;
-    }
 
-    ul li a span {
-      font-size: xx-large;
-    }
-    ul li a {
-      text-align: center;
-    }
+    .affix{ top: 300px; }
+
+    ul li a span { font-size: xx-large; }
+
+    ul li a { text-align: center; }
   }
 
 </style>
