@@ -35,6 +35,8 @@
 
 <style lang="sass" scoped>
   .historyOodlet {
+    width: 100%;
+
     span.bold{
       font-weight: bold;
     }

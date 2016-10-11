@@ -5,7 +5,7 @@
     </div>
 
     <div class="panel panel-default">
-      <div class="panel-heading"><span class="bold">Due in:</span> <span>{{ dueIn }}</span></div>
+      <div class="panel-heading"><span class="bold">Due in:</span> <span v-if="dueDate" :class=dueInClass>{{ dueIn }}</span></div>
       <div class="panel-body">
         <table class="table table-striped table-hover ">
           <tbody>
@@ -47,6 +47,18 @@
               Math.trunc((moment(this.dueDate).diff(this.now, 'seconds')%60)) + 's'
         );
       },
+      dueInClass() {
+        let diff = moment(this.dueDate).diff(this.now, 'days');
+        if(diff >= 2) {
+          return 'green';
+        }
+        else if(diff < 2 && diff > 0) {
+          return 'orange';
+        }
+        else {
+          return 'red';
+        }
+      }
 
     },
 
@@ -82,8 +94,20 @@
       padding-bottom: 7px;
     }
 
-    span.bold{
+    span.bold {
       font-weight: bold;
+    }
+
+    span.green {
+      color: #5cb85c;
+    }
+
+    span.orange {
+      color: #f0ad4e;
+    }
+
+    span.red {
+      color: #d9534f;
     }
   }
 </style>

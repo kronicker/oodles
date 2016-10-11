@@ -1,11 +1,11 @@
 <template>
   <div id="historyView">
-    <div class="row page-header">
+    <div class="row header page-header">
       <div class="col-md-3">
         <h1>History</h1>
       </div>
 
-      <div class="form-group col-md-offset-2 col-md-2">
+      <div class="form-group col-md-offset-3 col-md-2">
         <div class="input-group">
           <span class="input-group-addon">From: </span>
           <input type="date" class="form-control"  @change="load" v-model="fromDate">
@@ -71,12 +71,14 @@
 
 <style lang="sass" scoped>
   #historyView {
-    .form-group {
-      vertical-align:bottom ;
-    }
     ul {
       padding-left: 0;
       list-style: none;
+    }
+
+    .header h1, .header .form-group{
+      margin-top: 20px;
+      margin-bottom: 10px;
     }
 
     .list
