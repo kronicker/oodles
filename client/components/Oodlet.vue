@@ -1,11 +1,11 @@
 <template>
   <div class="oodlet">
-    <div >
+    <div>
       <h1>Oodlet</h1>
     </div>
 
     <div class="panel panel-default">
-      <div class="panel-heading">Due: {{ dueDate }}</div>
+      <div class="panel-heading"><span class="bold">Due in:</span> <span>{{ dueIn }}</span></div>
       <div class="panel-body">
         <table class="table table-striped table-hover ">
           <tbody>
@@ -13,22 +13,41 @@
           </tbody>
         </table>
       </div>
+      <div class="panel-footer" v-show="quantifiedThingies.length > 0">
+        <button class="btn btn-danger push-right" @click="reset">Reset</button>
+      </div>
     </div>
-    <button v-show="quantifiedThingies.length > 0" class="btn btn-danger" @click="reset">Reset</button>
   </div>
 </template>
 
 <script>
   import QuantifiedThingy from './QuantifiedThingy.vue';
+  import moment from 'moment';
 
-  export default{
+  export default {
+    data() {
+      return {
+        now : moment()
+      }
+    },
     computed: {
-      quantifiedThingies(){
+      quantifiedThingies() {
         return this.$store.getters.quantifiedThingies;
       },
-      dueDate(){
-        return this.$store.getters.dueDate;
-      }
+      dueDate() {
+        if(this.$store.getters.dueDate) {
+          return this.$store.getters.dueDate;
+        }
+      },
+      dueIn() {
+        return(
+              Math.trunc((moment(this.dueDate).diff(this.now, 'days'))) + 'd ' +
+              Math.trunc((moment(this.dueDate).diff(this.now, 'hours')%24)) + 'h ' +
+              Math.trunc((moment(this.dueDate).diff(this.now, 'minutes')%60)) + 'm ' +
+              Math.trunc((moment(this.dueDate).diff(this.now, 'seconds')%60)) + 's'
+        );
+      },
+
     },
 
     methods: {
@@ -45,15 +64,26 @@
       }
     },
 
+    created(){
+      window.setInterval(() => {
+        this.now = moment();
+      }, 1000);
+    },
+
     components: { QuantifiedThingy }
   }
 </script>
 
 <style lang="sass" scoped>
   .oodlet {
-    .affix{
-      top: 10px;
+    h1 {
+      border-bottom: 1px solid #4E5D6C;
+      margin-top: 10px;
+      padding-bottom: 7px;
     }
 
+    span.bold{
+      font-weight: bold;
+    }
   }
 </style>

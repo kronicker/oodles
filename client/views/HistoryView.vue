@@ -1,19 +1,37 @@
 <template>
   <div id="historyView">
-    <h1>History</h1>
-    <form>
-      <p>
-        <span>From: </span>
-        <input type="date" @change="load" v-model="fromDate"/>
-        <span>To: </span>
-        <input type="date" @change="load" v-model="toDate"/>
-      </p>
-    </form>
-    <ul>
-      <li v-for="oodlet in oodlets">
-        <history-oodlet :oodlet="oodlet"></history-oodlet>
-      </li>
-    </ul>
+    <div class="row page-header">
+      <div class="col-md-3">
+        <h1>History</h1>
+      </div>
+
+      <div class="form-group col-md-offset-2 col-md-2">
+        <div class="input-group">
+          <span class="input-group-addon">From: </span>
+          <input type="date" class="form-control"  @change="load" v-model="fromDate">
+        </div>
+      </div>
+
+      <div class="form-group col-md-2">
+        <div class="input-group">
+          <span class="input-group-addon">To: </span>
+          <input type="date" class="form-control" @change="load" v-model="toDate">
+        </div>
+      </div>
+    </div>
+
+    <div class="row" id="historyOodlets">
+      <div class="col-md-10">
+        <div class="row">
+          <ul class="list">
+            <li class="col-md-3 list__item" v-for="oodlet in oodlets">
+              <history-oodlet :oodlet="oodlet"></history-oodlet>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
   </div>
 </template>
 
@@ -53,25 +71,30 @@
 
 <style lang="sass" scoped>
   #historyView {
-    width: 1200px;
-    margin: 10px auto;
-    padding-top: 10px;
-    background-color: #f1ac2f;
-
-    input { display: inline; }
-
-    h1 { color: #545454; }
-
-    ul {
-      list-style: none;
-      width: 1200px;
-      display: block;
-      white-space: nowrap;
-      overflow: auto;
-      padding: 0;
+    .form-group {
+      vertical-align:bottom ;
     }
-    li {
-      display: inline-block;
+    ul {
+      padding-left: 0;
+      list-style: none;
+    }
+
+    .list
+    {
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+
+      -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+
+      .list__item
+      {
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+      }
     }
   }
 </style>

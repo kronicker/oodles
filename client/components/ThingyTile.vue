@@ -4,10 +4,11 @@
       <img :src=thingy.pictureUrl>
       <div class="caption">
         <h3>{{ thingy.name }}</h3>
-        <div class="input-group">
+        <div class="input-group input-group-sm">
+          <span class="input-group-addon">{{ thingy.unit }}</span>
           <input v-model.number="qty" type="number" class="form-control">
           <div class="input-group-btn">
-            <button class="btn btn-primary" @click="addThingy">Add</button>
+            <button class="btn btn-success" @click="addThingy">Order</button>
           </div>
         </div>
       </div>
@@ -41,9 +42,16 @@
 
 <style lang="sass" scoped>
   .thingy-tile {
-    .thumbnail .caption h3 {
-      margin-top: 0;
-      text-align: center;
+    .thumbnail {
+      .caption {
+        h3 {
+          margin-top: 0;
+          text-align: center;
+        }
+        .input-group-addon {
+          background-color: #2b3e50;
+        }
+      }
     }
   }
 
