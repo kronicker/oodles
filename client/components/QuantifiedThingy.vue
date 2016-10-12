@@ -48,8 +48,6 @@
 
 <style lang="sass" scoped>
   .quantifiedThingy {
-
-    .right { text-align: right; }
-
+    &.right { text-align: right; }
   }
 </style>

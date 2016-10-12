@@ -5,14 +5,12 @@
         <div class="col-md-3">
           <h1>History</h1>
         </div>
-
         <div class="form-group col-md-offset-5 col-md-2">
           <div class="input-group">
             <span class="input-group-addon">From: </span>
             <input type="date" class="form-control"  @change="load" v-model="fromDate">
           </div>
         </div>
-
         <div class="form-group col-md-2">
           <div class="input-group">
             <span class="input-group-addon">To: </span>
@@ -21,7 +19,6 @@
         </div>
       </div>
     </div>
-
     <div class="row" id="historyOodlets">
       <div class="col-md-12">
         <div class="row">
@@ -33,7 +30,6 @@
         </div>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -88,17 +84,16 @@
       display: -webkit-flex;
       display: -ms-flexbox;
       display: flex;
-
       -webkit-flex-wrap: wrap;
       -ms-flex-wrap: wrap;
       flex-wrap: wrap;
+    }
 
-      .list__item
-      {
-        display: -webkit-flex;
-        display: -ms-flexbox;
-        display: flex;
-      }
+    .list__item
+    {
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
     }
   }
 </style>

@@ -12,15 +12,15 @@
 </script>
 
 <style lang="sass">
-  #navBar{
+  #navBar {
 
-    .affix{ top: 300px; }
+    .affix { top: 300px; }
 
     ul li a span { font-size: xx-large; }
 
     ul li a { text-align: center; }
 
-    .router-link-active{
+    .router-link-active {
       background-color: #5bc0de;
       color: #2b3e50;
     }

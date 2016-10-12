@@ -56,7 +56,7 @@
         if(diff >= 2) {
           return 'green';
         }
-        else if(diff < 2 && diff > 0) {
+        else if(diff < 2 && diff >= 1) {
           return 'orange';
         }
         else {
@@ -92,7 +92,6 @@
 
 <style lang="sass" scoped>
   .oodlet {
-
     h1 {
       border-bottom: 1px solid #4E5D6C;
       margin-top: 10px;
@@ -104,6 +103,5 @@
       &.orange { color: #f0ad4e; }
       &.red { color: #d9534f; }
     }
-
   }
 </style>

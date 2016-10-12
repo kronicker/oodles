@@ -51,6 +51,5 @@
     .col-md-2 {
       &.right { text-align: right; }
     }
-
   }
 </style>
