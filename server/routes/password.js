@@ -7,25 +7,27 @@ const api_key = 'key-73db2b70c2c5fda574df5e2fd938504f';
 const domain = 'sandbox629530a6164643d28eb2f1767607d8db.mailgun.org';
 const mailgun = require('mailgun-js')({apiKey: api_key, domain: domain});
 
-function sendResetEmail (token) {
+function sendResetEmail (token, email) {
   let data = {
     from: 'Oodles <no-reply@oodles.extensionengine.com>',
-    to: token.email,
+    to: email,
     subject: 'Password reset',
-    text: 'Please use the following link to reset your password: https://oodles.extensionengine.com/' +
+    text: 'Please use the following link to reset your password: https://oodles.extensionengine.com/password/new?token=' +
           token.value +
           '.\nIf you did not request this password change please feel free to ignore it.' +
           '\nOodles'
   };
+  console.log(email);
   mailgun.messages().send(data, function (error, body) {
     console.log(body);
   });
 }
 
 function generateToken(request, reply) {
+  let email = request.payload.email;
 
   return Oodler
-    .filter({'email': request.payload.email})
+    .filter({'email': email})
     .run()
     .then(result => {
       return Token ({
@@ -35,7 +37,7 @@ function generateToken(request, reply) {
         })
         .save()
         .then(result => {
-          sendResetEmail(result);
+          sendResetEmail(result, email);
           reply().code(200);
         });
     });
