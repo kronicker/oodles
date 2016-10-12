@@ -46,6 +46,7 @@
 
 <style lang="sass" scoped>
   .history-oodlet {
+    width: 100%;
 
     .col-md-2 {
       &.right { text-align: right; }
