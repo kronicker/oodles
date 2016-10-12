@@ -1,7 +1,7 @@
 <template>
   <div class="thingy-tile col-md-2">
     <div class="thumbnail">
-      <img :src=thingy.pictureUrl>
+      <img :src="thingy.pictureUrl">
       <div class="caption">
         <h3>{{ thingy.name }}</h3>
         <div class="input-group input-group-sm">

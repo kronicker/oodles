@@ -22,8 +22,8 @@
     <div class="row" id="historyOodlets">
       <div class="col-md-12">
         <div class="row">
-          <ul class="list">
-            <li class="col-md-2 list__item" v-for="oodlet in oodlets">
+          <ul class="oodlets-list">
+            <li class="col-md-2" v-for="oodlet in oodlets">
               <history-oodlet :oodlet="oodlet"></history-oodlet>
             </li>
           </ul>
@@ -69,31 +69,28 @@
 
 <style lang="sass" scoped>
   #historyView {
-    ul {
-      padding-left: 0;
-      list-style: none;
-    }
-
     .header h1, .header .form-group{
       margin-top: 20px;
       margin-bottom: 10px;
     }
 
-    .list
+    ul.oodlets-list
     {
+      padding-left: 0;
+      list-style: none;
       display: -webkit-flex;
       display: -ms-flexbox;
       display: flex;
       -webkit-flex-wrap: wrap;
       -ms-flex-wrap: wrap;
       flex-wrap: wrap;
-    }
 
-    .list__item
-    {
-      display: -webkit-flex;
-      display: -ms-flexbox;
-      display: flex;
+      li
+      {
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+      }
     }
   }
 </style>

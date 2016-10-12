@@ -7,7 +7,7 @@
     <div class="panel panel-default">
       <div class="panel-heading">
         <strong>Due in: </strong>
-        <span v-if="dueDate" class="due-in-countdown" :class=dueInClass>{{ dueIn }}</span>
+        <span v-if="dueDate" class="due-in-countdown" :class="dueInClass">{{ dueIn }}</span>
         <span v-else class="due-in-countdown red">Expired</span>
       </div>
       <div class="panel-body">
@@ -40,19 +40,19 @@
       },
       dueDate() {
         if(this.$store.getters.dueDate) {
-          return this.$store.getters.dueDate;
+          return moment(this.$store.getters.dueDate);
         }
       },
       dueIn() {
         return(
-              Math.trunc((moment(this.dueDate).diff(this.now, 'days'))) + 'd ' +
-              Math.trunc((moment(this.dueDate).diff(this.now, 'hours')%24)) + 'h ' +
-              Math.trunc((moment(this.dueDate).diff(this.now, 'minutes')%60)) + 'm ' +
-              Math.trunc((moment(this.dueDate).diff(this.now, 'seconds')%60)) + 's'
+              Math.trunc(this.dueDate.diff(this.now, 'days')) + 'd ' +
+              Math.trunc(this.dueDate.diff(this.now, 'hours')%24) + 'h ' +
+              Math.trunc(this.dueDate.diff(this.now, 'minutes')%60) + 'm ' +
+              Math.trunc(this.dueDate.diff(this.now, 'seconds')%60) + 's'
         );
       },
       dueInClass() {
-        let diff = moment(this.dueDate).diff(this.now, 'days');
+        let diff = this.dueDate.diff(this.now, 'days');
         if(diff >= 2) {
           return 'green';
         }
