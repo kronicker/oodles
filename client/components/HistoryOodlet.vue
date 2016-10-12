@@ -1,18 +1,40 @@
 <template>
-  <div class="historyOodlet">
-    <span class="created-at">Created: </span>{{ oodlet.createdAt }}
-    <ol>
-      <li v-for="quantifiedThingy in oodlet.quantifiedThingies">
-          {{ quantifiedThingy.name }} {{ quantifiedThingy.qty }} {{ quantifiedThingy.unit }}
-      </li>
-    </ol>
-    <router-link to="/"><button @click="load">Load</button></router-link>
+  <div class="history-oodlet">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <strong>Created: </strong>
+        <span>{{ createdAt }}</span>
+      </div>
+      <div class="panel-body">
+        <table class="table table-striped table-hover">
+          <tbody>
+            <tr v-for="quantifiedThingy in oodlet.quantifiedThingies">
+              <td>{{ quantifiedThingy.name }}</td>
+              <td class="col-md-2 right">{{ quantifiedThingy.qty }}</td>
+              <td class="col-md-2">{{ quantifiedThingy.unit }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="panel-footer">
+        <router-link to="/"><button class="btn btn-success push-right" @click="load">Load</button></router-link>
+      </div>
+    </div>
+
   </div>
 </template>
 
 <script>
+  import moment from 'moment';
+
   export default{
     props: ['oodlet'],
+
+    computed: {
+      createdAt(){
+        return moment(this.oodlet.createdAt).locale('hr').format('LL');
+      }
+    },
 
     methods: {
       load(){
@@ -23,14 +45,11 @@
 </script>
 
 <style lang="sass" scoped>
-  .historyOodlet {
-    width: 400px;
-    min-height: 500px;
-    display: inline-block;
-    vertical-align: top;
+  .history-oodlet {
+    width: 100%;
 
-    .created-at {
-      font-weight: bold;
+    .col-md-2 {
+      &.right { text-align: right; }
     }
   }
 </style>

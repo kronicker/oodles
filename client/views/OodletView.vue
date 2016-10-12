@@ -1,16 +1,16 @@
 <template>
   <div id="oodletView">
-    <thingy-finder @thingyFinderUpdate="thingyFinderUpdate"></thingy-finder>
-
-    <div class="filtered-thingies">
-      <h1>Thingies</h1>
-      <ul>
-        <li v-for="thingy in filteredThingies">
-          <thingy-tile :thingy="thingy"></thingy-tile>
-        </li>
-      </ul>
+    <div class="row">
+      <div class="filtered-thingies col-md-9">
+        <ul class="row">
+          <thingy-finder class="col-md-12" @thingyFinderUpdate="thingyFinderUpdate"></thingy-finder>
+          <li v-for="thingy in filteredThingies">
+            <thingy-tile :thingy="thingy"></thingy-tile>
+          </li>
+        </ul>
+      </div>
+      <oodlet class="col-md-3"></oodlet>
     </div>
-    <oodlet></oodlet>
   </div>
 </template>
 
@@ -61,20 +61,5 @@
 </script>
 
 <style lang="sass" scoped>
-  #oodletView {
-    width: 1200px;
-    margin: 0 auto;
-
-    .filtered-thingies {
-      width: 795px;
-      min-height: 500px;
-      display: inline-block;
-      background-color: bisque;
-      vertical-align: top;
-
-      h1 { color: #545454; }
-
-      ul { list-style: none; }
-    }
-  }
+  .filtered-thingies ul{ list-style: none; }
 </style>

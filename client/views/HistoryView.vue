@@ -1,19 +1,35 @@
 <template>
   <div id="historyView">
-    <h1>History</h1>
-    <form>
-      <p>
-        <span>From: </span>
-        <input type="date" @change="load" v-model="fromDate"/>
-        <span>To: </span>
-        <input type="date" @change="load" v-model="toDate"/>
-      </p>
-    </form>
-    <ul>
-      <li v-for="oodlet in oodlets">
-        <history-oodlet :oodlet="oodlet"></history-oodlet>
-      </li>
-    </ul>
+    <div class="header page-header">
+      <div class="row">
+        <div class="col-md-3">
+          <h1>History</h1>
+        </div>
+        <div class="form-group col-md-offset-5 col-md-2">
+          <div class="input-group">
+            <span class="input-group-addon">From: </span>
+            <input type="date" class="form-control" @change="load" v-model="fromDate">
+          </div>
+        </div>
+        <div class="form-group col-md-2">
+          <div class="input-group">
+            <span class="input-group-addon">To: </span>
+            <input type="date" class="form-control" @change="load" v-model="toDate">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" id="historyOodlets">
+      <div class="col-md-12">
+        <div class="row">
+          <ul class="oodlets-list">
+            <li class="col-md-2" v-for="oodlet in oodlets">
+              <history-oodlet :oodlet="oodlet"></history-oodlet>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -53,25 +69,28 @@
 
 <style lang="sass" scoped>
   #historyView {
-    width: 1200px;
-    margin: 10px auto;
-    padding-top: 10px;
-    background-color: #f1ac2f;
-
-    input { display: inline; }
-
-    h1 { color: #545454; }
-
-    ul {
-      list-style: none;
-      width: 1200px;
-      display: block;
-      white-space: nowrap;
-      overflow: auto;
-      padding: 0;
+    .header h1, .header .form-group{
+      margin-top: 20px;
+      margin-bottom: 10px;
     }
-    li {
-      display: inline-block;
+
+    ul.oodlets-list
+    {
+      padding-left: 0;
+      list-style: none;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+
+      li
+      {
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+      }
     }
   }
 </style>
