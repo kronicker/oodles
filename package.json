@@ -11,6 +11,7 @@
   "main": "server.js",
   "author": "Toma Zelic & Ante Borzic",
   "dependencies": {
+    "bcrypt": "^0.8.7",
     "bootstrap-loader": "^2.0.0-beta.12",
     "faker": "^3.1.0",
     "hapi": "^15.0.3",
