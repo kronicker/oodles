@@ -39,9 +39,16 @@ function createToken(userId) {
     .save();
 }
 
+function deleteToken(tokenId) {
+  return Token
+    .get(tokenId)
+    .delete()
+    .run();
+}
+
 function saveOodlerPassword(userId, hash) {
   return Oodler
-    .get(request.payload.token.userId)
+    .get(userId)
     .update({
       password: hash
     })
@@ -67,6 +74,7 @@ function update(request, reply) {
   getToken(request.payload.token.id)
     .then(result => {
       if(moment(result.expiresAt).isBefore()) {
+        deleteToken(request.payload.token.id);
         reply('Token expired').code(400);
       }
 
@@ -77,6 +85,7 @@ function update(request, reply) {
       bcrypt.hash(request.payload.password, function(err, hash) {
         saveOodlerPassword(request.payload.token.userId, hash)
           .then(result => {
+            deleteToken(request.payload.token.id);
             reply(result).code(200);
           });
       });
