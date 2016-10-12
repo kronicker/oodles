@@ -8,7 +8,7 @@
         <div class="form-group col-md-offset-5 col-md-2">
           <div class="input-group">
             <span class="input-group-addon">From: </span>
-            <input type="date" class="form-control"  @change="load" v-model="fromDate">
+            <input type="date" class="form-control" @change="load" v-model="fromDate">
           </div>
         </div>
         <div class="form-group col-md-2">
