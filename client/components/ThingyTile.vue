@@ -1,9 +1,18 @@
 <template>
-  <div class="thingyTile">
-    <img :src=thingy.pictureUrl>
-    <span>{{ thingy.name }}</span>
-    <input v-model.number="qty" type="number">
-    <button @click="addThingy">Add</button>
+  <div class="thingy-tile col-md-2">
+    <div class="thumbnail">
+      <img :src="thingy.pictureUrl">
+      <div class="caption">
+        <h3>{{ thingy.name }}</h3>
+        <div class="input-group input-group-sm">
+          <span class="input-group-addon">{{ thingy.unit }}</span>
+          <input v-model.number="qty" type="number" class="form-control">
+          <div class="input-group-btn">
+            <button class="btn btn-success" @click="addThingy">Order</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -32,11 +41,16 @@
 </script>
 
 <style lang="sass" scoped>
-  .thingyTile{
-    margin: 5px 0;
-    &:hover{ background-color: #92FF8B; }
-    img { vertical-align: middle; }
-
-    input[type="number"]{ width: 30px; }
+  .thingy-tile {
+    .thumbnail {
+      .caption {
+        h3 {
+          margin-top: 0;
+          text-align: center;
+        }
+        .input-group-addon { background-color: #2b3e50; }
+      }
+    }
   }
+
 </style>

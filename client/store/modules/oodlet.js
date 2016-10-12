@@ -11,7 +11,7 @@ const mutations = {
     let index = array.findIndex(state.quantifiedThingies, ['id', quantifiedThingy.id]);
 
     if (index > -1) {
-      state.quantifiedThingies[index].qty += quantifiedThingy.qty;
+      state.quantifiedThingies[index].qty = quantifiedThingy.qty;
     }
     else {
       state.quantifiedThingies.push(quantifiedThingy);

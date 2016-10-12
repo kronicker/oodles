@@ -1,9 +1,9 @@
 <template>
   <div id="navBar">
-    <ul>
-      <li><router-link to="/">Oodlet</router-link></li>
-      <li><router-link to="/historyView">History</router-link></li>
-      <li><router-link to="/settingsView">Settings</router-link></li>
+    <ul class="nav nav-tabs nav-stacked" data-spy="affix" offset-top="300">
+      <li><router-link to="/" exact><span class="glyphicon glyphicon-shopping-cart"></span></router-link></li>
+      <li><router-link to="/historyView"><span class="glyphicon glyphicon-time"></span></router-link></li>
+      <li><router-link to="/settingsView"><span class="glyphicon glyphicon-cog"></span></router-link></li>
     </ul>
   </div>
 </template>
@@ -12,33 +12,20 @@
 </script>
 
 <style lang="sass">
-  #navBar{
-    width: 1200px;
-    margin: 0 auto;
+  #navBar {
 
-    ul {
-      list-style-type: none;
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-      background-color: #6577a5;
-    }
+    .affix { top: 300px; }
 
-    li {
-      float: left;
-    }
-
-    li a {
-      display: block;
-      color: white;
+    ul li a {
       text-align: center;
-      padding: 14px 16px;
-      text-decoration: none;
+
+      span { font-size: xx-large; }
     }
 
-    li a:hover {
-      cursor: pointer;
-      background-color: #35405b;
+    .router-link-active {
+      background-color: #5bc0de;
+      color: #2b3e50;
     }
   }
+
 </style>

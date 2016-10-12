@@ -4,7 +4,7 @@ let path = require('path');
 let webpack = require('webpack');
 
 module.exports = {
-  entry: './client/main.js',
+  entry: ['bootstrap-loader', './client/main.js'],
   output: {
     path: path.resolve(__dirname, './client/dist/'),
     publicPath: '/dist/',
@@ -25,6 +25,10 @@ module.exports = {
         exclude: /node_modules/
       },
       {
+        test: /bootstrap-sass\/assets\/javascripts\//,
+        loader: 'imports?jQuery=jquery'
+      },
+      {
         test: /\.scss$/,
         loaders: ["style", "css", "sass"]
       },
@@ -33,8 +37,16 @@ module.exports = {
         loader: 'file',
         query: {
           name: '[name].[ext]?[hash]'
-        }
-      }
+        },
+      },
+      {
+        test: /\.(woff2?|svg)$/,
+        loader: 'url?limit=10000'
+      },
+      {
+        test: /\.(ttf|eot)$/,
+        loader: 'file'
+      },
     ]
   },
   devServer: {

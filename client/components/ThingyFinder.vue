@@ -22,7 +22,7 @@
 
 <style lang="sass" scoped>
   input {
-    width: 1170px;
+    width: 100%;
     height: 50px;
     padding: 0 15px;
     font-size: 18px;
