@@ -3,16 +3,23 @@ const Oodler = require('../models/oodler');
 const Token = require('../models/token');
 const moment = require('moment');
 const crypto = require('crypto');
-
-// function getRandString () {
-//   require('crypto').randomBytes(60, function(err, buffer) {
-//     return buffer.toString('hex');
-//   });
-// }
+const api_key = 'key-73db2b70c2c5fda574df5e2fd938504f';
+const domain = 'sandbox629530a6164643d28eb2f1767607d8db.mailgun.org';
+const mailgun = require('mailgun-js')({apiKey: api_key, domain: domain});
 
 function sendResetEmail (token) {
-  console.log('Saljem mail sa tokenom:');
-  console.log(token);
+  let data = {
+    from: 'Oodles <no-reply@oodles.extensionengine.com>',
+    to: token.email,
+    subject: 'Password reset',
+    text: 'Please use the following link to reset your password: https://oodles.extensionengine.com/' +
+          token.value +
+          '.\nIf you did not request this password change please feel free to ignore it.' +
+          '\nOodles'
+  };
+  mailgun.messages().send(data, function (error, body) {
+    console.log(body);
+  });
 }
 
 function generateToken(request, reply) {
