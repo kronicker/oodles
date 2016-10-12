@@ -15,7 +15,8 @@ function list(request, reply) {
 }
 
 function get(request, reply) {
-  return Oodlet.get(request.params.id)
+  return Oodlet
+    .get(request.params.id)
     .run()
     .then(result => {
       reply(result).code(200);
@@ -24,8 +25,8 @@ function get(request, reply) {
 
 function create(request, reply) {
   return Oodlet({
-    oodler: request.payload.oodler,
-    quantifiedThingies: request.payload.quantifiedThingies
+      oodler: request.payload.oodler,
+      quantifiedThingies: request.payload.quantifiedThingies
     })
     .save()
     .then(result => {
@@ -34,7 +35,8 @@ function create(request, reply) {
 }
 
 function update(request, reply) {
-  return Oodlet.get(request.params.id)
+  return Oodlet
+    .get(request.params.id)
     .update({
       updatedAt: new Date(),
       quantifiedThingies: request.payload.quantifiedThingies
@@ -46,7 +48,8 @@ function update(request, reply) {
 }
 
 function remove(request, reply) {
-  return Oodlet.get(request.params.id)
+  return Oodlet
+    .get(request.params.id)
     .delete()
     .run()
     .then(result => {
