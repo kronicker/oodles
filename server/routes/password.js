@@ -1,8 +1,7 @@
 'use strict';
 const Oodler = require('../models/oodler');
-const Token = require('../models/token');
+const token = require('../util/token');
 const moment = require('moment');
-const crypto = require('crypto');
 const bcrypt = require('bcrypt');
 const api_key = 'key-73db2b70c2c5fda574df5e2fd938504f';
 const domain = 'sandbox629530a6164643d28eb2f1767607d8db.mailgun.org';
@@ -24,34 +23,10 @@ function sendResetEmail (token, email) {
   });
 }
 
-function getToken(tokenId) {
-  return Token
-    .get(tokenId)
-    .run();
-}
-
-function createToken(userId) {
-  return Token({
-      value: crypto.randomBytes(64).toString('hex'),
-      expiresAt: moment().add(2, 'hours').toDate(),
-      userId: userId
-    })
-    .save();
-}
-
-function deleteToken(tokenId) {
-  return Token
-    .get(tokenId)
-    .delete()
-    .run();
-}
-
 function saveOodlerPassword(userId, hash) {
   return Oodler
     .get(userId)
-    .update({
-      password: hash
-    })
+    .update({ password: hash })
     .run();
 }
 
@@ -62,7 +37,7 @@ function generateToken(request, reply) {
     .filter({'email': email})
     .run()
     .then(result => {
-      createToken(result[0].id)
+      token.create(result[0].id)
         .then(result => {
           sendResetEmail(result, email);
           reply().code(200);
@@ -70,25 +45,52 @@ function generateToken(request, reply) {
     });
 }
 
+let tokenich = {
+  expiresAt: moment().add(4, 'hours').format(),
+  id: "c600d119-40b1-4a36-ac8b-b67622e0798c" ,
+  userId: "306163de-fcc9-4a93-812c-22864b86cfeb" ,
+  value: "391cb0618becdbe2e38c385f512b53e060b51fb8bcc29974766e0b3f5218fd48e10e469f2c1578a17b2da5d9bda5de37d23b50a9d94969b6ee37e2e38fd1908c"
+};
+
+function encryptPassword(password) {
+  return new Promise((resolve, reject) => {
+    bcrypt.hash(password, 10, (err, hash) => {
+      return err ? reject(err) : resolve(hash);
+    });
+  });
+}
+
 function update(request, reply) {
-  getToken(request.payload.token.id)
-    .then(result => {
-      if(moment(result.expiresAt).isBefore()) {
-        deleteToken(request.payload.token.id);
-        reply('Token expired').code(400);
-      }
+  console.log('Handler!');
+  console.log(request.pre);
+  return encryptPassword(request.payload.password)
+    .then(hash => saveOodlerPassword(request.pre.userId, hash))
+    .then(reply('Password updated!').code(200));
+    // .catch(err => {
+    //   console.log('shitfuck');
+    //   reply(err).code(400);
+    // });
+}
 
-      else if(request.payload.password !== request.payload.passwordRepeat) {
-        reply('Passwords do not match').code(400);
-      }
+function validateRequest(request, reply) {
+  token.validate(request.payload.value)
+    .then(token => {
+        if(request.payload.password !== request.payload.passwordRepeat) {
+          return Promise.reject({ msg: 'Passwords do not match' });
+        }
 
-      bcrypt.hash(request.payload.password, function(err, hash) {
-        saveOodlerPassword(request.payload.token.userId, hash)
-          .then(result => {
-            deleteToken(request.payload.token.id);
-            reply(result).code(200);
-          });
-      });
+        return Promise.resolve(token);
+    })
+    .then(token => {
+      let userId = token.userId;
+      token.delete();
+
+      return reply(userId);
+    })
+    .catch(result => {
+      let respond = () => reply(result.msg).code(400).takeover();
+
+      result.token ? result.token.delete().then(respond()) : respond();
     });
 }
 
@@ -96,19 +98,23 @@ let routes = [
   {
     method: 'POST',
     path: '/password/reset',
-    handler: generateToken
+    config: {
+      handler: generateToken
+    }
   },
   {
     method: 'PUT',
     path: '/password/update',
-    handler: update
+    config: {
+      pre: [{ method: validateRequest, assign: 'userId' }],
+      handler: update
+    }
   }
-
 ];
 
 module.exports = function(server, errorHandler) {
   for (let route of routes) {
-    route.handler = errorHandler(route.handler);
+    route.config.handler = errorHandler(route.config.handler);
     server.route(route);
   }
 };
