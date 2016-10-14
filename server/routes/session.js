@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt');
 function validatePassword(password, oodler) {
   return new Promise((resolve, reject) => {
     bcrypt.compare(password, oodler.password, function(err, res) {
-      return err ? resolve(res) : reject(err);
+      return err ? reject(err) : resolve(res);
     });
   });
 }
@@ -17,16 +17,16 @@ function create(request, reply) {
       let oodler = oodlers[0];
 
       if(!oodler) {
-        return reply('Wrong email or password!').code(401);
+        return reply({msg: 'Wrong email or password!'}).code(401);
       }
 
-      validatePassword(request.payload.email, oodler)
+      validatePassword(request.payload.password, oodler)
         .then(result => {
           if(result) {
-            request.cookieAuth.set(oodler);
+            request.cookieAuth.set({ id: oodler.id });
             return reply('Cookie set!').code(200);
           }
-          return reply('Wrong email or password!').code(401);
+          return reply({msg: 'Wrong email or password!'}).code(401);
         });
     });
 }
@@ -42,11 +42,12 @@ let routes = [
     method: 'POST',
     path: '/session/create',
     config: {
-      handler: create
+      auth: false,
+      handler: create,
     }
   },
   {
-    method: 'POST',
+    method: 'GET',
     path: '/session/destroy',
     config: {
       handler: destroy

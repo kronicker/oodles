@@ -5,6 +5,7 @@ const moment = require('moment');
 let Thingy = require('../models/thingy');
 let Oodler = require('../models/oodler');
 let Oodlet = require('../models/oodlet');
+let bcrypt = require('bcrypt');
 
 function generateOodlers(quantity, callback) {
   console.log(`Generating ${quantity} Oodlers...`);
@@ -16,6 +17,8 @@ function generateOodlers(quantity, callback) {
       firstName: faker.name.firstName(),
       lastName: faker.name.lastName(),
       email: faker.internet.email(),
+      password: bcrypt.hashSync('password', 10),
+      scope: 'user',
       office: faker.random.word().toUpperCase().slice(-1) + faker.random.number(10)
     })
     .save()

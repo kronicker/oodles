@@ -1,12 +1,12 @@
-/**
- * Created by toma on 14.10.16..
- */
+'use strict';
+
 const CookieAuth = require('hapi-auth-cookie');
 
 const config = {
   clearInvalid: true,
-  password: 'BorzinaITominaAplikacijaZaOodlanje'
-
+  password: 'BorzinaITominaAplikacijaZaOodlanje',
+  isSecure: false,
+  ttl: 24 * 60 * 60 * 1000
 };
 
 let sessionStrategy = {
@@ -16,6 +16,7 @@ let sessionStrategy = {
         console.log('error', 'failed to install auth plugin');
         throw err;
       }
+
       server.auth.strategy('session', 'cookie', true, config);
     });
     next();

@@ -11,6 +11,8 @@ const schema = {
   firstName: type.string().min(2),
   lastName: type.string().min(2),
   email: type.string().email(),
+  password: type.string(),
+  scope: type.string().enum(['admin', 'user']),
   office: type.string().min(1)
 };
 
