@@ -28,12 +28,12 @@ function create(request, reply) {
           }
           return reply('Wrong email or password!').code(401);
         });
-      
     });
 }
 
 function destroy(request, reply) {
-
+  request.cookieAuth.clear();
+  return reply('Cookie deleted').code(200);
 }
 
 
