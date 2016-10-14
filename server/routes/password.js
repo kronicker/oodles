@@ -45,13 +45,6 @@ function generateToken(request, reply) {
     });
 }
 
-let tokenich = {
-  expiresAt: moment().add(4, 'hours').format(),
-  id: "c600d119-40b1-4a36-ac8b-b67622e0798c" ,
-  userId: "306163de-fcc9-4a93-812c-22864b86cfeb" ,
-  value: "391cb0618becdbe2e38c385f512b53e060b51fb8bcc29974766e0b3f5218fd48e10e469f2c1578a17b2da5d9bda5de37d23b50a9d94969b6ee37e2e38fd1908c"
-};
-
 function encryptPassword(password) {
   return new Promise((resolve, reject) => {
     bcrypt.hash(password, 10, (err, hash) => {
@@ -61,8 +54,6 @@ function encryptPassword(password) {
 }
 
 function update(request, reply) {
-  console.log('Handler!');
-  console.log(request.pre);
   return encryptPassword(request.payload.password)
     .then(hash => saveOodlerPassword(request.pre.userId, hash))
     .then(reply('Password updated!').code(200));

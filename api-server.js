@@ -8,11 +8,13 @@ const server = new Hapi.Server();
 const db = require('./server/db/');
 const routes = require('./server/routes/');
 const boomErrors = require('./server/extensions/boomErrors');
+const sessionAuth = require('./server/auth/session');
+
 
 module.exports = PORT => {
   server.connection({ port: PORT });
 
-  server.register([Inert, db, routes, boomErrors], (err) => {
+  server.register([Inert, db, routes, boomErrors, sessionAuth], (err) => {
     server.start(function (err) {
       if (err) { throw err; }
 
