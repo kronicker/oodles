@@ -2,8 +2,8 @@
   <div id="navBar">
     <ul class="nav nav-tabs nav-stacked" data-spy="affix" offset-top="300">
       <li><router-link to="/" exact><span class="glyphicon glyphicon-shopping-cart"></span></router-link></li>
-      <li><router-link to="/historyView"><span class="glyphicon glyphicon-time"></span></router-link></li>
-      <li><router-link to="/settingsView"><span class="glyphicon glyphicon-cog"></span></router-link></li>
+      <li><router-link to="/history"><span class="glyphicon glyphicon-time"></span></router-link></li>
+      <li><router-link to="/settings"><span class="glyphicon glyphicon-cog"></span></router-link></li>
     </ul>
   </div>
 </template>

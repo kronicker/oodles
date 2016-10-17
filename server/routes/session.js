@@ -23,12 +23,22 @@ function create(request, reply) {
       return validatePassword(request.payload.password, oodler)
         .then(result => {
           if(result) {
-            request.cookieAuth.set({id: oodler.id, scope: oodler.scope});
-            return reply('Cookie set!').code(200);
+            delete oodler.password;
+            request.cookieAuth.set(oodler);
+            return reply(oodler).code(200);
           }
           return reply({msg: 'Wrong email or password!'}).code(401);
         });
     });
+}
+
+function get(request, reply) {
+  if (request.auth.isAuthenticated) {
+    return reply(request.auth.credentials).code(200);
+  }
+  else {
+    return reply().code(401);
+  }
 }
 
 function destroy(request, reply) {
@@ -38,6 +48,17 @@ function destroy(request, reply) {
 
 
 let routes = [
+  {
+    method: 'GET',
+    path: '/session',
+    config: {
+      auth: {
+        strategy: 'session',
+        scope: ['user', 'admin']
+      },
+      handler: get
+    }
+  },
   {
     method: 'POST',
     path: '/session/create',
@@ -61,7 +82,7 @@ let routes = [
 
 module.exports = function(server, errorHandler) {
   for (let route of routes) {
-    route.config.handler = errorHandler(route.config.handler);
+    // route.config.handler = errorHandler(route.config.handler);
     server.route(route);
   }
 };

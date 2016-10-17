@@ -1,6 +1,6 @@
 'use strict';
 
-const Boom = require('boom');
+// const Boom = require('boom');
 const Glob = require('glob');
 const Path = require('path');
 const sessionAuth = require('../auth');
@@ -13,11 +13,13 @@ function requireAll(server) {
 
 function errorHandler(defaultHandler) {
   return function(request, reply) {
-    return defaultHandler(request, reply).catch(err => {
-      console.log('entered');
-      console.log(err);
-      reply(Boom.wrap(err));
-    });
+    return defaultHandler(request, reply);
+    //TODO Implement me, I dont work!
+    //   .catch(err => {
+    //   console.log('entered');
+    //   console.log(err);
+    //   reply(Boom.wrap(err));
+    // });
   };
 }
 
