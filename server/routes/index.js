@@ -3,6 +3,7 @@
 const Boom = require('boom');
 const Glob = require('glob');
 const Path = require('path');
+const sessionAuth = require('../auth');
 
 function requireAll(server) {
   Glob.sync('./server/routes/!(index.js)').forEach(file => {
@@ -13,6 +14,7 @@ function requireAll(server) {
 function errorHandler(defaultHandler) {
   return function(request, reply) {
     return defaultHandler(request, reply).catch(err => {
+      console.log('entered');
       console.log(err);
       reply(Boom.wrap(err));
     });
@@ -21,7 +23,11 @@ function errorHandler(defaultHandler) {
 
 let routes = {
   register: (server, options, next) => {
-    requireAll(server);
+    server.register(sessionAuth, err => {
+      if (err) throw err;
+
+      requireAll(server);
+    });
     next();
   }
 };

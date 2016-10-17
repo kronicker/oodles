@@ -3,10 +3,11 @@
 const CookieAuth = require('hapi-auth-cookie');
 
 const config = {
-  clearInvalid: true,
   password: 'BorzinaITominaAplikacijaZaOodlanje',
+  cookie: 'oodles-cookie',
+  clearInvalid: true,
   isSecure: false,
-  ttl: 24 * 60 * 60 * 1000
+  ttl: 24 * 60 * 60 * 1000 //1 day
 };
 
 let sessionStrategy = {
@@ -17,7 +18,11 @@ let sessionStrategy = {
         throw err;
       }
 
-      server.auth.strategy('session', 'cookie', true, config);
+      server.auth.strategy('session', 'cookie', config);
+      server.auth.default({
+        strategy: 'session',
+        scope: 'user'
+      });
     });
     next();
   }

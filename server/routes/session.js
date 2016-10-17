@@ -20,10 +20,10 @@ function create(request, reply) {
         return reply({msg: 'Wrong email or password!'}).code(401);
       }
 
-      validatePassword(request.payload.password, oodler)
+      return validatePassword(request.payload.password, oodler)
         .then(result => {
           if(result) {
-            request.cookieAuth.set({ id: oodler.id });
+            request.cookieAuth.set({id: oodler.id, scope: oodler.scope});
             return reply('Cookie set!').code(200);
           }
           return reply({msg: 'Wrong email or password!'}).code(401);
@@ -50,6 +50,10 @@ let routes = [
     method: 'GET',
     path: '/session/destroy',
     config: {
+      auth: {
+        strategy: 'session',
+        scope: ['user', 'admin']
+      },
       handler: destroy
     }
   },
