@@ -18,6 +18,10 @@
           this.$store.commit('oodlerSave', response.body);
           console.log(response.body);
         }
+        else {
+          console.log('No cookie. Redirecting to login...');
+          this.router.go('/login')
+        }
       });
     },
     components: { NavBar }

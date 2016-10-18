@@ -52,10 +52,7 @@ let routes = [
     method: 'GET',
     path: '/session',
     config: {
-      auth: {
-        strategy: 'session',
-        scope: ['user', 'admin']
-      },
+      auth: false,
       handler: get
     }
   },
