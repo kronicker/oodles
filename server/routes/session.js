@@ -11,6 +11,10 @@ function validatePassword(password, oodler) {
 }
 
 function create(request, reply) {
+  if(!request.payload.email || !request.payload.password){
+    return reply({msg: 'Wrong email or password!'}).code(401);
+  }
+
   return Oodler
     .filter({ email: request.payload.email})
     .then(oodlers => {
@@ -37,7 +41,7 @@ function get(request, reply) {
     return reply(request.auth.credentials).code(200);
   }
   else {
-    return reply().code(401);
+    return reply('No cookie set!').code(401);
   }
 }
 
@@ -52,7 +56,10 @@ let routes = [
     method: 'GET',
     path: '/session',
     config: {
-      auth: false,
+      auth: {
+        strategy: 'session',
+          scope: ['user', 'admin']
+      },
       handler: get
     }
   },
@@ -65,7 +72,7 @@ let routes = [
     }
   },
   {
-    method: 'GET',
+    method: 'DELETE',
     path: '/session/destroy',
     config: {
       auth: {

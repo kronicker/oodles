@@ -12,10 +12,26 @@ import SettingsView from '../views/SettingsView.vue';
 import LoginView from '../views/LoginView.vue';
 
 const routes = [
-  { path: '/login', component: LoginView },
-  { path: '/', component: OodletView },
-  { path: '/history', component: HistoryView },
-  { path: '/settings', component: SettingsView }
+  {
+    path: '/login',
+    component: LoginView,
+  },
+  {
+    path: '/',
+    component: OodletView,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/history',
+    component: HistoryView,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/settings',
+    component: SettingsView,
+    meta: { requiresAuth: true }
+  }
+
 ];
 
 let router = new VueRouter({

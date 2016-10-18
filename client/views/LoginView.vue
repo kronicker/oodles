@@ -1,8 +1,8 @@
 <template>
   <div id="loginView">
     <div class="row">
-      <div class="col-md-3 col-md-offset-4">
-        <form class="form-login form-horizontal">
+      <div class="col-md-3 col-md-offset-5">
+        <form @submit.prevent="login" class="form-login form-horizontal">
           <h1 class="page-header">Log in</h1>
           <fieldset class="well">
             <div class="form-group">
@@ -18,12 +18,12 @@
               </div>
             </div>
             <div v-if="warning" class="alert alert-dismissible alert-danger">
-              <button type="button" class="close" data-dismiss="alert">&times;</button>
-              <strong>Login failed!</strong>Incorrect email or password!
+              <button @click="closeWarning" type="button" class="close" data-dismiss="alert">&times;</button>
+              <strong>Login failed!</strong> Incorrect email or password!
             </div>
             <div class="form-group">
               <div class="col-md-12">
-                <button @click="logIn" type="submit" class="btn btn-block btn-primary">Log In</button>
+                <button @click="login" type="submit" class="btn btn-block btn-primary">Log In</button>
               </div>
             </div>
           </fieldset>
@@ -42,22 +42,27 @@
         warning: false
       }
     },
+
     methods: {
-      logIn() {
+      login() {
         this.$http.post('/session/create', {
           email: this.email,
           password: this.password
         })
-        .then(response => {
-          if(response.ok) {
+        .then(
+          response => {
             this.$store.commit('oodlerSave', response.body);
-          }
-          else {
-            this.email='';
-            this.password='';
-            this.warning=true;
-          }
-        });
+            this.$router.replace({ path: '/' });
+          },
+          response => {
+            console.log(response.status);
+            this.email = '';
+            this.password = '';
+            this.setWarning(true);
+          });
+      },
+      closeWarning() {
+        this.warning = false;
       }
     }
   }
