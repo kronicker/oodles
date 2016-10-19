@@ -12,13 +12,12 @@
 
   export default {
     computed: {
-      loggedIn(){
+      loggedIn() {
         return this.$store.getters.oodler.id ? true : false;
       }
     },
 
-    beforeCreate(){
-      console.log('called');
+    beforeCreate() {  
       this.$http.get('/session')
       .then(
         response => {

@@ -11,13 +11,13 @@ exports.register = function (server, options, next) {
   require('../models/oodlet');
 
   // Only seed if explicitly stated
-  if (process.env.DB_SEED === 'true'){
+  if (process.env.DB_SEED === 'true') {
     console.log('Started seeding!');
     seeds();
   }
 
   // Only reset if explicitly stated
-  if (process.env.DB_RESET === 'true'){
+  if (process.env.DB_RESET === 'true') {
     // TODO: IMPLEMENT ME, I DON'T WORK
     //
     // thinky.dbDrop('oodles').run(function() {

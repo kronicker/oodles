@@ -47,7 +47,5 @@
 </script>
 
 <style lang="sass" scoped>
-  .quantifiedThingy {
-    &.right { text-align: right; }
-  }
+  .quantifiedThingy .right { text-align: right; }
 </style>

@@ -24,7 +24,7 @@ function generateOodlers(quantity, callback) {
     .save()
     .then(oodler => {
       oodlers.push(oodler);
-      if(i+1 === quantity){ callback(oodlers); }
+      if(i+1 === quantity) { callback(oodlers); }
     });
   }
 }
@@ -44,7 +44,7 @@ function generateQuantifiedThingies(quantity, callback) {
     .save()
     .then(thingy => {
       quantifiedThingies.push(object.merge(thingy, { qty: faker.random.number({ 'min': 1,'max': 30 })}));
-      if(i+1 === quantity){ callback(quantifiedThingies); }
+      if(i+1 === quantity) { callback(quantifiedThingies); }
     });
   }
 }

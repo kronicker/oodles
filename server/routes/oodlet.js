@@ -6,7 +6,6 @@ function list(request, reply) {
   let fromDate = moment(request.query.fromDate).toDate() || moment().subtract(3, 'months').toDate();
   let toDate = moment(request.query.toDate).add(1, 'days').toDate() || moment().toDate();
   let office = request.query.office;
-  console.log(office);
 
   return Oodlet
     .between(fromDate, toDate, { index : 'dueDate' })

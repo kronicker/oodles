@@ -17,8 +17,8 @@ function sendResetEmail (token, email) {
           '\nOodles'
   };
 
-  mailgun.messages().send(data, (error, body) => {
-    console.log(body);
+  mailgun.messages().send(data, (err, body) => {
+    if(err) throw err;
   });
 }
 

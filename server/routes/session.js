@@ -3,7 +3,7 @@ const Oodler = require('../models/oodler');
 const password = require('../util/password');
 
 function create(request, reply) {
-  if(!request.payload.email || !request.payload.password){
+  if(!request.payload.email || !request.payload.password) {
     return reply({msg: 'Wrong email or password!'}).code(401);
   }
 

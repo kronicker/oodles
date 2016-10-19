@@ -12,7 +12,7 @@
 <script>
   export default {
     methods: {
-      logout(){
+      logout() {
         this.$http.delete('/session/destroy')
           .then(
             response => {

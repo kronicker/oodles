@@ -38,7 +38,7 @@
   import moment from 'moment';
 
   export default{
-    data(){
+    data() {
       return{
         oodlets: [],
         fromDate: moment().subtract(3, 'months').format('YYYY-MM-DD'),
@@ -54,8 +54,6 @@
 
     methods: {
       load() {
-        console.log('History load!!');
-
         this.$http.get('/oodlet', {
           params: {
             fromDate: moment(this.fromDate).format(),
@@ -68,7 +66,7 @@
       }
     },
 
-    created(){
+    created() {
       this.load();
     },
 
@@ -78,13 +76,12 @@
 
 <style lang="sass" scoped>
   #historyView {
-    .header h1, .header .form-group{
+    .header h1, .header .form-group {
       margin-top: 20px;
       margin-bottom: 10px;
     }
 
-    ul.oodlets-list
-    {
+    ul.oodlets-list {
       padding-left: 0;
       list-style: none;
       display: -webkit-flex;
@@ -94,8 +91,7 @@
       -ms-flex-wrap: wrap;
       flex-wrap: wrap;
 
-      li
-      {
+      li {
         display: -webkit-flex;
         display: -ms-flexbox;
         display: flex;

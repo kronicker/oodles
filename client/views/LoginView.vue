@@ -1,7 +1,7 @@
 <template>
   <div id="loginView">
     <div class="row">
-      <div class="col-md-3 col-md-offset-5">
+      <div class="col-md-3 col-md-offset-4">
         <form @submit.prevent="login" class="form-login form-horizontal">
           <h1 class="page-header">Log in</h1>
           <fieldset class="well">
@@ -55,7 +55,6 @@
             this.$router.replace({ path: '/' });
           },
           response => {
-            console.log(response.status);
             this.email = '';
             this.password = '';
             this.warning = true;
@@ -69,10 +68,5 @@
 </script>
 
 <style lang="sass" scoped>
-  #loginView {
-    .form-login {
-      margin-top: 200px;
-    }
-
-  }
+  #loginView .form-login { margin-top: 200px; }
 </style>

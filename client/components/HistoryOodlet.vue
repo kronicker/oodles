@@ -31,13 +31,13 @@
     props: ['oodlet'],
 
     computed: {
-      createdAt(){
+      createdAt() {
         return moment(this.oodlet.createdAt).locale('hr').format('LL');
       }
     },
 
     methods: {
-      load(){
+      load() {
         this.$store.dispatch('oodletSet', this.oodlet.quantifiedThingies);
       }
     }

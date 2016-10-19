@@ -22,7 +22,7 @@
   import ThingyTile from '../components/ThingyTile.vue'
 
   export default{
-    data(){
+    data() {
       return {
         searchString: '',
         thingies: []
@@ -31,7 +31,7 @@
 
     computed: {
       filteredThingies() {
-        if(this.searchString.length < 1){
+        if(this.searchString.length < 1) {
           return this.thingies;
         }
 
@@ -48,7 +48,7 @@
       }
     },
 
-    created(){
+    created() {
       this.$http.get('/thingy').then((response) => {
         this.thingies = response.body;
       });

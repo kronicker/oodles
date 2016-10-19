@@ -74,7 +74,7 @@
       }
     },
 
-    created(){
+    created() {
       window.setInterval(() => {
         this.now = moment();
       }, 1000);
