@@ -3,7 +3,7 @@ import oodletApi from './api/oodlet';
 function thingyTileAdd({ commit, state }, quantifiedThingy) {
   commit('thingyTileAdd', quantifiedThingy);
 
-  oodletApi.save(state.oodlet).then(response => {
+  oodletApi.save(state.oodlet, state.oodler).then(response => {
     commit('oodletSave', response.body);
   });
 }
@@ -16,7 +16,7 @@ function quantifiedThingyChange({ commit, state }, payload) {
     commit('quantifiedThingyUpdate', payload);
   }
 
-  oodletApi.save(state.oodlet).then(response => {
+  oodletApi.save(state.oodlet, state.oodler).then(response => {
     commit('oodletSave', response.body);
   });
 }
@@ -24,7 +24,7 @@ function quantifiedThingyChange({ commit, state }, payload) {
 function oodletSet({ commit, state }, quantifiedThingies) {
   commit('oodletSet', quantifiedThingies);
 
-  oodletApi.save(state.oodlet).then(response => {
+  oodletApi.save(state.oodlet, state.oodler).then(response => {
     commit('oodletSave', response.body);
   });
 }
@@ -32,7 +32,7 @@ function oodletSet({ commit, state }, quantifiedThingies) {
 function oodletReset({ commit, state }) {
   commit('oodletReset');
 
-  oodletApi.save(state.oodlet).then(response => {
+  oodletApi.save(state.oodlet, state.oodler).then(response => {
     commit('oodletSave', response.body);
   });
 }

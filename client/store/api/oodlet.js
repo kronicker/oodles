@@ -1,9 +1,10 @@
 import Vue from 'vue';
 
-function save(oodlet) {
+function save(oodlet, oodler) {
   if(!oodlet.id) {
     return Vue.http.post('/oodlet', {
-        quantifiedThingies: oodlet.quantifiedThingies
+        quantifiedThingies: oodlet.quantifiedThingies,
+        oodler: oodler.oodler
       });
   }
 

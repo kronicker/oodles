@@ -46,12 +46,21 @@
       }
     },
 
+    computed: {
+      oodler() {
+        return this.$store.getters.oodler;
+      }
+    },
+
     methods: {
-      load(){
+      load() {
+        console.log('History load!!');
+
         this.$http.get('/oodlet', {
           params: {
             fromDate: moment(this.fromDate).format(),
-            toDate: moment(this.toDate).format()
+            toDate: moment(this.toDate).format(),
+            office: this.oodler.office
           }})
           .then(response => {
             this.oodlets = response.body;

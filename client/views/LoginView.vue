@@ -58,7 +58,7 @@
             console.log(response.status);
             this.email = '';
             this.password = '';
-            this.setWarning(true);
+            this.warning = true;
           });
       },
       closeWarning() {
