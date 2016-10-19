@@ -1,5 +1,6 @@
 'use strict';
 const Oodlet = require('../models/oodlet');
+const Oodler = require('../models/oodler');
 const moment = require('moment');
 
 function list(request, reply) {
@@ -26,13 +27,19 @@ function get(request, reply) {
 }
 
 function create(request, reply) {
-  return Oodlet({
-      oodler: request.payload.oodler,
-      quantifiedThingies: request.payload.quantifiedThingies
-    })
-    .save()
-    .then(result => {
-      reply(result).code(201);
+
+  return Oodler
+    .get(request.payload.oodlerId)
+    .run()
+    .then(oodler => {
+      return Oodlet({
+        oodler: oodler,
+        quantifiedThingies: request.payload.quantifiedThingies
+      })
+        .save()
+        .then(result => {
+          reply(result).code(201);
+        });
     });
 }
 

@@ -4,7 +4,7 @@ function save(oodlet, oodler) {
   if(!oodlet.id) {
     return Vue.http.post('/oodlet', {
         quantifiedThingies: oodlet.quantifiedThingies,
-        oodler: oodler.oodler
+        oodlerId: oodler.oodler.id
       });
   }
 
