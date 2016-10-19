@@ -78,7 +78,6 @@ let routes = [
 
 module.exports = function(server, errorHandler) {
   for (let route of routes) {
-    server.route(route);
-    // route.config.handler = errorHandler(route.config.handler);
+    route.config.handler = errorHandler(route.config.handler);
   }
 };

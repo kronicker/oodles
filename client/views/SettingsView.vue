@@ -1,57 +1,39 @@
 <template>
   <div id="settingsView">
-      <!-- SIDEBAR USERPIC -->
-      <div class="profile-userpic">
-        <img src="http://keenthemes.com/preview/metronic/theme/assets/admin/pages/media/profile/profile_user.jpg" class="img-responsive" alt="">
-      </div>
-      <!-- END SIDEBAR USERPIC -->
-      <!-- SIDEBAR USER TITLE -->
-      <div class="profile-usertitle">
-        <div class="profile-usertitle-name">
-          Marcus Doe
-        </div>
-        <div class="profile-usertitle-job">
-          Developer
-        </div>
-      </div>
-      <!-- END SIDEBAR USER TITLE -->
-      <!-- SIDEBAR BUTTONS -->
-      <div class="profile-userbuttons">
-        <button type="button" class="btn btn-success btn-sm">Follow</button>
-        <button type="button" class="btn btn-danger btn-sm">Message</button>
-      </div>
-      <!-- END SIDEBAR BUTTONS -->
-      <!-- SIDEBAR MENU -->
-      <div class="profile-usermenu">
-        <ul class="nav">
-          <li class="active">
-            <a href="#">
-              <i class="glyphicon glyphicon-home"></i>
-              Overview </a>
-          </li>
-          <li>
-            <a href="#">
-              <i class="glyphicon glyphicon-user"></i>
-              Account Settings </a>
-          </li>
-          <li>
-            <a href="#" target="_blank">
-              <i class="glyphicon glyphicon-ok"></i>
-              Tasks </a>
-          </li>
-          <li>
-            <a href="#">
-              <i class="glyphicon glyphicon-flag"></i>
-              Help </a>
-          </li>
+<<<<<<< Updated upstream
+=======
+    <div class="row">
+      <div class="col-md-4 col-md-offset-3 well">
+        <ul>
+          <li><span class="glyphicon glyphicon-user"></span><span><strong>  {{ oodler.firstName }} {{ oodler.lastName }}</strong></span></li>
+          <li><span class="glyphicon glyphicon-envelope"></span><span>  {{ oodler.email }}</span></li>
+          <li><span class="glyphicon glyphicon-home"></span><span>  Office {{ oodler.office }}</span></li>
         </ul>
       </div>
-      <!-- END MENU -->
+    </div>
+>>>>>>> Stashed changes
   </div>
 </template>
 
 <script>
+  export default {
+    computed: {
+      oodler() {
+        return this.$store.getters.oodler;
+      }
+    }
+  }
 </script>
 
 <style lang="sass" scoped>
+  #settingsView .well {
+    margin-top: 200px;
+    ul {
+      list-style: none;
+      padding: 0;
+      font-size: x-large;
+
+      li { text-align: center; }
+    }
+  }
 </style>
