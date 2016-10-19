@@ -1,6 +1,6 @@
 <template>
   <div id="navBar">
-    <ul class="nav nav-tabs nav-stacked" data-spy="affix" data-offset-top="10">
+    <ul class="nav nav-tabs nav-stacked">
       <li><router-link to="/" exact><span class="glyphicon glyphicon-shopping-cart"></span></router-link></li>
       <li><router-link to="/history"><span class="glyphicon glyphicon-time"></span></router-link></li>
       <li><router-link to="/settings"><span class="glyphicon glyphicon-cog"></span></router-link></li>
@@ -30,12 +30,9 @@
 
 <style lang="sass">
   #navBar {
-    .affix-top{
-      position: absolute;
-      top: 300px;
-    }
-
-    .affix { top: 300px; }
+    position: absolute;
+    top: 300px;
+    width: 100px;
 
     ul li a {
       text-align: center;

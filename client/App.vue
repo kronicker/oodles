@@ -2,7 +2,7 @@
   <div id="app" class="container-fluid">
     <div class="row">
       <nav-bar v-if="loggedIn" class="col-md-1"></nav-bar>
-      <router-view class="col-md-11"></router-view>
+      <router-view class="col-md-11 col-md-offset-1"></router-view>
     </div>
   </div>
 </template>

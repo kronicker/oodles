@@ -2,12 +2,14 @@
   <div id="oodletView">
     <div class="row">
       <div class="filtered-thingies col-md-9">
-        <ul class="row">
+        <div class="row">
           <thingy-finder class="col-md-12" @thingyFinderUpdate="thingyFinderUpdate"></thingy-finder>
-          <li v-for="thingy in filteredThingies">
-            <thingy-tile :thingy="thingy"></thingy-tile>
-          </li>
-        </ul>
+        </div>
+        <ul class="row">
+            <li v-for="thingy in filteredThingies" class="col-md-2">
+              <thingy-tile :thingy="thingy"></thingy-tile>
+            </li>
+          </ul>
       </div>
       <oodlet class="col-md-3"></oodlet>
     </div>
@@ -61,5 +63,8 @@
 </script>
 
 <style lang="sass" scoped>
-  .filtered-thingies ul{ list-style: none; }
+  .filtered-thingies ul {
+    padding: 0;
+    list-style: none;
+  }
 </style>

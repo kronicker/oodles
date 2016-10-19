@@ -1,5 +1,5 @@
 <template>
-  <div class="thingy-tile col-md-2">
+  <div class="thingy-tile ">
     <div class="thumbnail">
       <img :src="thingy.pictureUrl">
       <div class="caption">
