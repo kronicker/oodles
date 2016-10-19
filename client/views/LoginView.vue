@@ -6,15 +6,15 @@
           <h1 class="page-header">Log in</h1>
           <fieldset class="well">
             <div class="form-group">
-              <label for="inputEmail" class="col-lg-2 control-label">Email</label>
+              <label for="email" class="col-lg-2 control-label">Email</label>
               <div class="col-md-10">
-                <input v-model="email" class="form-control" id="inputEmail" placeholder="Email" type="text">
+                <input v-model="email" class="form-control" id="email" placeholder="Email" type="text">
               </div>
             </div>
             <div class="form-group">
-              <label for="inputPassword" class="col-md-2 control-label">Password</label>
+              <label for="password" class="col-md-2 control-label">Password</label>
               <div class="col-md-10">
-                <input v-model="password" class="form-control" id="inputPassword" placeholder="Password" type="password">
+                <input v-model="password" class="form-control" id="password" placeholder="Password" type="password">
               </div>
             </div>
             <div v-if="warning" class="alert alert-dismissible alert-danger">

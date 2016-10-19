@@ -1,14 +1,6 @@
 'use strict';
 const Oodler = require('../models/oodler');
-const bcrypt = require('bcrypt');
-
-function validatePassword(password, oodler) {
-  return new Promise((resolve, reject) => {
-    bcrypt.compare(password, oodler.password, function(err, res) {
-      return err ? reject(err) : resolve(res);
-    });
-  });
-}
+const password = require('../util/password');
 
 function create(request, reply) {
   if(!request.payload.email || !request.payload.password){
@@ -24,7 +16,7 @@ function create(request, reply) {
         return reply({msg: 'Wrong email or password!'}).code(401);
       }
 
-      return validatePassword(request.payload.password, oodler)
+      return password.validate(request.payload.password, oodler)
         .then(result => {
           if(result) {
             delete oodler.password;
@@ -86,7 +78,6 @@ let routes = [
 
 module.exports = function(server, errorHandler) {
   for (let route of routes) {
-    // route.config.handler = errorHandler(route.config.handler);
-    server.route(route);
+    route.config.handler = errorHandler(route.config.handler);
   }
 };

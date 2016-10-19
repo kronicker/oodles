@@ -13,13 +13,13 @@ import LoginView from '../views/LoginView.vue';
 
 const routes = [
   {
-    path: '/login',
-    component: LoginView,
-  },
-  {
     path: '/',
     component: OodletView,
     meta: { requiresAuth: true }
+  },
+  {
+    path: '/login',
+    component: LoginView,
   },
   {
     path: '/history',
@@ -34,15 +34,6 @@ const routes = [
 
 ];
 
-let router = new VueRouter({
-  routes,
+export default new VueRouter({
+  routes
 });
-
-router.beforeEach((to, from, next) => {
-  console.log('From ' + from.path);
-  console.log('To ' + to.path);
-
-  next();
-});
-
-export default router;

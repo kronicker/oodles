@@ -36,6 +36,7 @@
 
     ul li a {
       text-align: center;
+      cursor: pointer;
 
       span { font-size: xx-large; }
     }

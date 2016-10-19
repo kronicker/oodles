@@ -1,8 +1,7 @@
 'use strict';
 const Oodler = require('../models/oodler');
 const token = require('../util/token');
-const moment = require('moment');
-const bcrypt = require('bcrypt');
+const password = require('../util/password');
 const api_key = 'key-73db2b70c2c5fda574df5e2fd938504f';
 const domain = 'sandbox629530a6164643d28eb2f1767607d8db.mailgun.org';
 const mailgun = require('mailgun-js')({apiKey: api_key, domain: domain});
@@ -18,12 +17,12 @@ function sendResetEmail (token, email) {
           '\nOodles'
   };
 
-  mailgun.messages().send(data, function (error, body) {
+  mailgun.messages().send(data, (error, body) => {
     console.log(body);
   });
 }
 
-function saveOodlerPassword(userId, hash) {
+function savePassword(userId, hash) {
   return Oodler
     .get(userId)
     .update({ password: hash })
@@ -45,22 +44,10 @@ function generateToken(request, reply) {
     });
 }
 
-function encryptPassword(password) {
-  return new Promise((resolve, reject) => {
-    bcrypt.hash(password, 10, (err, hash) => {
-      return err ? reject(err) : resolve(hash);
-    });
-  });
-}
-
 function update(request, reply) {
-  return encryptPassword(request.payload.password)
-    .then(hash => saveOodlerPassword(request.pre.userId, hash))
+  return password.encrypt(request.payload.password)
+    .then(hash => savePassword(request.pre.userId, hash))
     .then(reply('Password updated!').code(200));
-    // .catch(err => {
-    //   console.log('shitfuck');
-    //   reply(err).code(400);
-    // });
 }
 
 function validateRequest(request, reply) {
