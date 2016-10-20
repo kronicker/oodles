@@ -5,7 +5,6 @@
         <form @submit.prevent="updatePassword" class="form-new-password form-horizontal">
           <h1 class="page-header">Set new password</h1>
           <fieldset class="well">
-            <input type="hidden" id="token">
             <div class="form-group">
               <label for="password" class="col-md-2 control-label">Password</label>
               <div class="col-md-10">
