@@ -64,7 +64,7 @@
             response => {
               this.password = '';
               this.passwordRepeat = '';
-              this.messageText = response.body.msg;
+              this.message = response.body.msg;
               document.getElementById('message').classList.add('alert-danger');
               this.message = '';
             });

@@ -13,7 +13,7 @@
             </div>
             <div id="message" v-show="message" class="alert">
               <button @click="closeMessage" type="button" class="close">&times;</button>
-              {{ messageText }}
+              {{ message }}
             </div>
             <div class="form-group">
               <div class="col-lg-6 col-lg-offset-2">
@@ -47,14 +47,14 @@
           .then(
             response => {
               this.email = '';
-              this.messageText = response.body.msg;
+              this.message = response.body.msg;
               document.getElementById('message').classList.add('alert-info');
               document.getElementById('message').classList.remove('alert-danger');
               this.message = '';
             },
             response => {
               this.email = '';
-              this.messageText = response.body.msg;
+              this.message = response.body.msg;
               document.getElementById('message').classList.add('alert-danger');
               document.getElementById('message').classList.remove('alert-info');
               this.message = '';
