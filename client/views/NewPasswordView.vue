@@ -61,7 +61,7 @@
           .then(
             response => {
               this.$store.commit('oodlerSave', response.body);
-              this.$router.replace({ path: '/login' });
+              this.$router.replace({ path: '/' });
             },
             response => {
               this.email = '';

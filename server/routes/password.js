@@ -36,6 +36,7 @@ function update(request, reply) {
     .then((result) => {
       let oodler = result;
       delete oodler.password;
+      request.cookieAuth.set(oodler);
       reply(oodler).code(200);
     });
 }
