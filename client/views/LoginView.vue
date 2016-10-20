@@ -23,7 +23,8 @@
             </div>
             <div class="form-group">
               <div class="col-md-12">
-                <button @click="login" type="submit" class="btn btn-block btn-primary">Log In</button>
+                <router-link to="/password/reset"><p>Forgot your password?</p></router-link>
+                <button type="submit" class="btn btn-block btn-primary">Log In</button>
               </div>
             </div>
           </fieldset>

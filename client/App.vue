@@ -17,7 +17,11 @@
       }
     },
 
-    beforeCreate() {  
+    beforeCreate() {
+      if(['/password/reset', '/password/new'].indexOf(this.$route.path) > -1) {
+        return;
+      }
+
       this.$http.get('/session')
       .then(
         response => {

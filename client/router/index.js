@@ -10,6 +10,8 @@ import OodletView from '../views/OodletView.vue';
 import HistoryView from '../views/HistoryView.vue';
 import SettingsView from '../views/SettingsView.vue';
 import LoginView from '../views/LoginView.vue';
+import NewPasswordView from '../views/NewPasswordView.vue';
+import ResetPasswordView from '../views/ResetPasswordView.vue';
 
 const routes = [
   {
@@ -30,8 +32,15 @@ const routes = [
     path: '/settings',
     component: SettingsView,
     meta: { requiresAuth: true }
+  },
+  {
+    path: '/password/new',
+    component: NewPasswordView
+  },
+  {
+    path: '/password/reset',
+    component: ResetPasswordView
   }
-
 ];
 
 export default new VueRouter({
