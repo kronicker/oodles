@@ -29,15 +29,10 @@ const mutations = {
   },
 
   oodletSave(state, oodlet) {
-    if(!state.id){
-      console.log('Oodlet created');
-      console.log(oodlet);
+    if(!state.id) {
       state.dueDate = oodlet.dueDate;
       return state.id = oodlet.id;
     }
-
-    console.log('Oodlet updated');
-    console.log(oodlet);
   },
 
   oodletSet(state, quantifiedThingies) {

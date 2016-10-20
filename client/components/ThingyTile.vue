@@ -1,5 +1,5 @@
 <template>
-  <div class="thingy-tile col-md-2">
+  <div class="thingy-tile ">
     <div class="thumbnail">
       <img :src="thingy.pictureUrl">
       <div class="caption">
@@ -20,7 +20,7 @@
   import object from 'lodash/object';
 
   export default{
-    data(){
+    data() {
       return {
         qty: 1
       }
@@ -41,16 +41,12 @@
 </script>
 
 <style lang="sass" scoped>
-  .thingy-tile {
-    .thumbnail {
-      .caption {
-        h3 {
-          margin-top: 0;
-          text-align: center;
-        }
-        .input-group-addon { background-color: #2b3e50; }
-      }
+  .thingy-tile .thumbnail .caption {
+    h3 {
+      margin-top: 0;
+      text-align: center;
     }
+    .input-group-addon { background-color: #2b3e50; }
   }
 
 </style>

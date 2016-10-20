@@ -12,7 +12,8 @@ const boomErrors = require('./server/extensions/boomErrors');
 module.exports = PORT => {
   server.connection({ port: PORT });
 
-  server.register([Inert, db, routes, boomErrors], (err) => {
+  server.register([Inert, db, boomErrors, routes], (err) => {
+
     server.start(function (err) {
       if (err) { throw err; }
 

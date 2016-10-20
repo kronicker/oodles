@@ -67,12 +67,6 @@
     },
 
     methods: {
-      save() {
-        if (confirm('Are you sure you want to confirm this oodlet?')) {
-          this.$store.commit('oodletSave');
-        }
-      },
-
       reset() {
         if (confirm('Are you sure you want to reset this oodlet?')) {
           this.$store.dispatch('oodletReset');
@@ -80,7 +74,7 @@
       }
     },
 
-    created(){
+    created() {
       window.setInterval(() => {
         this.now = moment();
       }, 1000);
