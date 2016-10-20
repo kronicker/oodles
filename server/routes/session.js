@@ -17,8 +17,8 @@ function create(request, reply) {
       }
 
       return password.validate(request.payload.password, oodler)
-        .then(result => {
-          if(result) {
+        .then(valid => {
+          if(valid) {
             delete oodler.password;
             request.cookieAuth.set(oodler);
             return reply(oodler).code(200);
