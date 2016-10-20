@@ -65,6 +65,7 @@
             },
             response => {
               this.email = '';
+              this.warning = true;
             });
       },
       closeWarning() {

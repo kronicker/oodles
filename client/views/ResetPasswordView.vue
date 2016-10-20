@@ -11,9 +11,13 @@
                 <input v-model="email" class="form-control" id="email" placeholder="Email" type="text">
               </div>
             </div>
-            <div v-if="message" class="alert alert-dismissible alert-info">
-              <button @click="closeMessage" type="button" class="close" data-dismiss="alert">&times;</button>
+            <div v-if="infoMessage" class="alert alert-dismissible alert-info">
+              <button @click="closeInfoMessage" type="button" class="close" data-dismiss="alert">&times;</button>
               <strong>Email sent!</strong> Please check your email for reset link!
+            </div>
+            <div v-if="warningMessage" class="alert alert-dismissible alert-danger">
+              <button @click="closeWarningMessage" type="button" class="close" data-dismiss="alert">&times;</button>
+              <strong>Something went wrong!</strong> Please try again!
             </div>
             <div class="form-group">
               <div class="col-lg-6 col-lg-offset-2">
@@ -35,7 +39,8 @@
     data() {
       return {
         email: '',
-        message: false
+        infoMessage: false,
+        warningMessage: false
       }
     },
 
@@ -47,17 +52,21 @@
           .then(
             response => {
               this.email = '';
-              this.message = true;
+              this.infoMessage = true;
             },
             response => {
               this.email = '';
+              this.warningMessage = true;
             });
       },
       goBack() {
         this.$router.replace('/login');
       },
-      closeMessage() {
-        this.message = false;
+      closeInfoMessage() {
+        this.infoMessage = false;
+      },
+      closeWarningMessage() {
+        this.warningMessage = false;
       }
     }
   }
