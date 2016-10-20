@@ -71,8 +71,8 @@
               this.message = true;
             });
       },
-      closeWarning() {
-        this.warning = false;
+      closeMessage() {
+        this.message = false;
       }
 
     }
