@@ -7,43 +7,41 @@ const mail = require('../util/mail');
 function savePassword(userId, hash) {
   return Oodler
     .get(userId)
-    .update({ password: hash }, {returnChanges: true})
+    .update({ password: hash }, { returnChanges: true })
     .run();
 }
 
 function generateToken(request, reply) {
   if(!request.payload.email) {
-    return reply({msg: 'You must enter your email!'}).code(401);
+    return reply({ msg: 'You must enter your email!' }).code(401);
   }
   let email = request.payload.email;
-  console.log(email);
 
   return Oodler
-    .filter({'email': email})
+    .filter({ 'email': email })
     .run()
     .then(result => {
       token.create(result[0].id)
         .then(result => {
           mail.sendReset(result, email);
-          reply({msg: 'Email sent! Please check your email!'}).code(200);
+          reply({ msg: 'Email sent! Please check your email!' }).code(200);
         });
     })
     .catch(() => {
-      return reply({msg: 'Something went wrong! Please try again!'}).code(401);
+      return reply({ msg: 'Something went wrong! Please try again!' }).code(401);
     });
 }
 
 function update(request, reply) {
   return password.encrypt(request.payload.password)
     .then(hash => savePassword(request.pre.userId, hash))
-    .then((result) => {
-      let oodler = result;
+    .then(oodler => {
       delete oodler.password;
       request.cookieAuth.set(oodler);
       reply(oodler).code(200);
     })
     .catch(() => {
-      return reply({msg: 'Something went wrong! Please try again!'}).code(401);
+      return reply({ msg: 'Something went wrong! Please try again!' }).code(401);
     });
 }
 
@@ -63,7 +61,7 @@ function validateRequest(request, reply) {
       return reply(userId);
     })
     .catch(result => {
-      let respond = () => reply(result.msg).code(400).takeover();
+      let respond = () => reply(result).code(400).takeover();
 
       result.token ? result.token.delete().then(respond()) : respond();
     });

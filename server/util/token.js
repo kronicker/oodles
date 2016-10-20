@@ -26,11 +26,11 @@ function validate(value) {
       let token = tokens[0];
 
       if(!token) {
-        return Promise.reject({ msg: 'Token not found' });
+        return Promise.reject({ msg: 'Reset link not valid!' });
       }
 
       if(moment(token.expiresAt).isBefore()) {
-        return Promise.reject({ token: token, msg: 'Token expired' });
+        return Promise.reject({ token: token, msg: 'Reset link not valid!' });
       }
 
       return token;

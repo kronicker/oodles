@@ -19,7 +19,7 @@
             </div>
             <div id="message" v-show="message" class="alert">
               <button @click="closeMessage" type="button" class="close">&times;</button>
-              {{ messageText }}
+              {{ message }}
             </div>
             <div class="form-group">
               <div class="col-lg-6 col-lg-offset-2">
@@ -39,8 +39,7 @@
       return {
         password: '',
         passwordRepeat: '',
-        message: false,
-        messageText: ''
+        message: ''
       }
     },
 
@@ -52,7 +51,6 @@
 
     methods: {
       updatePassword() {
-        console.log(this.token);
         this.$http.put('/password/update', {
             password: this.password,
             passwordRepeat: this.passwordRepeat,
@@ -68,13 +66,12 @@
               this.passwordRepeat = '';
               this.messageText = response.body.msg;
               document.getElementById('message').classList.add('alert-danger');
-              this.message = true;
+              this.message = '';
             });
       },
       closeMessage() {
-        this.message = false;
+        this.message = '';
       }
-
     }
   }
 </script>

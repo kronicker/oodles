@@ -35,8 +35,7 @@
     data() {
       return {
         email: '',
-        message: false,
-        messageText: ''
+        message: ''
       }
     },
 
@@ -51,21 +50,21 @@
               this.messageText = response.body.msg;
               document.getElementById('message').classList.add('alert-info');
               document.getElementById('message').classList.remove('alert-danger');
-              this.message = true;
+              this.message = '';
             },
             response => {
               this.email = '';
               this.messageText = response.body.msg;
               document.getElementById('message').classList.add('alert-danger');
               document.getElementById('message').classList.remove('alert-info');
-              this.message = true;
+              this.message = '';
             });
       },
       goBack() {
         this.$router.replace('/login');
       },
       closeMessage() {
-        this.message = false;
+        this.message = '';
       }
     }
   }
