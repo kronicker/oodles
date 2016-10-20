@@ -18,9 +18,9 @@
                 <input v-model="passwordRepeat" class="form-control" id="passwordRepeat" placeholder="Repeat password" type="password">
               </div>
             </div>
-            <div v-if="warning" class="alert alert-dismissible alert-danger">
-              <button @click="closeWarning" type="button" class="close" data-dismiss="alert">&times;</button>
-              <strong>Passwords do not match!</strong> Please enter passwords again!
+            <div id="message" v-show="message" class="alert">
+              <button @click="closeMessage" type="button" class="close">&times;</button>
+              {{ messageText }}
             </div>
             <div class="form-group">
               <div class="col-lg-6 col-lg-offset-2">
@@ -40,7 +40,8 @@
       return {
         password: '',
         passwordRepeat: '',
-        warning: false
+        message: false,
+        messageText: ''
       }
     },
 
@@ -64,8 +65,11 @@
               this.$router.replace({ path: '/' });
             },
             response => {
-              this.email = '';
-              this.warning = true;
+              this.password = '';
+              this.passwordRepeat = '';
+              this.messageText = response.body.msg;
+              document.getElementById('message').classList.add('alert-danger');
+              this.message = true;
             });
       },
       closeWarning() {

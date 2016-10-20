@@ -11,13 +11,9 @@
                 <input v-model="email" class="form-control" id="email" placeholder="Email" type="text">
               </div>
             </div>
-            <div v-if="infoMessage" class="alert alert-dismissible alert-info">
-              <button @click="closeInfoMessage" type="button" class="close" data-dismiss="alert">&times;</button>
-              <strong>Email sent!</strong> Please check your email for reset link!
-            </div>
-            <div v-if="warningMessage" class="alert alert-dismissible alert-danger">
-              <button @click="closeWarningMessage" type="button" class="close" data-dismiss="alert">&times;</button>
-              <strong>Something went wrong!</strong> Please try again!
+            <div id="message" v-show="message" class="alert">
+              <button @click="closeMessage" type="button" class="close">&times;</button>
+              {{ messageText }}
             </div>
             <div class="form-group">
               <div class="col-lg-6 col-lg-offset-2">
@@ -39,8 +35,8 @@
     data() {
       return {
         email: '',
-        infoMessage: false,
-        warningMessage: false
+        message: false,
+        messageText: ''
       }
     },
 
@@ -52,21 +48,24 @@
           .then(
             response => {
               this.email = '';
-              this.infoMessage = true;
+              this.messageText = response.body.msg;
+              document.getElementById('message').classList.add('alert-info');
+              document.getElementById('message').classList.remove('alert-danger');
+              this.message = true;
             },
             response => {
               this.email = '';
-              this.warningMessage = true;
+              this.messageText = response.body.msg;
+              document.getElementById('message').classList.add('alert-danger');
+              document.getElementById('message').classList.remove('alert-info');
+              this.message = true;
             });
       },
       goBack() {
         this.$router.replace('/login');
       },
-      closeInfoMessage() {
-        this.infoMessage = false;
-      },
-      closeWarningMessage() {
-        this.warningMessage = false;
+      closeMessage() {
+        this.message = false;
       }
     }
   }

@@ -13,7 +13,7 @@ function savePassword(userId, hash) {
 
 function generateToken(request, reply) {
   if(!request.payload.email) {
-    return reply().code(401);
+    return reply({msg: 'You must enter your email!'}).code(401);
   }
   let email = request.payload.email;
   console.log(email);
@@ -25,8 +25,11 @@ function generateToken(request, reply) {
       token.create(result[0].id)
         .then(result => {
           mail.sendReset(result, email);
-          reply().code(200);
+          reply({msg: 'Email sent! Please check your email!'}).code(200);
         });
+    })
+    .catch(() => {
+      return reply({msg: 'Something went wrong! Please try again!'}).code(401);
     });
 }
 
@@ -38,6 +41,9 @@ function update(request, reply) {
       delete oodler.password;
       request.cookieAuth.set(oodler);
       reply(oodler).code(200);
+    })
+    .catch(() => {
+      return reply({msg: 'Something went wrong! Please try again!'}).code(401);
     });
 }
 
