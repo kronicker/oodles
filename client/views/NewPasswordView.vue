@@ -1,8 +1,8 @@
 <template>
-  <div id="resetLoginView">
+  <div id="newPasswordView">
     <div class="row">
       <div class="col-md-3 col-md-offset-4">
-        <form @submit.prevent="" class="form-new-password form-horizontal">
+        <form @submit.prevent="updatePassword" class="form-new-password form-horizontal">
           <h1 class="page-header">Set new password</h1>
           <fieldset class="well">
             <input type="hidden" id="token">
@@ -13,14 +13,18 @@
               </div>
             </div>
             <div class="form-group">
-              <label for="repeatPassword" class="col-md-2 control-label">Repeat password</label>
+              <label for="passwordRepeat" class="col-md-2 control-label">Repeat password</label>
               <div class="col-md-10">
-                <input v-model="repeatPassword" class="form-control" id="repeatPassword" placeholder="Repeat password" type="password">
+                <input v-model="passwordRepeat" class="form-control" id="passwordRepeat" placeholder="Repeat password" type="password">
               </div>
+            </div>
+            <div v-if="warning" class="alert alert-dismissible alert-danger">
+              <button @click="closeWarning" type="button" class="close" data-dismiss="alert">&times;</button>
+              <strong>Passwords do not match!</strong> Please enter passwords again!
             </div>
             <div class="form-group">
               <div class="col-lg-6 col-lg-offset-2">
-                <button @click="resetPassword" type="submit" class="btn btn-block btn-success">Send</button>
+                <button type="submit" class="btn btn-block btn-success">Send</button>
               </div>
             </div>
           </fieldset>
@@ -31,7 +35,46 @@
 </template>
 
 <script>
+  export default {
+    data() {
+      return {
+        password: '',
+        passwordRepeat: '',
+        warning: false
+      }
+    },
+
+    computed: {
+      token() {
+        return this.$route.query.token;
+      }
+    },
+
+    methods: {
+      updatePassword() {
+        console.log(this.token);
+        this.$http.put('/password/update', {
+            password: this.password,
+            passwordRepeat: this.passwordRepeat,
+            value: this.token
+          })
+          .then(
+            response => {
+              this.$store.commit('oodlerSave', response.body);
+              this.$router.replace({ path: '/login' });
+            },
+            response => {
+              this.email = '';
+            });
+      },
+      closeWarning() {
+        this.warning = false;
+      }
+
+    }
+  }
 </script>
 
 <style lang="sass" scoped>
+  #newPasswordView .form-new-password { margin-top: 200px; }
 </style>

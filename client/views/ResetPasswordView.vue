@@ -1,8 +1,8 @@
 <template>
-  <div id="resetLoginView">
+  <div id="resetPasswordView">
     <div class="row">
       <div class="col-md-3 col-md-offset-4">
-        <form @submit.prevent="" class="form-reset-password form-horizontal">
+        <form @submit.prevent="resetPassword" class="form-reset-password form-horizontal">
           <h1 class="page-header">Reset password</h1>
           <fieldset class="well">
             <div class="form-group">
@@ -11,9 +11,13 @@
                 <input v-model="email" class="form-control" id="email" placeholder="Email" type="text">
               </div>
             </div>
+            <div v-if="message" class="alert alert-dismissible alert-info">
+              <button @click="closeMessage" type="button" class="close" data-dismiss="alert">&times;</button>
+              <strong>Email sent!</strong> Please check your email for reset link!
+            </div>
             <div class="form-group">
               <div class="col-lg-6 col-lg-offset-2">
-                <button @click="resetPassword" type="submit" class="btn btn-block btn-success">Send reset email</button>
+                <button type="submit" class="btn btn-block btn-success">Send reset email</button>
                 </div>
               <div class="col-lg-4">
                 <button @click="goBack" class="btn btn-block btn-danger">Cancel</button>
@@ -31,19 +35,34 @@
     data() {
       return {
         email: '',
-        password: '',
-        warning: false
+        message: false
       }
     },
 
     methods: {
-      login() {
-
+      resetPassword() {
+        this.$http.post('/password/reset', {
+            email: this.email
+          })
+          .then(
+            response => {
+              this.email = '';
+              this.message = true;
+            },
+            response => {
+              this.email = '';
+            });
+      },
+      goBack() {
+        this.$router.replace('/login');
+      },
+      closeMessage() {
+        this.message = false;
       }
     }
   }
 </script>
 
 <style lang="sass" scoped>
-  #resetLoginView .form-reset-password { margin-top: 200px; }
+  #resetPasswordView .form-reset-password { margin-top: 200px; }
 </style>
