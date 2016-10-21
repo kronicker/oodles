@@ -4,7 +4,7 @@
   "scripts": {
     "start": "node api-server.js",
     "dev": "webpack-dev-server --inline --hot",
-    "start-dev": "node main-server",
+    "start-dev": "nodemon main-server",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "description": "Ordering stuff for office",
@@ -40,6 +40,7 @@
     "file-loader": "^0.8.4",
     "imports-loader": "^0.6.5",
     "node-sass": "^3.10.1",
+    "nodemon": "^1.11.0",
     "resolve-url-loader": "^1.6.0",
     "sass-loader": "^4.0.2",
     "style-loader": "^0.13.1",
