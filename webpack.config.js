@@ -4,7 +4,7 @@ let path = require('path');
 let webpack = require('webpack');
 
 module.exports = {
-  entry: ['bootstrap-loader', './client/main.js'],
+  entry: ['bootstrap-loader', './client/main.js', 'webpack/hot/dev-server', 'webpack-dev-server/client?http://localhost:3000/'],
   output: {
     path: path.resolve(__dirname, './client/dist/'),
     publicPath: '/dist/',
@@ -49,6 +49,9 @@ module.exports = {
       },
     ]
   },
+  plugins: [
+    new webpack.HotModuleReplacementPlugin()
+  ],
   devServer: {
     historyApiFallback: true,
     noInfo: true
