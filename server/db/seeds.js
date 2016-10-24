@@ -7,10 +7,37 @@ let Oodler = require('../models/oodler');
 let Oodlet = require('../models/oodlet');
 let bcrypt = require('bcrypt');
 
+//DEVS ACCOUNTS
+let devs = [{
+  firstName: 'Toma',
+  lastName: 'Zelic',
+  email: 'toma@extensionengine.com',
+  password: bcrypt.hashSync('password', 10),
+  scope: 'user',
+  office: 'C7'
+},{
+  firstName: 'Ante',
+  lastName: 'Borzic',
+  email: 'aborzic@extensionengine.com',
+  password: bcrypt.hashSync('password', 10),
+  scope: 'user',
+  office: 'C7'
+}];
+
 function generateOodlers(quantity, callback) {
   console.log(`Generating ${quantity} Oodlers...`);
 
   let oodlers = [];
+
+  //Save devs to db
+  for (let i = 0; i < devs.length; i++) {
+    Oodler(devs[i])
+      .save()
+      .then(oodler => {
+        oodlers.push(oodler);
+        if(i+1 === quantity) { callback(oodlers); }
+      });
+  }
 
   for (let i = 0; i < quantity; i++) {
     Oodler({

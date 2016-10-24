@@ -6,23 +6,22 @@ const seeds = require('./seeds.js');
 
 exports.register = function (server, options, next) {
 
-  require('../models/thingy');
-  require('../models/oodler');
-  require('../models/oodlet');
+  let Thingy = require('../models/thingy');
+  let Oodler = require('../models/oodler');
+  let Oodlet = require('../models/oodlet');
 
   // Only seed if explicitly stated
   if (process.env.DB_SEED === 'true') {
-    console.log('Started seeding!');
     seeds();
   }
 
   // Only reset if explicitly stated
   if (process.env.DB_RESET === 'true') {
-    // TODO: IMPLEMENT ME, I DON'T WORK
-    //
-    // thinky.dbDrop('oodles').run(function() {
-    //   seeds();
-    // });
+
+    Oodler.delete().run()
+      .then(Oodlet.delete().run())
+      .then(Thingy.delete().run())
+      .done(seeds());
  }
 
   return next();
