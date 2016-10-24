@@ -2,13 +2,12 @@
  * Created by toma on 21.09.16..
  */
 'use strict';
+const Glob = require('glob');
+const Path = require('path');
 const seeds = require('./seeds.js');
+const models = Glob.sync('./server/models/*');
 
 exports.register = function (server, options, next) {
-
-  let Thingy = require('../models/thingy');
-  let Oodler = require('../models/oodler');
-  let Oodlet = require('../models/oodlet');
 
   // Only seed if explicitly stated
   if (process.env.DB_SEED === 'true') {
@@ -18,10 +17,12 @@ exports.register = function (server, options, next) {
   // Only reset if explicitly stated
   if (process.env.DB_RESET === 'true') {
 
-    Oodler.delete().run()
-      .then(Oodlet.delete().run())
-      .then(Thingy.delete().run())
-      .done(seeds());
+  Promise.all(function* () {
+      for(let model of models) {
+        yield require(Path.resolve(model)).delete().run();
+      }
+    }())
+    .then(seeds());
  }
 
   return next();
