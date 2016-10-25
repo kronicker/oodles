@@ -8,6 +8,8 @@ let Thingy = require('../models/thingy');
 let Oodler = require('../models/oodler');
 let Oodlet = require('../models/oodlet');
 
+const seedsQuantity = process.env.DB_SEED_QTY || 10;
+
 // Dev Accounts
 let devs = [{
   firstName: 'Toma',
@@ -79,18 +81,18 @@ function generateOodlets(quantity, oodlers, quantifiedThingies) {
   }
 }
 
-module.exports = (quantity) => {
+module.exports = () => {
 
   console.log('Started seeding');
 
-  Promise.all([...generateOodlers(quantity), ...generateThingies(quantity)])
+  Promise.all([...generateOodlers(seedsQuantity), ...generateThingies(seedsQuantity)])
     .then(values => {
       let oodlers = collection.filter(values, val => { return val.email; });
       let quantifiedThingies = collection.filter(values, val => { return val.name; });
 
       collection.forEach(quantifiedThingies, thingy => { object.merge(thingy, { qty: faker.random.number({ 'min': 1,'max': 30 })}); });
 
-      generateOodlets(quantity, oodlers, quantifiedThingies);
+      generateOodlets(seedsQuantity, oodlers, quantifiedThingies);
     });
 };
 

@@ -7,13 +7,12 @@ const Path = require('path');
 const seeds = require('./seeds.js');
 const models = Glob.sync('./server/models/*');
 
-const DB_QUANTITY = process.env.DB_SEED_QTY || 10;
 
 exports.register = function (server, options, next) {
 
   // Only seed if explicitly stated
   if (process.env.DB_SEED === 'true') {
-    seeds(DB_QUANTITY);
+    seeds();
   }
 
   // Only reset if explicitly stated
@@ -24,7 +23,7 @@ exports.register = function (server, options, next) {
         yield require(Path.resolve(model)).delete().run();
       }
     }())
-    .then(seeds(DB_QUANTITY));
+    .then(seeds());
  }
 
   return next();
