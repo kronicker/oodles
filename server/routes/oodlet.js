@@ -75,7 +75,7 @@ let routes = [
       handler: list,
       validate: {
         query: {
-          office: Joi.string(),
+          office: Joi.string().required(),
           toDate: Joi.date(),
           fromDate: Joi.date()
         }
