@@ -1,4 +1,5 @@
 'use strict';
+const Joi = require('joi');
 const Oodler = require('../models/oodler');
 
 function list(request, reply) {
@@ -26,7 +27,9 @@ function create(request, reply) {
     firstName: request.payload.firstName,
     lastName: request.payload.lastName,
     email: request.payload.email,
-    office: request.payload.office
+    office: request.payload.office,
+    password: request.payload.password,
+    scope: request.payload.scope
     })
     .save()
     .then(result => {
@@ -42,7 +45,9 @@ function update(request, reply) {
       firstName: request.payload.firstName,
       lastName: request.payload.lastName,
       email: request.payload.email,
-      office: request.payload.office
+      office: request.payload.office,
+      password: request.payload.password,
+      scope: request.payload.scope
     })
     .run()
     .then(result => {
@@ -68,28 +73,69 @@ let routes = [
   {
     method: 'GET',
     path: '/oodler/{id}',
-    handler: get
+    config: {
+      handler: get,
+      validate: {
+        params: {
+          id: Joi.string().token()
+        }
+      }
+    }
   },
   {
     method: 'POST',
     path: '/oodler',
-    handler: create
+    config: {
+      handler: create,
+      validate: {
+        payload: {
+          firstName: Joi.string().alphanum().required(),
+          lastName: Joi.string().alphanum().required(),
+          email: Joi.string().email().required(),
+          office: Joi.string().required(),
+          password: Joi.string().min(6).max(200).required(),
+          scope: Joi.string().valid('user', 'admin').required()
+        }
+      }
+    }
   },
   {
     method: 'PUT',
     path: '/oodler/{id}',
-    handler: update
+    config: {
+      handler: update,
+      validate: {
+        params: {
+          id: Joi.string().required()
+        },
+        payload: {
+          firstName: Joi.string().alphanum().required(),
+          lastName: Joi.string().alphanum().required(),
+          email: Joi.string().required(),
+          office: Joi.string().required(),
+          password: Joi.string().min(6).max(200).required(),
+          scope: Joi.string().valid('user', 'admin').required()
+        }
+      }
+    }
   },
   {
     method: 'DELETE',
     path: '/oodler/{id}',
-    handler: remove
+    config: {
+      handler: remove,
+      validate: {
+        params: {
+          id: Joi.string().required()
+        }
+      }
+    }
   }
 ];
 
 module.exports = function(server, errorHandler) {
   for (let route of routes) {
-    route.handler = errorHandler(route.handler);
+    // route.handler = errorHandler(route.handler);
     server.route(route);
   }
 };

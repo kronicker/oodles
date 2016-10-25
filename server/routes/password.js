@@ -1,4 +1,5 @@
 'use strict';
+const Joi = require('joi');
 const Oodler = require('../models/oodler');
 const token = require('../util/token');
 const password = require('../util/password');
@@ -73,7 +74,12 @@ let routes = [
     path: '/password/reset',
     config: {
       auth: false,
-      handler: generateToken
+      handler: generateToken,
+      validate: {
+        payload: {
+          email: Joi.string().email().required()
+        }
+      }
     }
   },
   {
@@ -82,7 +88,14 @@ let routes = [
     config: {
       auth: false,
       pre: [{ method: validateRequest, assign: 'userId' }],
-      handler: update
+      handler: update,
+      validate: {
+        payload: {
+          password: Joi.string().min(6).max(200).required(),
+          passwordRepeat: Joi.string().min(6).max(200).required(),
+          value: Joi.string().token()
+        }
+      }
     }
   }
 ];

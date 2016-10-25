@@ -1,7 +1,8 @@
 'use strict';
+const Joi = require('joi');
+const moment = require('moment');
 const Oodlet = require('../models/oodlet');
 const Oodler = require('../models/oodler');
-const moment = require('moment');
 
 function list(request, reply) {
   let fromDate = moment(request.query.fromDate).toDate() || moment().subtract(3, 'months').toDate();
@@ -70,33 +71,74 @@ let routes = [
   {
     method: 'GET',
     path: '/oodlet',
-    handler: list
+    config: {
+      handler: list,
+      validate: {
+        query: {
+          office: Joi.string().required(),
+          toDate: Joi.date(),
+          fromDate: Joi.date()
+        }
+      }
+    }
   },
   {
     method: 'GET',
     path: '/oodlet/{id}',
-    handler: get
+    config: {
+      handler: get,
+      validate: {
+        params: {
+          id: Joi.string().required()
+        }
+      }
+    }
   },
   {
     method: 'POST',
     path: '/oodlet',
-    handler: create
+    config: {
+      handler: create,
+      validate: {
+        payload: {
+          oodlerId: Joi.string().required(),
+          quantifiedThingies: Joi.array()
+        }
+      }
+    }
   },
   {
     method: 'PUT',
     path: '/oodlet/{id}',
-    handler: update
+    config: {
+      handler: update,
+      validate: {
+        params: {
+          id: Joi.string().required()
+        },
+        payload: {
+          quantifiedThingies: Joi.array().required()
+        }
+      }
+    }
   },
   {
     method: 'DELETE',
     path: '/oodlet/{id}',
-    handler: remove
+    config: {
+      handler: remove,
+      validate: {
+        params: {
+          id: Joi.string().required()
+        }
+      }
+    }
   }
 ];
 
 module.exports = function(server, errorHandler) {
   for (let route of routes) {
-    route.handler = errorHandler(route.handler);
+    // route.handler = errorHandler(route.handler);
     server.route(route);
   }
 };
