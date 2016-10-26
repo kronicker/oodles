@@ -87,10 +87,10 @@ module.exports = () => {
 
   Promise.all([...generateOodlers(seedsQuantity), ...generateThingies(seedsQuantity)])
     .then(values => {
-      let oodlers = collection.filter(values, val => { return val.email; });
-      let quantifiedThingies = collection.filter(values, val => { return val.name; });
+      let oodlers = collection.filter(values, val => val.email);
+      let quantifiedThingies = collection.filter(values, val => val.name);
 
-      collection.forEach(quantifiedThingies, thingy => { object.merge(thingy, { qty: faker.random.number({ 'min': 1,'max': 30 })}); });
+      collection.forEach(quantifiedThingies, thingy => object.merge(thingy, { qty: faker.random.number({ 'min': 1,'max': 30 })}));
 
       generateOodlets(seedsQuantity, oodlers, quantifiedThingies);
     });

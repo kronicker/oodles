@@ -2,10 +2,10 @@
  * Created by toma on 21.09.16..
  */
 'use strict';
-const Glob = require('glob');
-const Path = require('path');
+const glob = require('glob');
+const path = require('path');
 const seeds = require('./seeds.js');
-const models = Glob.sync('./server/models/*');
+const models = glob.sync('./server/models/*');
 
 
 exports.register = function (server, options, next) {
@@ -20,7 +20,7 @@ exports.register = function (server, options, next) {
 
   Promise.all(function* () {
       for(let model of models) {
-        yield require(Path.resolve(model)).delete().run();
+        yield require(path.resolve(model)).delete().run();
       }
     }())
     .then(seeds());
