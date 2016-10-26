@@ -7,7 +7,11 @@ const sessionAuth = require('../auth');
 
 function requireAll(server) {
   Glob.sync('./server/routes/!(index.js)').forEach(file => {
-    require(Path.resolve(file))(server, errorHandler);
+    let routes = require(Path.resolve(file));
+    for(let route of routes) {
+      route.config.handler = errorHandler(route.config.handler);
+      server.route(route);
+    }
   });
 }
 

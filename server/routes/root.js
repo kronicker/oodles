@@ -1,7 +1,6 @@
 'use strict';
-
-module.exports = function(server) {
-  server.route({
+let routes = [
+  {
     method: 'GET',
     path: '/',
     config: {
@@ -10,5 +9,7 @@ module.exports = function(server) {
         reply.file('./client/index.html');
       }
     }
-  });
-};
+  }
+];
+
+module.exports = routes;
