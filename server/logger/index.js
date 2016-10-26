@@ -5,21 +5,33 @@ const good = require('good');
 
 const config = {
   includes: {
-    request: ['headers', 'payload'],
+    request: ['payload'],
     response: ['payload']
   },
   reporters: {
-    consoleReporter: [
-      {
-        module: 'good-squeeze',
-        name: 'Squeeze',
-        args: [{ log: '*', response: '*' , request: '*'}]
-      },
-      {
-        module: 'good-console'
-      },
-      'stdout'
-    ]
+    consoleReporter: [{
+      module: 'good-squeeze',
+      name: 'Squeeze',
+      args: [{
+        log: '*',
+        response: '*'
+      }]
+    }, {
+      module: 'good-console'
+    }, 'stdout'],
+
+    fileReporter: [{
+      module: 'good-squeeze',
+      name: 'Squeeze',
+      args: [{ request: '*', response: '*' }]
+    },
+    {
+      module: 'good-squeeze',
+      name: 'SafeJson',
+    },{
+      module: 'good-squeeze-pretty',
+      args: [2]
+    }, 'stdout'],
   }
 };
 
