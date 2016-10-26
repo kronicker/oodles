@@ -4,7 +4,7 @@
 'use strict';
 const seeds = require('./seeds.js');
 
-exports.register = (server, options, next) => {
+exports.register = function (server, options, next) {
 
   require('../models/thingy');
   require('../models/oodler');
