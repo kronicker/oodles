@@ -4,7 +4,7 @@ let path = require('path');
 let webpack = require('webpack');
 
 module.exports = {
-  entry: ['bootstrap-loader', './client/main.js', 'webpack/hot/dev-server', 'webpack-dev-server/client?http://localhost:3000/'],
+  entry: ['bootstrap-loader', './client/main.js'],
   output: {
     path: path.resolve(__dirname, './client/dist/'),
     publicPath: '/dist/',
@@ -22,10 +22,7 @@ module.exports = {
       {
         test: /\.js$/,
         loader: 'babel',
-        exclude: /node_modules/,
-        query: {
-          presets:[ 'es2015', 'stage-2' ]
-        }
+        exclude: /node_modules/
       },
       {
         test: /bootstrap-sass\/assets\/javascripts\//,
@@ -52,9 +49,6 @@ module.exports = {
       },
     ]
   },
-  plugins: [
-    new webpack.HotModuleReplacementPlugin()
-  ],
   devServer: {
     historyApiFallback: true,
     noInfo: true
