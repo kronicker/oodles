@@ -20,10 +20,30 @@ const config = {
       module: 'good-console'
     }, 'stdout'],
 
-    fileReporter: [{
+    customPayloadReporter: [{
       module: 'good-squeeze',
       name: 'Squeeze',
       args: [{ request: '*', response: '*' }]
+    }, {
+      module: 'white-out',
+      args: [{
+        password: 'remove',
+        passwordRepeat: 'remove',
+        event: 'remove',
+        instance: 'remove',
+        labels: 'remove',
+        method: 'remove',
+        path: 'remove',
+        query: 'remove',
+        responseTime: 'remove',
+        statusCode: 'remove',
+        pid: 'remove',
+        httpVersion: 'remove',
+        source: 'remove',
+        route: 'remove',
+        log: 'remove',
+        config: 'remove',
+      }]
     },
     {
       module: 'good-squeeze',
@@ -35,7 +55,7 @@ const config = {
   }
 };
 
-let logger = {
+let monitor = {
   register: (server, options, next) => {
     server.register({
       register: good,
@@ -50,8 +70,8 @@ let logger = {
   }
 };
 
-logger.register.attributes = {
-  name: 'consoleLogger'
+monitor.register.attributes = {
+  name: 'monitor'
 };
 
-module.exports = logger;
+module.exports = monitor;
