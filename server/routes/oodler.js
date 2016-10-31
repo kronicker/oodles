@@ -52,7 +52,6 @@ function update(request, reply) {
       firstName: request.payload.firstName,
       lastName: request.payload.lastName,
       email: request.payload.email,
-      password: request.payload.password,
       office: request.payload.office,
       scope: request.payload.office
     })
