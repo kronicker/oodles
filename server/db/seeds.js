@@ -54,7 +54,6 @@ function* generateThingies(quantity) {
   for (let i = 0; i < quantity; i++) {
     yield Thingy({
       name: faker.commerce.product(),
-      price: faker.commerce.price(60),
       unit: ['kg', 'kom'][Math.floor(Math.random() * 2)],
       pictureUrl: 'https://placeimg.com/240/200/any'
     })
@@ -74,8 +73,7 @@ function generateOodlets(quantity, oodlers, quantifiedThingies) {
       updatedAt: createDate,
       dueDate: moment(createDate).add(2, 'weeks').toDate(),
       oodler: oodlers[Math.floor(Math.random() * oodlers.length)],
-      quantifiedThingies: quantifiedThingies,
-      total: faker.random.number(10)
+      quantifiedThingies: quantifiedThingies
     })
     .save();
   }

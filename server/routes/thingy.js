@@ -25,7 +25,6 @@ function get(request, reply) {
 function create(request, reply) {
   return Thingy({
       name: request.payload.name,
-      price: request.payload.price,
       unit: request.payload.unit,
       pictureUrl: request.payload.pictureUrl
     })
@@ -39,7 +38,6 @@ function update(request, reply) {
   return Thingy.get(request.params.id)
     .update({
       name: request.payload.name,
-      price: request.payload.price,
       unit: request.payload.unit,
       pictureUrl: request.payload.pictureUrl
     })

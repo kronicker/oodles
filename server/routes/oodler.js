@@ -23,16 +23,25 @@ function get(request, reply) {
 }
 
 function create(request, reply) {
-  return Oodler({
-    firstName: request.payload.firstName,
-    lastName: request.payload.lastName,
-    email: request.payload.email,
-    office: request.payload.office,
-    scope: request.payload.scope
-    })
-    .save()
-    .then(result => {
-      reply(result).code(201);
+  return Oodler
+    .filter({ email: request.payload.email})
+    .run()
+    .then(oodlers => {
+      if(oodlers[0]) {
+        reply('User already registered with this email').code(400);
+      }
+
+    return Oodler({
+      firstName: request.payload.firstName,
+      lastName: request.payload.lastName,
+      email: request.payload.email,
+      office: request.payload.office,
+      scope: request.payload.office
+      })
+      .save()
+      .then(result => {
+        reply(result).code(201);
+      });
     });
 }
 
@@ -45,7 +54,7 @@ function update(request, reply) {
       lastName: request.payload.lastName,
       email: request.payload.email,
       office: request.payload.office,
-      scope: request.payload.scope
+      scope: request.payload.office
     })
     .run()
     .then(result => {
