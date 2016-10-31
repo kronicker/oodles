@@ -48,17 +48,26 @@ function create(request, reply) {
 function update(request, reply) {
   let oodlerId = request.params.id;
 
-  return Oodler.get(oodlerId)
-    .update({
-      firstName: request.payload.firstName,
-      lastName: request.payload.lastName,
-      email: request.payload.email,
-      office: request.payload.office,
-      scope: request.payload.office
-    })
+  return Oodler
+    .filter({ email: request.payload.email})
     .run()
-    .then(result => {
-      reply(result).code(200);
+    .then(oodlers => {
+      if (oodlers[0] && oodlers[0].id !== oodlerId) {
+        reply('User already registered with this email').code(400);
+      }
+
+      return Oodler.get(oodlerId)
+        .update({
+          firstName: request.payload.firstName,
+          lastName: request.payload.lastName,
+          email: request.payload.email,
+          office: request.payload.office,
+          scope: request.payload.office
+        })
+        .run()
+        .then(result => {
+          reply(result).code(200);
+        });
     });
 }
 
@@ -86,7 +95,7 @@ let routes = [
       handler: get,
       validate: {
         params: {
-          id: Joi.string().token()
+          id: Joi.string().required()
         }
       }
     }
