@@ -28,7 +28,6 @@ function create(request, reply) {
     lastName: request.payload.lastName,
     email: request.payload.email,
     office: request.payload.office,
-    password: request.payload.password,
     scope: request.payload.scope
     })
     .save()
@@ -46,7 +45,6 @@ function update(request, reply) {
       lastName: request.payload.lastName,
       email: request.payload.email,
       office: request.payload.office,
-      password: request.payload.password,
       scope: request.payload.scope
     })
     .run()
@@ -93,7 +91,6 @@ let routes = [
           lastName: Joi.string().alphanum().required(),
           email: Joi.string().email().required(),
           office: Joi.string().required(),
-          password: Joi.string().min(6).max(200).required(),
           scope: Joi.string().valid('user', 'admin').required()
         }
       }
@@ -111,9 +108,8 @@ let routes = [
         payload: {
           firstName: Joi.string().alphanum().required(),
           lastName: Joi.string().alphanum().required(),
-          email: Joi.string().required(),
+          email: Joi.string().email().required(),
           office: Joi.string().required(),
-          password: Joi.string().min(6).max(200).required(),
           scope: Joi.string().valid('user', 'admin').required()
         }
       }
