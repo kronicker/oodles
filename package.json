@@ -17,6 +17,7 @@
     "hapi": "^15.0.3",
     "hapi-auth-cookie": "^6.1.1",
     "inert": "^4.0.2",
+    "joi": "^9.2.0",
     "jquery": "^3.1.1",
     "lodash": "^4.16.2",
     "mailgun-js": "^0.7.12",

@@ -1,11 +1,9 @@
 'use strict';
-const Oodler = require('../models/oodler');
+const Joi = require('joi');
 const password = require('../util/password');
+const Oodler = require('../models/oodler');
 
 function create(request, reply) {
-  if(!request.payload.email || !request.payload.password) {
-    return reply({msg: 'Wrong email or password!'}).code(401);
-  }
 
   return Oodler
     .filter({ email: request.payload.email})
@@ -61,7 +59,13 @@ let routes = [
     config: {
       auth: false,
       handler: create,
-    }
+      validate: {
+        payload: {
+          email: Joi.string().email().required(),
+          password: Joi.string().min(6).max(200).required()
+        }
+      }
+    },
   },
   {
     method: 'DELETE',
@@ -76,9 +80,5 @@ let routes = [
   },
 ];
 
-module.exports = function(server, errorHandler) {
-  for (let route of routes) {
-    // route.config.handler = errorHandler(route.config.handler);
-    server.route(route);
-  }
-};
+module.exports = routes;
+
