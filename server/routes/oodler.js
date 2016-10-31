@@ -25,8 +25,8 @@ function create(request, reply) {
   return Oodler
     .filter({ email: request.payload.email})
     .run()
-    .then(exists => {
-      if(exists) {
+    .then(oodlers => {
+      if(oodlers[0]) {
         reply('User already registered with this email').code(400);
       }
 
