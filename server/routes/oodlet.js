@@ -106,7 +106,7 @@ let routes = [
             id: Joi.string(),
             name: Joi.string().min(1),
             unit: Joi.string(),
-            pictureUrl: Joi.string(),
+            pictureUrl: Joi.string().uri(),
             qty: Joi.number().min(1)
           }))
         }
@@ -127,7 +127,7 @@ let routes = [
             id: Joi.string(),
             name: Joi.string().min(1),
             unit: Joi.string(),
-            pictureUrl: Joi.string(),
+            pictureUrl: Joi.string().uri(),
             qty: Joi.number().min(1)
           }).required())
         }
