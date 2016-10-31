@@ -84,7 +84,6 @@ let routes = [
       validate: {
         payload: {
           name: Joi.string().required(),
-          price: Joi.number(),
           unit: Joi.string(),
           pictureUrl: Joi.string().uri()
         }
@@ -102,7 +101,6 @@ let routes = [
         },
         payload: {
           name: Joi.string().required(),
-          price: Joi.number(),
           unit: Joi.string(),
           pictureUrl: Joi.string().uri()
         }

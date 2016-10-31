@@ -102,7 +102,13 @@ let routes = [
       validate: {
         payload: {
           oodlerId: Joi.string().required(),
-          quantifiedThingies: Joi.array()
+          quantifiedThingies: Joi.array(Joi.object({
+            id: Joi.string(),
+            name: Joi.string().min(1),
+            unit: Joi.string(),
+            pictureUrl: Joi.string(),
+            qty: Joi.number().min(1)
+          }))
         }
       }
     }
@@ -117,7 +123,13 @@ let routes = [
           id: Joi.string().required()
         },
         payload: {
-          quantifiedThingies: Joi.array().required()
+          quantifiedThingies: Joi.array(Joi.object({
+            id: Joi.string(),
+            name: Joi.string().min(1),
+            unit: Joi.string(),
+            pictureUrl: Joi.string(),
+            qty: Joi.number().min(1)
+          }).required())
         }
       }
     }
