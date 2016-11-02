@@ -40,6 +40,7 @@
   export default{
     data() {
       return{
+        oodlets: [],
         fromDate: moment().subtract(3, 'months').format('YYYY-MM-DD'),
         toDate: moment().format('YYYY-MM-DD'),
         maxDate: moment().format('YYYY-MM-DD')
@@ -47,18 +48,34 @@
     },
 
     computed: {
-      oodlets() {
-        return this.$store.getters.historyOodlets;
+      oodler() {
+        return this.$store.getters.oodler;
+      }
+    },
+
+    watch: {
+      oodler: function() { //Cannot be arrow fn cause that way 'this' wouldn't be Vue instance
+        this.load()
       }
     },
 
     methods: {
       load() {
-        let payload = {
-          fromDate: this.fromDate,
-          toDate: this.toDate
-        };
-        this.$store.dispatch('historyOodletsLoad', payload);
+        this.$http.get('/oodlet', {
+          params: {
+            fromDate: moment(this.fromDate).format(),
+            toDate: moment(this.toDate).format(),
+            office: this.oodler.office
+          }})
+          .then(response => {
+            this.oodlets = response.body;
+          });
+      }
+    },
+
+    mounted() {
+      if(this.oodler) {
+        this.load()
       }
     },
 

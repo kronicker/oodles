@@ -1,18 +1,12 @@
 import oodletApi from './api/oodlet';
-import historyOodletApi from './api/historyOodlet';
 
 function initStore({ commit }, oodler) {
   commit('oodlerSave', oodler);
-  historyOodletApi.load(oodler.office)
-    .then(response => {
-      commit('historyOodletsLoad', response.body);
-    });
 }
 
 function clearStore({ commit }) {
   commit('oodlerClear');
   commit('oodletClear');
-  commit('historyOodletsClear');
 }
 
 function thingyTileAdd({ commit, state }, quantifiedThingy) {
@@ -52,19 +46,11 @@ function oodletReset({ commit, state }) {
   });
 }
 
-function historyOodletsLoad({commit, state}, payload) {
-  historyOodletApi.load(state.oodler.oodler.office, payload.fromDate, payload.toDate)
-    .then(response => {
-      commit('historyOodletsLoad', response.body);
-    });
-}
-
 export {
   initStore,
   clearStore,
   thingyTileAdd,
   quantifiedThingyChange,
   oodletSet,
-  oodletReset,
-  historyOodletsLoad
+  oodletReset
 };
