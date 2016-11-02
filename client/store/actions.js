@@ -53,7 +53,6 @@ function oodletReset({ commit, state }) {
 }
 
 function historyOodletsLoad({commit, state}, payload) {
-  console.log(state.oodler);
   historyOodletApi.load(state.oodler.oodler.office, payload.fromDate, payload.toDate)
     .then(response => {
       commit('historyOodletsLoad', response.body);
