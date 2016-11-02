@@ -7,6 +7,7 @@ import * as actions from './actions';
 import * as getters from './getters';
 import oodlet from './modules/oodlet';
 import oodler from './modules/oodler';
+import historyOodlet from './modules/historyOodlet';
 
 Vue.use(Vuex);
 
@@ -15,6 +16,7 @@ export default new Vuex.Store({
   getters,
   modules: {
     oodlet,
-    oodler
+    oodler,
+    historyOodlet
   }
 });

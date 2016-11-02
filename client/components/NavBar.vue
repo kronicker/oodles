@@ -16,7 +16,7 @@
         this.$http.delete('/session/destroy')
           .then(
             response => {
-              this.$store.commit('oodlerSave', {});
+              this.$store.dispatch('clearStore', response.body);
               this.$router.replace({ path: '/login' });
             },
             response => {

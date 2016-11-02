@@ -5,8 +5,8 @@ const Oodlet = require('../models/oodlet');
 const Oodler = require('../models/oodler');
 
 function list(request, reply) {
-  let fromDate = moment(request.query.fromDate).toDate() || moment().subtract(3, 'months').toDate();
-  let toDate = moment(request.query.toDate).add(1, 'days').toDate() || moment().toDate();
+  let fromDate = (() => { return request.query.fromDate ? moment(request.query.fromDate).toDate() : moment().subtract(3, 'months').toDate(); })();
+  let toDate = (() => { return request.query.fromDate ? moment(request.query.toDate).add(1, 'days').toDate() : moment().toDate(); })();
   let office = request.query.office;
 
   return Oodlet

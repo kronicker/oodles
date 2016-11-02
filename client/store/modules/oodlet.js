@@ -41,6 +41,12 @@ const mutations = {
 
   oodletReset(state) {
     state.quantifiedThingies = [];
+  },
+
+  oodletClear(state) {
+    state.quantifiedThingies = [];
+    state.id = '';
+    state.dueDate = undefined;
   }
 };
 

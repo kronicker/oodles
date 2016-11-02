@@ -40,34 +40,25 @@
   export default{
     data() {
       return{
-        oodlets: [],
         fromDate: moment().subtract(3, 'months').format('YYYY-MM-DD'),
         toDate: moment().format('YYYY-MM-DD')
       }
     },
 
     computed: {
-      oodler() {
-        return this.$store.getters.oodler;
+      oodlets() {
+        return this.$store.getters.historyOodlets;
       }
     },
 
     methods: {
       load() {
-        this.$http.get('/oodlet', {
-          params: {
-            fromDate: moment(this.fromDate).format(),
-            toDate: moment(this.toDate).format(),
-            office: this.oodler.office
-          }})
-          .then(response => {
-            this.oodlets = response.body;
-          });
+        let payload = {
+          fromDate: this.fromDate,
+          toDate: this.toDate
+        };
+        this.$store.dispatch('historyOodletsLoad', payload);
       }
-    },
-
-    created() {
-      this.load();
     },
 
     components: { HistoryOodlet }
