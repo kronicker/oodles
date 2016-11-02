@@ -14,7 +14,7 @@
         <div class="form-group col-md-2">
           <div class="input-group">
             <span class="input-group-addon">To: </span>
-            <input type="date" class="form-control" @change="load" v-model="toDate">
+            <input type="date" class="form-control" @change="load" :max="maxDate" v-model="toDate">
           </div>
         </div>
       </div>
@@ -41,7 +41,8 @@
     data() {
       return{
         fromDate: moment().subtract(3, 'months').format('YYYY-MM-DD'),
-        toDate: moment().format('YYYY-MM-DD')
+        toDate: moment().format('YYYY-MM-DD'),
+        maxDate: moment().format('YYYY-MM-DD')
       }
     },
 
