@@ -16,7 +16,7 @@
         this.$http.delete('/session/destroy')
           .then(
             response => {
-              this.$store.dispatch('clearStore', response.body);
+              this.$store.dispatch('clearStore');
               this.$router.replace({ path: '/login' });
             },
             response => {
