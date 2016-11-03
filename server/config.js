@@ -3,7 +3,8 @@
  */
 let config = {
   server: {
-    port: 3000
+    port: 3000,
+    host: 'localhost'
   },
 
   database: {
@@ -40,8 +41,7 @@ let config = {
     options: {
       apiKey: 'key-73db2b70c2c5fda574df5e2fd938504f',
       domain: 'sandbox629530a6164643d28eb2f1767607d8db.mailgun.org'
-    },
-    domain: 'oodles.extensionengine.com'
+    }
   }
 };
 
