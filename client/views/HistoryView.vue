@@ -57,7 +57,8 @@
     },
 
     watch: {
-      appInitialized: function() { //Cannot be arrow fn cause that way 'this' wouldn't be Vue instance
+      // Cannot use an arrow fn because 'this' wouldn't be Vue instance
+      appInitialized: function() {
         this.load()
       }
     },
