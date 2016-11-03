@@ -2,11 +2,13 @@ import oodletApi from './api/oodlet';
 
 function initStore({ commit }, oodler) {
   commit('oodlerSave', oodler);
+  commit('storeInitialized', oodler);
 }
 
 function clearStore({ commit }) {
   commit('oodlerClear');
   commit('oodletClear');
+  commit('storeUninitialized');
 }
 
 function thingyTileAdd({ commit, state }, quantifiedThingy) {

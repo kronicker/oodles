@@ -50,11 +50,14 @@
     computed: {
       oodler() {
         return this.$store.getters.oodler;
+      },
+      appInitialized() {
+        return this.$store.getters.appInitialized;
       }
     },
 
     watch: {
-      oodler: function() { //Cannot be arrow fn cause that way 'this' wouldn't be Vue instance
+      appInitialized: function() { //Cannot be arrow fn cause that way 'this' wouldn't be Vue instance
         this.load()
       }
     },
@@ -74,7 +77,7 @@
     },
 
     mounted() {
-      if(this.oodler) {
+      if(this.appInitialized) {
         this.load()
       }
     },
