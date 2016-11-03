@@ -3,19 +3,36 @@
     <div class="page-header">
       <h1 class="text-info">Pending oodlet</h1>
     </div>
+    <div class="row">
+      <div class="pending-oodlets col-md-9">
+        <div class="page-header">
+          <h4 class="text-info">Pending oodlets</h4>
+        </div>
 
-    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-        <pending-oodlet v-for="pendingOodlet in pendingOodlets" :pendingOodlet="pendingOodlet"></pending-oodlet>
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            <pending-oodlet v-for="pendingOodlet in pendingOodlets" :pendingOodlet="pendingOodlet"></pending-oodlet>
+        </div>
+      </div>
+
+      <div class="total-oodlet col-md-3">
+        <div class="page-header">
+          <h4 class="text-info">Total oodlet</h4>
+        </div>
+        <total-oodlet></total-oodlet>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
   import PendingOodlet from '../components/PendingOodlet.vue';
+  import TotalOodlet from '../components/TotalOodlet.vue';
 
   export default {
     data() {
-      totalOodlet: {}
+      return {
+        totalOodlet: {}
+      }
     },
 
     computed: {
@@ -30,7 +47,7 @@
                 ];
       }
     },
-    components: { PendingOodlet }
+    components: { PendingOodlet, TotalOodlet }
   }
 </script>
 

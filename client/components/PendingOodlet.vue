@@ -40,10 +40,12 @@
             <th class="col-md-2">Quantity</th>
             <th class="col-md-2">Unit</th>
           </tr>
+          </thead>
+          <tbody>
           <tr v-for="quantifiedThingy in pendingOodlet.quantifiedThingies">
-            <td>{{ quantifiedThingy.name }}</td>
-            <td class="col-md-2 right">{{ quantifiedThingy.qty }}</td>
-            <td class="col-md-2">{{ quantifiedThingy.unit }}</td>
+            <td>{{ quantifiedThingy }}</td>
+            <td class="col-md-2 right">{{ quantifiedThingy }}</td>
+            <td class="col-md-2">{{ quantifiedThingy }}</td>
           </tr>
           </tbody>
         </table>
