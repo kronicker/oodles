@@ -62,7 +62,7 @@
       }
     },
 
-    created() {
+    mounted() {
       if(this.appInitialized) {
         this.load();
       }
