@@ -1,10 +1,7 @@
 /**
  * Created by toma on 20.10.16..
  */
-const config = {
-  apiKey: 'key-73db2b70c2c5fda574df5e2fd938504f',
-  domain: 'sandbox629530a6164643d28eb2f1767607d8db.mailgun.org'
-};
+const config = require('../config').mailgun;
 const mailgun = require('mailgun-js')(config);
 
 function sendReset (token, email) {

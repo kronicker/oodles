@@ -1,13 +1,7 @@
 'use strict';
 
 const CookieAuth = require('hapi-auth-cookie');
-
-const config = {
-  password: 'BorzinaITominaAplikacijaZaOodlanje',
-  cookie: 'oodles-cookie',
-  isSecure: false,
-  ttl: 24 * 60 * 60 * 1000 //1 day
-};
+const config = require('../config').auth;
 
 let sessionStrategy = {
   register: (server, options, next) => {
