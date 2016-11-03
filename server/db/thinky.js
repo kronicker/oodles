@@ -1,10 +1,10 @@
 /**
  * Created by toma on 22.09.16..
  */
-const dbName = require('../config').dbName;
+const databaseConfig = require('../config').database;
 
 var thinky = require('thinky')({
-  db: dbName
+  db: databaseConfig.name
 });
 
 module.exports = thinky;

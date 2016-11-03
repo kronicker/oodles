@@ -1,12 +1,12 @@
 /**
  * Created by toma on 20.10.16..
  */
-const config = require('../config').mailgun;
-const mailgun = require('mailgun-js')(config);
+const mailgunConfig = require('../config').mailgun;
+const mailgun = require('mailgun-js')(mailgunConfig.options);
 
 function sendReset (token, email) {
   let data = {
-    from: 'Oodles <no-reply@oodles.extensionengine.com>',
+    from: 'Oodles <no-reply@' + mailgunConfig.domain + '>',
     to: email,
     subject: 'Password reset',
     text: 'Please use the following link to reset your password: http://localhost:3000/#/password/new?token=' +
