@@ -1,5 +1,8 @@
 <template>
   <div id="settingsView">
+    <div class="page-header">
+      <h1 class="text-info">Settings</h1>
+    </div>
     <div class="row">
       <div class="col-md-4 col-md-offset-3 well">
         <ul>
@@ -23,14 +26,19 @@
 </script>
 
 <style lang="sass" scoped>
-  #settingsView .well {
-    margin-top: 200px;
-    ul {
-      list-style: none;
-      padding: 0;
-      font-size: x-large;
+  #settingsView {
+    .page-header { margin: 0px 0 10px; }
 
-      li { text-align: center; }
+    .well {
+      margin-top: 200px;
+      ul {
+        list-style: none;
+        padding: 0;
+        font-size: x-large;
+
+        li { text-align: center; }
+      }
     }
+
   }
 </style>

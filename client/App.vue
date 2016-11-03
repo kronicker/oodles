@@ -1,8 +1,17 @@
 <template>
-  <div id="app" class="container-fluid">
-    <div class="row">
-      <nav-bar v-if="loggedIn" class="col-md-1"></nav-bar>
-      <router-view class="col-md-11 col-md-offset-1"></router-view>
+  <div id="app">
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <router-link to="/" class="navbar-brand"></router-link>
+        </div>
+      </div>
+    </nav>
+    <div class="container-fluid">
+      <div class="row">
+        <nav-bar v-if="loggedIn" class="col-md-1"></nav-bar>
+        <router-view class="col-md-11 col-md-offset-1"></router-view>
+      </div>
     </div>
   </div>
 </template>
@@ -40,6 +49,14 @@
 
 <style lang="sass">
   body {
+    .navbar {
+      margin-bottom: 0;
+
+      .navbar-brand {
+        background: url('./assets/ee-labs_bar-logo.png') center / contain no-repeat;
+        width: 140px;
+      }
+    }
     background: url('./assets/background.png') repeat;
   }
 </style>

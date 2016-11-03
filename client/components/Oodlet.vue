@@ -1,9 +1,5 @@
 <template>
   <div class="oodlet">
-    <div>
-      <h1>Oodlet</h1>
-    </div>
-
     <div class="panel panel-default">
       <div class="panel-heading">
         <strong>Due in: </strong>
@@ -86,11 +82,7 @@
 
 <style lang="sass" scoped>
   .oodlet {
-    h1 {
-      border-bottom: 1px solid #4E5D6C;
-      margin-top: 10px;
-      padding-bottom: 7px;
-    }
+    margin-top: 10px;
 
     .due-in-countdown {
       &.green { color: #5cb85c; }
