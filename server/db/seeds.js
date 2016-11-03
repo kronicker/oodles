@@ -11,28 +11,14 @@ let Oodlet = require('../models/oodlet');
 const seedsQuantity = process.env.DB_SEED_QTY || 10;
 
 // Dev Accounts
-let devs = [{
-  firstName: 'Toma',
-  lastName: 'Zelic',
-  email: 'toma@extensionengine.com',
-  password: bcrypt.hashSync('password', 10),
-  scope: 'user',
-  office: 'C7'
-},{
-  firstName: 'Ante',
-  lastName: 'Borzic',
-  email: 'aborzic@extensionengine.com',
-  password: bcrypt.hashSync('password', 10),
-  scope: 'user',
-  office: 'C7'
-}];
+const dbConfig = require('../config').database;
 
 function* generateOodlers(quantity) {
   console.log(`Generating ${quantity} Oodlers...`);
 
   // Save devs to db
-  for (let i = 0; i < devs.length; i++) {
-    yield Oodler(devs[i]).save();
+  for (let i = 0; i < dbConfig.devsAccounts.length; i++) {
+    yield Oodler(dbConfig.devsAccounts[i]).save();
   }
 
   for (let i = 0; i < quantity; i++) {
@@ -40,7 +26,7 @@ function* generateOodlers(quantity) {
       firstName: faker.name.firstName(),
       lastName: faker.name.lastName(),
       email: faker.internet.email(),
-      password: bcrypt.hashSync('password', 10),
+      password: bcrypt.hashSync(dbConfig.defaultOodlerPassword, dbConfig.defaultBcryptRounds),
       scope: 'user',
       office: faker.random.word().toUpperCase().slice(-1) + faker.random.number(10)
     })
