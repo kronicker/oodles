@@ -8,6 +8,10 @@ const state = {
 const mutations = {
   oodlerSave(state, oodler) {
     state.oodler = oodler;
+  },
+
+  oodlerClear(state) {
+    state.oodler = {};
   }
 };
 

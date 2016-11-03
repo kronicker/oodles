@@ -2,10 +2,11 @@
  * Created by toma on 19.10.16..
  */
 const bcrypt = require('bcrypt');
+const rounds = require('../config').database.defaultBcryptRounds;
 
 function encrypt(password) {
   return new Promise((resolve, reject) => {
-    bcrypt.hash(password, 10, (err, hash) => {
+    bcrypt.hash(password, rounds, (err, hash) => {
       return err ? reject(err) : resolve(hash);
     });
   });

@@ -2,8 +2,9 @@
 
 const webpackServer = require("./webpack-server");
 const apiServer = require("./api-server");
+const serverConfig = require('./server/config').server;
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || serverConfig.port;
 const PROD = process.env.NODE_ENV === "production";
 
 if (PROD) {

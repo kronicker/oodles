@@ -2,27 +2,28 @@
  * Created by toma on 21.09.16..
  */
 'use strict';
+const glob = require('glob');
+const path = require('path');
 const seeds = require('./seeds.js');
+const models = glob.sync('./server/models/*');
+
 
 exports.register = function (server, options, next) {
 
-  require('../models/thingy');
-  require('../models/oodler');
-  require('../models/oodlet');
-
   // Only seed if explicitly stated
   if (process.env.DB_SEED === 'true') {
-    console.log('Started seeding!');
     seeds();
   }
 
   // Only reset if explicitly stated
   if (process.env.DB_RESET === 'true') {
-    // TODO: IMPLEMENT ME, I DON'T WORK
-    //
-    // thinky.dbDrop('oodles').run(function() {
-    //   seeds();
-    // });
+
+  Promise.all(function* () {
+      for(let model of models) {
+        yield require(path.resolve(model)).delete().run();
+      }
+    }())
+    .then(seeds());
  }
 
   return next();

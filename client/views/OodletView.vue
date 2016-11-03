@@ -1,5 +1,8 @@
 <template>
   <div id="oodletView">
+    <div class="page-header">
+      <h1 class="text-info">Oodlet</h1>
+    </div>
     <div class="row">
       <div class="filtered-thingies col-md-9">
         <div class="row">
@@ -30,6 +33,9 @@
     },
 
     computed: {
+      appInitialized() {
+        return this.$store.getters.appInitialized;
+      },
       filteredThingies() {
         if(this.searchString.length < 1) {
           return this.thingies;
@@ -42,16 +48,27 @@
       }
     },
 
-    methods: {
-      thingyFinderUpdate(query) {
-        this.searchString = query;
+    watch: {
+      appInitialized: function() { //Cannot be arrow fn cause that way 'this' wouldn't be Vue instance
+        this.load()
       }
     },
 
-    created() {
-      this.$http.get('/thingy').then((response) => {
-        this.thingies = response.body;
-      });
+    methods: {
+      thingyFinderUpdate(query) {
+        this.searchString = query;
+      },
+      load() {
+        this.$http.get('/thingy').then((response) => {
+          this.thingies = response.body;
+        });
+      }
+    },
+
+    mounted() {
+      if(this.appInitialized) {
+        this.load();
+      }
     },
 
     components: {
@@ -63,8 +80,12 @@
 </script>
 
 <style lang="sass" scoped>
-  .filtered-thingies ul {
-    padding: 0;
-    list-style: none;
+  #oodletView {
+    .page-header { margin: 0px 0 10px; }
+
+    .filtered-thingies ul {
+      padding: 0;
+      list-style: none;
+    }
   }
 </style>

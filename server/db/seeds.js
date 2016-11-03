@@ -1,51 +1,49 @@
 'use strict';
 const faker = require('faker');
 const object = require('lodash/object');
+const collection = require('lodash/collection');
 const moment = require('moment');
+const bcrypt = require('bcrypt');
 let Thingy = require('../models/thingy');
 let Oodler = require('../models/oodler');
 let Oodlet = require('../models/oodlet');
-let bcrypt = require('bcrypt');
 
-function generateOodlers(quantity, callback) {
+const seedsQuantity = process.env.DB_SEED_QTY || 10;
+
+// Dev Accounts
+const dbConfig = require('../config').database;
+
+function* generateOodlers(quantity) {
   console.log(`Generating ${quantity} Oodlers...`);
 
-  let oodlers = [];
+  // Save devs to db
+  for (let i = 0; i < dbConfig.devsAccounts.length; i++) {
+    yield Oodler(dbConfig.devsAccounts[i]).save();
+  }
 
   for (let i = 0; i < quantity; i++) {
-    Oodler({
+    yield Oodler({
       firstName: faker.name.firstName(),
       lastName: faker.name.lastName(),
       email: faker.internet.email(),
-      password: bcrypt.hashSync('password', 10),
+      password: bcrypt.hashSync(dbConfig.defaultOodlerPassword, dbConfig.defaultBcryptRounds),
       scope: 'user',
       office: faker.random.word().toUpperCase().slice(-1) + faker.random.number(10)
     })
-    .save()
-    .then(oodler => {
-      oodlers.push(oodler);
-      if(i+1 === quantity) { callback(oodlers); }
-    });
+    .save();
   }
 }
 
-function generateQuantifiedThingies(quantity, callback) {
+function* generateThingies(quantity) {
   console.log(`Generating ${quantity} quantifiedThingies...`);
 
-  let quantifiedThingies = [];
-
   for (let i = 0; i < quantity; i++) {
-    Thingy({
+    yield Thingy({
       name: faker.commerce.product(),
-      price: faker.commerce.price(60),
       unit: ['kg', 'kom'][Math.floor(Math.random() * 2)],
       pictureUrl: 'https://placeimg.com/240/200/any'
     })
-    .save()
-    .then(thingy => {
-      quantifiedThingies.push(object.merge(thingy, { qty: faker.random.number({ 'min': 1,'max': 30 })}));
-      if(i+1 === quantity) { callback(quantifiedThingies); }
-    });
+    .save();
   }
 }
 
@@ -61,8 +59,7 @@ function generateOodlets(quantity, oodlers, quantifiedThingies) {
       updatedAt: createDate,
       dueDate: moment(createDate).add(2, 'weeks').toDate(),
       oodler: oodlers[Math.floor(Math.random() * oodlers.length)],
-      quantifiedThingies: quantifiedThingies,
-      total: faker.random.number(10)
+      quantifiedThingies: quantifiedThingies
     })
     .save();
   }
@@ -72,11 +69,15 @@ module.exports = () => {
 
   console.log('Started seeding');
 
-  generateOodlers(10, oodlers => {
-    generateQuantifiedThingies(10, (quantifiedThingies) => {
-      generateOodlets(10, oodlers, quantifiedThingies);
+  Promise.all([...generateOodlers(seedsQuantity), ...generateThingies(seedsQuantity)])
+    .then(values => {
+      let oodlers = collection.filter(values, val => val.email);
+      let quantifiedThingies = collection.filter(values, val => val.name);
+
+      collection.forEach(quantifiedThingies, thingy => object.merge(thingy, { qty: faker.random.number({ 'min': 1,'max': 30 })}));
+
+      generateOodlets(seedsQuantity, oodlers, quantifiedThingies);
     });
-  });
 };
 
 

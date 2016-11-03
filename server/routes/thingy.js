@@ -1,4 +1,5 @@
 'use strict';
+const Joi = require('joi');
 const Thingy = require('../models/thingy');
 
 function list(request, reply) {
@@ -24,7 +25,6 @@ function get(request, reply) {
 function create(request, reply) {
   return Thingy({
       name: request.payload.name,
-      price: request.payload.price,
       unit: request.payload.unit,
       pictureUrl: request.payload.pictureUrl
     })
@@ -38,7 +38,6 @@ function update(request, reply) {
   return Thingy.get(request.params.id)
     .update({
       name: request.payload.name,
-      price: request.payload.price,
       unit: request.payload.unit,
       pictureUrl: request.payload.pictureUrl
     })
@@ -61,33 +60,65 @@ let routes = [
   {
     method: 'GET',
     path: '/thingy',
-    handler: list
+    config: {
+      handler: list
+    }
   },
   {
     method: 'GET',
     path: '/thingy/{id}',
-    handler: get
+    config: {
+      handler: get,
+      validate: {
+        params: {
+          id: Joi.string().required()
+        }
+      }
+    }
   },
   {
     method: 'POST',
     path: '/thingy',
-    handler: create
+    config: {
+      handler: create,
+      validate: {
+        payload: {
+          name: Joi.string().required(),
+          unit: Joi.string(),
+          pictureUrl: Joi.string().uri()
+        }
+      }
+    }
   },
   {
     method: 'PUT',
     path: '/thingy/{id}',
-    handler: update
+    config: {
+      handler: update,
+      validate: {
+        params: {
+          id: Joi.string().required()
+        },
+        payload: {
+          name: Joi.string().required(),
+          unit: Joi.string(),
+          pictureUrl: Joi.string().uri()
+        }
+      }
+    }
   },
   {
     method: 'DELETE',
     path: '/thingy/{id}',
-    handler: remove
+    config: {
+      handler: remove,
+      validate: {
+        params: {
+          id: Joi.string().required()
+        }
+      }
+    }
   }
 ];
 
-module.exports = function (server, errorHandler) {
-  for (let route of routes) {
-    route.handler = errorHandler(route.handler);
-    server.route(route);
-  }
-};
+module.exports = routes;
