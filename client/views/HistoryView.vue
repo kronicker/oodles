@@ -14,7 +14,7 @@
         <div class="form-group col-md-2">
           <div class="input-group">
             <span class="input-group-addon">To: </span>
-            <input type="date" class="form-control" @change="load" v-model="toDate">
+            <input type="date" class="form-control" @change="load" :max="maxDate" v-model="toDate">
           </div>
         </div>
       </div>
@@ -42,13 +42,24 @@
       return{
         oodlets: [],
         fromDate: moment().subtract(3, 'months').format('YYYY-MM-DD'),
-        toDate: moment().format('YYYY-MM-DD')
+        toDate: moment().format('YYYY-MM-DD'),
+        maxDate: moment().format('YYYY-MM-DD')
       }
     },
 
     computed: {
       oodler() {
         return this.$store.getters.oodler;
+      },
+      appInitialized() {
+        return this.$store.getters.appInitialized;
+      }
+    },
+
+    watch: {
+      // Cannot use an arrow fn because 'this' wouldn't be Vue instance
+      appInitialized: function() {
+        this.load()
       }
     },
 
@@ -66,8 +77,10 @@
       }
     },
 
-    created() {
-      this.load();
+    mounted() {
+      if(this.appInitialized) {
+        this.load()
+      }
     },
 
     components: { HistoryOodlet }

@@ -26,7 +26,7 @@
       .then(
         response => {
           if (response.ok) {
-            this.$store.commit('oodlerSave', response.body);
+            this.$store.dispatch('initStore', response.body);
           }
         },
         response => {

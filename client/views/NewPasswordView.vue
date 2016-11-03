@@ -58,7 +58,7 @@
           })
           .then(
             response => {
-              this.$store.commit('oodlerSave', response.body);
+              this.$store.dispatch('initStore', response.body);
               this.$router.replace({ path: '/' });
             },
             response => {
