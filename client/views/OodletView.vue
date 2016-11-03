@@ -1,5 +1,8 @@
 <template>
   <div id="oodletView">
+    <div class="page-header">
+      <h1 class="text-info">Oodlet</h1>
+    </div>
     <div class="row">
       <div class="filtered-thingies col-md-9">
         <div class="row">
@@ -77,8 +80,12 @@
 </script>
 
 <style lang="sass" scoped>
-  .filtered-thingies ul {
-    padding: 0;
-    list-style: none;
+  #oodletView {
+    .page-header { margin: 0px 0 10px; }
+
+    .filtered-thingies ul {
+      padding: 0;
+      list-style: none;
+    }
   }
 </style>

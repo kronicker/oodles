@@ -1,8 +1,13 @@
 <template>
-  <div id="app" class="container-fluid">
-    <div class="row">
-      <nav-bar v-if="loggedIn" class="col-md-1"></nav-bar>
-      <router-view class="col-md-11 col-md-offset-1"></router-view>
+  <div id="app">
+    <div class="container-fluid">
+      <div class="row">
+        <nav-bar v-if="loggedIn" class="col-md-1"></nav-bar>
+        <router-view class="col-md-11 col-md-offset-1"></router-view>
+      </div>
+    </div>
+    <div class="logo">
+      <img src="./assets/ee-labs-logo.png" alt="EE Labs">
     </div>
   </div>
 </template>
@@ -40,6 +45,13 @@
 
 <style lang="sass">
   body {
+    .logo {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      z-index: -1;
+    }
+
     background: url('./assets/background.png') repeat;
   }
 </style>

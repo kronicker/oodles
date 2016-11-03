@@ -3,7 +3,7 @@
     <div class="header page-header">
       <div class="row">
         <div class="col-md-3">
-          <h1>History</h1>
+          <h1 class="text-info">History</h1>
         </div>
         <div class="form-group col-md-offset-5 col-md-2">
           <div class="input-group">
@@ -89,9 +89,13 @@
 
 <style lang="sass" scoped>
   #historyView {
-    .header h1, .header .form-group {
-      margin-top: 20px;
-      margin-bottom: 10px;
+    .page-header {
+      margin: 0px 0 10px;
+
+      h1, .form-group {
+        margin-top: 20px;
+        margin-bottom: 10px;
+      }
     }
 
     ul.oodlets-list {
