@@ -1,6 +1,12 @@
 <template>
   <div class="oodlet">
     <div class="panel panel-default">
+      <div class="panel-heading">
+        <strong>Offices: </strong>
+        <ul class="list-inline">
+          <li v-for="office in totalOodlet.offices">{{ office }}</li>
+        </ul>
+      </div>
       <div class="panel-body">
         <table class="table table-striped table-hover">
           <tbody>
@@ -12,6 +18,9 @@
           </tbody>
         </table>
       </div>
+      <div class="panel-footer">
+        <button class="btn btn-success" @click="">Order</button>
+      </div>
     </div>
   </div>
 </template>
@@ -21,8 +30,11 @@
   export default {
     computed: {
       totalOodlet() {
+        //return this.$store.getters.totalOodlet
+
+        //Mock-uped total oodlet
         return {
-          oodler: 'mate',
+          offices: ['C7', 'C8', 'D3', 'C18'],
           quantifiedThingies: [
             {
               id: "df997beb-21ee-44e8-8393-2f561f89b45e",
@@ -59,5 +71,4 @@
 </script>
 
 <style lang="sass" scoped>
-
 </style>

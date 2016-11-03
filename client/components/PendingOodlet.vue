@@ -1,37 +1,38 @@
 <template>
   <div class="panel panel-default">
-    <div class="panel-heading" role="tab" :id="'heading'+pendingOodlet.office">
+    <div class="panel-heading" role="tab" :id="'heading'+pendingOodlet.oodler.office">
       <div class="row panel-title">
         <div class="col-md-1">
-          <label>
-            <input type="checkbox">
-          </label>
+          <button class="btn btn-danger" v-show="added" @click="removeOodlet">Remove</button>
+          <button class="btn btn-success" v-show="!added" @click="addOodlet">Add</button>
         </div>
-        <a role="button" data-toggle="collapse" data-parent="#accordion" :href="'#colllapse'+pendingOodlet.office" aria-expanded="false" :aria-controls="'colllapse'+pendingOodlet.office">
+        <a role="button" data-toggle="collapse" data-parent="#accordion" :href="'#colllapse'+pendingOodlet.oodler.office"
+           aria-expanded="false" :aria-controls="'colllapse'+pendingOodlet.oodler.office">
           <div class="col-md-2">
             <h4 class="panel-title">
-              {{ pendingOodlet.office }}
+              {{ pendingOodlet.oodler.office }}
             </h4>
           </div>
           <div class="col-md-3">
             <h4 class="panel-title">
-              Last updated: {{ updatedAt }}
+              Last updated: {{ pendingOodlet.updatedAt }}
             </h4>
           </div>
           <div class="col-md-3">
             <h4 class="panel-title">
-              Due date: Sutra
+              Due date: {{ pendingOodlet.dueDate }}
             </h4>
           </div>
           <div class="col-md-3">
             <h4 class="panel-title">
-              Submited by: Mate
+              Submited by: {{ pendingOodlet.oodler.firstName }} {{ pendingOodlet.oodler.lastName }}
             </h4>
           </div>
         </a>
       </div>
     </div>
-    <div :id="'colllapse'+pendingOodlet.office" class="panel-collapse collapse" role="tabpanel" :aria-labelledby="'heading'+pendingOodlet.office">
+    <div :id="'colllapse'+pendingOodlet.oodler.office" class="panel-collapse collapse" role="tabpanel"
+         :aria-labelledby="'heading'+pendingOodlet.oodler.office">
       <div class="panel-body">
         <table class="table table-striped table-hover">
           <thead>
@@ -43,9 +44,9 @@
           </thead>
           <tbody>
           <tr v-for="quantifiedThingy in pendingOodlet.quantifiedThingies">
-            <td>{{ quantifiedThingy }}</td>
-            <td class="col-md-2 right">{{ quantifiedThingy }}</td>
-            <td class="col-md-2">{{ quantifiedThingy }}</td>
+            <td>{{ quantifiedThingy.name }}</td>
+            <td class="col-md-2 right">{{ quantifiedThingy.qty }}</td>
+            <td class="col-md-2">{{ quantifiedThingy.unit }}</td>
           </tr>
           </tbody>
         </table>
@@ -58,6 +59,12 @@
   import moment from 'moment';
 
   export default{
+    data() {
+      return {
+        added: true
+      }
+    },
+
     props: ['pendingOodlet'],
 
     computed: {
@@ -70,11 +77,15 @@
     },
 
     methods: {
-      load() {
-        this.$store.dispatch('oodletSet', this.oodlet.quantifiedThingies);
-      }
+      addOodlet() {
+        this.added = true;
+      },
+      removeOodlet() {
+        this.added = false;
+      },
     }
   }
+
 </script>
 
 <style>
