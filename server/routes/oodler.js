@@ -64,7 +64,7 @@ function update(request, reply) {
           lastName: request.payload.lastName,
           email: request.payload.email,
           office: request.payload.office,
-          scope: request.payload.office
+          scope: request.payload.scope
         })
         .run()
         .then(result => {
