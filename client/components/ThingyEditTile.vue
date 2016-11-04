@@ -4,27 +4,27 @@
       <img :src="thingy.pictureUrl">
       <div class="row">
         <form class="form-horizontal col-md-12">
-          <div class="form-group">
+          <div class="form-group form-group-sm">
             <label for="name" class="col-lg-2 control-label">Name</label>
             <div class="col-lg-10">
-              <input type="text" v-model="thingy.name" class="form-control" id="name">
+              <input type="text" v-model="thingy.name" class="form-control input-sm" id="name">
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group form-group-sm">
             <label for="unit" class="col-lg-2 control-label">Unit</label>
             <div class="col-lg-10">
-              <input type="text" v-model="thingy.unit" class="form-control" id="unit">
+              <input type="text" v-model="thingy.unit" class="form-control input-sm" id="unit">
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group form-group-sm">
             <label for="pictureUrl" class="col-lg-2 control-label">Picture URL</label>
             <div class="col-lg-10">
-              <input type="text" v-model="thingy.pictureUrl" class="form-control" id="pictureUrl">
+              <input type="text" v-model="thingy.pictureUrl" class="form-control input-sm" id="pictureUrl">
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group form-group-sm">
             <div class="col-lg-5 col-lg-offset-7">
-              <button @click="updateThingy" class="btn btn-block btn-success">Save</button>
+              <button @click="updateThingy" class="btn btn-sm btn-block btn-success">Save</button>
             </div>
           </div>
         </form>
@@ -59,8 +59,8 @@
 </script>
 
 <style lang="sass" scoped>
-  .thingy-edit-tile .thumbnail img{
-    margin-bottom: 5px;
+  .thingy-edit-tile  .thumbnail {
+    padding: 5px 10px 0;
+    img { margin-bottom: 5px; }
   }
-
 </style>
