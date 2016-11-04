@@ -14,6 +14,7 @@ import NewPasswordView from '../views/NewPasswordView.vue';
 import ResetPasswordView from '../views/ResetPasswordView.vue';
 import PendingOodletsView from '../views/PendingOodletsView.vue';
 import TotalOodletHistoryView from '../views/TotalOodletHistoryView.vue';
+import ThingyEditorView from '../views/ThingyEditorView.vue';
 
 const routes = [
   {
@@ -50,6 +51,10 @@ const routes = [
   {
     path: '/admin/history',
     component: TotalOodletHistoryView
+  },
+  {
+    path: '/admin/thingyEditor',
+    component: ThingyEditorView
   }
 ];
 
