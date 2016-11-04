@@ -15,12 +15,12 @@
           </div>
           <div class="col-md-3">
             <h4 class="panel-title">
-              Last updated: {{ pendingOodlet.updatedAt }}
+              Last updated: {{ updatedAt }}
             </h4>
           </div>
           <div class="col-md-3">
             <h4 class="panel-title">
-              Due date: {{ pendingOodlet.dueDate }}
+              Due date: {{ dueDate }}
             </h4>
           </div>
           <div class="col-md-3">
@@ -90,5 +90,5 @@
 
 </script>
 
-<style>
+<style lang="sass" scoped>
 </style>
