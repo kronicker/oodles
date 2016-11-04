@@ -1,16 +1,16 @@
 <template>
-  <div id="thingyEditorView">
+  <div id="oodlerEditorView">
     <div class="page-header">
-      <h1 class="text-info">Thingies editor</h1>
+      <h1 class="text-info">Oodlers editor</h1>
     </div>
     <div class="row">
-      <div class="filtered-thingies col-md-12">
+      <div class="filtered-oodlers col-md-12">
         <div class="row">
           <thingy-finder class="col-md-12" @thingyFinderUpdate="thingyFinderUpdate"></thingy-finder>
         </div>
         <ul class="row">
-          <li v-for="thingy in filteredThingies" class="col-md-2">
-            <thingy-edit-tile @thingyUpdate="load" :thingy="thingy"></thingy-edit-tile>
+          <li v-for="oodler in filteredOodlers" class="col-md-2">
+            <oodler-edit-tile @oodlerUpdate="load" :oodler="oodler"></oodler-edit-tile>
           </li>
         </ul>
       </div>
@@ -20,13 +20,13 @@
 
 <script>
   import ThingyFinder from '../components/ThingyFinder.vue'
-  import ThingyEditTile from '../components/ThingyEditTile.vue'
+  import OodlerEditTile from '../components/OodlerEditTile.vue'
   
   export default{
     data() {
       return {
         searchString: '',
-        thingies: []
+        oodlers: []
       }
     },
     
@@ -34,14 +34,14 @@
       appInitialized() {
         return this.$store.getters.appInitialized;
       },
-      filteredThingies() {
+      filteredOodlers() {
         if(this.searchString.length < 1) {
-          return this.thingies;
+          return this.oodlers;
         }
         
         let searchString = this.searchString.toLowerCase();
-        return this.thingies.filter(item => {
-          return item.name.toLowerCase().indexOf(searchString) !== -1
+        return this.oodlers.filter(oodler => {
+          return (oodler.firstName+oodler.lastName+oodler.office).toLowerCase().indexOf(searchString) !== -1
         });
       }
     },
@@ -57,8 +57,8 @@
         this.searchString = query;
       },
       load() {
-        this.$http.get('/thingy').then((response) => {
-          this.thingies = response.body;
+        this.$http.get('/oodler').then((response) => {
+          this.oodlers = response.body;
         });
       }
     },
@@ -71,18 +71,18 @@
     
     components: {
       ThingyFinder,
-      ThingyEditTile
+      OodlerEditTile
     }
   }
 </script>
 
 <style lang="sass" scoped>
-  #thingyEditorView {
+  #oodlerEditorView {
     .page-header { margin: 0px 0 10px; }
     
-    .filtered-thingies ul {
-      padding: 0;
-      list-style: none;
-    }
+      .filtered-oodlers ul {
+        padding: 0;
+        list-style: none;
+      }
   }
 </style>
