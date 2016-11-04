@@ -3,14 +3,14 @@
     <div class="panel-heading" role="tab" :id="'heading'+pendingOodlet.oodler.office">
       <div class="row panel-title">
         <div class="col-md-1">
-          <button class="btn btn-danger" v-show="added" @click="removeOodlet">Remove</button>
-          <button class="btn btn-success" v-show="!added" @click="addOodlet">Add</button>
+          <button class="btn btn-danger" v-show="added" @click="removePendingOodlet">Remove</button>
+          <button class="btn btn-success" v-show="!added" @click="addPendingOodlet">Add</button>
         </div>
         <a role="button" data-toggle="collapse" data-parent="#accordion" :href="'#colllapse'+pendingOodlet.oodler.office"
            aria-expanded="false" :aria-controls="'colllapse'+pendingOodlet.oodler.office">
           <div class="col-md-2">
             <h4 class="panel-title">
-              {{ pendingOodlet.oodler.office }}
+              Office: {{ pendingOodlet.oodler.office }}
             </h4>
           </div>
           <div class="col-md-3">
@@ -77,10 +77,12 @@
     },
 
     methods: {
-      addOodlet() {
+      addPendingOodlet() {
+        //this.$store.dispatch('pendingOodletAdd', pendingOodlet)
         this.added = true;
       },
-      removeOodlet() {
+      removePendingOodlet() {
+        //this.$store.dispatch('pendingOodletRemove', pendingOodlet)
         this.added = false;
       },
     }

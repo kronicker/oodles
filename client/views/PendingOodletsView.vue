@@ -29,12 +29,6 @@
   import TotalOodlet from '../components/TotalOodlet.vue';
 
   export default {
-    data() {
-      return {
-        totalOodlet: {}
-      }
-    },
-
     computed: {
       pendingOodlets() {
         //return this.$store.getters.pendingOodlets
@@ -203,6 +197,7 @@
         ];
       }
     },
+
     components: { PendingOodlet, TotalOodlet }
   }
 

@@ -19,7 +19,33 @@
         </table>
       </div>
       <div class="panel-footer">
-        <button class="btn btn-success" @click="">Order</button>
+        <button class="btn btn-success" data-toggle="modal" data-target="#totalOodletReview">Order</button>
+      </div>
+    </div>
+
+    <div class="modal fade" data-backdrop="static" data-keyboard="false" id="totalOodletReview">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Total oodlet review</h4>
+          </div>
+          <div class="modal-body">
+            <table class="table table-striped table-hover">
+              <tbody>
+              <tr v-for="quantifiedThingy in totalOodlet.quantifiedThingies">
+                <td>{{ quantifiedThingy.name }}</td>
+                <td class="col-md-2 right">{{ quantifiedThingy.qty }}</td>
+                <td class="col-md-2">{{ quantifiedThingy.unit }}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-success" @click="order">Order</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -62,6 +88,12 @@
               unit: "kg"
             }]
         };
+      }
+    },
+
+    methods: {
+      order() {
+        //this.$store.dispatch('totalOodletOrder');
       }
     },
 
