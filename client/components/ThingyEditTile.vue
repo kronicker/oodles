@@ -7,24 +7,25 @@
           <div class="form-group form-group-sm">
             <label for="name" class="col-lg-2 control-label">Name</label>
             <div class="col-lg-10">
-              <input type="text" v-model="thingy.name" class="form-control input-sm" id="name">
+              <input type="text" v-model="thingy.name" class="form-control input-sm" id="name" :disabled="!editing">
             </div>
           </div>
           <div class="form-group form-group-sm">
             <label for="unit" class="col-lg-2 control-label">Unit</label>
             <div class="col-lg-10">
-              <input type="text" v-model="thingy.unit" class="form-control input-sm" id="unit">
+              <input type="text" v-model="thingy.unit" class="form-control input-sm" id="unit" :disabled="!editing">
             </div>
           </div>
           <div class="form-group form-group-sm">
             <label for="pictureUrl" class="col-lg-2 control-label">Picture URL</label>
             <div class="col-lg-10">
-              <input type="text" v-model="thingy.pictureUrl" class="form-control input-sm" id="pictureUrl">
+              <input type="text" v-model="thingy.pictureUrl" class="form-control input-sm" id="pictureUrl" :disabled="!editing">
             </div>
           </div>
           <div class="form-group form-group-sm">
             <div class="col-lg-5 col-lg-offset-7">
-              <button @click="updateThingy" class="btn btn-sm btn-block btn-success">Save</button>
+              <button @click="updateThingy" v-show="editing" class="btn btn-sm btn-block btn-success">Save</button>
+              <button @click="edit" v-show="!editing" class="btn btn-sm btn-block btn-primary">Edit</button>
             </div>
           </div>
         </form>
@@ -35,7 +36,13 @@
 
 <script>
   
-  export default{
+  export default {
+    data() {
+      return {
+        editing: false
+      }
+    },
+  
     props: ['thingy'],
     
     methods: {
@@ -46,13 +53,15 @@
             unit: this.thingy.unit,
             pictureUrl: this.thingy.pictureUrl
           })
-          .then(
-            response => {
+          .then(response => {
+            if(response.ok) {
               this.$emit('thingyUpdate');
-            },
-            response => {
-              
-            });
+              this.editing = false;
+            }
+          });
+      },
+      edit() {
+        this.editing = true;
       }
     }
   }

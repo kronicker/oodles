@@ -6,7 +6,7 @@
     <div class="row">
       <div class="filtered-oodlers col-md-12">
         <div class="row">
-          <thingy-finder class="col-md-12" @thingyFinderUpdate="thingyFinderUpdate"></thingy-finder>
+          <search-bar class="col-md-12" subject="oodler" @searchBarUpdate="searchBarUpdate"></search-bar>
         </div>
         <ul class="row">
           <li v-for="oodler in filteredOodlers" class="col-md-2">
@@ -19,7 +19,7 @@
 </template>
 
 <script>
-  import ThingyFinder from '../components/ThingyFinder.vue'
+  import SearchBar from '../components/SearchBar.vue'
   import OodlerEditTile from '../components/OodlerEditTile.vue'
   
   export default{
@@ -53,7 +53,7 @@
     },
     
     methods: {
-      thingyFinderUpdate(query) {
+      searchBarUpdate(query) {
         this.searchString = query;
       },
       load() {
@@ -70,7 +70,7 @@
     },
     
     components: {
-      ThingyFinder,
+      SearchBar,
       OodlerEditTile
     }
   }

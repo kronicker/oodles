@@ -41,7 +41,7 @@
 
 <script>
   
-  export default{
+  export default {
     data() {
       return {
         editing: false

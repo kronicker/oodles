@@ -6,11 +6,11 @@
     <div class="row">
       <div class="filtered-thingies col-md-12">
         <div class="row">
-          <thingy-finder class="col-md-12" @thingyFinderUpdate="thingyFinderUpdate"></thingy-finder>
+          <search-bar class="col-md-12" subject="thingy" @searchBarUpdate="searchBarUpdate"></search-bar>
         </div>
         <ul class="row">
           <li v-for="thingy in filteredThingies" class="col-md-2">
-            <thingy-edit-tile @thingyUpdate="load" :thingy="thingy"></thingy-edit-tile>
+            <thingy-edit-tile  @thingyUpdate="load" :thingy="thingy"></thingy-edit-tile>
           </li>
         </ul>
       </div>
@@ -19,7 +19,7 @@
 </template>
 
 <script>
-  import ThingyFinder from '../components/ThingyFinder.vue'
+  import SearchBar from '../components/SearchBar.vue'
   import ThingyEditTile from '../components/ThingyEditTile.vue'
   
   export default{
@@ -53,7 +53,7 @@
     },
     
     methods: {
-      thingyFinderUpdate(query) {
+      searchBarUpdate(query) {
         this.searchString = query;
       },
       load() {
@@ -70,7 +70,7 @@
     },
     
     components: {
-      ThingyFinder,
+      SearchBar,
       ThingyEditTile
     }
   }
