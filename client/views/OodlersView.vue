@@ -6,7 +6,7 @@
     <div class="row">
       <div class="filtered-oodlers col-md-12">
         <div class="row">
-          <search-bar class="col-md-12" subject="oodler" @searchBarUpdate="searchBarUpdate"></search-bar>
+          <search-bar class="col-md-12" subject="oodler by first name, last name or office" @searchBarUpdate="searchBarUpdate"></search-bar>
         </div>
         <ul class="row">
           <li v-for="oodler in filteredOodlers" class="col-md-3">
