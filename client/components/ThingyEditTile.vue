@@ -1,7 +1,7 @@
 <template>
   <div class="thingy-edit-tile">
     <div class="thumbnail">
-      <img :src="thingy.pictureUrl">
+      <img :src="originalThingy.pictureUrl">
       <div class="row">
         <form class="form-horizontal col-md-12">
           <div class="form-group form-group-sm">
@@ -23,8 +23,13 @@
             </div>
           </div>
           <div class="form-group form-group-sm">
-            <div class="col-lg-5 col-lg-offset-7">
+            <div class="col-sm-5 col-sm-offset-2">
+              <button @click="cancel" v-show="editing" class="btn btn-sm btn-block btn-danger">Cancel</button>
+            </div>
+            <div class="col-sm-5">
               <button @click="updateThingy" v-show="editing" class="btn btn-sm btn-block btn-success">Save</button>
+            </div>
+            <div class="col-sm-10 col-sm-offset-2">
               <button @click="edit" v-show="!editing" class="btn btn-sm btn-block btn-primary">Edit</button>
             </div>
           </div>
@@ -39,6 +44,7 @@
   export default {
     data() {
       return {
+        originalThingy: {},
         editing: false
       }
     },
@@ -56,13 +62,22 @@
           .then(response => {
             if(response.ok) {
               this.$emit('thingyUpdate');
+              Object.assign(this.originalThingy, this.thingy);
               this.editing = false;
             }
           });
       },
       edit() {
         this.editing = true;
+      },
+      cancel() {
+        Object.assign(this.thingy, this.originalThingy);
+        this.editing = false;
       }
+    },
+  
+    mounted() {
+      Object.assign(this.originalThingy, this.thingy);
     }
   }
 </script>
