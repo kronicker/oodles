@@ -1,7 +1,7 @@
 <template>
-  <div id="oodlerEditorView">
+  <div id="oodlersView">
     <div class="page-header">
-      <h1 class="text-info">Oodlers editor</h1>
+      <h1 class="text-info">Oodlers</h1>
     </div>
     <div class="row">
       <div class="filtered-oodlers col-md-12">
@@ -9,7 +9,7 @@
           <search-bar class="col-md-12" subject="oodler" @searchBarUpdate="searchBarUpdate"></search-bar>
         </div>
         <ul class="row">
-          <li v-for="oodler in filteredOodlers" class="col-md-2">
+          <li v-for="oodler in filteredOodlers" class="col-md-3">
             <oodler-edit-tile @oodlerUpdate="load" :oodler="oodler"></oodler-edit-tile>
           </li>
         </ul>
@@ -77,7 +77,7 @@
 </script>
 
 <style lang="sass" scoped>
-  #oodlerEditorView {
+  #oodlersView {
     .page-header { margin: 0px 0 10px; }
     
       .filtered-oodlers ul {

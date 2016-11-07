@@ -1,24 +1,54 @@
 <template>
-  <div id="pendingOodletsView">
+  <div id="totalOodletView">
     <div class="page-header">
-      <h1 class="text-info">Pending oodlet</h1>
+      <h1 class="text-info">Total oodlet</h1>
     </div>
     <div class="row">
-      <div class="pending-oodlets col-md-9">
-        <div class="page-header">
-          <h3 class="text-info">Pending oodlets</h3>
-        </div>
-
-        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-          <pending-oodlet v-for="pendingOodlet in pendingOodlets" :pendingOodlet="pendingOodlet"></pending-oodlet>
-        </div>
-      </div>
-
-      <div class="total-oodlet col-md-3">
+      <div class="total-oodlet col-md-4">
         <div class="page-header">
           <h3 class="text-info">Total oodlet</h3>
         </div>
         <total-oodlet></total-oodlet>
+      </div>
+  
+      <div class="pending-oodlets col-md-8">
+        <div class="page-header">
+          <h3 class="text-info">Pending oodlets</h3>
+        </div>
+        
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <div class="row panel-title">
+              <div class="col-md-1">
+              </div>
+              <div class="col-md-2">
+                <h3 class="panel-title">
+                  <strong>Office</strong>
+                </h3>
+              </div>
+              <div class="col-md-3">
+                <h3 class="panel-title">
+                  <strong>Last updated</strong>
+                </h3>
+              </div>
+              <div class="col-md-3">
+                <h3 class="panel-title">
+                  <strong>Due date</strong>
+                </h3>
+              </div>
+              <div class="col-md-3">
+                <h3 class="panel-title">
+                  <strong>Submited by</strong>
+                </h3>
+              </div>
+            </div>
+          </div>
+          <div class="panel-body">
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+              <pending-oodlet v-for="pendingOodlet in pendingOodlets" :pendingOodlet="pendingOodlet"></pending-oodlet>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -204,7 +234,8 @@
 </script>
 
 <style lang="sass" scoped>
-  #pendingOodletsView {
+  #totalOodletView {
     .page-header { margin: 0px 0 10px; }
+    .panel-title { text-align: center; }
   }
 </style>
