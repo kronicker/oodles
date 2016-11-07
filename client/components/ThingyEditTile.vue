@@ -1,7 +1,7 @@
 <template>
   <div class="thingy-edit-tile">
     <div class="thumbnail">
-      <img :src="originalThingy.pictureUrl">
+      <img :src="pictureUrl">
       <div class="row">
         <form class="form-horizontal col-md-12">
           <div class="form-group form-group-sm">
@@ -45,6 +45,7 @@
     data() {
       return {
         originalThingy: {},
+        pictureUrl: '',
         editing: false
       }
     },
@@ -63,6 +64,7 @@
             if(response.ok) {
               this.$emit('thingyUpdate');
               Object.assign(this.originalThingy, this.thingy);
+              this.pictureUrl = this.originalThingy.pictureUrl;
               this.editing = false;
             }
           });
@@ -78,6 +80,7 @@
   
     mounted() {
       Object.assign(this.originalThingy, this.thingy);
+      this.pictureUrl = this.originalThingy.pictureUrl;
     }
   }
 </script>
