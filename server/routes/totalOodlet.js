@@ -33,10 +33,13 @@ function createTotalOodlet(oodler) {
 }
 
 function list(request, reply) {
-  let fromDate = (() => { return request.query.fromDate ? moment(request.query.fromDate).toDate() : moment().subtract(3, 'months').toDate(); })();
-  let toDate = (() => { return request.query.fromDate ? moment(request.query.toDate).add(1, 'days').toDate() : moment().toDate(); })();
+  let fromDate = (() => { return request.params.fromDate ? moment(request.params.fromDate).toDate() : moment().subtract(3, 'months').toDate(); })();
+  let toDate = (() => { return request.params.fromDate ? moment(request.params.toDate).add(1, 'days').toDate() : moment().toDate(); })();
   
   return TotalOodlet
+    .filter(function (row) {
+      return row.hasFields('orderedAt');
+    })
     .between(fromDate, toDate, { index : 'orderedAt' })
     .run()
     .then(result => {
@@ -46,7 +49,7 @@ function list(request, reply) {
 
 function get(request, reply) {
   return TotalOodlet
-    .get(request.params.id)
+    .get(request.query.id)
     .run()
     .then(result => {
       reply(result).code(200);
@@ -70,7 +73,7 @@ function getActive(request, reply) {
     })
     .run()
     .then((activeOodlets) => {
-      if(activeOodlets) {
+      if(activeOodlets[0]) {
         reply(activeOodlets[0]).code(200);
       }
       else {
@@ -87,7 +90,7 @@ function getActive(request, reply) {
 
 function update(request, reply) {
   return TotalOodlet
-    .get(request.params.id)
+    .get(request.query.id)
     .update({
       updatedAt: new Date(),
       quantifiedThingies: request.payload.quantifiedThingies,
@@ -101,7 +104,7 @@ function update(request, reply) {
 
 function finalize(request, reply) {
   return TotalOodlet
-    .get(request.params.id)
+    .get(request.query.id)
     .update({
       orderedAt: new Date()
     },
@@ -117,7 +120,7 @@ function finalize(request, reply) {
 
 function remove(request, reply) {
   return TotalOodlet
-    .get(request.params.id)
+    .get(request.query.id)
     .delete()
     .run()
     .then(result => {
@@ -132,10 +135,12 @@ let routes = [
     config: {
       handler: list,
       auth: {
-        scope: 'admin'
+        access: {
+          scope: 'admin'
+        }
       },
       validate: {
-        query: {
+        params: {
           toDate: Joi.date(),
           fromDate: Joi.date()
         }
@@ -148,10 +153,12 @@ let routes = [
     config: {
       handler: get,
       auth: {
-        scope: 'admin'
+        access: {
+          scope: 'admin'
+        }
       },
       validate: {
-        params: {
+        query: {
           id: Joi.string().required()
         }
       }
@@ -159,15 +166,17 @@ let routes = [
   },
   {
     method: 'GET',
-    path: '/totalOodlet/active/{oodlerId}',
+    path: '/totalOodlet/active',
     config: {
       handler: getActive,
       auth: {
-        scope: 'admin'
+        access: {
+          scope: 'admin'
+        }
       },
       validate: {
         params: {
-          oodlerId: Joi.string().required()
+          oodlerId: Joi.string()
         }
       }
     }
@@ -178,7 +187,9 @@ let routes = [
     config: {
       handler: create,
       auth: {
-        scope: 'admin'
+        access: {
+          scope: 'admin'
+        }
       },
       validate: {
         payload: {
@@ -193,10 +204,12 @@ let routes = [
     config: {
       handler: finalize,
       auth: {
-        scope: 'admin'
+        access: {
+          scope: 'admin'
+        }
       },
       validate: {
-        params: {
+        query: {
           id: Joi.string().required()
         }
       }
@@ -208,10 +221,12 @@ let routes = [
     config: {
       handler: update,
       auth: {
-        scope: 'admin'
+        access: {
+          scope: 'admin'
+        }
       },
       validate: {
-        params: {
+        query: {
           id: Joi.string().required()
         },
         payload: {
@@ -233,10 +248,12 @@ let routes = [
     config: {
       handler: remove,
       auth: {
-        scope: 'admin'
+        access: {
+          scope: 'admin'
+        }
       },
       validate: {
-        params: {
+        query: {
           id: Joi.string().required()
         }
       }

@@ -56,7 +56,7 @@ function get(request, reply) {
 
 function getActive(request, reply) {
   return Oodlet
-    .filter({ oodler: { office: request.query.office} })
+    .filter({ oodler: { office: request.params.office} })
     .filter(function (row) {
       return row('dueDate').ge(new Date());
     })
@@ -66,7 +66,7 @@ function getActive(request, reply) {
         reply(activeOodlets[0]).code(200);
       }
       else {
-        getOodler(request.query.oodlerId)
+        getOodler(request.params.oodlerId)
           .then(oodler => {
             getNextDueDate()
               .then(dueDate => {
@@ -127,7 +127,7 @@ let routes = [
     config: {
       handler: list,
       validate: {
-        query: {
+        params: {
           office: Joi.string().required(),
           toDate: Joi.date(),
           fromDate: Joi.date()
@@ -141,7 +141,7 @@ let routes = [
     config: {
       handler: get,
       validate: {
-        params: {
+        query: {
           id: Joi.string().required()
         }
       }
@@ -149,7 +149,7 @@ let routes = [
   },
   {
     method: 'GET',
-    path: '/oodlet/active/{oodlerId}',
+    path: '/oodlet/active',
     config: {
       handler: getActive,
       validate: {
