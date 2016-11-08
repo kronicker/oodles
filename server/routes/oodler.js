@@ -3,8 +3,8 @@ const Joi = require('joi');
 const Oodler = require('../models/oodler');
 
 function list(request, reply) {
-  let limit = request.query.limit || 20;
-  let offset = request.query.offset || 0;
+  let limit = request.params.limit || 20;
+  let offset = request.params.offset || 0;
 
   return Oodler.skip(parseInt(offset))
     .limit(parseInt(limit))
@@ -74,6 +74,9 @@ function update(request, reply) {
 }
 
 function remove(request, reply) {
+  console.log(request.params.id);
+  console.log(request.params);
+  reply('Nice').code(200);
   return Oodler.get(request.params.id)
     .delete()
     .run()
@@ -87,7 +90,10 @@ let routes = [
     method: 'GET',
     path: '/oodler',
     config: {
-      handler: list
+      handler: list,
+      auth: {
+        scope: 'admin'
+      }
     }
   },
   {
@@ -95,6 +101,9 @@ let routes = [
     path: '/oodler/{id}',
     config: {
       handler: get,
+      auth: {
+        scope: ['user', 'admin']
+      },
       validate: {
         params: {
           id: Joi.string().required()
@@ -107,6 +116,9 @@ let routes = [
     path: '/oodler',
     config: {
       handler: create,
+      auth: {
+        scope: ['admin', 'user']
+      },
       validate: {
         payload: {
           firstName: Joi.string().alphanum().required(),
@@ -123,6 +135,9 @@ let routes = [
     path: '/oodler/{id}',
     config: {
       handler: update,
+      auth: {
+        scope: ['admin', 'user']
+      },
       validate: {
         params: {
           id: Joi.string().required()
@@ -142,6 +157,9 @@ let routes = [
     path: '/oodler/{id}',
     config: {
       handler: remove,
+      auth: {
+        scope: 'admin'
+      },
       validate: {
         params: {
           id: Joi.string().required()

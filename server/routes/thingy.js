@@ -3,8 +3,8 @@ const Joi = require('joi');
 const Thingy = require('../models/thingy');
 
 function list(request, reply) {
-  let limit = request.query.limit || 50;
-  let offset = request.query.offset || 0;
+  let limit = request.params.limit || 50;
+  let offset = request.params.offset || 0;
 
   return Thingy.skip(parseInt(offset))
     .limit(parseInt(limit))
@@ -61,7 +61,10 @@ let routes = [
     method: 'GET',
     path: '/thingy',
     config: {
-      handler: list
+      handler: list,
+      auth: {
+        scope: ['admin', 'user']
+      },
     }
   },
   {
@@ -69,6 +72,9 @@ let routes = [
     path: '/thingy/{id}',
     config: {
       handler: get,
+      auth: {
+        scope: ['admin', 'user']
+      },
       validate: {
         params: {
           id: Joi.string().required()
@@ -81,6 +87,9 @@ let routes = [
     path: '/thingy',
     config: {
       handler: create,
+      auth: {
+        scope: 'admin'
+      },
       validate: {
         payload: {
           name: Joi.string().required(),
@@ -95,6 +104,9 @@ let routes = [
     path: '/thingy/{id}',
     config: {
       handler: update,
+      auth: {
+        scope: 'admin'
+      },
       validate: {
         params: {
           id: Joi.string().required()
@@ -112,6 +124,9 @@ let routes = [
     path: '/thingy/{id}',
     config: {
       handler: remove,
+      auth: {
+        scope: ['admin', 'user']
+      },
       validate: {
         params: {
           id: Joi.string().required()

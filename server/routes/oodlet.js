@@ -56,7 +56,7 @@ function get(request, reply) {
 
 function getActive(request, reply) {
   return Oodlet
-    .filter({ oodler: { office: request.params.office} })
+    .filter({ oodler: { office: request.query.office} })
     .filter(function (row) {
       return row('dueDate').ge(new Date());
     })
@@ -66,7 +66,7 @@ function getActive(request, reply) {
         reply(activeOodlets[0]).code(200);
       }
       else {
-        getOodler(request.params.oodlerId)
+        getOodler(request.query.oodlerId)
           .then(oodler => {
             getNextDueDate()
               .then(dueDate => {
@@ -126,8 +126,11 @@ let routes = [
     path: '/oodlet',
     config: {
       handler: list,
+      auth: {
+        scope: ['admin', 'user']
+      },
       validate: {
-        params: {
+        query: {
           office: Joi.string().required(),
           toDate: Joi.date(),
           fromDate: Joi.date()
@@ -140,8 +143,11 @@ let routes = [
     path: '/oodlet/{id}',
     config: {
       handler: get,
+      auth: {
+        scope: ['admin', 'user']
+      },
       validate: {
-        query: {
+        params: {
           id: Joi.string().required()
         }
       }
@@ -152,8 +158,13 @@ let routes = [
     path: '/oodlet/active',
     config: {
       handler: getActive,
+      auth: {
+        access: {
+          scope: 'user'
+        }
+      },
       validate: {
-        params: {
+        query: {
           oodlerId: Joi.string().required(),
           office: Joi.string().required()
         }
@@ -165,6 +176,9 @@ let routes = [
     path: '/oodlet',
     config: {
       handler: create,
+      auth: {
+        scope: ['admin', 'user']
+      },
       validate: {
         payload: {
           oodlerId: Joi.string().required(),
@@ -184,6 +198,9 @@ let routes = [
     path: '/oodlet/{id}',
     config: {
       handler: update,
+      auth: {
+        scope: ['admin', 'user']
+      },
       validate: {
         params: {
           id: Joi.string().required()
@@ -205,6 +222,9 @@ let routes = [
     path: '/oodlet/{id}',
     config: {
       handler: remove,
+      auth: {
+        scope: ['admin', 'user']
+      },
       validate: {
         params: {
           id: Joi.string().required()
