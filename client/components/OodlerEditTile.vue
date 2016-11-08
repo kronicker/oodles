@@ -16,7 +16,7 @@
           <table v-show="!editing.firstName" class="table table-striped table-hover col-md-12">
             <tbody>
             <tr @click="edit('firstName')">
-              <td class="col-lg-2 left">First Name</td>
+              <td class="col-lg-2">First Name</td>
               <td class="col-lg-8">{{ oodler.firstName }}</td>
               <td class="col-lg-2"><a class="hover-btn"><span class="glyphicon glyphicon-pencil"></span></a></td>
             </tr>
@@ -38,7 +38,7 @@
           <table v-show="!editing.lastName" class="table table-striped table-hover col-md-12">
             <tbody>
             <tr @click="edit('lastName')">
-              <td class="col-lg-2 left">Last Name</td>
+              <td class="col-lg-2">Last Name</td>
               <td class="col-lg-8">{{ oodler.lastName }}</td>
               <td class="col-lg-2"><a class="hover-btn"><span class="glyphicon glyphicon-pencil"></span></a></td>
             </tr>
@@ -60,7 +60,7 @@
           <table v-show="!editing.email" class="table table-striped table-hover col-md-12">
             <tbody>
             <tr @click="edit('email')">
-              <td class="col-lg-2 left">Email</td>
+              <td class="col-lg-2">Email</td>
               <td class="col-lg-8">{{ oodler.email }}</td>
               <td class="col-lg-2"><a class="hover-btn"><span class="glyphicon glyphicon-pencil"></span></a></td>
             </tr>
@@ -82,7 +82,7 @@
           <table v-show="!editing.office" class="table table-striped table-hover col-md-12">
             <tbody>
             <tr @click="edit('office')">
-              <td class="col-lg-2 left">office</td>
+              <td class="col-lg-2">office</td>
               <td class="col-lg-8">{{ oodler.office }}</td>
               <td class="col-lg-2"><a class="hover-btn"><span class="glyphicon glyphicon-pencil"></span></a></td>
             </tr>

@@ -17,7 +17,7 @@
           <table v-show="!editing.name" class="table table-striped table-hover col-md-12">
             <tbody>
             <tr @click="edit('name')">
-              <td class="col-md-2 left">Name</td>
+              <td class="col-md-2">Name</td>
               <td class="col-md-8">{{ thingy.name }}</td>
               <td class="col-md-2"><a class="hover-btn"><span class="glyphicon glyphicon-pencil"></span></a></td>
             </tr>
@@ -39,7 +39,7 @@
           <table v-show="!editing.unit" class="table table-striped table-hover col-md-12">
             <tbody>
             <tr @click="edit('unit')">
-              <td class="col-md-2 left">Unit</td>
+              <td class="col-md-2">Unit</td>
               <td class="col-md-8">{{ thingy.unit }}</td>
               <td class="col-md-2"><a class="hover-btn"><span class="glyphicon glyphicon-pencil"></span></a></td>
             </tr>
@@ -61,7 +61,7 @@
           <table v-show="!editing.pictureUrl" class="table table-striped table-hover col-md-12">
             <tbody>
             <tr @click="edit('pictureUrl')">
-              <td class="col-md-2 left">Picture Url</td>
+              <td class="col-md-2">Picture Url</td>
               <td class="col-md-8">{{ thingy.pictureUrl }}</td>
               <td class="col-md-2"><a class="hover-btn"><span class="glyphicon glyphicon-pencil"></span></a></td>
             </tr>
