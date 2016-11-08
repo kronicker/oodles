@@ -24,7 +24,6 @@ module.exports = (() => {
   var model = thinky.createModel("Oodlet", schema);
 
   model.ensureIndex('dueDate');
-  model.ensureIndex('orderedAt');
   model.schema = schema;
 
   return model;

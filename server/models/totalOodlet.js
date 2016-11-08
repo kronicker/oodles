@@ -21,7 +21,7 @@ const schema = {
 module.exports = (() => {
   var model = thinky.createModel("totalOodlet", schema);
   
-  model.ensureIndex('orederedAt');
+  model.ensureIndex('createdAt');
   model.schema = schema;
   
   return model;

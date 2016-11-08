@@ -37,10 +37,11 @@ function list(request, reply) {
   let toDate = (() => { return request.query.fromDate ? moment(request.query.toDate).add(1, 'days').toDate() : moment().toDate(); })();
   
   return TotalOodlet
+  //TODO: Find more accurate approach
+    .between(fromDate, toDate, { index : 'createdAt' })
     .filter(function (row) {
       return row.hasFields('orderedAt');
     })
-    .between(fromDate, toDate, { index : 'orderedAt' })
     .run()
     .then(result => {
       reply(result).code(200);
