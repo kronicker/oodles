@@ -19,6 +19,19 @@ function* finalizeOrderedOodlets(oodlets) {
   }
 }
 
+function getOodler(oodlerId) {
+  return Oodler
+    .get(oodlerId)
+    .run();
+}
+
+function createTotalOodlet(oodler) {
+  return TotalOodlet({
+      oodler: oodler
+    })
+    .save();
+}
+
 function list(request, reply) {
   let fromDate = (() => { return request.query.fromDate ? moment(request.query.fromDate).toDate() : moment().subtract(3, 'months').toDate(); })();
   let toDate = (() => { return request.query.fromDate ? moment(request.query.toDate).add(1, 'days').toDate() : moment().toDate(); })();
@@ -41,19 +54,34 @@ function get(request, reply) {
 }
 
 function create(request, reply) {
-  return Oodler
-    .get(request.payload.oodlerId)
-    .run()
+  getOodler(request.payload.oodlerId)
     .then(oodler => {
-      return TotalOodlet({
-          oodler: oodler,
-          quantifiedThingies: request.payload.quantifiedThingies,
-          orderedOodlets: request.payload.orderedOodlets
-        })
-        .save()
+      createTotalOodlet(oodler)
         .then(result => {
           reply(result).code(201);
         });
+    });
+}
+
+function getActive(request, reply) {
+  return TotalOodlet
+    .filter(function (row) {
+      return row.hasFields('orderedAt').not();
+    })
+    .run()
+    .then((activeOodlets) => {
+      if(activeOodlets) {
+        reply(activeOodlets[0]).code(200);
+      }
+      else {
+        getOodler(request.query.oodlerId)
+          .then(oodler => {
+            createTotalOodlet(oodler)
+              .then(result => {
+                reply(result).code(201);
+              });
+          });
+      }
     });
 }
 
@@ -130,6 +158,21 @@ let routes = [
     }
   },
   {
+    method: 'GET',
+    path: '/totalOodlet/active/{oodlerId}',
+    config: {
+      handler: getActive,
+      auth: {
+        scope: 'admin'
+      },
+      validate: {
+        params: {
+          oodlerId: Joi.string().required()
+        }
+      }
+    }
+  },
+  {
     method: 'POST',
     path: '/totalOodlet',
     config: {
@@ -139,15 +182,7 @@ let routes = [
       },
       validate: {
         payload: {
-          oodlerId: Joi.string().required(),
-          quantifiedThingies: Joi.array(Joi.object({
-            id: Joi.string(),
-            name: Joi.string().min(1),
-            unit: Joi.string(),
-            pictureUrl: Joi.string().uri(),
-            qty: Joi.number().min(1)
-          })),
-          orderedOodlets: Joi.array(Joi.object())
+          oodlerId: Joi.string().required()
         }
       }
     }
@@ -163,17 +198,6 @@ let routes = [
       validate: {
         params: {
           id: Joi.string().required()
-        },
-        payload: {
-          oodlerId: Joi.string(),
-          quantifiedThingies: Joi.array(Joi.object({
-            id: Joi.string(),
-            name: Joi.string().min(1),
-            unit: Joi.string(),
-            pictureUrl: Joi.string().uri(),
-            qty: Joi.number().min(1)
-          })),
-          orderedOodlets: Joi.array(Joi.object())
         }
       }
     }

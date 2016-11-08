@@ -3,9 +3,10 @@
  */
 const object = require('lodash/object');
 const thinky = require('../db/thinky');
+const type = thinky.type;
 const Thingy = require('./thingy');
 const Oodler = require('./oodler');
-const type = thinky.type;
+const Oodlet = require('./oodlet');
 
 const schema = {
   id: type.string(),
@@ -14,7 +15,7 @@ const schema = {
   orederedAt: type.date(),
   oodler: type.object().schema(Oodler.schema),
   quantifiedThingies: [type.object().schema(object.merge(Thingy.schema, { qty: type.number() }))],
-  orderedOodlets: type.array().schema(type.object().schema(Oodlet.schema))
+  orderedOodlets: type.array(type.object().schema(Oodlet.schema))
 };
 
 module.exports = (() => {

@@ -4,6 +4,33 @@ const moment = require('moment');
 const Oodlet = require('../models/oodlet');
 const Oodler = require('../models/oodler');
 
+function getOodler(oodlerId) {
+  return Oodler
+    .get(oodlerId)
+    .run();
+}
+
+function createNewOodlet(oodler, dueDate) {
+  return Oodlet({
+      oodler: oodler,
+      dueDate: dueDate
+    })
+    .save();
+}
+
+function getNextDueDate() {
+  return Oodlet
+    .orderBy({index: '-dueDate'})
+    .run()
+    .then(oodlets => {
+      let nextDate = oodlets[0].dueDate || new Date();
+      while(nextDate <= new Date()) {
+        nextDate = moment(nextDate).add(2, 'weeks').toDate();
+      }
+      return nextDate;
+    });
+}
+
 function list(request, reply) {
   let fromDate = (() => { return request.query.fromDate ? moment(request.query.fromDate).toDate() : moment().subtract(3, 'months').toDate(); })();
   let toDate = (() => { return request.query.fromDate ? moment(request.query.toDate).add(1, 'days').toDate() : moment().toDate(); })();
@@ -24,6 +51,32 @@ function get(request, reply) {
     .run()
     .then(result => {
       reply(result).code(200);
+    });
+}
+
+function getActive(request, reply) {
+  return Oodlet
+    .filter({ oodler: { office: request.query.office} })
+    .filter(function (row) {
+      return row('dueDate').ge(new Date());
+    })
+    .run()
+    .then((activeOodlets) => {
+      if (activeOodlets) {
+        reply(activeOodlets[0]).code(200);
+      }
+      else {
+        getOodler(request.query.oodlerId)
+          .then(oodler => {
+            getNextDueDate()
+              .then(dueDate => {
+                createNewOodlet(oodler, dueDate)
+                  .then(result => {
+                    reply(result).code(201);
+                  });
+              });
+          });
+      }
     });
 }
 
@@ -90,6 +143,19 @@ let routes = [
       validate: {
         params: {
           id: Joi.string().required()
+        }
+      }
+    }
+  },
+  {
+    method: 'GET',
+    path: '/oodlet/active/{oodlerId}',
+    config: {
+      handler: getActive,
+      validate: {
+        params: {
+          oodlerId: Joi.string().required(),
+          office: Joi.string().required()
         }
       }
     }
