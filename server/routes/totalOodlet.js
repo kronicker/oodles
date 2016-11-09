@@ -4,41 +4,17 @@
 'use strict';
 const Joi = require('joi');
 const moment = require('moment');
-const Oodlet = require('../models/oodlet');
 const TotalOodlet = require('../models/totalOodlet');
-const Oodler = require('../models/oodler');
-
-function* finalizeOrderedOodlets(oodlets) {
-  for(let oodlet of oodlets) {
-    yield Oodlet
-      .get(oodlet.id)
-      .update({
-          orderedAt: new Date()
-        })
-      .run();
-  }
-}
-
-function getOodler(oodlerId) {
-  return Oodler
-    .get(oodlerId)
-    .run();
-}
-
-function createTotalOodlet(oodler) {
-  return TotalOodlet({
-      oodler: oodler
-    })
-    .save();
-}
+const oodlerUtil = require('../util/oodler');
+const oodletUtil = require('../util/oodlet');
+const totalOodletUtil = require('../util/totalOodlet');
 
 function list(request, reply) {
   let fromDate = (() => { return request.query.fromDate ? moment(request.query.fromDate).toDate() : moment().subtract(3, 'months').toDate(); })();
   let toDate = (() => { return request.query.fromDate ? moment(request.query.toDate).add(1, 'days').toDate() : moment().toDate(); })();
   
   return TotalOodlet
-  //TODO: Find more accurate approach
-    .between(fromDate, toDate, { index : 'createdAt' })
+    .between(fromDate, toDate, { index : 'orderedAt' })
     .filter(function (row) {
       return row.hasFields('orderedAt');
     })
@@ -49,41 +25,31 @@ function list(request, reply) {
 }
 
 function get(request, reply) {
-  return TotalOodlet
-    .get(request.params.id)
-    .run()
+  totalOodletUtil.get(request.params.id)
     .then(result => {
       reply(result).code(200);
     });
 }
 
 function create(request, reply) {
-  getOodler(request.payload.oodlerId)
-    .then(oodler => {
-      createTotalOodlet(oodler)
-        .then(result => {
-          reply(result).code(201);
-        });
+  oodlerUtil.get(request.payload.oodlerId)
+    .then(oodler => totalOodletUtil.create(oodler))
+    .then(result => {
+      reply(result).code(201);
     });
 }
 
 function getActive(request, reply) {
-  return TotalOodlet
-    .filter(function (row) {
-      return row.hasFields('orderedAt').not();
-    })
-    .run()
+  totalOodletUtil.findActive()
     .then((activeOodlets) => {
       if(activeOodlets[0]) {
         reply(activeOodlets[0]).code(200);
       }
       else {
-        getOodler(request.query.oodlerId)
-          .then(oodler => {
-            createTotalOodlet(oodler)
-              .then(result => {
-                reply(result).code(201);
-              });
+        oodlerUtil.get(request.query.oodlerId)
+          .then(oodler => totalOodletUtil.create(oodler))
+          .then(result => {
+            reply(result).code(201);
           });
       }
     });
@@ -95,7 +61,7 @@ function update(request, reply) {
     .update({
       updatedAt: new Date(),
       quantifiedThingies: request.payload.quantifiedThingies,
-      orderedOodlets: request.payload.orderedOodlets
+      oodlets: request.payload.oodlets
     })
     .run()
     .then(result => {
@@ -112,7 +78,7 @@ function finalize(request, reply) {
     { returnChanges: true })
     .run()
     .then(result => {
-      Promise.all(finalizeOrderedOodlets(result.orderedOodlets))
+      Promise.all(oodletUtil.finalize(result.oodlets))
         .then(() => {
           reply(result).code(200);
         });
@@ -136,7 +102,7 @@ let routes = [
     config: {
       handler: list,
       auth: {
-        scope: 'admin'
+        scope: ['admin']
       },
       validate: {
         query: {
@@ -152,7 +118,7 @@ let routes = [
     config: {
       handler: get,
       auth: {
-        scope: 'admin'
+        scope: ['admin']
       },
       validate: {
         params: {
@@ -167,11 +133,11 @@ let routes = [
     config: {
       handler: getActive,
       auth: {
-        scope: 'admin'
+        scope: ['admin']
       },
       validate: {
         query: {
-          oodlerId: Joi.string()
+          oodlerId: Joi.string().required()
         }
       }
     }
@@ -182,7 +148,7 @@ let routes = [
     config: {
       handler: create,
       auth: {
-        scope: 'admin'
+        scope: ['admin']
       },
       validate: {
         payload: {
@@ -197,7 +163,7 @@ let routes = [
     config: {
       handler: finalize,
       auth: {
-        scope: 'admin'
+        scope: ['admin']
       },
       validate: {
         params: {
@@ -212,7 +178,7 @@ let routes = [
     config: {
       handler: update,
       auth: {
-        scope: 'admin'
+        scope: ['admin']
       },
       validate: {
         params: {
@@ -237,7 +203,7 @@ let routes = [
     config: {
       handler: remove,
       auth: {
-        scope: 'admin'
+        scope: ['admin']
       },
       validate: {
         params: {

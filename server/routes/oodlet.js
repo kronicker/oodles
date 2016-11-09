@@ -2,34 +2,8 @@
 const Joi = require('joi');
 const moment = require('moment');
 const Oodlet = require('../models/oodlet');
-const Oodler = require('../models/oodler');
-
-function getOodler(oodlerId) {
-  return Oodler
-    .get(oodlerId)
-    .run();
-}
-
-function createNewOodlet(oodler, dueDate) {
-  return Oodlet({
-      oodler: oodler,
-      dueDate: dueDate
-    })
-    .save();
-}
-
-function getNextDueDate() {
-  return Oodlet
-    .orderBy({index: '-dueDate'})
-    .run()
-    .then(oodlets => {
-      let nextDate = oodlets[0].dueDate || new Date();
-      while(nextDate <= new Date()) {
-        nextDate = moment(nextDate).add(2, 'weeks').toDate();
-      }
-      return nextDate;
-    });
-}
+const oodlerUtil = require('../util/oodler');
+const oodletUtil = require('../util/oodlet');
 
 function list(request, reply) {
   let fromDate = (() => { return request.query.fromDate ? moment(request.query.fromDate).toDate() : moment().subtract(3, 'months').toDate(); })();
@@ -54,37 +28,25 @@ function get(request, reply) {
     });
 }
 
-function getActive(request, reply) {
-  return Oodlet
-    .filter({ oodler: { office: request.query.office} })
-    .filter(function (row) {
-      return row('dueDate').ge(new Date());
-    })
-    .run()
+function active(request, reply) {
+  oodletUtil.findActive(request.query.office)
     .then((activeOodlets) => {
       if (activeOodlets) {
         reply(activeOodlets[0]).code(200);
       }
       else {
-        getOodler(request.query.oodlerId)
-          .then(oodler => {
-            getNextDueDate()
-              .then(dueDate => {
-                createNewOodlet(oodler, dueDate)
-                  .then(result => {
-                    reply(result).code(201);
-                  });
-              });
-          });
+        Promise.all([
+          oodlerUtil.get(request.query.oodlerId),
+          oodletUtil.nextDueDate()
+        ])
+        .then(([oodler, dueDate]) => oodletUtil.create(oodler, dueDate))
+        .then(result => reply(result).code(201));
       }
     });
 }
 
 function create(request, reply) {
-
-  return Oodler
-    .get(request.payload.oodlerId)
-    .run()
+  oodlerUtil.get(request.payload.oodlerId)
     .then(oodler => {
       return Oodlet({
         oodler: oodler,
@@ -126,9 +88,6 @@ let routes = [
     path: '/oodlet',
     config: {
       handler: list,
-      auth: {
-        scope: ['admin', 'user']
-      },
       validate: {
         query: {
           office: Joi.string().required(),
@@ -143,9 +102,6 @@ let routes = [
     path: '/oodlet/{id}',
     config: {
       handler: get,
-      auth: {
-        scope: ['admin', 'user']
-      },
       validate: {
         params: {
           id: Joi.string().required()
@@ -157,10 +113,10 @@ let routes = [
     method: 'GET',
     path: '/oodlet/active',
     config: {
-      handler: getActive,
+      handler: active,
       auth: {
         access: {
-          scope: 'user'
+          scope: ['user']
         }
       },
       validate: {
@@ -176,9 +132,6 @@ let routes = [
     path: '/oodlet',
     config: {
       handler: create,
-      auth: {
-        scope: ['admin', 'user']
-      },
       validate: {
         payload: {
           oodlerId: Joi.string().required(),
@@ -198,9 +151,6 @@ let routes = [
     path: '/oodlet/{id}',
     config: {
       handler: update,
-      auth: {
-        scope: ['admin', 'user']
-      },
       validate: {
         params: {
           id: Joi.string().required()
@@ -222,9 +172,6 @@ let routes = [
     path: '/oodlet/{id}',
     config: {
       handler: remove,
-      auth: {
-        scope: ['admin', 'user']
-      },
       validate: {
         params: {
           id: Joi.string().required()

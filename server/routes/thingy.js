@@ -62,9 +62,6 @@ let routes = [
     path: '/thingy',
     config: {
       handler: list,
-      auth: {
-        scope: ['admin', 'user']
-      },
       validate: {
         query: {
           limit: Joi.number(),
@@ -78,9 +75,6 @@ let routes = [
     path: '/thingy/{id}',
     config: {
       handler: get,
-      auth: {
-        scope: ['admin', 'user']
-      },
       validate: {
         params: {
           id: Joi.string().required()
@@ -94,7 +88,7 @@ let routes = [
     config: {
       handler: create,
       auth: {
-        scope: 'admin'
+        scope: ['admin']
       },
       validate: {
         payload: {
@@ -111,7 +105,7 @@ let routes = [
     config: {
       handler: update,
       auth: {
-        scope: 'admin'
+        scope: ['admin']
       },
       validate: {
         params: {
@@ -130,9 +124,6 @@ let routes = [
     path: '/thingy/{id}',
     config: {
       handler: remove,
-      auth: {
-        scope: ['admin', 'user']
-      },
       validate: {
         params: {
           id: Joi.string().required()

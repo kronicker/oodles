@@ -74,9 +74,6 @@ function update(request, reply) {
 }
 
 function remove(request, reply) {
-  console.log(request.params.id);
-  console.log(request.params);
-  reply('Nice').code(200);
   return Oodler.get(request.params.id)
     .delete()
     .run()
@@ -92,7 +89,7 @@ let routes = [
     config: {
       handler: list,
       auth: {
-        scope: 'admin'
+        scope: ['admin']
       },
       validate: {
         query: {
@@ -107,9 +104,6 @@ let routes = [
     path: '/oodler/{id}',
     config: {
       handler: get,
-      auth: {
-        scope: ['user', 'admin']
-      },
       validate: {
         params: {
           id: Joi.string().required()
@@ -122,9 +116,6 @@ let routes = [
     path: '/oodler',
     config: {
       handler: create,
-      auth: {
-        scope: ['admin', 'user']
-      },
       validate: {
         payload: {
           firstName: Joi.string().alphanum().required(),
@@ -141,9 +132,6 @@ let routes = [
     path: '/oodler/{id}',
     config: {
       handler: update,
-      auth: {
-        scope: ['admin', 'user']
-      },
       validate: {
         params: {
           id: Joi.string().required()
@@ -164,7 +152,7 @@ let routes = [
     config: {
       handler: remove,
       auth: {
-        scope: 'admin'
+        scope: ['admin']
       },
       validate: {
         params: {
