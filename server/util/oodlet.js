@@ -34,6 +34,14 @@ function findActive(office) {
     .run();
 }
 
+function findPending() {
+  return Oodlet
+    .filter(function (row) {
+      return row('dueDate').le(new Date()) && row.hasFields('orderedAt').not();
+    })
+    .run();
+}
+
 function* finalize(oodletIds) {
   for(let id of oodletIds) {
     yield Oodlet
@@ -49,5 +57,6 @@ module.exports = {
   nextDueDate,
   create,
   findActive,
+  findPending,
   finalize
 };

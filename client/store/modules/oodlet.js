@@ -27,16 +27,15 @@ const mutations = {
     let index = array.findIndex(state.quantifiedThingies, ['id', payload.id]);
     state.quantifiedThingies[index].qty = payload.qty;
   },
-
-  oodletSave(state, oodlet) {
-    if(!state.id) {
-      state.dueDate = oodlet.dueDate;
-      return state.id = oodlet.id;
-    }
+  
+  oodletSetQuantifiedThingies(state, quantifiedThingies) {
+    state.quantifiedThingies = quantifiedThingies;
   },
 
-  oodletSet(state, quantifiedThingies) {
-    state.quantifiedThingies = quantifiedThingies;
+  oodletSet(state, oodlet) {
+    state.quantifiedThingies = oodlet.quantifiedThingies;
+    state.id = oodlet.id;
+    state.dueDate = oodlet.dueDate;
   },
 
   oodletReset(state) {

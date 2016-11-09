@@ -1,19 +1,22 @@
 import Vue from 'vue';
 
-function save(oodlet, oodler) {
-  if(!oodlet.id) {
-    return Vue.http.post('/oodlet', {
-        quantifiedThingies: oodlet.quantifiedThingies,
-        oodlerId: oodler.oodler.id
-      });
-  }
+function load(oodler) {
+  return Vue.http.get('/oodlet/active', {
+    params: {
+      oodlerId: oodler.id,
+      office: oodler.office
+    }
+  });
+}
 
+function update(oodlet) {
   return Vue.http.put('/oodlet/' + oodlet.id, {
       quantifiedThingies: oodlet.quantifiedThingies
     });
 }
 
 export default {
-  save
+  load,
+  update
 };
 

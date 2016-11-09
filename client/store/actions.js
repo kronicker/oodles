@@ -14,8 +14,8 @@ function clearStore({ commit }) {
 function thingyTileAdd({ commit, state }, quantifiedThingy) {
   commit('thingyTileAdd', quantifiedThingy);
 
-  oodletApi.save(state.oodlet, state.oodler).then(response => {
-    commit('oodletSave', response.body);
+  oodletApi.update(state.oodlet).then(response => {
+    commit('oodletSet', response.body);
   });
 }
 
@@ -27,24 +27,31 @@ function quantifiedThingyChange({ commit, state }, payload) {
     commit('quantifiedThingyUpdate', payload);
   }
 
-  oodletApi.save(state.oodlet, state.oodler).then(response => {
-    commit('oodletSave', response.body);
+  oodletApi.update(state.oodlet).then(response => {
+    commit('oodletSet', response.body);
   });
 }
 
-function oodletSet({ commit, state }, quantifiedThingies) {
-  commit('oodletSet', quantifiedThingies);
+function historyOodletLoad({ commit, state }, oodlet) {
+  commit('oodletSetQuantifiedThingies', oodlet.quantifiedThingies);
+  
+  oodletApi.update(state.oodlet).then(response => {
+    commit('oodletSet', response.body);
+  });
+}
 
-  oodletApi.save(state.oodlet, state.oodler).then(response => {
-    commit('oodletSave', response.body);
+function oodletLoad({ commit, state }) {
+  console.log(state.oodler.oodler.id);
+  oodletApi.load(state.oodler.oodler).then(response => {
+    commit('oodletSet', response.body);
   });
 }
 
 function oodletReset({ commit, state }) {
   commit('oodletReset');
 
-  oodletApi.save(state.oodlet, state.oodler).then(response => {
-    commit('oodletSave', response.body);
+  oodletApi.update(state.oodlet).then(response => {
+    commit('oodletSet', response.body);
   });
 }
 
@@ -53,6 +60,7 @@ export {
   clearStore,
   thingyTileAdd,
   quantifiedThingyChange,
-  oodletSet,
+  historyOodletLoad,
+  oodletLoad,
   oodletReset
 };
