@@ -9,6 +9,10 @@ function load(oodler) {
   });
 }
 
+function pending() {
+  return Vue.http.get('/oodlet/pending');
+}
+
 function update(oodlet) {
   return Vue.http.put('/oodlet/' + oodlet.id, {
       quantifiedThingies: oodlet.quantifiedThingies
@@ -17,6 +21,7 @@ function update(oodlet) {
 
 export default {
   load,
-  update
+  update,
+  pending
 };
 

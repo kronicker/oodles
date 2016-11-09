@@ -4,13 +4,13 @@
       <div class="panel-heading">
         <strong>Offices: </strong>
         <ul class="list-inline">
-          <li v-for="office in totalOodlet.offices">{{ office }}</li>
+          <li v-for="office in 10">{{ office }}</li>
         </ul>
       </div>
       <div class="panel-body">
         <table class="table table-striped table-hover">
           <tbody>
-            <tr v-for="quantifiedThingy in totalOodlet.quantifiedThingies">
+            <tr v-for="quantifiedThingy in quantifiedThingies">
               <td>{{ quantifiedThingy.name }}</td>
               <td class="col-md-2 right">{{ quantifiedThingy.qty }}</td>
               <td class="col-md-2">{{ quantifiedThingy.unit }}</td>
@@ -33,7 +33,7 @@
           <div class="modal-body">
             <table class="table table-striped table-hover">
               <tbody>
-              <tr v-for="quantifiedThingy in totalOodlet.quantifiedThingies">
+              <tr v-for="quantifiedThingy in quantifiedThingies">
                 <td>{{ quantifiedThingy.name }}</td>
                 <td class="col-md-2 right">{{ quantifiedThingy.qty }}</td>
                 <td class="col-md-2">{{ quantifiedThingy.unit }}</td>
@@ -55,45 +55,14 @@
 
   export default {
     computed: {
-      totalOodlet() {
-        //return this.$store.getters.totalOodlet
-
-        //Mock-uped total oodlet
-        return {
-          offices: ['C7', 'C8', 'D3', 'C18'],
-          quantifiedThingies: [
-            {
-              id: "df997beb-21ee-44e8-8393-2f561f89b45e",
-              name: "Sausages",
-              pictureUrl: "https://placeimg.com/240/200/any",
-              qty: 1,
-              unit: "kg"
-            },{
-              id: "df997beb-21ee-44e8-8393-2f561f89b45e",
-              name: "Sausages",
-              pictureUrl: "https://placeimg.com/240/200/any",
-              qty: 1,
-              unit: "kg"
-            },{
-              id: "df997beb-21ee-44e8-8393-2f561f89b45e",
-              name: "Sausages",
-              pictureUrl: "https://placeimg.com/240/200/any",
-              qty: 1,
-              unit: "kg"
-            },{
-              id: "df997beb-21ee-44e8-8393-2f561f89b45e",
-              name: "Sausages",
-              pictureUrl: "https://placeimg.com/240/200/any",
-              qty: 1,
-              unit: "kg"
-            }]
-        };
+      quantifiedThingies() {
+        return this.$store.getters.totalOodlet.quantifiedThingies
       }
     },
 
     methods: {
       order() {
-        //this.$store.dispatch('totalOodletOrder');
+        //this.$store.dispatch('totalOodletFinalize');
       }
     },
 

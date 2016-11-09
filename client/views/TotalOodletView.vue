@@ -61,176 +61,35 @@
   export default {
     computed: {
       pendingOodlets() {
-        //return this.$store.getters.pendingOodlets
-
-        //Mock-uped data
-        return [{
-            createdAt: '31 Oct 2016' ,
-            dueDate: '31 Nov 2016' ,
-            id:  "7e8cf827-eb9e-42ef-984d-e08b865d227a" ,
-            oodler: {
-              email: 'toma@extensionengine.com',
-              firstName:  "Toma" ,
-              id:  "3beb563e-557a-4d0f-916a-de2dd7dbd10c" ,
-              lastName:  "Zelic" ,
-              office:  "C7" ,
-              scope:  "user"
-            },
-            quantifiedThingies: [
-            {
-              id: "df997beb-21ee-44e8-8393-2f561f89b45e",
-              name: "Sausages",
-              pictureUrl: "https://placeimg.com/240/200/any",
-              qty: 1,
-              unit: "kg"
-            },{
-              id: "df997beb-21ee-44e8-8393-2f561f89b45e",
-              name: "Sausages",
-              pictureUrl: "https://placeimg.com/240/200/any",
-              qty: 1,
-              unit: "kg"
-            },{
-              id: "df997beb-21ee-44e8-8393-2f561f89b45e",
-              name: "Sausages",
-              pictureUrl: "https://placeimg.com/240/200/any",
-              qty: 1,
-              unit: "kg"
-            },{
-              id: "df997beb-21ee-44e8-8393-2f561f89b45e",
-              name: "Sausages",
-              pictureUrl: "https://placeimg.com/240/200/any",
-              qty: 1,
-              unit: "kg"
-            }],
-            updatedAt: '31 Oct 2016'
-          },
-          {
-            createdAt: '31 Oct 2016' ,
-            dueDate: '31 Nov 2016' ,
-            id:  "7e8cf827-eb9e-42ef-984d-e08b865d227a" ,
-            oodler: {
-              email: 'toma@extensionengine.com',
-              firstName:  "Toma" ,
-              id:  "3beb563e-557a-4d0f-916a-de2dd7dbd10c" ,
-              lastName:  "Zelic" ,
-              office:  "C8" ,
-              scope:  "user"
-            },
-            quantifiedThingies: [
-            {
-              id: "df997beb-21ee-44e8-8393-2f561f89b45e",
-              name: "Sausages",
-              pictureUrl: "https://placeimg.com/240/200/any",
-              qty: 1,
-              unit: "kg"
-            },{
-              id: "df997beb-21ee-44e8-8393-2f561f89b45e",
-              name: "Sausages",
-              pictureUrl: "https://placeimg.com/240/200/any",
-              qty: 1,
-              unit: "kg"
-            },{
-              id: "df997beb-21ee-44e8-8393-2f561f89b45e",
-              name: "Sausages",
-              pictureUrl: "https://placeimg.com/240/200/any",
-              qty: 1,
-              unit: "kg"
-            },{
-              id: "df997beb-21ee-44e8-8393-2f561f89b45e",
-              name: "Sausages",
-              pictureUrl: "https://placeimg.com/240/200/any",
-              qty: 1,
-              unit: "kg"
-            }],
-            updatedAt: '31 Oct 2016'
-          },
-          {
-            createdAt: '31 Oct 2016' ,
-            dueDate: '31 Nov 2016' ,
-            id:  "7e8cf827-eb9e-42ef-984d-e08b865d227a" ,
-            oodler: {
-              email: 'toma@extensionengine.com',
-              firstName:  "Toma" ,
-              id:  "3beb563e-557a-4d0f-916a-de2dd7dbd10c" ,
-              lastName:  "Zelic" ,
-              office:  "C9" ,
-              scope:  "user"
-            },
-            quantifiedThingies: [
-            {
-              id: "df997beb-21ee-44e8-8393-2f561f89b45e",
-              name: "Sausages",
-              pictureUrl: "https://placeimg.com/240/200/any",
-              qty: 1,
-              unit: "kg"
-            },{
-              id: "df997beb-21ee-44e8-8393-2f561f89b45e",
-              name: "Sausages",
-              pictureUrl: "https://placeimg.com/240/200/any",
-              qty: 1,
-              unit: "kg"
-            },{
-              id: "df997beb-21ee-44e8-8393-2f561f89b45e",
-              name: "Sausages",
-              pictureUrl: "https://placeimg.com/240/200/any",
-              qty: 1,
-              unit: "kg"
-            },{
-              id: "df997beb-21ee-44e8-8393-2f561f89b45e",
-              name: "Sausages",
-              pictureUrl: "https://placeimg.com/240/200/any",
-              qty: 1,
-              unit: "kg"
-            }],
-            updatedAt: '31 Oct 2016'
-          },
-          {
-            createdAt: '31 Oct 2016' ,
-            dueDate: '31 Nov 2016' ,
-            id:  "7e8cf827-eb9e-42ef-984d-e08b865d227a" ,
-            oodler: {
-              email: 'toma@extensionengine.com',
-              firstName:  "Toma" ,
-              id:  "3beb563e-557a-4d0f-916a-de2dd7dbd10c" ,
-              lastName:  "Zelic" ,
-              office:  "C10" ,
-              scope:  "user"
-            },
-            quantifiedThingies: [
-            {
-              id: "df997beb-21ee-44e8-8393-2f561f89b45e",
-              name: "Sausages",
-              pictureUrl: "https://placeimg.com/240/200/any",
-              qty: 1,
-              unit: "kg"
-            },{
-              id: "df997beb-21ee-44e8-8393-2f561f89b45e",
-              name: "Sausages",
-              pictureUrl: "https://placeimg.com/240/200/any",
-              qty: 1,
-              unit: "kg"
-            },{
-              id: "df997beb-21ee-44e8-8393-2f561f89b45e",
-              name: "Sausages",
-              pictureUrl: "https://placeimg.com/240/200/any",
-              qty: 1,
-              unit: "kg"
-            },{
-              id: "df997beb-21ee-44e8-8393-2f561f89b45e",
-              name: "Sausages",
-              pictureUrl: "https://placeimg.com/240/200/any",
-              qty: 1,
-              unit: "kg"
-            }],
-            updatedAt: '31 Oct 2016'
-          },
-        ];
+        return this.$store.getters.pendingOodlets;
+      },
+      appInitialized() {
+        return this.$store.getters.appInitialized;
+      }
+    },
+  
+    watch: {
+      // Cannot use an arrow fn because 'this' wouldn't be Vue instance
+      appInitialized: function() {
+        this.load()
+      }
+    },
+    
+    methods: {
+      load() {
+        this.$store.dispatch('totalOodletLoad');
       }
     },
   
     beforeCreate() {
       if(this.$store.getters.oodler.scope === 'user') {
         this.$router.replace({ path: '/' });
+      }
+    },
+  
+    mounted() {
+      if(this.appInitialized) {
+        this.load()
       }
     },
 

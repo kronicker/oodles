@@ -1,4 +1,5 @@
 import oodletApi from './api/oodlet';
+import totalOodletApi from './api/totalOodlet';
 
 function initStore({ commit }, oodler) {
   commit('oodlerSave', oodler);
@@ -41,7 +42,6 @@ function historyOodletLoad({ commit, state }, oodlet) {
 }
 
 function oodletLoad({ commit, state }) {
-  console.log(state.oodler.oodler.id);
   oodletApi.load(state.oodler.oodler).then(response => {
     commit('oodletSet', response.body);
   });
@@ -55,6 +55,21 @@ function oodletReset({ commit, state }) {
   });
 }
 
+function totalOodletLoad({ commit, state }) {
+  totalOodletApi.load(state.oodler.oodler).then(response => {
+    commit('totalOodletSet', response.body);
+    
+    oodletApi.pending().then(response => {
+      commit('pendingOodletsSet', response.body);
+      
+      for(let pendingOodlet of response.body) {
+        console.log(pendingOodlet);
+        commit('pendingOodletAdd', pendingOodlet);
+      }
+    });
+  });
+}
+
 export {
   initStore,
   clearStore,
@@ -62,5 +77,6 @@ export {
   quantifiedThingyChange,
   historyOodletLoad,
   oodletLoad,
-  oodletReset
+  oodletReset,
+  totalOodletLoad
 };
