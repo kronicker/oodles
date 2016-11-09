@@ -35,13 +35,13 @@
             this.$store.dispatch('initStore', oodler);
             
             if (oodler.scope === 'admin') {
-              if(['/admin', '/admin/history', '/admin/thinhies', '/admin/oodlers'].indexOf(this.$route.path) > -1) {
+              if(['/admin', '/admin/history', '/admin/thinhies', '/admin/oodlers', '/settings'].indexOf(this.$route.path) > -1) {
                 return;
               }
               this.$router.replace({ path: '/admin' });
             }
             else {
-              if(['/', '/history'].indexOf(this.$route.path) > -1) {
+              if(['/', '/history', '/settings'].indexOf(this.$route.path) > -1) {
                 return;
               }
               this.$router.replace({ path: '/' });
