@@ -227,6 +227,12 @@
         ];
       }
     },
+  
+    beforeCreate() {
+      if(this.$store.getters.oodler.scope === 'user') {
+        this.$router.replace({ path: '/' });
+      }
+    },
 
     components: { PendingOodlet, TotalOodlet }
   }

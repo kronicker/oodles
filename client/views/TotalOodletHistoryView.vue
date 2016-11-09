@@ -224,6 +224,12 @@
 //            });
       }
     },
+  
+    beforeCreate() {
+      if(this.$store.getters.oodler.scope === 'user') {
+        this.$router.replace({ path: '/' });
+      }
+    },
     
     mounted() {
       if (this.appInitialized) {
