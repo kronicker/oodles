@@ -3,8 +3,8 @@ const Joi = require('joi');
 const Oodler = require('../models/oodler');
 
 function list(request, reply) {
-  let limit = request.params.limit || 20;
-  let offset = request.params.offset || 0;
+  let limit = request.query.limit || 20;
+  let offset = request.query.offset || 0;
 
   return Oodler.skip(parseInt(offset))
     .limit(parseInt(limit))
@@ -93,6 +93,12 @@ let routes = [
       handler: list,
       auth: {
         scope: 'admin'
+      },
+      validate: {
+        query: {
+          limit: Joi.number(),
+          offset: Joi.number()
+        }
       }
     }
   },
