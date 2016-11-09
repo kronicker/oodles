@@ -61,7 +61,16 @@ let routes = [
     method: 'GET',
     path: '/thingy',
     config: {
-      handler: list
+      handler: list,
+      auth: {
+        scope: ['admin', 'user']
+      },
+      validate: {
+        query: {
+          limit: Joi.number(),
+          offset: Joi.number()
+        }
+      }
     }
   },
   {
@@ -69,6 +78,9 @@ let routes = [
     path: '/thingy/{id}',
     config: {
       handler: get,
+      auth: {
+        scope: ['admin', 'user']
+      },
       validate: {
         params: {
           id: Joi.string().required()

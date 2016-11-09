@@ -87,7 +87,13 @@ let routes = [
     method: 'GET',
     path: '/oodler',
     config: {
-      handler: list
+      handler: list,
+      validate: {
+        query: {
+          limit: Joi.number(),
+          offset: Joi.number()
+        }
+      }
     }
   },
   {
@@ -95,6 +101,9 @@ let routes = [
     path: '/oodler/{id}',
     config: {
       handler: get,
+      auth: {
+        scope: ['admin', 'user']
+      },
       validate: {
         params: {
           id: Joi.string().required()
@@ -107,6 +116,9 @@ let routes = [
     path: '/oodler',
     config: {
       handler: create,
+      auth: {
+        scope: ['admin', 'user']
+      },
       validate: {
         payload: {
           firstName: Joi.string().alphanum().required(),
@@ -123,6 +135,9 @@ let routes = [
     path: '/oodler/{id}',
     config: {
       handler: update,
+      auth: {
+        scope: ['admin', 'user']
+      },
       validate: {
         params: {
           id: Joi.string().required()

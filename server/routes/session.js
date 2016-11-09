@@ -48,7 +48,7 @@ let routes = [
     config: {
       auth: {
         strategy: 'session',
-          scope: ['user', 'admin']
+        scope: ['admin', 'user']
       },
       handler: get
     }
@@ -72,8 +72,7 @@ let routes = [
     path: '/session/destroy',
     config: {
       auth: {
-        strategy: 'session',
-        scope: ['user', 'admin']
+        strategy: 'session'
       },
       handler: destroy
     }

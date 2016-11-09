@@ -1,30 +1,27 @@
 /**
- * Created by toma on 21.09.16..
+ * Created by toma on 08.11.16..
  */
-'use strict';
-
 const object = require('lodash/object');
 const thinky = require('../db/thinky');
+const type = thinky.type;
 const Thingy = require('./thingy');
 const Oodler = require('./oodler');
-const type = thinky.type;
-const dbConfig = require('../config').database;
 
 const schema = {
   id: type.string(),
   createdAt: type.date().default(() => new Date()),
   updatedAt: type.date().default(() => new Date()),
-  dueDate: type.date().default(() => dbConfig.defaultOodletDueDate),
   orderedAt: type.date(),
   oodler: type.object().schema(Oodler.schema),
-  quantifiedThingies: [type.object().schema(object.merge(Thingy.schema, { qty: type.number() }))]
+  quantifiedThingies: [type.object().schema(object.merge(Thingy.schema, { qty: type.number() }))],
+  oodletIds: type.array(type.string())
 };
 
 module.exports = (() => {
-  var model = thinky.createModel("Oodlet", schema);
-
-  model.ensureIndex('dueDate');
+  var model = thinky.createModel("TotalOodlet", schema);
+  
+  model.ensureIndex('orderedAt');
   model.schema = schema;
-
+  
   return model;
 })();
