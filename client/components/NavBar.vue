@@ -1,8 +1,12 @@
 <template>
   <div id="navBar">
     <ul class="nav nav-tabs nav-stacked">
-      <li><router-link to="/" exact><span class="glyphicon glyphicon-shopping-cart"></span></router-link></li>
-      <li><router-link to="/history"><span class="glyphicon glyphicon-time"></span></router-link></li>
+      <li><router-link v-show="user" to="/" :exact="user"><span class="glyphicon glyphicon-shopping-cart"></span></router-link></li>
+      <li><router-link v-show="user" to="/history"><span class="glyphicon glyphicon-time"></span></router-link></li>
+      <li><router-link v-show="admin" to="/admin" :exact="admin"><span class="glyphicon glyphicon-shopping-cart"></span></router-link></li>
+      <li><router-link v-show="admin" to="/admin/history"><span class="glyphicon glyphicon-time"></span></router-link></li>
+      <li><router-link v-show="admin" to="/admin/thingies"><span class="glyphicon glyphicon-glass"></span></router-link></li>
+      <li><router-link v-show="admin" to="/admin/oodlers"><span class="glyphicon glyphicon-user"></span></router-link></li>
       <li><router-link to="/settings"><span class="glyphicon glyphicon-cog"></span></router-link></li>
       <li><a @click="logout"><span class="glyphicon glyphicon-off"></span></a></li>
     </ul>
@@ -11,6 +15,15 @@
 
 <script>
   export default {
+    computed: {
+      admin() {
+        return this.$store.getters.oodler.scope === 'admin'
+      },
+      user() {
+        return this.$store.getters.oodler.scope === 'user'
+      }
+    },
+    
     methods: {
       logout() {
         this.$http.delete('/session/destroy')
@@ -31,7 +44,7 @@
 <style lang="sass">
   #navBar {
     position: absolute;
-    top: 300px;
+    top: 280px;
     width: 100px;
 
     ul li a {
