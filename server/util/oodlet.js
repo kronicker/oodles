@@ -34,8 +34,8 @@ function findActive(office) {
     .run();
 }
 
-function* finalize(oodlets) {
-  for(let id of oodlets) {
+function* finalize(oodletIds) {
+  for(let id of oodletIds) {
     yield Oodlet
       .get(id)
       .update({

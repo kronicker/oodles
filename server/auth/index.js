@@ -14,7 +14,7 @@ let sessionStrategy = {
       server.auth.strategy('session', 'cookie', config);
       server.auth.default({
         strategy: 'session',
-        scope: ['admin', 'user']
+        scope: ['admin']
       });
     });
     next();

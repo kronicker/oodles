@@ -88,9 +88,6 @@ let routes = [
     path: '/oodler',
     config: {
       handler: list,
-      auth: {
-        scope: ['admin']
-      },
       validate: {
         query: {
           limit: Joi.number(),
@@ -104,6 +101,9 @@ let routes = [
     path: '/oodler/{id}',
     config: {
       handler: get,
+      auth: {
+        scope: ['admin', 'user']
+      },
       validate: {
         params: {
           id: Joi.string().required()
@@ -116,6 +116,9 @@ let routes = [
     path: '/oodler',
     config: {
       handler: create,
+      auth: {
+        scope: ['admin', 'user']
+      },
       validate: {
         payload: {
           firstName: Joi.string().alphanum().required(),
@@ -132,6 +135,9 @@ let routes = [
     path: '/oodler/{id}',
     config: {
       handler: update,
+      auth: {
+        scope: ['admin', 'user']
+      },
       validate: {
         params: {
           id: Joi.string().required()
@@ -151,9 +157,6 @@ let routes = [
     path: '/oodler/{id}',
     config: {
       handler: remove,
-      auth: {
-        scope: ['admin']
-      },
       validate: {
         params: {
           id: Joi.string().required()

@@ -88,6 +88,9 @@ let routes = [
     path: '/oodlet',
     config: {
       handler: list,
+      auth: {
+        scope: ['admin', 'user']
+      },
       validate: {
         query: {
           office: Joi.string().required(),
@@ -102,6 +105,9 @@ let routes = [
     path: '/oodlet/{id}',
     config: {
       handler: get,
+      auth: {
+        scope: ['admin', 'user']
+      },
       validate: {
         params: {
           id: Joi.string().required()
@@ -115,9 +121,7 @@ let routes = [
     config: {
       handler: active,
       auth: {
-        access: {
-          scope: ['user']
-        }
+        scope: ['user']
       },
       validate: {
         query: {
@@ -132,6 +136,9 @@ let routes = [
     path: '/oodlet',
     config: {
       handler: create,
+      auth: {
+        scope: ['admin', 'user']
+      },
       validate: {
         payload: {
           oodlerId: Joi.string().required(),
@@ -151,6 +158,9 @@ let routes = [
     path: '/oodlet/{id}',
     config: {
       handler: update,
+      auth: {
+        scope: ['admin', 'user']
+      },
       validate: {
         params: {
           id: Joi.string().required()
@@ -172,6 +182,9 @@ let routes = [
     path: '/oodlet/{id}',
     config: {
       handler: remove,
+      auth: {
+        scope: ['admin', 'user']
+      },
       validate: {
         params: {
           id: Joi.string().required()

@@ -61,7 +61,7 @@ function update(request, reply) {
     .update({
       updatedAt: new Date(),
       quantifiedThingies: request.payload.quantifiedThingies,
-      oodlets: request.payload.oodlets
+      oodletIds: request.payload.oodletIds
     })
     .run()
     .then(result => {
@@ -78,7 +78,7 @@ function finalize(request, reply) {
     { returnChanges: true })
     .run()
     .then(result => {
-      Promise.all(oodletUtil.finalize(result.oodlets))
+      Promise.all(oodletUtil.finalize(result.oodletIds))
         .then(() => {
           reply(result).code(200);
         });
@@ -101,9 +101,6 @@ let routes = [
     path: '/totalOodlet',
     config: {
       handler: list,
-      auth: {
-        scope: ['admin']
-      },
       validate: {
         query: {
           toDate: Joi.date(),
@@ -117,9 +114,6 @@ let routes = [
     path: '/totalOodlet/{id}',
     config: {
       handler: get,
-      auth: {
-        scope: ['admin']
-      },
       validate: {
         params: {
           id: Joi.string().required()
@@ -132,9 +126,6 @@ let routes = [
     path: '/totalOodlet/active',
     config: {
       handler: getActive,
-      auth: {
-        scope: ['admin']
-      },
       validate: {
         query: {
           oodlerId: Joi.string().required()
@@ -147,9 +138,6 @@ let routes = [
     path: '/totalOodlet',
     config: {
       handler: create,
-      auth: {
-        scope: ['admin']
-      },
       validate: {
         payload: {
           oodlerId: Joi.string().required()
@@ -162,9 +150,6 @@ let routes = [
     path: '/totalOodlet/{id}',
     config: {
       handler: finalize,
-      auth: {
-        scope: ['admin']
-      },
       validate: {
         params: {
           id: Joi.string().required()
@@ -177,9 +162,6 @@ let routes = [
     path: '/totalOodlet/{id}',
     config: {
       handler: update,
-      auth: {
-        scope: ['admin']
-      },
       validate: {
         params: {
           id: Joi.string().required()
@@ -192,7 +174,7 @@ let routes = [
             pictureUrl: Joi.string().uri(),
             qty: Joi.number().min(1)
           }).required()),
-          orderedOodlets: Joi.array(Joi.object()).required()
+          oodletIds: Joi.array(Joi.string()).required()
         }
       }
     }
@@ -202,9 +184,6 @@ let routes = [
     path: '/totalOodlet/{id}',
     config: {
       handler: remove,
-      auth: {
-        scope: ['admin']
-      },
       validate: {
         params: {
           id: Joi.string().required()

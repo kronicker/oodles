@@ -47,7 +47,8 @@ let routes = [
     path: '/session',
     config: {
       auth: {
-        strategy: 'session'
+        strategy: 'session',
+        scope: ['admin', 'user']
       },
       handler: get
     }
