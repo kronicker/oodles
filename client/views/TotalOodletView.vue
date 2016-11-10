@@ -71,7 +71,7 @@
     watch: {
       // Cannot use an arrow fn because 'this' wouldn't be Vue instance
       appInitialized: function() {
-        this.load()
+        this.load();
       }
     },
     
@@ -88,11 +88,11 @@
     },
   
     mounted() {
-      if(this.appInitialized) {
-        this.load()
+      if (this.appInitialized) {
+        this.load();
       }
     },
-
+    
     components: { PendingOodlet, TotalOodlet }
   }
 

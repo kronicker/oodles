@@ -37,7 +37,7 @@ function findActive(office) {
 function findPending() {
   return Oodlet
     .filter(function (row) {
-      return row('dueDate').gt(new Date()).and(row.hasFields('orderedAt').not());
+      return row('dueDate').lt(new Date()).and(row.hasFields('orderedAt').not());
     })
     .run();
 }

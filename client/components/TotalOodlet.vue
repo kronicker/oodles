@@ -2,10 +2,6 @@
   <div class="oodlet">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <strong>Offices: </strong>
-        <ul class="list-inline">
-          <li v-for="oodlet in addedOodlets">{{ oodlet.oodler.office }}</li>
-        </ul>
       </div>
       <div class="panel-body">
         <table class="table table-striped table-hover">
@@ -56,10 +52,7 @@
   export default {
     computed: {
       quantifiedThingies() {
-        return this.$store.getters.totalOodlet.quantifiedThingies
-      },
-      addedOodlets() {
-        return this.$store.getters.totalOodlet.addedOodlets
+        return this.$store.getters.totalOodlet.quantifiedThingies;
       }
     },
 

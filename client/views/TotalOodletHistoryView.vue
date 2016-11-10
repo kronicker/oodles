@@ -8,7 +8,7 @@
         <div class="form-group col-md-offset-5 col-md-2">
           <div class="input-group">
             <span class="input-group-addon">From: </span>
-            <input type="date" class="form-control" @change="load" v-model="fromDate">
+            <input type="date" class="form-control" @change="load" :max="maxDate" v-model="fromDate">
           </div>
         </div>
         <div class="form-group col-md-2">
@@ -40,159 +40,7 @@
   export default{
     data() {
       return {
-        totalOodlets: [
-          //Mock-uped total oodlet
-          {
-            offices: ['C7', 'C8', 'D3', 'C18'],
-            orderedOn: '12-5-2016',
-            quantifiedThingies: [
-              {
-                id: "df997beb-21ee-44e8-8393-2f561f89b45e",
-                name: "Sausages",
-                pictureUrl: "https://placeimg.com/240/200/any",
-                qty: 1,
-                unit: "kg"
-              },{
-                id: "df997beb-21ee-44e8-8393-2f561f89b45e",
-                name: "Sausages",
-                pictureUrl: "https://placeimg.com/240/200/any",
-                qty: 1,
-                unit: "kg"
-              },{
-                id: "df997beb-21ee-44e8-8393-2f561f89b45e",
-                name: "Sausages",
-                pictureUrl: "https://placeimg.com/240/200/any",
-                qty: 1,
-                unit: "kg"
-              },{
-                id: "df997beb-21ee-44e8-8393-2f561f89b45e",
-                name: "Sausages",
-                pictureUrl: "https://placeimg.com/240/200/any",
-                qty: 1,
-                unit: "kg"
-              }]
-            },
-          {
-            offices: ['C7', 'C8', 'D3', 'C18'],
-            orderedOn: '12-5-2016',
-            quantifiedThingies: [
-              {
-                id: "df997beb-21ee-44e8-8393-2f561f89b45e",
-                name: "Sausages",
-                pictureUrl: "https://placeimg.com/240/200/any",
-                qty: 1,
-                unit: "kg"
-              },{
-                id: "df997beb-21ee-44e8-8393-2f561f89b45e",
-                name: "Sausages",
-                pictureUrl: "https://placeimg.com/240/200/any",
-                qty: 1,
-                unit: "kg"
-              },{
-                id: "df997beb-21ee-44e8-8393-2f561f89b45e",
-                name: "Sausages",
-                pictureUrl: "https://placeimg.com/240/200/any",
-                qty: 1,
-                unit: "kg"
-              },{
-                id: "df997beb-21ee-44e8-8393-2f561f89b45e",
-                name: "Sausages",
-                pictureUrl: "https://placeimg.com/240/200/any",
-                qty: 1,
-                unit: "kg"
-              }]
-          },
-          {
-            offices: ['C7', 'C8', 'D3', 'C18'],
-            orderedOn: '12-5-2016',
-            quantifiedThingies: [
-              {
-                id: "df997beb-21ee-44e8-8393-2f561f89b45e",
-                name: "Sausages",
-                pictureUrl: "https://placeimg.com/240/200/any",
-                qty: 1,
-                unit: "kg"
-              },{
-                id: "df997beb-21ee-44e8-8393-2f561f89b45e",
-                name: "Sausages",
-                pictureUrl: "https://placeimg.com/240/200/any",
-                qty: 1,
-                unit: "kg"
-              },{
-                id: "df997beb-21ee-44e8-8393-2f561f89b45e",
-                name: "Sausages",
-                pictureUrl: "https://placeimg.com/240/200/any",
-                qty: 1,
-                unit: "kg"
-              },{
-                id: "df997beb-21ee-44e8-8393-2f561f89b45e",
-                name: "Sausages",
-                pictureUrl: "https://placeimg.com/240/200/any",
-                qty: 1,
-                unit: "kg"
-              }]
-          },
-          {
-            offices: ['C7', 'C8', 'D3', 'C18'],
-            orderedOn: '12-5-2016',
-            quantifiedThingies: [
-              {
-                id: "df997beb-21ee-44e8-8393-2f561f89b45e",
-                name: "Sausages",
-                pictureUrl: "https://placeimg.com/240/200/any",
-                qty: 1,
-                unit: "kg"
-              },{
-                id: "df997beb-21ee-44e8-8393-2f561f89b45e",
-                name: "Sausages",
-                pictureUrl: "https://placeimg.com/240/200/any",
-                qty: 1,
-                unit: "kg"
-              },{
-                id: "df997beb-21ee-44e8-8393-2f561f89b45e",
-                name: "Sausages",
-                pictureUrl: "https://placeimg.com/240/200/any",
-                qty: 1,
-                unit: "kg"
-              },{
-                id: "df997beb-21ee-44e8-8393-2f561f89b45e",
-                name: "Sausages",
-                pictureUrl: "https://placeimg.com/240/200/any",
-                qty: 1,
-                unit: "kg"
-              }]
-          },
-          {
-            offices: ['C7', 'C8', 'D3', 'C18'],
-            orderedOn: '12-5-2016',
-            quantifiedThingies: [
-              {
-                id: "df997beb-21ee-44e8-8393-2f561f89b45e",
-                name: "Sausages",
-                pictureUrl: "https://placeimg.com/240/200/any",
-                qty: 1,
-                unit: "kg"
-              },{
-                id: "df997beb-21ee-44e8-8393-2f561f89b45e",
-                name: "Sausages",
-                pictureUrl: "https://placeimg.com/240/200/any",
-                qty: 1,
-                unit: "kg"
-              },{
-                id: "df997beb-21ee-44e8-8393-2f561f89b45e",
-                name: "Sausages",
-                pictureUrl: "https://placeimg.com/240/200/any",
-                qty: 1,
-                unit: "kg"
-              },{
-                id: "df997beb-21ee-44e8-8393-2f561f89b45e",
-                name: "Sausages",
-                pictureUrl: "https://placeimg.com/240/200/any",
-                qty: 1,
-                unit: "kg"
-              }]
-          }
-        ],
+        totalOodlets: [],
         fromDate: moment().subtract(3, 'months').format('YYYY-MM-DD'),
         toDate: moment().format('YYYY-MM-DD'),
         maxDate: moment().format('YYYY-MM-DD')
@@ -214,14 +62,14 @@
     
     methods: {
       load() {
-//        this.$http.get('/totalOodlet', {
-//              params: {
-//                fromDate: moment(this.fromDate).format(),
-//                toDate: moment(this.toDate).format()
-//              }})
-//            .then(response => {
-//              this.totalOodlets = response.body;
-//            });
+        this.$http.get('/totalOodlet', {
+              params: {
+                fromDate: moment(this.fromDate).format(),
+                toDate: moment(this.toDate).format()
+              }})
+            .then(response => {
+              this.totalOodlets = response.body;
+            });
       }
     },
   
