@@ -43,7 +43,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-success" @click="order">Order</button>
+            <button type="button" class="btn btn-success" data-dismiss="modal" @click="order">Order</button>
           </div>
         </div>
       </div>
@@ -65,7 +65,7 @@
 
     methods: {
       order() {
-        //this.$store.dispatch('totalOodletFinalize');
+        this.$store.dispatch('totalOodletFinalize');
       }
     },
 

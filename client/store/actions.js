@@ -67,11 +67,19 @@ function totalOodletLoad({ commit, state }) {
       console.log(state.totalOodlet.oodletIds);
       
       for(let pendingOodlet of response.body) {
-        console.log('Action '+pendingOodlet.id);
         commit('oodletAdd', pendingOodlet);
       }
       totalOodletApi.update(state.totalOodlet);
     });
+  });
+}
+
+function totalOodletFinalize({ commit, state }) {
+  totalOodletApi.finalize(state.totalOodlet).then(() => {
+    commit('totalOodletClear');
+    commit('pendingOodletClear');
+    
+    totalOodletLoad({ commit, state });
   });
 }
 
@@ -98,6 +106,7 @@ export {
   oodletLoad,
   oodletReset,
   totalOodletLoad,
+  totalOodletFinalize,
   pendingOodletAdd,
   pendingOodletRemove
 };
