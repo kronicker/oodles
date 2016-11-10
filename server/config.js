@@ -14,14 +14,14 @@ let config = {
       lastName: 'Zelic',
       email: 'toma@extensionengine.com',
       password: 'password',
-      scope: 'user',
+      scope: 'admin',
       office: 'C7'
     }, {
       firstName: 'Ante',
       lastName: 'Borzic',
       email: 'aborzic@extensionengine.com',
       password: 'password',
-      scope: 'user',
+      scope: 'admin',
       office: 'C7'
     }],
     defaultOodletDueDate: new Date(Date.now() + 60*60*24*7*1000),

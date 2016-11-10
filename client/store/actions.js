@@ -9,6 +9,8 @@ function initStore({ commit }, oodler) {
 function clearStore({ commit }) {
   commit('oodlerClear');
   commit('oodletClear');
+  commit('totalOodletClear');
+  commit('pendingOodletClear');
   commit('storeUninitialized');
 }
 
@@ -62,11 +64,28 @@ function totalOodletLoad({ commit, state }) {
     oodletApi.pending().then(response => {
       commit('pendingOodletsSet', response.body);
       
+      console.log(state.totalOodlet.oodletIds);
+      
       for(let pendingOodlet of response.body) {
-        console.log(pendingOodlet);
-        commit('pendingOodletAdd', pendingOodlet);
+        console.log('Action '+pendingOodlet.id);
+        commit('oodletAdd', pendingOodlet);
       }
+      totalOodletApi.update(state.totalOodlet);
     });
+  });
+}
+
+function pendingOodletAdd({ commit, state }, pendingOodlet) {
+  commit('oodletAdd', pendingOodlet);
+  totalOodletApi.update(state.totalOodlet).then(response => {
+    commit('totalOodletSet', response.body)
+  });
+}
+
+function pendingOodletRemove({ commit, state }, pendingOodlet) {
+  commit('oodletRemove', pendingOodlet);
+  totalOodletApi.update(state.totalOodlet).then(response => {
+    commit('totalOodletSet', response.body)
   });
 }
 
@@ -78,5 +97,7 @@ export {
   historyOodletLoad,
   oodletLoad,
   oodletReset,
-  totalOodletLoad
+  totalOodletLoad,
+  pendingOodletAdd,
+  pendingOodletRemove
 };

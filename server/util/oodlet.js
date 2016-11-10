@@ -29,7 +29,7 @@ function findActive(office) {
   return Oodlet
     .filter({ oodler: { office: office} })
     .filter(function (row) {
-      return row('dueDate').ge(new Date());
+      return row('dueDate').gt(new Date());
     })
     .run();
 }
@@ -37,7 +37,7 @@ function findActive(office) {
 function findPending() {
   return Oodlet
     .filter(function (row) {
-      return row('dueDate').le(new Date()) && row.hasFields('orderedAt').not();
+      return row('dueDate').gt(new Date()).and(row.hasFields('orderedAt').not());
     })
     .run();
 }

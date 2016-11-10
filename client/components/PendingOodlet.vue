@@ -61,32 +61,27 @@
   import moment from 'moment';
 
   export default{
-    data() {
-      return {
-        added: true
-      }
-    },
-
     props: ['pendingOodlet'],
 
     computed: {
+      added() {
+        return this.$store.getters.totalOodlet.oodletIds ? this.$store.getters.totalOodlet.oodletIds.indexOf(this.pendingOodlet.id) > -1 : undefined;
+      },
       updatedAt() {
         return moment(this.pendingOodlet.updatedAt).locale('hr').format('LL');
       },
       dueDate() {
         return moment(this.pendingOodlet.dueDate).locale('hr').format('LL');
-      },
+      }
     },
 
     methods: {
       addPendingOodlet() {
-        //this.$store.dispatch('pendingOodletAdd', pendingOodlet)
-        this.added = true;
+        this.$store.dispatch('pendingOodletAdd', this.pendingOodlet);
       },
       removePendingOodlet() {
-        //this.$store.dispatch('pendingOodletRemove', pendingOodlet)
-        this.added = false;
-      },
+        this.$store.dispatch('pendingOodletRemove', this.pendingOodlet);
+      }
     }
   }
 

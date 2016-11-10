@@ -4,7 +4,7 @@
       <div class="panel-heading">
         <strong>Offices: </strong>
         <ul class="list-inline">
-          <li v-for="office in 10">{{ office }}</li>
+          <li v-for="oodlet in addedOodlets">{{ oodlet.oodler.office }}</li>
         </ul>
       </div>
       <div class="panel-body">
@@ -57,6 +57,9 @@
     computed: {
       quantifiedThingies() {
         return this.$store.getters.totalOodlet.quantifiedThingies
+      },
+      addedOodlets() {
+        return this.$store.getters.totalOodlet.addedOodlets
       }
     },
 

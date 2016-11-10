@@ -12,6 +12,9 @@ const state = {
 const mutations = {
   pendingOodletsSet(state, pendingOodlets) {
     state.pendingOodlets = pendingOodlets;
+  },
+  pendingOodletClear(state) {
+    state.pendingOodlets = [];
   }
 };
 
