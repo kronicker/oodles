@@ -1,6 +1,8 @@
 /**
  * Created by toma on 03.11.16..
  */
+const bcrypt = require('bcrypt');
+
 let config = {
   server: {
     port: 3000,
@@ -13,14 +15,14 @@ let config = {
       firstName: 'Toma',
       lastName: 'Zelic',
       email: 'toma@extensionengine.com',
-      password: 'password',
+      password: bcrypt.hashSync('password', 10),
       scope: 'admin',
       office: 'C7'
     }, {
       firstName: 'Ante',
       lastName: 'Borzic',
       email: 'aborzic@extensionengine.com',
-      password: 'password',
+      password: bcrypt.hashSync('password', 10),
       scope: 'admin',
       office: 'C7'
     }],
