@@ -2,6 +2,7 @@
  * Created by toma on 09.11.16..
  */
 import array from 'lodash/array';
+import object from 'lodash/object';
 
 function thingyAdd (state, quantifiedThingy) {
   let index = array.findIndex(state.quantifiedThingies, {id: quantifiedThingy.id});
@@ -10,7 +11,7 @@ function thingyAdd (state, quantifiedThingy) {
     state.quantifiedThingies[index].qty += quantifiedThingy.qty;
   }
   else {
-    state.quantifiedThingies.push(quantifiedThingy);
+    state.quantifiedThingies.push({} = object.merge({}, quantifiedThingy));
   }
 }
 
