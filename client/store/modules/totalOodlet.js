@@ -6,7 +6,6 @@ import object from 'lodash/object';
 
 function thingyAdd (state, quantifiedThingy) {
   let index = array.findIndex(state.quantifiedThingies, {id: quantifiedThingy.id});
-  console.log('index  ' + index);
   if (index > -1) {
     state.quantifiedThingies[index].qty += quantifiedThingy.qty;
   }
@@ -59,7 +58,6 @@ const mutations = {
   oodletAdd(state, pendingOodlet) {
     if(addOodlet(state, pendingOodlet)) {
       for(let quantifiedThingy of pendingOodlet.quantifiedThingies) {
-        console.log(quantifiedThingy.name + '    ' + quantifiedThingy.qty)
         thingyAdd(state, quantifiedThingy);
       }
     }

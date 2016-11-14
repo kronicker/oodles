@@ -12,7 +12,6 @@ function load(oodler) {
 }
 
 function update(totalOodlet) {
-  console.log(totalOodlet);
   return Vue.http.put('/totalOodlet/' + totalOodlet.id, {
     quantifiedThingies: totalOodlet.quantifiedThingies,
     oodletIds: totalOodlet.oodletIds

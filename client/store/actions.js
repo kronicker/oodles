@@ -64,8 +64,6 @@ function totalOodletLoad({ commit, state }) {
     oodletApi.pending().then(response => {
       commit('pendingOodletsSet', response.body);
       
-      console.log(state.totalOodlet.oodletIds);
-      
       for(let pendingOodlet of response.body) {
         commit('oodletAdd', pendingOodlet);
       }

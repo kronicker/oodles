@@ -101,7 +101,6 @@
             if(response.ok) {
               this.$emit('thingyUpdate');
               for(let property in this.editing) {
-                console.log(property);
                 this.$set(this.editing, property, false);
               }
             }

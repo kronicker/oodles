@@ -113,7 +113,6 @@
     
     methods: {
       updateOodler() {
-        console.log(this.oodler.scope);
         this.$http.put('/oodler/'+this.oodler.id,
           {
             firstName: this.editOodler.firstName,

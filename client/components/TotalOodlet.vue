@@ -2,6 +2,10 @@
   <div class="oodlet">
     <div class="panel panel-default">
       <div class="panel-heading">
+        <strong>Offices: </strong>
+        <ul class="list-inline">
+          <li v-for="office in offices">{{ office }}</li>
+        </ul>
       </div>
       <div class="panel-body">
         <table class="table table-striped table-hover">
@@ -53,6 +57,9 @@
     computed: {
       quantifiedThingies() {
         return this.$store.getters.totalOodlet.quantifiedThingies;
+      },
+      offices() {
+        return this.$store.getters.totalOodletOffices;
       }
     },
 
@@ -60,9 +67,7 @@
       order() {
         this.$store.dispatch('totalOodletFinalize');
       }
-    },
-
-    components: {  }
+    }
   }
 
 </script>
