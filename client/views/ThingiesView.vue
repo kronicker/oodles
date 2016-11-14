@@ -1,18 +1,16 @@
 <template>
   <div id="thingiesView">
-    <div class="page-header">
-      <h1 class="text-info">Thingies</h1>
+    <div>
+      <div class="page-header col-md-12">
+        <h1 class="text-info">Thingies</h1>
+      </div>
     </div>
     <div class="row">
-      <div class="filtered-thingies col-md-12">
-        <div class="row">
-          <search-bar class="col-md-12" subject="thingy" @searchBarUpdate="searchBarUpdate"></search-bar>
-        </div>
-        <ul class="row">
-          <li v-for="thingy in filteredThingies" class="col-md-3">
-            <thingy-edit-tile  @thingyUpdate="load" :thingy="thingy"></thingy-edit-tile>
-          </li>
-        </ul>
+      <search-bar class="col-md-12" subject="thingy" @searchBarUpdate="searchBarUpdate"></search-bar>
+    </div>
+    <div class="row filtered-thingies">
+      <div v-for="thingy in filteredThingies" class="col-md-3">
+        <thingy-edit-tile  @thingyUpdate="load" :thingy="thingy"></thingy-edit-tile>
       </div>
     </div>
   </div>
@@ -79,10 +77,5 @@
 <style lang="sass" scoped>
   #thingiesView {
     .page-header { margin: 0px 0 10px; }
-    
-    .filtered-thingies ul {
-      padding: 0;
-      list-style: none;
-    }
   }
 </style>

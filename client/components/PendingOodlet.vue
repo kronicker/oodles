@@ -1,35 +1,31 @@
 <template>
-  <div class="pending-oodlet">
-    <div class="panel panel-default">
-      <div class="panel-heading" role="tab" :id="'heading'+pendingOodlet.oodler.office">
-        <div class="row panel-title">
-          <div class="col-md-1">
-            <button class="btn btn-danger" v-show="added" @click="removePendingOodlet">Remove</button>
-            <button class="btn btn-success" v-show="!added" @click="addPendingOodlet">Add</button>
-          </div>
-          <a role="button" data-toggle="collapse" data-parent="#accordion" :href="'#colllapse'+pendingOodlet.oodler.office"
-             aria-expanded="false" :aria-controls="'colllapse'+pendingOodlet.oodler.office">
-            <div class="col-md-2">
-              <h2 class="panel-title">
-                {{ pendingOodlet.oodler.office }}
-              </h2>
-            </div>
-            <div class="col-md-3">
-              <h2 class="panel-title">
-                {{ updatedAt }}
-              </h2>
-            </div>
-            <div class="col-md-3">
-              <h2 class="panel-title">
-                {{ dueDate }}
-              </h2>
-            </div>
-            <div class="col-md-3">
-              <h2 class="panel-title">
-                {{ pendingOodlet.oodler.firstName }} {{ pendingOodlet.oodler.lastName }}
-              </h2>
-            </div>
-          </a>
+  <div class="panel panel-default pending-oodlet">
+    <div class="panel-heading" role="tab" :id="'heading'+pendingOodlet.id">
+      <div class="row panel-title" role="button" data-toggle="collapse" data-parent="#accordion" :href="'#colllapse'+pendingOodlet.id"
+           aria-expanded="false" :aria-controls="'colllapse'+pendingOodlet.id">
+        <div class="col-md-1">
+          <button class="btn btn-sm btn-danger" v-show="added" @click.prevent.stop="removePendingOodlet">Remove</button>
+          <button class="btn btn-sm btn-success" v-show="!added" @click.prevent.stop="addPendingOodlet">Add</button>
+        </div>
+        <div class="col-md-2">
+          <h2 class="panel-title">
+            {{ pendingOodlet.oodler.office }}
+          </h2>
+        </div>
+        <div class="col-md-3">
+          <h2 class="panel-title">
+            {{ updatedAt }}
+          </h2>
+        </div>
+        <div class="col-md-3">
+          <h2 class="panel-title">
+            {{ dueDate }}
+          </h2>
+        </div>
+        <div class="col-md-3">
+          <h2 class="panel-title">
+            {{ pendingOodlet.oodler.firstName }} {{ pendingOodlet.oodler.lastName }}
+          </h2>
         </div>
       </div>
       <div :id="'colllapse'+pendingOodlet.oodler.office" class="panel-collapse collapse" role="tabpanel"

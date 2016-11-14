@@ -45,6 +45,11 @@ function active(request, reply) {
     });
 }
 
+function pending(request, reply) {
+  oodletUtil.findPending()
+    .then(pendingOodlets => reply(pendingOodlets).code(200));
+}
+
 function create(request, reply) {
   oodlerUtil.get(request.payload.oodlerId)
     .then(oodler => {

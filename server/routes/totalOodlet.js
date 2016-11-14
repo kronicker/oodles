@@ -15,7 +15,7 @@ function list(request, reply) {
   
   return TotalOodlet
     .between(fromDate, toDate, { index : 'orderedAt' })
-    .filter(function (row) {
+    .filter(row => {
       return row.hasFields('orderedAt');
     })
     .run()

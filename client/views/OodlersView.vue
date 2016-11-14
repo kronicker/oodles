@@ -1,18 +1,16 @@
 <template>
   <div id="oodlersView">
-    <div class="page-header">
-      <h1 class="text-info">Oodlers</h1>
+    <div class="row">
+      <div class="page-header col-md-12">
+        <h1 class="text-info">Oodlers</h1>
+      </div>
     </div>
     <div class="row">
-      <div class="filtered-oodlers col-md-12">
-        <div class="row">
-          <search-bar class="col-md-12" subject="oodler by first name, last name or office" @searchBarUpdate="searchBarUpdate"></search-bar>
-        </div>
-        <ul class="row">
-          <li v-for="oodler in filteredOodlers" class="col-md-3">
-            <oodler-edit-tile @oodlerUpdate="load" :oodler="oodler"></oodler-edit-tile>
-          </li>
-        </ul>
+        <search-bar class="col-md-12" subject="oodler by first name, last name or office" @searchBarUpdate="searchBarUpdate"></search-bar>
+    </div>
+    <div class="row filtered-oodlers">
+      <div v-for="oodler in filteredOodlers" class="col-md-3">
+        <oodler-edit-tile @oodlerUpdate="load" :oodler="oodler"></oodler-edit-tile>
       </div>
     </div>
   </div>
@@ -41,7 +39,7 @@
         
         let searchString = this.searchString.toLowerCase();
         return this.oodlers.filter(oodler => {
-          return (oodler.firstName+oodler.lastName+oodler.office).toLowerCase().indexOf(searchString) !== -1
+          return (`${oodler.firstName} ${oodler.lastName} ${oodler.office}`).toLowerCase().indexOf(searchString) !== -1
         });
       }
     },
@@ -57,7 +55,7 @@
         this.searchString = query;
       },
       load() {
-        this.$http.get('/oodler').then((response) => {
+        this.$http.get('/oodler').then(response => {
           this.oodlers = response.body;
         });
       }
@@ -79,10 +77,5 @@
 <style lang="sass" scoped>
   #oodlersView {
     .page-header { margin: 0px 0 10px; }
-    
-      .filtered-oodlers ul {
-        padding: 0;
-        list-style: none;
-      }
   }
 </style>
