@@ -30,7 +30,7 @@ function get(request, reply) {
 
 function active(request, reply) {
   oodletUtil.findActive(request.query.office)
-    .then((activeOodlets) => {
+    .then(activeOodlets => {
       if (activeOodlets) {
         reply(activeOodlets[0]).code(200);
       }
