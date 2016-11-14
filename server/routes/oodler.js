@@ -121,8 +121,8 @@ let routes = [
       },
       validate: {
         payload: {
-          firstName: Joi.string().alphanum().required(),
-          lastName: Joi.string().alphanum().required(),
+          firstName: Joi.string().min(1).required(),
+          lastName: Joi.string().min(1).required(),
           email: Joi.string().email().required(),
           office: Joi.string().required(),
           scope: Joi.string().valid('user', 'admin').required()
@@ -143,8 +143,8 @@ let routes = [
           id: Joi.string().required()
         },
         payload: {
-          firstName: Joi.string().alphanum().required(),
-          lastName: Joi.string().alphanum().required(),
+          firstName: Joi.string().min(1).required(),
+          lastName: Joi.string().min(1).required(),
           email: Joi.string().email().required(),
           office: Joi.string().required(),
           scope: Joi.string().valid('user', 'admin').required()
