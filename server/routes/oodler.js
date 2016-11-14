@@ -55,7 +55,7 @@ function update(request, reply) {
       //Check if email in the payload exists in database and if it is registered for another user
       //TODO: Check if there is a better implementation
       if (oodlers[0] && oodlers[0].id !== oodlerId) {
-        reply('User already registered with this email').code(400);
+        return reply('User already registered with this email').code(400);
       }
 
       return Oodler.get(oodlerId)
