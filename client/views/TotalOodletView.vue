@@ -28,7 +28,7 @@
               </div>
               <div class="col-md-3">
                 <h3 class="panel-title">
-                  <strong>Last updated</strong>
+                  <strong>Updated at</strong>
                 </h3>
               </div>
               <div class="col-md-3">

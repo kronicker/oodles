@@ -1,5 +1,5 @@
 <template>
-  <div class="oodlet">
+  <div class="total-oodlet">
     <div class="panel panel-default">
       <div class="panel-heading">
         <strong>Offices: </strong>

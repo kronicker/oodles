@@ -3,11 +3,11 @@
     <div class="thumbnail">
       <img :src="thingy.pictureUrl">
       <div class="row">
-        <form @submit="updateThingy('name')" class="form-horizontal col-md-12">
+        <form @submit="updateThingy" class="form-horizontal col-md-12">
           <div v-show="editing.name" class="form-group form-group-sm">
             <label for="name" class="col-md-2 control-label">Name</label>
             <div class="col-md-6">
-              <input type="text" v-model="editThingy.name" class="form-control input-sm" id="name">
+              <input type="text" v-model="editedThingy.name" class="form-control input-sm" id="name">
             </div>
             <div class="btn-group col-md-4">
               <button type="submit" class="col-md-8 btn btn-sm btn-success">Save</button>
@@ -25,11 +25,11 @@
           </table>
         </form>
         
-        <form @submit="updateThingy('unit')" class="form-horizontal col-md-12">
+        <form @submit="updateThingy" class="form-horizontal col-md-12">
           <div v-show="editing.unit" class="form-group form-group-sm">
             <label for="unit" class="col-md-2 control-label">Unit</label>
             <div class="col-md-6">
-              <input type="text" v-model="editThingy.unit" class="form-control input-sm" id="unit">
+              <input type="text" v-model="editedThingy.unit" class="form-control input-sm" id="unit">
             </div>
             <div class="btn-group col-md-4">
               <button type="submit" class="col-md-8 btn btn-sm btn-success">Save</button>
@@ -47,11 +47,11 @@
           </table>
         </form>
         
-        <form @submit="updateThingy('pictureUrl')" class="form-horizontal col-md-12">
+        <form @submit="updateThingy" class="form-horizontal col-md-12">
           <div v-show="editing.pictureUrl" class="form-group form-group-sm">
             <label for="name" class="col-md-2 control-label">Picture Url</label>
             <div class="col-md-6">
-              <input type="text" v-model="editThingy.pictureUrl" class="form-control input-sm" id="pictureUrl">
+              <input type="text" v-model="editedThingy.pictureUrl" class="form-control input-sm" id="pictureUrl">
             </div>
             <div class="btn-group col-md-4">
               <button type="submit" class="col-md-8 btn btn-sm btn-success">Save</button>
@@ -78,7 +78,7 @@
   export default {
     data() {
       return {
-        editThingy: {},
+        editedThingy: {},
         editing: {
           name: false,
           unit: false,
@@ -91,11 +91,11 @@
     
     methods: {
       updateThingy() {
-        this.$http.put('/thingy/'+this.thingy.id,
+        this.$http.put('/thingy/' + this.thingy.id,
           {
-            name: this.editThingy.name,
-            unit: this.editThingy.unit,
-            pictureUrl: this.editThingy.pictureUrl
+            name: this.editedThingy.name,
+            unit: this.editedThingy.unit,
+            pictureUrl: this.editedThingy.pictureUrl
           })
           .then(response => {
             if(response.ok) {
@@ -110,17 +110,17 @@
         this.$set(this.editing, el, true);
       },
       cancel(el) {
-        Object.assign(this.editThingy, this.thingy);
+        Object.assign(this.editedThingy, this.thingy);
         this.$set(this.editing, el, false);
       }
     },
   
     mounted() {
-      Object.assign(this.editThingy, this.thingy);
+      Object.assign(this.editedThingy, this.thingy);
     },
     
     beforeUpdate() {
-      Object.assign(this.editThingy, this.thingy);
+      Object.assign(this.editedThingy, this.thingy);
     }
   }
 </script>
