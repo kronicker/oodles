@@ -14,7 +14,32 @@
         </table>
       </div>
       <div class="panel-footer" v-show="quantifiedThingies.length > 0">
-        <button class="btn btn-danger push-right" @click="reset">Reset</button>
+        <button class="btn btn-danger push-right" data-toggle="modal" data-target="#oodletReset">Reset</button>
+      </div>
+      <div class="modal fade" data-backdrop="static" data-keyboard="false" id="oodletReset">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title">Are you sure you want to reset this oodlet?</h4>
+            </div>
+            <div class="modal-body">
+              <table class="table table-striped table-hover">
+                <tbody>
+                <tr v-for="quantifiedThingy in quantifiedThingies">
+                  <td>{{ quantifiedThingy.name }}</td>
+                  <td class="col-md-2 right">{{ quantifiedThingy.qty }}</td>
+                  <td class="col-md-2">{{ quantifiedThingy.unit }}</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-danger" data-dismiss="modal" @click="reset">Reset</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -58,15 +83,30 @@
         else {
           return 'red';
         }
+      },
+      appInitialized() {
+        return this.$store.getters.appInitialized;
       }
-
     },
-
+  
+    watch: {
+      // Cannot use an arrow fn because 'this' wouldn't be Vue instance
+      appInitialized: function() {
+        this.load()
+      }
+    },
     methods: {
+      load() {
+        this.$store.dispatch('oodletLoad');
+      },
       reset() {
-        if (confirm('Are you sure you want to reset this oodlet?')) {
-          this.$store.dispatch('oodletReset');
-        }
+        this.$store.dispatch('oodletReset');
+      }
+    },
+  
+    mounted() {
+      if(this.appInitialized) {
+        this.load()
       }
     },
 

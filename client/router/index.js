@@ -6,12 +6,16 @@ import VueRouter from 'vue-router';
 
 Vue.use(VueRouter);
 
-import OodletView from '../views/OodletView.vue';
-import HistoryView from '../views/HistoryView.vue';
-import SettingsView from '../views/SettingsView.vue';
-import LoginView from '../views/LoginView.vue';
-import NewPasswordView from '../views/NewPasswordView.vue';
-import ResetPasswordView from '../views/ResetPasswordView.vue';
+import OodletView from '../views/user/OodletView.vue';
+import HistoryView from '../views/user/HistoryView.vue';
+import SettingsView from '../views/common/SettingsView.vue';
+import LoginView from '../views/common/LoginView.vue';
+import NewPasswordView from '../views/common/NewPasswordView.vue';
+import ResetPasswordView from '../views/common/ResetPasswordView.vue';
+import TotalOodletView from '../views/admin/TotalOodletView.vue';
+import TotalOodletHistoryView from '../views/admin/TotalOodletHistoryView.vue';
+import ThingiesView from '../views/admin/ThingiesView.vue';
+import OodlersView from '../views/admin/OodlersView.vue';
 
 const routes = [
   {
@@ -40,6 +44,22 @@ const routes = [
   {
     path: '/password/reset',
     component: ResetPasswordView
+  },
+  {
+    path: '/admin/',
+    component: TotalOodletView
+  },
+  {
+    path: '/admin/history',
+    component: TotalOodletHistoryView
+  },
+  {
+    path: '/admin/thingies',
+    component: ThingiesView
+  },
+  {
+    path: '/admin/oodlers',
+    component: OodlersView
   }
 ];
 

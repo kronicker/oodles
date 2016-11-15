@@ -52,8 +52,17 @@
         })
         .then(
           response => {
-            this.$store.dispatch('initStore', response.body);
-            this.$router.replace({ path: '/' });
+            if(response.ok) {
+              let oodler = response.body;
+              this.$store.dispatch('initStore', oodler);
+  
+              if (oodler.scope === 'admin') {
+                this.$router.replace({ path: '/admin' });
+              }
+              else {
+                this.$router.replace({ path: '/' });
+              }
+            }
           },
           response => {
             this.email = '';

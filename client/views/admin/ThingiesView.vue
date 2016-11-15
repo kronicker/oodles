@@ -1,29 +1,25 @@
 <template>
-  <div id="oodletView">
-    <div class="page-header">
-      <h1 class="text-info">Oodlet</h1>
+  <div id="thingiesView">
+    <div>
+      <div class="page-header col-md-12">
+        <h1 class="text-info">Thingies</h1>
+      </div>
     </div>
     <div class="row">
-      <div class="filtered-thingies col-md-9">
-        <div class="row">
-          <thingy-finder class="col-md-12" @thingyFinderUpdate="thingyFinderUpdate"></thingy-finder>
-        </div>
-        <ul class="row">
-            <li v-for="thingy in filteredThingies" class="col-md-2">
-              <thingy-tile :thingy="thingy"></thingy-tile>
-            </li>
-          </ul>
+      <search-bar class="col-md-12" subject="thingy" @searchBarUpdate="searchBarUpdate"></search-bar>
+    </div>
+    <div class="row filtered-thingies">
+      <div v-for="thingy in filteredThingies" class="col-md-3">
+        <thingy-edit-tile  @thingyUpdate="load" :thingy="thingy"></thingy-edit-tile>
       </div>
-      <oodlet class="col-md-3"></oodlet>
     </div>
   </div>
 </template>
 
 <script>
-  import Oodlet from '../components/Oodlet.vue'
-  import ThingyFinder from '../components/ThingyFinder.vue'
-  import ThingyTile from '../components/ThingyTile.vue'
-
+  import SearchBar from '../../components/common/SearchBar.vue'
+  import ThingyEditTile from '../../components/admin/ThingyEditTile.vue'
+  
   export default{
     data() {
       return {
@@ -31,7 +27,7 @@
         thingies: []
       }
     },
-
+    
     computed: {
       appInitialized() {
         return this.$store.getters.appInitialized;
@@ -40,22 +36,22 @@
         if(this.searchString.length < 1) {
           return this.thingies;
         }
-
+        
         let searchString = this.searchString.toLowerCase();
         return this.thingies.filter(item => {
           return item.name.toLowerCase().indexOf(searchString) !== -1
         });
       }
     },
-
+    
     watch: {
       appInitialized: function() { //Cannot be arrow fn cause that way 'this' wouldn't be Vue instance
         this.load()
       }
     },
-
+    
     methods: {
-      thingyFinderUpdate(query) {
+      searchBarUpdate(query) {
         this.searchString = query;
       },
       load() {
@@ -64,28 +60,44 @@
         });
       }
     },
-
+  
+    beforeCreate() {
+      if(this.$store.getters.oodler.scope === 'user') {
+        this.$router.replace({ path: '/' });
+      }
+    },
+    
     mounted() {
       if(this.appInitialized) {
         this.load();
       }
     },
-
+    
     components: {
-      Oodlet,
-      ThingyFinder,
-      ThingyTile,
+      SearchBar,
+      ThingyEditTile
     }
   }
 </script>
 
 <style lang="sass" scoped>
-  #oodletView {
+  #thingiesView {
     .page-header { margin: 0px 0 10px; }
 
-    .filtered-thingies ul {
-      padding: 0;
-      list-style: none;
+    .filtered-thingies {
+      padding-left: 0;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  
+      .thingy-edit-tile {
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+      }
     }
   }
 </style>

@@ -1,6 +1,6 @@
 <template>
-  <div class="thingyFinder">
-    <input @keyup="updateQuery" v-model="searchString" type="text" placeholder="Find your thingy"/>
+  <div class="search-bar">
+    <input @keyup="updateQuery" v-model="searchString" type="text" :placeholder="'Find '+subject"/>
   </div>
 </template>
 
@@ -11,17 +11,19 @@
         searchString: ''
       }
     },
+    
+    props: ['subject'],
 
     methods: {
       updateQuery() {
-        this.$emit('thingyFinderUpdate', this.searchString);
+        this.$emit('searchBarUpdate', this.searchString);
       }
     }
   }
 </script>
 
 <style lang="sass" scoped>
-  input {
+  .search-bar input {
     width: 100%;
     height: 50px;
     padding: 0 15px;
