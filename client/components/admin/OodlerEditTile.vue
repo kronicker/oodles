@@ -156,8 +156,8 @@
 
 <style lang="sass" scoped>
   .oodler-edit-tile .well {
-    &.form-group { margin-bottom: 13px; }
-    
+    padding: 5px 10px 0;
+  
     .control-label { padding-left: 21px; }
     
     .form-horizontal .control-label { text-align: left; }
