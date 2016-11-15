@@ -55,8 +55,8 @@
 </template>
 
 <script>
-  import PendingOodlet from '../components/PendingOodlet.vue';
-  import TotalOodlet from '../components/TotalOodlet.vue';
+  import PendingOodlet from '../../components/admin/PendingOodlet.vue';
+  import TotalOodlet from '../../components/admin/TotalOodlet.vue';
 
   export default {
     computed: {
