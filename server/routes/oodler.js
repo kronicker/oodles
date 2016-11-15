@@ -55,7 +55,7 @@ function update(request, reply) {
       //Check if email in the payload exists in database and if it is registered for another user
       //TODO: Check if there is a better implementation
       if (oodlers[0] && oodlers[0].id !== oodlerId) {
-        reply('User already registered with this email').code(400);
+        return reply('User already registered with this email').code(400);
       }
 
       return Oodler.get(oodlerId)
@@ -121,8 +121,8 @@ let routes = [
       },
       validate: {
         payload: {
-          firstName: Joi.string().alphanum().required(),
-          lastName: Joi.string().alphanum().required(),
+          firstName: Joi.string().min(1).required(),
+          lastName: Joi.string().min(1).required(),
           email: Joi.string().email().required(),
           office: Joi.string().required(),
           scope: Joi.string().valid('user', 'admin').required()
@@ -143,8 +143,8 @@ let routes = [
           id: Joi.string().required()
         },
         payload: {
-          firstName: Joi.string().alphanum().required(),
-          lastName: Joi.string().alphanum().required(),
+          firstName: Joi.string().min(1).required(),
+          lastName: Joi.string().min(1).required(),
           email: Joi.string().email().required(),
           office: Joi.string().required(),
           scope: Joi.string().valid('user', 'admin').required()

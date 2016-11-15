@@ -19,7 +19,7 @@
       <div class="panel-footer">
         <strong>Offices: </strong>
         <ul class="list-inline">
-          <li v-for="office in totalOodlet.offices">{{ office }}</li>
+          <li v-for="office in offices">{{ office }}</li>
         </ul>
       </div>
     </div>
@@ -30,13 +30,34 @@
 <script>
   import moment from 'moment';
   
-  export default{
+  export default {
+    data() {
+      return {
+        offices: []
+      }
+    },
+    
     props: ['totalOodlet'],
     
     computed: {
       orderedOn() {
         return moment(this.totalOodlet.orderedOn).locale('hr').format('LL');
       }
+    },
+    
+    methods: {
+      getOffices(){
+        for(let oodletId of this.totalOodlet.oodletIds) {
+          this.$http.get(`/oodlet/${oodletId}`)
+            .then(response => {
+              this.offices.push(response.body.oodler.office);
+            });
+        }
+      }
+    },
+    
+    mounted() {
+      this.getOffices();
     }
   }
 </script>

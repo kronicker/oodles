@@ -64,6 +64,12 @@
         });
       }
     },
+    
+    beforeCreate() {
+      if(this.$store.getters.oodler.scope === 'admin') {
+        this.$router.replace({ path: '/admin' });
+      }
+    },
 
     mounted() {
       if(this.appInitialized) {

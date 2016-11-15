@@ -128,6 +128,11 @@
                 this.$set(this.editing, property, false);
               }
             }
+          })
+          .catch( () => {
+            for(let property in this.editing) {
+              this.$set(this.editing, property, false);
+            }
           });
       },
       edit(el) {

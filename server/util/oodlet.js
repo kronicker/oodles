@@ -2,6 +2,8 @@
  * Created by toma on 09.11.16..
  */
 const Oodlet = require('../models/oodlet');
+const thinky = require('../db/thinky');
+const r = thinky.r;
 const moment = require('moment');
 
 function create(oodler, dueDate) {
@@ -14,7 +16,7 @@ function create(oodler, dueDate) {
 
 function nextDueDate() {
   return Oodlet
-    .orderBy({index: '-dueDate'})
+    .orderBy({index: r.desc('dueDate')})
     .run()
     .then(oodlets => {
       let nextDate = oodlets[0].dueDate || new Date();
@@ -28,9 +30,16 @@ function nextDueDate() {
 function findActive(office) {
   return Oodlet
     .filter({ oodler: { office: office} })
-    .filter(function (row) {
-      return row('dueDate').ge(new Date());
-    })
+    .filter(row => row('dueDate').gt(new Date()))
+    .run();
+}
+
+function findPending() {
+  return Oodlet
+    .filter(row =>
+      row('dueDate').lt(new Date())
+      .and(row.hasFields('orderedAt').not())
+    )
     .run();
 }
 
@@ -49,5 +58,6 @@ module.exports = {
   nextDueDate,
   create,
   findActive,
+  findPending,
   finalize
 };

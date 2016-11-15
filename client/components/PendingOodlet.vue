@@ -28,26 +28,26 @@
           </h2>
         </div>
       </div>
-      <div :id="'colllapse'+pendingOodlet.oodler.office" class="panel-collapse collapse" role="tabpanel"
-           :aria-labelledby="'heading'+pendingOodlet.oodler.office">
-        <div class="panel-body">
-          <table class="table table-striped table-hover">
-            <thead>
-            <tr>
-              <th>Thingy</th>
-              <th class="col-md-2">Quantity</th>
-              <th class="col-md-2">Unit</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr v-for="quantifiedThingy in pendingOodlet.quantifiedThingies">
-              <td>{{ quantifiedThingy.name }}</td>
-              <td class="col-md-2 right">{{ quantifiedThingy.qty }}</td>
-              <td class="col-md-2">{{ quantifiedThingy.unit }}</td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
+    </div>
+    <div :id="'colllapse'+pendingOodlet.id" class="panel-collapse collapse" role="tabpanel"
+         :aria-labelledby="'heading'+pendingOodlet.id">
+      <div class="panel-body">
+        <table class="table table-striped table-hover">
+          <thead>
+          <tr>
+            <th>Thingy</th>
+            <th class="col-md-2">Quantity</th>
+            <th class="col-md-2">Unit</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr v-for="quantifiedThingy in pendingOodlet.quantifiedThingies">
+            <td>{{ quantifiedThingy.name }}</td>
+            <td class="col-md-2 right">{{ quantifiedThingy.qty }}</td>
+            <td class="col-md-2">{{ quantifiedThingy.unit }}</td>
+          </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
@@ -57,32 +57,27 @@
   import moment from 'moment';
 
   export default{
-    data() {
-      return {
-        added: true
-      }
-    },
-
     props: ['pendingOodlet'],
 
     computed: {
+      added() {
+        return this.$store.getters.totalOodlet.oodletIds ? this.$store.getters.totalOodlet.oodletIds.indexOf(this.pendingOodlet.id) > -1 : false;
+      },
       updatedAt() {
         return moment(this.pendingOodlet.updatedAt).locale('hr').format('LL');
       },
       dueDate() {
         return moment(this.pendingOodlet.dueDate).locale('hr').format('LL');
-      },
+      }
     },
 
     methods: {
       addPendingOodlet() {
-        //this.$store.dispatch('pendingOodletAdd', pendingOodlet)
-        this.added = true;
+        this.$store.dispatch('pendingOodletAdd', this.pendingOodlet);
       },
       removePendingOodlet() {
-        //this.$store.dispatch('pendingOodletRemove', pendingOodlet)
-        this.added = false;
-      },
+        this.$store.dispatch('pendingOodletRemove', this.pendingOodlet);
+      }
     }
   }
 
