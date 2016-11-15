@@ -20,9 +20,9 @@
 </template>
 
 <script>
-  import Oodlet from '../components/Oodlet.vue'
-  import SearchBar from '../components/SearchBar.vue'
-  import ThingyTile from '../components/ThingyTile.vue'
+  import Oodlet from '../../components/user/Oodlet.vue'
+  import SearchBar from '../../components/common/SearchBar.vue'
+  import ThingyTile from '../../components/user/ThingyTile.vue'
 
   export default{
     data() {

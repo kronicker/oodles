@@ -17,8 +17,8 @@
 </template>
 
 <script>
-  import SearchBar from '../components/SearchBar.vue'
-  import OodlerEditTile from '../components/OodlerEditTile.vue'
+  import SearchBar from '../../components/common/SearchBar.vue'
+  import OodlerEditTile from '../../components/admin/OodlerEditTile.vue'
   
   export default{
     data() {
@@ -83,5 +83,21 @@
 <style lang="sass" scoped>
   #oodlersView {
     .page-header { margin: 0px 0 10px; }
+
+    .filtered-oodlers {
+      padding-left: 0;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+
+    .oodler-edit-tile {
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+      }
+    }
   }
 </style>

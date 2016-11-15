@@ -17,8 +17,8 @@
 </template>
 
 <script>
-  import SearchBar from '../components/SearchBar.vue'
-  import ThingyEditTile from '../components/ThingyEditTile.vue'
+  import SearchBar from '../../components/common/SearchBar.vue'
+  import ThingyEditTile from '../../components/admin/ThingyEditTile.vue'
   
   export default{
     data() {
@@ -83,5 +83,21 @@
 <style lang="sass" scoped>
   #thingiesView {
     .page-header { margin: 0px 0 10px; }
+
+    .filtered-thingies {
+      padding-left: 0;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  
+      .thingy-edit-tile {
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+      }
+    }
   }
 </style>
