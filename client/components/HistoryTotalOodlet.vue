@@ -48,7 +48,7 @@
     methods: {
       getOffices(){
         for(let oodletId of this.totalOodlet.oodletIds) {
-          this.$http.get('/oodlet/'+oodletId)
+          this.$http.get(`/oodlet/${oodletId}`)
             .then(response => {
               this.offices.push(response.body.oodler.office);
             });

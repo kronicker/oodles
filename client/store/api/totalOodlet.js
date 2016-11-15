@@ -3,7 +3,7 @@
  */
 import Vue from 'vue';
 
-function load(oodler) {
+function active(oodler) {
   return Vue.http.get('/totalOodlet/active', {
     params: {
       oodlerId: oodler.id
@@ -23,7 +23,7 @@ function finalize(totalOodlet) {
 }
 
 export default {
-  load,
+  active,
   update,
   finalize
 };

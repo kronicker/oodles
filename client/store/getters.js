@@ -15,11 +15,10 @@ export const totalOodlet = state => state.totalOodlet;
 export const totalOodletOffices = state => {
   let offices = [];
   for(let id of state.totalOodlet.oodletIds) {
-    let oodlet = state.pendingOodlets.pendingOodlets.find(pending => { return pending.id === id; });
+    let oodlet = state.pendingOodlets.pendingOodlets.find(pendingOodlet => pendingOodlet.id === id);
     if(oodlet) {
       offices.push(oodlet.oodler.office);
     }
   }
-  offices.sort();
-  return offices;
+  return offices.sort();
 };

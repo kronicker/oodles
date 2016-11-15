@@ -33,13 +33,9 @@ const mutations = {
   },
 
   oodletSet(state, oodlet) {
-    state.quantifiedThingies = oodlet.quantifiedThingies;
-    state.id = oodlet.id;
+    state.quantifiedThingies = (() => oodlet.quantifiedThingies ? oodlet.quantifiedThingies : [])();
+    state.id =  oodlet.id;
     state.dueDate = oodlet.dueDate;
-  },
-
-  oodletReset(state) {
-    state.quantifiedThingies = [];
   },
 
   oodletClear(state) {

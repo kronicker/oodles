@@ -24,7 +24,7 @@ function thingyRemove (state, quantifiedThingy) {
   }
 }
 
-function addOodlet(state, pendingOodlet) {
+function pushOodletId(state, pendingOodlet) {
   if (array.indexOf(state.oodletIds, pendingOodlet.id) < 0) {
     state.oodletIds.push(pendingOodlet.id);
     return true;
@@ -32,7 +32,7 @@ function addOodlet(state, pendingOodlet) {
   return false;
 }
 
-function removeOoodlet(state, pendingOodlet) {
+function popOodletId(state, pendingOodlet) {
   if (array.indexOf(state.oodletIds, pendingOodlet.id) > -1) {
     array.pull(state.oodletIds, pendingOodlet.id);
     return true;
@@ -51,12 +51,12 @@ const state = {
 const mutations = {
   totalOodletSet(state, totalOodlet) {
     state.id = totalOodlet.id;
-    state.quantifiedThingies = (() => { return totalOodlet.quantifiedThingies ? totalOodlet.quantifiedThingies : [];})();
-    state.oodletIds = (() => { return totalOodlet.oodletIds ? totalOodlet.oodletIds : [];})();
+    state.quantifiedThingies = (() => totalOodlet.quantifiedThingies ? totalOodlet.quantifiedThingies : [])();
+    state.oodletIds = (() => totalOodlet.oodletIds ? totalOodlet.oodletIds : [])();
   },
   
   oodletAdd(state, pendingOodlet) {
-    if(addOodlet(state, pendingOodlet)) {
+    if(pushOodletId(state, pendingOodlet)) {
       for(let quantifiedThingy of pendingOodlet.quantifiedThingies) {
         thingyAdd(state, quantifiedThingy);
       }
@@ -64,7 +64,7 @@ const mutations = {
   },
   
   oodletRemove(state, pendingOodlet) {
-    if(removeOoodlet(state, pendingOodlet)) {
+    if(popOodletId(state, pendingOodlet)) {
       for (let quantifiedThingy of pendingOodlet.quantifiedThingies) {
         thingyRemove(state, quantifiedThingy);
       }

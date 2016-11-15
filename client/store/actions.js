@@ -35,30 +35,34 @@ function quantifiedThingyChange({ commit, state }, payload) {
   });
 }
 
-function historyOodletLoad({ commit, state }, oodlet) {
-  commit('oodletSetQuantifiedThingies', oodlet.quantifiedThingies);
-  
-  oodletApi.update(state.oodlet).then(response => {
-    commit('oodletSet', response.body);
-  });
+function historyOodletLoad({ commit, state }, historyOodlet) {
+  oodletApi.update({
+      id: state.oodlet.id,
+      quantifiedThingies: historyOodlet.quantifiedThingies
+    })
+    .then(response => {
+      commit('oodletSet', response.body);
+    });
 }
 
 function oodletLoad({ commit, state }) {
-  oodletApi.load(state.oodler.oodler).then(response => {
+  oodletApi.active(state.oodler.oodler).then(response => {
     commit('oodletSet', response.body);
   });
 }
 
 function oodletReset({ commit, state }) {
-  commit('oodletReset');
-
-  oodletApi.update(state.oodlet).then(response => {
-    commit('oodletSet', response.body);
-  });
+  oodletApi.update({
+      id: state.oodlet.id,
+      quantifiedThingies: []
+    })
+    .then(response => {
+      commit('oodletSet', response.body);
+    });
 }
 
 function totalOodletLoad({ commit, state }) {
-  totalOodletApi.load(state.oodler.oodler).then(response => {
+  totalOodletApi.active(state.oodler.oodler).then(response => {
     commit('totalOodletSet', response.body);
     
     oodletApi.pending().then(response => {

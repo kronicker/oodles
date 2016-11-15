@@ -1,6 +1,6 @@
 import Vue from 'vue';
 
-function load(oodler) {
+function active(oodler) {
   return Vue.http.get('/oodlet/active', {
     params: {
       oodlerId: oodler.id,
@@ -20,7 +20,7 @@ function update(oodlet) {
 }
 
 export default {
-  load,
+  active,
   update,
   pending
 };

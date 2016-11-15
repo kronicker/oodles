@@ -30,8 +30,8 @@ function get(request, reply) {
 
 function active(request, reply) {
   oodletUtil.findActive(request.query.office)
-    .then((activeOodlets) => {
-      if (activeOodlets) {
+    .then(activeOodlets => {
+      if (activeOodlets.length) {
         reply(activeOodlets[0]).code(200);
       }
       else {
@@ -46,8 +46,7 @@ function active(request, reply) {
 }
 
 function pending(request, reply) {
-  oodletUtil.findPending()
-    .then((pendingOodlets) => reply(pendingOodlets).code(200));
+  reply(oodletUtil.findPending()).code(200);
 }
 
 function create(request, reply) {

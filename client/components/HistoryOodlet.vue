@@ -39,7 +39,7 @@
             </table>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
             <router-link to="/"><button type="button" class="btn btn-danger" data-dismiss="modal" @click="load">Load</button></router-link>
           </div>
         </div>

@@ -42,7 +42,7 @@ function create(request, reply) {
 function getActive(request, reply) {
   totalOodletUtil.findActive()
     .then((activeOodlets) => {
-      if(activeOodlets[0]) {
+      if(activeOodlets.length) {
         reply(activeOodlets[0]).code(200);
       }
       else {
