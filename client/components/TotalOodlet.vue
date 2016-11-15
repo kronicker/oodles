@@ -1,14 +1,16 @@
 <template>
-  <div class="history-oodlet">
+  <div class="total-oodlet">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <strong>Created: </strong>
-        <span>{{ createdAt }}</span>
+        <strong>Offices: </strong>
+        <ul class="list-inline">
+          <li v-for="office in offices">{{ office }}</li>
+        </ul>
       </div>
       <div class="panel-body">
         <table class="table table-striped table-hover">
           <tbody>
-            <tr v-for="quantifiedThingy in oodlet.quantifiedThingies">
+            <tr v-for="quantifiedThingy in quantifiedThingies">
               <td>{{ quantifiedThingy.name }}</td>
               <td class="col-md-2 right">{{ quantifiedThingy.qty }}</td>
               <td class="col-md-2">{{ quantifiedThingy.unit }}</td>
@@ -17,20 +19,21 @@
         </table>
       </div>
       <div class="panel-footer">
-        <button class="btn btn-success push-right" data-toggle="modal" data-target="#historyOodletLoad">Load</button>
+        <button class="btn btn-success" data-toggle="modal" data-target="#totalOodletReview">Order</button>
       </div>
     </div>
-    <div class="modal fade" data-backdrop="static" data-keyboard="false" id="historyOodletLoad">
+
+    <div class="modal fade" data-backdrop="static" data-keyboard="false" id="totalOodletReview">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title">You will owerwrite your current oodlet with following</h4>
+            <h4 class="modal-title">Total oodlet review</h4>
           </div>
           <div class="modal-body">
             <table class="table table-striped table-hover">
               <tbody>
-              <tr v-for="quantifiedThingy in oodlet.quantifiedThingies">
+              <tr v-for="quantifiedThingy in quantifiedThingies">
                 <td>{{ quantifiedThingy.name }}</td>
                 <td class="col-md-2 right">{{ quantifiedThingy.qty }}</td>
                 <td class="col-md-2">{{ quantifiedThingy.unit }}</td>
@@ -39,8 +42,8 @@
             </table>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
-            <router-link to="/"><button type="button" class="btn btn-danger" data-dismiss="modal" @click="load">Load</button></router-link>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-success" data-dismiss="modal" @click="order">Order</button>
           </div>
         </div>
       </div>
@@ -49,31 +52,25 @@
 </template>
 
 <script>
-  import moment from 'moment';
 
-  export default{
-    props: ['oodlet'],
-
+  export default {
     computed: {
-      createdAt() {
-        return moment(this.oodlet.createdAt).locale('hr').format('LL');
+      quantifiedThingies() {
+        return this.$store.getters.totalOodlet.quantifiedThingies;
+      },
+      offices() {
+        return this.$store.getters.totalOodletOffices;
       }
     },
 
     methods: {
-      load() {
-        this.$store.dispatch('historyOodletLoad', this.oodlet);
+      order() {
+        this.$store.dispatch('totalOodletFinalize');
       }
     }
   }
+
 </script>
 
 <style lang="sass" scoped>
-  .history-oodlet {
-    width: 100%;
-
-    .col-md-2 {
-      &.right { text-align: right; }
-    }
-  }
 </style>

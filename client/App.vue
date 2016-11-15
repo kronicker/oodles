@@ -31,7 +31,19 @@
       .then(
         response => {
           if (response.ok) {
-            this.$store.dispatch('initStore', response.body);
+            let oodler = response.body;
+            this.$store.dispatch('initStore', oodler);
+            
+            if (oodler.scope === 'admin') {
+              if(['/admin', '/admin/history', '/admin/thingies', '/admin/oodlers', '/settings'].indexOf(this.$route.path) < 0) {
+                this.$router.replace({ path: '/admin' });
+              }
+            }
+            else {
+              if(['/', '/history', '/settings'].indexOf(this.$route.path) < 0) {
+                this.$router.replace({ path: '/' });
+              }
+            }
           }
         },
         response => {

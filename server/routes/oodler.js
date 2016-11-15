@@ -36,7 +36,7 @@ function create(request, reply) {
       lastName: request.payload.lastName,
       email: request.payload.email,
       office: request.payload.office,
-      scope: request.payload.office
+      scope: request.payload.scope
       })
       .save()
       .then(result => {
@@ -55,7 +55,7 @@ function update(request, reply) {
       //Check if email in the payload exists in database and if it is registered for another user
       //TODO: Check if there is a better implementation
       if (oodlers[0] && oodlers[0].id !== oodlerId) {
-        reply('User already registered with this email').code(400);
+        return reply('User already registered with this email').code(400);
       }
 
       return Oodler.get(oodlerId)
@@ -64,7 +64,7 @@ function update(request, reply) {
           lastName: request.payload.lastName,
           email: request.payload.email,
           office: request.payload.office,
-          scope: request.payload.office
+          scope: request.payload.scope
         })
         .run()
         .then(result => {
@@ -87,7 +87,13 @@ let routes = [
     method: 'GET',
     path: '/oodler',
     config: {
-      handler: list
+      handler: list,
+      validate: {
+        query: {
+          limit: Joi.number(),
+          offset: Joi.number()
+        }
+      }
     }
   },
   {
@@ -95,6 +101,9 @@ let routes = [
     path: '/oodler/{id}',
     config: {
       handler: get,
+      auth: {
+        scope: ['admin', 'user']
+      },
       validate: {
         params: {
           id: Joi.string().required()
@@ -107,10 +116,13 @@ let routes = [
     path: '/oodler',
     config: {
       handler: create,
+      auth: {
+        scope: ['admin', 'user']
+      },
       validate: {
         payload: {
-          firstName: Joi.string().alphanum().required(),
-          lastName: Joi.string().alphanum().required(),
+          firstName: Joi.string().min(1).required(),
+          lastName: Joi.string().min(1).required(),
           email: Joi.string().email().required(),
           office: Joi.string().required(),
           scope: Joi.string().valid('user', 'admin').required()
@@ -123,13 +135,16 @@ let routes = [
     path: '/oodler/{id}',
     config: {
       handler: update,
+      auth: {
+        scope: ['admin', 'user']
+      },
       validate: {
         params: {
           id: Joi.string().required()
         },
         payload: {
-          firstName: Joi.string().alphanum().required(),
-          lastName: Joi.string().alphanum().required(),
+          firstName: Joi.string().min(1).required(),
+          lastName: Joi.string().min(1).required(),
           email: Joi.string().email().required(),
           office: Joi.string().required(),
           scope: Joi.string().valid('user', 'admin').required()
