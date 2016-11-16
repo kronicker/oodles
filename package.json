@@ -2,7 +2,7 @@
   "name": "oodles",
   "version": "0.0.1",
   "scripts": {
-    "start": "node api-server.js",
+    "start": "node main-server.js",
     "dev": "webpack-dev-server --inline --hot",
     "start-dev": "nodemon main-server",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
