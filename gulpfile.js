@@ -1,3 +1,5 @@
+const config = require('./server/config');
+
 const gulp = require('gulp'),
   browserSync = require('browser-sync'),
   nodemon = require('gulp-nodemon');
@@ -41,7 +43,7 @@ gulp.task('browser-sync', ['nodemon'], function () {
     files: ['public/assets/js/**/*.*', 'public/assets/css/**/*.*', 'public/assets/images/**/*.*'],
 
     // Proxy our Hapi app
-    proxy: 'http://localhost:3333',
+    proxy: `http://localhost:${config.server.port}`,
     // Use the following port for the proxied app to avoid clash
     port: 4000,
     reloadDelay: 500,

@@ -1,8 +1,6 @@
 'use strict';
 const path = require('path');
 const webpack = require('webpack');
-const projectRoot = path.resolve(__dirname, '../');
-
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
@@ -20,9 +18,6 @@ module.exports = {
       'vue': 'vue/dist/vue'
     }
   },
-  // resolveLoader: {
-  //   root: path.join(__dirname, 'node_modules'),
-  // },
   module: {
     loaders: [
       {
@@ -65,11 +60,9 @@ module.exports = {
     ]
   },
   plugins: [
-    // https://github.com/glenjamin/webpack-hot-middleware#installation--usage
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
-    // https://github.com/ampedandwired/html-webpack-plugin
     new HtmlWebpackPlugin({
       filename: path.resolve(__dirname, '../public/index.html'),
       template: path.resolve(__dirname, '../build/index_dev.html'),

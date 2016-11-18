@@ -1,11 +1,12 @@
 'use strict';
+const config = require('./server/config');
 
 const Hapi = require('hapi');
 const Inert = require('inert');
 
 const server = new Hapi.Server();
 server.connection({
-  port: 3333
+  port: config.server.port
 });
 
 

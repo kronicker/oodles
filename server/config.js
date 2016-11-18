@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt');
 
 let config = {
   server: {
-    port: 3333,
+    port: 3000,
     host: 'localhost'
   },
 
