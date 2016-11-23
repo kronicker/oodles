@@ -11,6 +11,8 @@ let config = {
 
   database: {
     name: 'oodles',
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
     devsAccounts: [{
       firstName: 'Toma',
       lastName: 'Zelic',

@@ -4,7 +4,9 @@
 const databaseConfig = require('../config').database;
 
 var thinky = require('thinky')({
-  db: databaseConfig.name
+  db: databaseConfig.name,
+  host: databaseConfig.host,
+  port: databaseConfig.port,
 });
 
 module.exports = thinky;
