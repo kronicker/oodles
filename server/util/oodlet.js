@@ -24,7 +24,8 @@ function nextDueDate() {
         nextDate = moment(nextDate).add(2, 'weeks').toDate();
       }
       return nextDate;
-    });
+    })
+    .catch(() => moment().add(2, 'weeks').toDate());
 }
 
 function findActive(office) {
