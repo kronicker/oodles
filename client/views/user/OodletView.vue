@@ -90,8 +90,20 @@
     .page-header { margin: 0px 0 10px; }
 
     .filtered-thingies ul {
-      padding: 0;
+      padding-left: 0;
       list-style: none;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  
+      li {
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+      }
     }
   }
 </style>
