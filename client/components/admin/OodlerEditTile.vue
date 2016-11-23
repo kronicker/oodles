@@ -13,16 +13,18 @@
               <button type="reset" @click="cancel('firstName')" class="col-md-4 btn btn-sm btn-default"><span class="glyphicon glyphicon-remove"></span></button>
             </div>
           </div>
+        </form>
+        <div class="col-md-12">
           <table v-show="!editing.firstName" class="table table-striped table-hover col-md-12">
             <tbody>
             <tr @click="edit('firstName')">
               <td class="col-md-3">First Name</td>
-              <td class="col-md-7">{{ oodler.firstName }}</td>
-              <td class="col-md-2"><a class="hover-btn"><span class="glyphicon glyphicon-pencil"></span></a></td>
+              <td class="col-md-8">{{ oodler.firstName }}</td>
+              <td class="col-md-1"><a class="hover-btn"><span class="glyphicon glyphicon-pencil"></span></a></td>
             </tr>
             </tbody>
           </table>
-        </form>
+        </div>
   
         <form @submit="updateOodler" class="form-horizontal col-md-12">
           <div v-show="editing.lastName" class="form-group form-group-sm">
@@ -35,17 +37,19 @@
               <button type="reset" @click="cancel('lastName')" class="col-md-4 btn btn-sm btn-default"><span class="glyphicon glyphicon-remove"></span></button>
             </div>
           </div>
+        </form>
+        <div class="col-md-12">
           <table v-show="!editing.lastName" class="table table-striped table-hover col-md-12">
             <tbody>
             <tr @click="edit('lastName')">
               <td class="col-md-3">Last Name</td>
-              <td class="col-md-7">{{ oodler.lastName }}</td>
-              <td class="col-md-2"><a class="hover-btn"><span class="glyphicon glyphicon-pencil"></span></a></td>
+              <td class="col-md-8">{{ oodler.lastName }}</td>
+              <td class="col-md-1"><a class="hover-btn"><span class="glyphicon glyphicon-pencil"></span></a></td>
             </tr>
             </tbody>
           </table>
-        </form>
-  
+        </div>
+        
         <form @submit="updateOodler" class="form-horizontal col-md-12">
           <div v-show="editing.email" class="form-group form-group-sm">
             <label for="email" class="col-md-3 control-label">Email</label>
@@ -57,16 +61,18 @@
               <button type="reset" @click="cancel('email')" class="col-md-4 btn btn-sm btn-default"><span class="glyphicon glyphicon-remove"></span></button>
             </div>
           </div>
+        </form>
+        <div class="col-md-12">
           <table v-show="!editing.email" class="table table-striped table-hover col-md-12">
             <tbody>
             <tr @click="edit('email')">
               <td class="col-md-3">Email</td>
-              <td class="col-md-7">{{ oodler.email }}</td>
-              <td class="col-md-2"><a class="hover-btn"><span class="glyphicon glyphicon-pencil"></span></a></td>
+              <td class="col-md-8">{{ oodler.email }}</td>
+              <td class="col-md-1"><a class="hover-btn"><span class="glyphicon glyphicon-pencil"></span></a></td>
             </tr>
             </tbody>
           </table>
-        </form>
+        </div>
   
         <form @submit="updateOodler" class="form-horizontal col-md-12">
           <div v-show="editing.office" class="form-group form-group-sm">
@@ -79,16 +85,18 @@
               <button type="reset" @click="cancel('office')" class="col-md-4 btn btn-sm btn-default"><span class="glyphicon glyphicon-remove"></span></button>
             </div>
           </div>
+        </form>
+        <div class="col-md-12">
           <table v-show="!editing.office" class="table table-striped table-hover col-md-12">
             <tbody>
             <tr @click="edit('office')">
               <td class="col-md-3">Office</td>
-              <td class="col-md-7">{{ oodler.office }}</td>
-              <td class="col-md-2"><a class="hover-btn"><span class="glyphicon glyphicon-pencil"></span></a></td>
+              <td class="col-md-8">{{ oodler.office }}</td>
+              <td class="col-md-1"><a class="hover-btn"><span class="glyphicon glyphicon-pencil"></span></a></td>
             </tr>
             </tbody>
           </table>
-        </form>
+        </div>
       </div>
     </div>
   </div>
@@ -157,15 +165,18 @@
 <style lang="sass" scoped>
   .oodler-edit-tile .well {
     padding: 5px 10px 0;
+    max-width: 100%;
   
     .control-label { padding-left: 21px; }
     
     .form-horizontal .control-label { text-align: left; }
     
     .table {
+      table-layout:fixed;
       margin-bottom: 15px;
       tr {
         cursor: text;
+        td {overflow: hidden; overflow-wrap: break-word;}
         .hover-btn {
           position: absolute;
           right: 15px;
