@@ -1,8 +1,13 @@
 <template>
   <div id="oodlersView">
-    <div class="row">
-      <div class="page-header col-md-12">
-        <h1 class="text-info">Oodlers</h1>
+    <div class="header page-header">
+      <div class="row">
+        <div class="col-md-3">
+          <h1 class="text-info">Oodlers</h1>
+        </div>
+        <div class="add-button col-md-offset-8 col-md-1">
+          <button class="btn btn-block btn-success" data-toggle="modal" data-target="#newOodler"><span class="glyphicon glyphicon-plus"></span> Add</button>
+        </div>
       </div>
     </div>
     <div class="row">
@@ -11,6 +16,55 @@
     <div class="row filtered-oodlers">
       <div v-for="oodler in filteredOodlers" class="col-md-3">
         <oodler-edit-tile @oodlerUpdate="load" :oodler="oodler"></oodler-edit-tile>
+      </div>
+    </div>
+  
+    <div class="modal fade" data-backdrop="static" data-keyboard="false" id="newOodler">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Add new oodler</h4>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <form class="form-horizontal col-md-10 col-md-offset-1">
+                <fieldset>
+                  <div class="form-group">
+                    <input v-model="newOodler.email" type="email" class="form-control" placeholder="Email">
+                  </div>
+                  <div class="form-group">
+                    <input v-model="newOodler.firstName" type="text" class="form-control" placeholder="First Name">
+                  </div>
+                  <div class="form-group">
+                    <input v-model="newOodler.lastName" type="text" class="form-control" placeholder="Last Name">
+                  </div>
+                  <div class="form-group">
+                    <input v-model="newOodler.office" type="text" class="form-control" placeholder="Office">
+                  </div>
+                  <div class="form-group">
+                    <div class="radio">
+                      <label>
+                        <input v-model="newOodler.scope" type="radio" value="user">
+                        User
+                      </label>
+                    </div>
+                    <div class="radio">
+                      <label>
+                        <input v-model="newOodler.scope" type="radio" value="admin">
+                        Administrator
+                      </label>
+                    </div>
+                  </div>
+                </fieldset>
+              </form>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-success" data-dismiss="modal" @click="save">Save</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -24,7 +78,14 @@
     data() {
       return {
         searchString: '',
-        oodlers: []
+        oodlers: [],
+        newOodler: {
+          firstName: '',
+          lastName: '',
+          email: '',
+          office: '',
+          scope: 'user'
+        }
       }
     },
     
@@ -58,6 +119,26 @@
         this.$http.get('/oodler').then(response => {
           this.oodlers = response.body;
         });
+      },
+      save() {
+        this.$http.post('/oodler', {
+          firstName: this.newOodler.firstName,
+          lastName: this.newOodler.lastName,
+          email: this.newOodler.email,
+          office: this.newOodler.office,
+          scope: this.newOodler.scope
+        }).then(response => {
+          if (response.ok) {
+            this.newOodler = {
+              firstName: '',
+              lastName: '',
+              email: '',
+              office: '',
+              scope: 'user'
+            };
+            this.load();
+          }
+        });
       }
     },
   
@@ -82,7 +163,14 @@
 
 <style lang="sass" scoped>
   #oodlersView {
-    .page-header { margin: 0px 0 10px; }
+    .page-header {
+      margin: 0px 0 10px;
+  
+      h1, .add-button {
+        margin-top: 20px;
+        margin-bottom: 10px;
+      }
+    }
 
     .filtered-oodlers {
       padding-left: 0;

@@ -7,7 +7,7 @@
         <span v-else class="due-in-countdown red">Expired</span>
       </div>
       <div class="panel-body">
-        <table class="table table-striped table-hover ">
+        <table class="table table-striped table-hover">
           <tbody>
             <quantified-thingy v-for="quantifiedThingy in quantifiedThingies" :quantifiedThingy="quantifiedThingy"></quantified-thingy>
           </tbody>
