@@ -9,7 +9,9 @@ function requireAll(server) {
     let routes = require(path.resolve(file));
 
     for(let route of routes) {
-      route.config.handler = errorHandler(route.config.handler);
+      if(!route.config.handler.directory) {
+        route.config.handler = errorHandler(route.config.handler);
+      }
       server.route(route);
     }
   });
