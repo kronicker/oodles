@@ -7,10 +7,6 @@ function get(id) {
   return Oodler.get(id).run();
 }
 
-function save() {
-  
-}
-
 module.exports = {
   get
 };

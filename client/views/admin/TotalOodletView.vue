@@ -1,7 +1,14 @@
 <template>
   <div id="totalOodletView">
-    <div class="page-header">
-      <h1 class="text-info">Total oodlet</h1>
+    <div class="header page-header">
+      <div class="row">
+        <div class="col-md-3">
+          <h1 class="text-info">Total Oodlet</h1>
+        </div>
+        <div class="add-button col-md-offset-7 col-md-2">
+          <button class="btn btn-block btn-success" data-toggle="modal" data-target="#newDueDate"><span class="glyphicon glyphicon-calendar"></span> Set new due date</button>
+        </div>
+      </div>
     </div>
     <div class="row">
       <div class="total-oodlet col-md-4">
@@ -51,14 +58,68 @@
         </div>
       </div>
     </div>
+  
+    <div class="modal fade" data-backdrop="static" data-keyboard="false" id="newDueDate">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Set new due date</h4>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <form class="form-horizontal col-md-10 col-md-offset-1">
+                <div class="form-group">
+                  <flatpickr :message="message" :options="options" @update="changeDueDate"/>
+                </div>
+                <div class="form-group">
+                  <span>Select oodlers: </span>
+                  <div class="row">
+                    <div class="radio col-md-6" v-for="oodler in oodlers">
+                      <label>
+                        <input type="checkbox" :value="oodler.id" v-model="checkedOodlers">
+                        {{oodler.office}} - {{oodler.firstName}} {{oodler.lastName}}
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-success" data-dismiss="modal" @click="setDueDates">Set</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
   import PendingOodlet from '../../components/admin/PendingOodlet.vue';
   import TotalOodlet from '../../components/admin/TotalOodlet.vue';
+  import Flatpickr from '../../../node_modules/vue-flatpickr/vue-flatpickr-dark.vue';
+  import moment from 'moment';
+  import object from 'lodash/object';
+  
 
   export default {
+    data() {
+      return {
+        message: 'Click here to pick date',
+        options: {
+          locale: 'hr',
+          time_24hr: true,
+          enableTime: true,
+          minDate: new Date()
+        },
+        dueDate: '',
+        oodlers: [],
+        checkedOodlers: []
+      }
+    },
+    
     computed: {
       pendingOodlets() {
         return this.$store.getters.pendingOodlets;
@@ -78,6 +139,31 @@
     methods: {
       load() {
         this.$store.dispatch('totalOodletLoad');
+        this.$http.get('/oodler')
+          .then(response => {
+            this.oodlers = response.body
+              .filter(oodler => oodler.scope !== 'admin')
+              .sort((a,b) => {
+                return a.office < b.office ? -1 : 1;
+              });
+            this.oodlers.forEach(oodler => this.checkedOodlers.push(oodler.id));
+          });
+      },
+//      toggleCheck(oodler) {
+//        let index = this.oodlers.findIndex(checkedOodler => checkedOodler.id === oodler.id)
+//        this.$set(this.oodlers[index], 'checked', false);
+//      },
+      changeDueDate(newDate) {
+        this.dueDate = moment(newDate).toDate();
+      },
+      setDueDates() {
+        for(let oodlerId of this.checkedOodlers) {
+          console.log(oodlerId);
+          this.$http.post('/oodlet/active', {
+            id: oodlerId,
+            dueDate: this.dueDate
+          });
+        }
       }
     },
   
@@ -93,14 +179,21 @@
       }
     },
     
-    components: { PendingOodlet, TotalOodlet }
+    components: { PendingOodlet, TotalOodlet, Flatpickr }
   }
 
 </script>
 
 <style lang="sass" scoped>
   #totalOodletView {
-    .page-header { margin: 0px 0 10px; }
+    .page-header {
+      margin: 0px 0 10px;
+    
+        h1, .add-button {
+          margin-top: 20px;
+          margin-bottom: 10px;
+        }
+      }
     .panel-title { text-align: center; }
   }
 </style>

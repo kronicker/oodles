@@ -4,6 +4,7 @@ const moment = require('moment');
 const Oodlet = require('../models/oodlet');
 const oodlerUtil = require('../util/oodler');
 const oodletUtil = require('../util/oodlet');
+const mail = require('../util/mail');
 
 function list(request, reply) {
   let fromDate = (() => { return request.query.fromDate ? moment(request.query.fromDate).toDate() : moment().subtract(3, 'months').toDate(); })();
@@ -28,21 +29,20 @@ function get(request, reply) {
     });
 }
 
-function active(request, reply) {
+function getActive(request, reply) {
   oodletUtil.findActive(request.query.office)
     .then(activeOodlets => {
-      if (activeOodlets.length) {
-        reply(activeOodlets[0]).code(200);
-      }
-      else {
-        Promise.all([
-          oodlerUtil.get(request.query.oodlerId),
-          oodletUtil.nextDueDate()
-        ])
-        .then(([oodler, dueDate]) => oodletUtil.create(oodler, dueDate))
-        .then(result => reply(result).code(201));
-      }
+      reply(activeOodlets[0]).code(200);
     });
+}
+
+function setActive(request, reply) {
+  oodlerUtil.get(request.payload.id)
+    .then(oodler => oodletUtil.create(oodler, request.payload.dueDate)
+      .then(result => {
+        mail.sendDueDate(oodler.email, request.payload.dueDate);
+      }))
+    .then(reply().code(201));
 }
 
 function pending(request, reply) {
@@ -123,14 +123,26 @@ let routes = [
     method: 'GET',
     path: '/oodlet/active',
     config: {
-      handler: active,
+      handler: getActive,
       auth: {
         scope: ['user']
       },
       validate: {
         query: {
-          oodlerId: Joi.string().required(),
           office: Joi.string().required()
+        }
+      }
+    }
+  },
+  {
+    method: 'POST',
+    path: '/oodlet/active',
+    config: {
+      handler: setActive,
+      validate: {
+        payload: {
+          id: Joi.string().required(),
+          dueDate: Joi.date().required()
         }
       }
     }
