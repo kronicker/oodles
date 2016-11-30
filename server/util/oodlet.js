@@ -3,10 +3,11 @@
  */
 const Oodlet = require('../models/oodlet');
 
-function create(oodler, dueDate) {
+function create(oodler, dueDate, quantifiedThingies) {
   return Oodlet({
       oodler: oodler,
-      dueDate: dueDate
+      dueDate: dueDate,
+      quantifiedThingies: quantifiedThingies
     })
     .save();
 }

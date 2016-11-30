@@ -38,7 +38,7 @@ function getActive(request, reply) {
 
 function setActive(request, reply) {
   oodlerUtil.get(request.payload.id)
-    .then(oodler => oodletUtil.create(oodler, request.payload.dueDate)
+    .then(oodler => oodletUtil.create(oodler, request.payload.dueDate, [])
       .then(result => {
         mail.sendDueDate(oodler.email, request.payload.dueDate);
       }))

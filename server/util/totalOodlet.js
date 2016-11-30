@@ -11,7 +11,8 @@ function get(id) {
 
 function create(oodler) {
   return TotalOodlet({
-      oodler: oodler
+      oodler: oodler,
+      quantifiedThingies: []
     })
     .save();
 }
