@@ -149,10 +149,6 @@
             this.oodlers.forEach(oodler => this.checkedOodlers.push(oodler.id));
           });
       },
-//      toggleCheck(oodler) {
-//        let index = this.oodlers.findIndex(checkedOodler => checkedOodler.id === oodler.id)
-//        this.$set(this.oodlers[index], 'checked', false);
-//      },
       changeDueDate(newDate) {
         this.dueDate = moment(newDate).toDate();
       },

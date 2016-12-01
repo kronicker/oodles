@@ -47,7 +47,7 @@ const routes = [
   },
   {
     path: '/admin/',
-    component: AdminHistoryView
+    component: TotalOodletView
   },
   {
     path: '/admin/history',
