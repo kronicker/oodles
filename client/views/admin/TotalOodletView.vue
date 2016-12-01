@@ -69,11 +69,15 @@
           <div class="modal-body">
             <div class="row">
               <form class="form-horizontal col-md-10 col-md-offset-1">
-                <div class="form-group">
+                <div class="form-group col-md-6">
                   <flatpickr :message="message" :options="options" @update="changeDueDate"/>
                 </div>
-                <div class="form-group">
-                  <span>Select oodlers: </span>
+                <div class="form-group col-md-12">
+                  <div class="row">
+                  <span class="col-md-6">Select oodlers: </span>
+                  <a class="col-md-3 btn btn-xs btn-default" @click="selectAll">Select all</a>
+                  <a class="col-md-3 btn btn-xs btn-default" @click="unselectAll">Unselect all</a>
+                  </div>
                   <div class="row">
                     <div class="radio col-md-6" v-for="oodler in oodlers">
                       <label>
@@ -88,7 +92,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-success" data-dismiss="modal" @click="setDueDates">Set</button>
+            <button type="button" class="btn btn-success" data-dismiss="modal" @click="setDueDates($event)">Set</button>
           </div>
         </div>
       </div>
@@ -152,7 +156,21 @@
       changeDueDate(newDate) {
         this.dueDate = moment(newDate).toDate();
       },
-      setDueDates() {
+      selectAll() {
+        for(let oodler of this.oodlers) {
+          if(this.checkedOodlers.indexOf(oodler.id) < 0) {
+            this.checkedOodlers.push(oodler.id)
+          }
+        }
+      },
+      unselectAll(){
+        this.checkedOodlers = []
+      },
+      setDueDates(event) {
+        if(this.dueDate === '') {
+          event.stopPropagation();
+          return;
+        }
         for(let oodlerId of this.checkedOodlers) {
           this.$http.post('/oodlet/active', {
             id: oodlerId,
