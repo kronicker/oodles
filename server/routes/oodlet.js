@@ -38,11 +38,17 @@ function getActive(request, reply) {
 
 function setActive(request, reply) {
   oodlerUtil.get(request.payload.id)
-    .then(oodler => oodletUtil.create(oodler, request.payload.dueDate, [])
-      .then(result => {
-        mail.sendDueDate(oodler.email, request.payload.dueDate);
-      }))
-    .then(reply().code(201));
+    .then(oodler => {
+      oodletUtil.findActive(oodler.office).then(oodlets => {
+        if(oodlets.length) { return reply(oodlets[0]).code(401); }
+  
+        oodletUtil.create(oodler, request.payload.dueDate, [])
+          .then(result => {
+            mail.sendDueDate(oodler.email, request.payload.dueDate);
+            reply(result).code(201)
+          });
+      });
+    });
 }
 
 function pending(request, reply) {
