@@ -32,8 +32,8 @@
       <div class="col-md-12">
         <div class="row">
           <ul class="total-oodlets-list">
-            <li class="col-md-2" v-for="totalOodlet in totalOodlets">
-              <history-total-oodlet :isTotal="isTotal" :totalOodlet="totalOodlet"></history-total-oodlet>
+            <li class="col-md-2" v-for="historyOodlet in historyOodlets">
+              <admin-history-oodlet :isTotal="isTotal" :historyOodlet="historyOodlet"></admin-history-oodlet>
             </li>
           </ul>
         </div>
@@ -49,7 +49,7 @@
   export default{
     data() {
       return {
-        totalOodlets: [],
+        historyOodlets: [],
         isTotal: true,
         fromDate: moment().subtract(3, 'months').format('YYYY-MM-DD'),
         toDate: moment().format('YYYY-MM-DD'),
@@ -84,7 +84,7 @@
               }
             })
             .then(response => {
-              this.totalOodlets = response.body;
+              this.historyOodlets = response.body;
             });
         }
         else {
@@ -96,7 +96,7 @@
                 office: this.selectedOffice
               }})
             .then(response => {
-              this.totalOodlets = response.body;
+              this.historyOodlets = response.body;
             });
         }
         this.$http.get('/oodler').then(response => {
