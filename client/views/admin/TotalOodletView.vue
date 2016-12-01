@@ -111,7 +111,7 @@
   export default {
     data() {
       return {
-        message: 'Click here to pick date',
+        message: ' Click here to pick date',
         options: {
           locale: 'hr',
           time_24hr: true,
