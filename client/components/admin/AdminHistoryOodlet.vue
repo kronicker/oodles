@@ -1,5 +1,5 @@
 <template>
-  <div class="admin-histoy-oodlet">
+  <div class="admin-history-oodlet">
     <div class="panel panel-default">
       <div class="panel-heading">
         <strong>Ordered on: </strong>
@@ -71,7 +71,7 @@
 </script>
 
 <style lang="sass" scoped>
-  .admin-histoy-oodlet {
+  .admin-history-oodlet {
     width: 100%;
     .col-md-2 {
       &.right { text-align: right; }
