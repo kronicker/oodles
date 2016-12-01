@@ -50,7 +50,7 @@ function historyOodletLoad({ commit, state }, historyOodlet) {
 
 function oodletLoad({ commit, state }) {
   oodletApi.active(state.oodler.oodler).then(response => {
-    if(response.body.length) {
+    if(response.body) {
       commit('oodletSet', response.body);
     }
   });

@@ -1,5 +1,5 @@
 <template>
-  <div class="history-total-oodlet">
+  <div class="admin-histoy-oodlet">
     <div class="panel panel-default">
       <div class="panel-heading">
         <strong>Ordered on: </strong>
@@ -16,14 +16,21 @@
           </tbody>
         </table>
       </div>
-      <div class="panel-footer">
+      <div class="panel-footer" v-if="isTotal">
         <strong>Offices: </strong>
         <ul class="list-inline">
           <li v-for="office in offices">{{ office }}</li>
         </ul>
       </div>
+      <div class="panel-footer" v-else>
+        <p>
+          <strong>Office: </strong>{{ totalOodlet.oodler.office }}
+        </p>
+        <p>
+          <strong>Submitted by: </strong>{{ totalOodlet.oodler.firstName }} {{ totalOodlet.oodler.lastName }}
+        </p>
+      </div>
     </div>
-  
   </div>
 </template>
 
@@ -37,7 +44,7 @@
       }
     },
     
-    props: ['totalOodlet'],
+    props: ['totalOodlet', 'isTotal'],
     
     computed: {
       orderedOn() {
@@ -47,6 +54,7 @@
     
     methods: {
       getOffices(){
+        if(this.isTotal === false) { return; }
         for(let oodletId of this.totalOodlet.oodletIds) {
           this.$http.get(`/oodlet/${oodletId}`)
             .then(response => {
@@ -63,7 +71,7 @@
 </script>
 
 <style lang="sass" scoped>
-  .history-total-oodlet {
+  .admin-histoy-oodlet {
     width: 100%;
     .col-md-2 {
       &.right { text-align: right; }

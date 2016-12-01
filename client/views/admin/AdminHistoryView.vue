@@ -1,11 +1,20 @@
 <template>
-  <div id="totalOodletHistoryView">
+  <div id="AdminHistoryView">
     <div class="header page-header">
       <div class="row">
         <div class="col-md-3">
           <h1 class="text-info">History</h1>
         </div>
-        <div class="form-group col-md-offset-5 col-md-2">
+        <div class="form-group col-md-offset-3 col-md-2">
+          <div class="input-group">
+            <span class="input-group-addon">Office: </span>
+            <select class="form-control" @change="load" v-model="selectedOffice">
+              <option>TOTALS</option>
+              <option v-for="office in offices">{{ office }}</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group col-md-2">
           <div class="input-group">
             <span class="input-group-addon">From: </span>
             <input type="date" class="form-control" @change="load" :max="maxDate" v-model="fromDate">
@@ -24,7 +33,7 @@
         <div class="row">
           <ul class="total-oodlets-list">
             <li class="col-md-2" v-for="totalOodlet in totalOodlets">
-              <history-total-oodlet :totalOodlet="totalOodlet"></history-total-oodlet>
+              <history-total-oodlet :isTotal="isTotal" :totalOodlet="totalOodlet"></history-total-oodlet>
             </li>
           </ul>
         </div>
@@ -34,16 +43,19 @@
 </template>
 
 <script>
-  import HistoryTotalOodlet from '../../components/admin/HistoryTotalOodlet.vue';
+  import AdminHistoryOodlet from '../../components/admin/AdminHistoryOodlet.vue';
   import moment from 'moment';
   
   export default{
     data() {
       return {
         totalOodlets: [],
+        isTotal: true,
         fromDate: moment().subtract(3, 'months').format('YYYY-MM-DD'),
         toDate: moment().format('YYYY-MM-DD'),
-        maxDate: moment().format('YYYY-MM-DD')
+        maxDate: moment().format('YYYY-MM-DD'),
+        offices: [],
+        selectedOffice: 'TOTALS'
       }
     },
     
@@ -62,14 +74,39 @@
     
     methods: {
       load() {
-        this.$http.get('/totalOodlet', {
+        let self = this;
+        if(this.selectedOffice === 'TOTALS') {
+          this.isTotal = true;
+          this.$http.get('/totalOodlet', {
               params: {
                 fromDate: moment(this.fromDate).format(),
                 toDate: moment(this.toDate).format()
+              }
+            })
+            .then(response => {
+              this.totalOodlets = response.body;
+            });
+        }
+        else {
+          this.isTotal = false;
+          this.$http.get('/oodlet', {
+              params: {
+                fromDate: moment(this.fromDate).format(),
+                toDate: moment(this.toDate).format(),
+                office: this.selectedOffice
               }})
             .then(response => {
               this.totalOodlets = response.body;
             });
+        }
+        this.$http.get('/oodler').then(response => {
+          for(let oodler of response.body) {
+            if(this.offices.indexOf(oodler.office) < 0) {
+              this.offices.push(oodler.office)
+            }
+          }
+          this.offices.sort();
+        })
       }
     },
   
@@ -85,12 +122,12 @@
       }
     },
     
-    components: { HistoryTotalOodlet }
+    components: { AdminHistoryOodlet }
   }
 </script>
 
 <style lang="sass" scoped>
-  #totalOodletHistoryView {
+  #AdminHistoryView {
     .page-header {
       margin: 0px 0 10px;
 
