@@ -154,7 +154,6 @@
       },
       setDueDates() {
         for(let oodlerId of this.checkedOodlers) {
-          console.log(oodlerId);
           this.$http.post('/oodlet/active', {
             id: oodlerId,
             dueDate: this.dueDate

@@ -1,5 +1,5 @@
 <template>
-  <div id="AdminHistoryView">
+  <div id="adminHistoryView">
     <div class="header page-header">
       <div class="row">
         <div class="col-md-3">
@@ -74,7 +74,6 @@
     
     methods: {
       load() {
-        let self = this;
         if(this.selectedOffice === 'TOTALS') {
           this.isTotal = true;
           this.$http.get('/totalOodlet', {
@@ -127,7 +126,7 @@
 </script>
 
 <style lang="sass" scoped>
-  #AdminHistoryView {
+  #adminHistoryView {
     .page-header {
       margin: 0px 0 10px;
 
