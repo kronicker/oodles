@@ -6,6 +6,7 @@ const Joi = require('joi');
 const SuggestedThingy = require('../models/suggestedThingy');
 const suggestedThingyUtil = require('../util/suggestedThingy');
 const thingyUtil = require('../util/thingy');
+const mail = require('../util/mail');
 
 function list(request, reply) {
   let limit = request.query.limit || 50;
@@ -40,6 +41,7 @@ function create(request, reply) {
       })
         .save()
         .then(result => {
+          mail.sendThingySuggestion(result);
           reply(result).code(201);
         });
       
@@ -60,14 +62,22 @@ function update(request, reply) {
 }
 
 function save(request, reply) {
-  suggestedThingyUtil.remove(request.params.id)
-    .then(() => thingyUtil.save(request.payload.name, request.payload.unit, request.payload.pictureUrl))
-    .then(thingy => reply(thingy).code(201));
+  suggestedThingyUtil.get(request.params.id)
+    .then(suggestedThingy => {
+      suggestedThingyUtil.remove(request.params.id)
+        .then(() => thingyUtil.save(request.payload.name, request.payload.unit, request.payload.pictureUrl))
+        .then(() => mail.sendThingyApproval(suggestedThingy.suggestedBy.email, suggestedThingy.name, request.auth.credentials))
+        .then(thingy => reply(thingy).code(201));
+    });
 }
 
 function remove(request, reply) {
-  suggestedThingyUtil.remove(request.params.id)
-    .then(result => reply(result).code(200));
+  suggestedThingyUtil.get(request.params.id)
+    .then(suggestedThingy => {
+      suggestedThingyUtil.remove(request.params.id)
+        .then(() => mail.sendThingyRejection(suggestedThingy.suggestedBy.email, suggestedThingy.name, request.auth.credentials))
+        .then(thingy => reply(thingy).code(201));
+    });
 }
 
 let routes = [
