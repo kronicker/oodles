@@ -73,20 +73,25 @@
     
     methods: {
       load() {
-        let options = this.selectedOffice === 'TOTALS' ?
-           {
-            params: {
-              fromDate: moment(this.fromDate).format(),
+        let options = (() => {
+          if (this.selectedOffice === 'TOTALS') {
+            return {
+              params: {
+                fromDate: moment(this.fromDate).format(),
                 toDate: moment(this.toDate).format()
+              }
             }
-          } :
-          {
-            params: {
-              fromDate: moment(this.fromDate).format(),
-              toDate: moment(this.toDate).format(),
-              office: this.selectedOffice
+          }
+          else {
+            return {
+              params: {
+                fromDate: moment(this.fromDate).format(),
+                toDate: moment(this.toDate).format(),
+                office: this.selectedOffice
+              }
             }
-          };
+          }
+        })();
         let endpoint = this.selectedOffice === 'TOTALS' ? '/totalOodlet' : '/oodlet';
         
         this.$http.get(endpoint, options)
