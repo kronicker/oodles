@@ -1,7 +1,14 @@
 <template>
   <div id="oodletView">
-    <div class="page-header">
-      <h1 class="text-info">Oodlet</h1>
+    <div class="header page-header">
+      <div class="row">
+        <div class="col-md-3">
+          <h1 class="text-info">Oodlet</h1>
+        </div>
+        <div class="add-button col-md-offset-7 col-md-2">
+          <button class="btn btn-block btn-success" data-toggle="modal" data-target="#suggestThingy"><span class="glyphicon glyphicon-plus"></span> Suggest new thingy</button>
+        </div>
+      </div>
     </div>
     <div class="row">
       <div class="filtered-thingies col-md-9">
@@ -16,6 +23,38 @@
       </div>
       <oodlet class="col-md-3"></oodlet>
     </div>
+    
+    <div class="modal fade" data-backdrop="static" data-keyboard="false" id="suggestThingy">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Suggest new thingy</h4>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <form class="form-horizontal col-md-10 col-md-offset-1">
+                <fieldset>
+                  <div class="form-group">
+                    <input v-model="suggestedThingy.name" type="text" class="form-control" placeholder="Name">
+                  </div>
+                  <div class="form-group">
+                    <input v-model="suggestedThingy.unit" type="text" class="form-control" placeholder="Unit">
+                  </div>
+                  <div class="form-group">
+                    <input v-model="suggestedThingy.pictureUrl" type="url" class="form-control" placeholder="Picture URL">
+                  </div>
+                </fieldset>
+              </form>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-success" data-dismiss="modal" @click="suggestThingy">Suggest</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -28,6 +67,11 @@
     data() {
       return {
         searchString: '',
+        suggestedThingy: {
+          name: '',
+          unit: '',
+          pictureUrl: ''
+        },
         thingies: []
       }
     },
@@ -35,6 +79,9 @@
     computed: {
       appInitialized() {
         return this.$store.getters.appInitialized;
+      },
+      oodler() {
+        return this.$store.getters.oodler;
       },
       filteredThingies() {
         if(this.searchString.length < 1) {
@@ -62,6 +109,23 @@
         this.$http.get('/thingy').then((response) => {
           this.thingies = response.body;
         });
+      },
+      suggestThingy() {
+        this.$http.post('/suggestedThingy', {
+          name: this.suggestedThingy.name,
+          unit: this.suggestedThingy.unit,
+          pictureUrl: this.suggestedThingy.pictureUrl,
+          oodler: this.oodler
+          
+        }).then(response => {
+          if(response.ok) {
+            this.suggestedThingy = {
+              name: '',
+              unit: '',
+              pictureUrl: ''
+            };
+          }
+        });
       }
     },
     
@@ -87,7 +151,14 @@
 
 <style lang="sass" scoped>
   #oodletView {
-    .page-header { margin: 0px 0 10px; }
+    .page-header {
+      margin: 0px 0 10px;
+  
+      h1, .add-button {
+        margin-top: 20px;
+        margin-bottom: 10px;
+      }
+    }
 
     .filtered-thingies ul {
       padding-left: 0;
