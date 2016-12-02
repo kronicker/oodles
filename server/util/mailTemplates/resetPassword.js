@@ -1,4 +1,4 @@
-module.exports = function (host, port, token) {
+module.exports = (host, port, token) => {
   return `<html xmlns="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/xhtml" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
   <head>
   <meta name="viewport" content="width=device-width" />
