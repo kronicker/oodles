@@ -16,7 +16,7 @@
           </tbody>
         </table>
       </div>
-      <div class="panel-footer" v-if="isTotal">
+      <div class="panel-footer" v-if="selectedOffice == 'TOTALS'">
         <strong>Offices: </strong>
         <ul class="list-inline">
           <li v-for="office in offices">{{ office }}</li>
@@ -44,7 +44,7 @@
       }
     },
     
-    props: ['historyOodlet', 'isTotal'],
+    props: ['historyOodlet', 'selectedOffice'],
     
     computed: {
       orderedOn() {
@@ -54,7 +54,7 @@
     
     methods: {
       getOffices() {
-        if(this.isTotal === false) { return; }
+        if(this.selectedOffice !== 'TOTALS') { return; }
         for(let oodletId of this.historyOodlet.oodletIds) {
           this.$http.get(`/oodlet/${oodletId}`)
             .then(response => {

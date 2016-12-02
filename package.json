@@ -29,6 +29,7 @@
     "rethinkdb": "^2.3.3",
     "thinky": "^2.3.6",
     "vue": "^2.0.0-rc.1",
+    "vue-flatpickr": "^2.0.3",
     "vue-resource": "^1.0.3",
     "vue-router": "^2.0.0",
     "vuex": "^2.0.0-rc.6",

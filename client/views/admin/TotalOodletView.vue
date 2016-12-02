@@ -111,7 +111,7 @@
   export default {
     data() {
       return {
-        message: ' Click here to pick date',
+        message: ' Click here to pick a date',
         options: {
           locale: 'hr',
           time_24hr: true,
@@ -168,8 +168,7 @@
       },
       setDueDates(event) {
         if(this.dueDate === '') {
-          event.stopPropagation();
-          return;
+          return event.stopPropagation();
         }
         for(let oodlerId of this.checkedOodlers) {
           this.$http.post('/oodlet/active', {

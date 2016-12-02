@@ -33,7 +33,7 @@
         <div class="row">
           <ul class="total-oodlets-list">
             <li class="col-md-2" v-for="historyOodlet in historyOodlets">
-              <admin-history-oodlet :isTotal="isTotal" :historyOodlet="historyOodlet"></admin-history-oodlet>
+              <admin-history-oodlet :selectedOffice="selectedOffice" :historyOodlet="historyOodlet"></admin-history-oodlet>
             </li>
           </ul>
         </div>
@@ -50,7 +50,6 @@
     data() {
       return {
         historyOodlets: [],
-        isTotal: true,
         fromDate: moment().subtract(3, 'months').format('YYYY-MM-DD'),
         toDate: moment().format('YYYY-MM-DD'),
         maxDate: moment().format('YYYY-MM-DD'),
@@ -74,30 +73,27 @@
     
     methods: {
       load() {
-        if(this.selectedOffice === 'TOTALS') {
-          this.isTotal = true;
-          this.$http.get('/totalOodlet', {
-              params: {
-                fromDate: moment(this.fromDate).format(),
+        let options = this.selectedOffice === 'TOTALS' ?
+           {
+            params: {
+              fromDate: moment(this.fromDate).format(),
                 toDate: moment(this.toDate).format()
-              }
-            })
-            .then(response => {
-              this.historyOodlets = response.body;
-            });
-        }
-        else {
-          this.isTotal = false;
-          this.$http.get('/oodlet', {
-              params: {
-                fromDate: moment(this.fromDate).format(),
-                toDate: moment(this.toDate).format(),
-                office: this.selectedOffice
-              }})
-            .then(response => {
-              this.historyOodlets = response.body;
-            });
-        }
+            }
+          } :
+          {
+            params: {
+              fromDate: moment(this.fromDate).format(),
+              toDate: moment(this.toDate).format(),
+              office: this.selectedOffice
+            }
+          };
+        let endpoint = this.selectedOffice === 'TOTALS' ? '/totalOodlet' : '/oodlet';
+        
+        this.$http.get(endpoint, options)
+          .then(response => {
+            this.historyOodlets = response.body;
+          });
+        
         this.$http.get('/oodler').then(response => {
           for(let oodler of response.body) {
             if(this.offices.indexOf(oodler.office) < 0) {

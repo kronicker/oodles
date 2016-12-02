@@ -13,8 +13,8 @@ const schema = {
   updatedAt: type.date().default(() => new Date()),
   orderedAt: type.date(),
   oodler: type.object().schema(Oodler.schema),
-  quantifiedThingies: [type.object().schema(object.merge(Thingy.schema, { qty: type.number() }))],
-  oodletIds: [type.string()]
+  quantifiedThingies: type.array(type.object().schema(object.merge(Thingy.schema, { qty: type.number() }))).default([]),
+  oodletIds: type.array(type.string()).default([])
 };
 
 module.exports = (() => {

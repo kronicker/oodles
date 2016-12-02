@@ -72,8 +72,7 @@
     methods: {
       order(event) {
         if(this.checkedQuantifiedThingies.length !== this.quantifiedThingies.length) {
-          event.stopPropagation();
-          return;
+          return event.stopPropagation();
         }
         this.$store.dispatch('totalOodletFinalize');
       }
