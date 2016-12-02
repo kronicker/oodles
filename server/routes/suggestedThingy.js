@@ -1,13 +1,17 @@
+/**
+ * Created by toma on 02.12.16..
+ */
 'use strict';
 const Joi = require('joi');
-const Thingy = require('../models/thingy');
+const SuggestedThingy = require('../models/suggestedThingy');
+const suggestedThingyUtil = require('../util/suggestedThingy');
 const thingyUtil = require('../util/thingy');
 
 function list(request, reply) {
   let limit = request.query.limit || 50;
   let offset = request.query.offset || 0;
-
-  return Thingy.skip(parseInt(offset))
+  
+  return SuggestedThingy.skip(parseInt(offset))
     .limit(parseInt(limit))
     .run()
     .then(result => {
@@ -16,17 +20,34 @@ function list(request, reply) {
 }
 
 function get(request, reply) {
-  thingyUtil.get(request.params.id)
-    .then(result => reply(result).code(200));
+  return SuggestedThingy.get(request.params.id)
+    .run()
+    .then(result => {
+      reply(result).code(200);
+    });
 }
 
 function create(request, reply) {
-  thingyUtil.save(request.payload.name, request.payload.unit, request.payload.pictureUrl)
-    .then(result => reply(result).code(201));
+  thingyUtil.filterByName(request.payload.name)
+    .then(thingies => {
+      if(thingies[0]) { return reply(thingies[0]).code(400); }
+      
+      return SuggestedThingy({
+        name: request.payload.name,
+        unit: request.payload.unit,
+        pictureUrl: request.payload.pictureUrl,
+        suggestedBy: request.payload.oodler
+      })
+        .save()
+        .then(result => {
+          reply(result).code(201);
+        });
+      
+    });
 }
 
 function update(request, reply) {
-  return Thingy.get(request.params.id)
+  return SuggestedThingy.get(request.params.id)
     .update({
       name: request.payload.name,
       unit: request.payload.unit,
@@ -38,19 +59,21 @@ function update(request, reply) {
     });
 }
 
+function save(request, reply) {
+  suggestedThingyUtil.remove(request.params.id)
+    .then(() => thingyUtil.save(request.payload.name, request.payload.unit, request.payload.pictureUrl))
+    .then(thingy => reply(thingy).code(201));
+}
+
 function remove(request, reply) {
-  return Thingy.get(request.params.id)
-    .delete()
-    .run()
-    .then(result => {
-      reply(result).code(200);
-    });
+  suggestedThingyUtil.remove(request.params.id)
+    .then(result => reply(result).code(200));
 }
 
 let routes = [
   {
     method: 'GET',
-    path: '/thingy',
+    path: '/suggestedThingy',
     config: {
       handler: list,
       auth: {
@@ -66,7 +89,7 @@ let routes = [
   },
   {
     method: 'GET',
-    path: '/thingy/{id}',
+    path: '/suggestedThingy/{id}',
     config: {
       handler: get,
       auth: {
@@ -81,9 +104,12 @@ let routes = [
   },
   {
     method: 'POST',
-    path: '/thingy',
+    path: '/suggestedThingy',
     config: {
       handler: create,
+      auth: {
+        scope: ['user']
+      },
       validate: {
         payload: {
           name: Joi.string().required(),
@@ -95,7 +121,7 @@ let routes = [
   },
   {
     method: 'PUT',
-    path: '/thingy/{id}',
+    path: '/suggestedThingy/{id}',
     config: {
       handler: update,
       validate: {
@@ -111,8 +137,25 @@ let routes = [
     }
   },
   {
+    method: 'POST',
+    path: '/suggestedThingy/{id}',
+    config: {
+      handler: save,
+      validate: {
+        params: {
+          id: Joi.string().required()
+        },
+        payload: {
+          name: Joi.string().required(),
+          unit: Joi.string(),
+          pictureUrl: Joi.string().uri()
+        }
+      }
+    }
+  },
+  {
     method: 'DELETE',
-    path: '/thingy/{id}',
+    path: '/suggestedThingy/{id}',
     config: {
       handler: remove,
       validate: {
