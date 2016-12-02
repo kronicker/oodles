@@ -34,6 +34,7 @@
             <table class="table table-striped table-hover">
               <tbody>
               <tr v-for="quantifiedThingy in quantifiedThingies">
+                <td class="col-md-1"><input type="checkbox" :value="quantifiedThingy.id" v-model="checkedQuantifiedThingies"></td>
                 <td>{{ quantifiedThingy.name }}</td>
                 <td class="col-md-2 right">{{ quantifiedThingy.qty }}</td>
                 <td class="col-md-2">{{ quantifiedThingy.unit }}</td>
@@ -43,7 +44,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-success" data-dismiss="modal" @click="order">Order</button>
+            <button type="button" class="btn btn-success" data-dismiss="modal" @click="order($event)">Order</button>
           </div>
         </div>
       </div>
@@ -54,6 +55,11 @@
 <script>
 
   export default {
+    data() {
+      return {
+        checkedQuantifiedThingies: []
+      }
+    },
     computed: {
       quantifiedThingies() {
         return this.$store.getters.totalOodlet.quantifiedThingies;
@@ -64,7 +70,10 @@
     },
 
     methods: {
-      order() {
+      order(event) {
+        if(this.checkedQuantifiedThingies.length !== this.quantifiedThingies.length) {
+          return event.stopPropagation();
+        }
         this.$store.dispatch('totalOodletFinalize');
       }
     }

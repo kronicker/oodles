@@ -15,6 +15,7 @@ function clearStore({ commit }) {
 }
 
 function thingyTileAdd({ commit, state }, quantifiedThingy) {
+  if(!state.oodlet.id) { return false; }
   commit('thingyTileAdd', quantifiedThingy);
 
   oodletApi.update(state.oodlet).then(response => {
@@ -23,6 +24,7 @@ function thingyTileAdd({ commit, state }, quantifiedThingy) {
 }
 
 function quantifiedThingyChange({ commit, state }, payload) {
+  if(!state.oodlet.id) { return false; }
   if (payload.qty === 0) {
     commit('quantifiedThingyRemove', payload.id);
   }
@@ -36,6 +38,7 @@ function quantifiedThingyChange({ commit, state }, payload) {
 }
 
 function historyOodletLoad({ commit, state }, historyOodlet) {
+  if(!state.oodlet.id) { return false; }
   oodletApi.update({
       id: state.oodlet.id,
       quantifiedThingies: historyOodlet.quantifiedThingies
@@ -47,11 +50,14 @@ function historyOodletLoad({ commit, state }, historyOodlet) {
 
 function oodletLoad({ commit, state }) {
   oodletApi.active(state.oodler.oodler).then(response => {
-    commit('oodletSet', response.body);
+    if(response.body) {
+      commit('oodletSet', response.body);
+    }
   });
 }
 
 function oodletReset({ commit, state }) {
+  if(!state.oodlet.id) { return false; }
   oodletApi.update({
       id: state.oodlet.id,
       quantifiedThingies: []

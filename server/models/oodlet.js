@@ -17,7 +17,7 @@ const schema = {
   dueDate: type.date().default(() => dbConfig.defaultOodletDueDate),
   orderedAt: type.date(),
   oodler: type.object().schema(Oodler.schema),
-  quantifiedThingies: [type.object().schema(object.merge(Thingy.schema, { qty: type.number() }))]
+  quantifiedThingies: type.array(type.object().schema(object.merge(Thingy.schema, { qty: type.number() }))).default([])
 };
 
 module.exports = (() => {

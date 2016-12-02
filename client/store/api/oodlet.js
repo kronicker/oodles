@@ -3,7 +3,6 @@ import Vue from 'vue';
 function active(oodler) {
   return Vue.http.get('/oodlet/active', {
     params: {
-      oodlerId: oodler.id,
       office: oodler.office
     }
   });

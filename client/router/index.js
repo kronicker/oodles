@@ -13,7 +13,7 @@ import LoginView from '../views/common/LoginView.vue';
 import NewPasswordView from '../views/common/NewPasswordView.vue';
 import ResetPasswordView from '../views/common/ResetPasswordView.vue';
 import TotalOodletView from '../views/admin/TotalOodletView.vue';
-import TotalOodletHistoryView from '../views/admin/TotalOodletHistoryView.vue';
+import AdminHistoryView from '../views/admin/AdminHistoryView.vue';
 import ThingiesView from '../views/admin/ThingiesView.vue';
 import OodlersView from '../views/admin/OodlersView.vue';
 
@@ -51,7 +51,7 @@ const routes = [
   },
   {
     path: '/admin/history',
-    component: TotalOodletHistoryView
+    component: AdminHistoryView
   },
   {
     path: '/admin/thingies',

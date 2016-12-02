@@ -4,7 +4,7 @@
       <div class="panel-heading">
         <strong>Due in: </strong>
         <span v-if="dueDate" class="due-in-countdown" :class="dueInClass">{{ dueIn }}</span>
-        <span v-else class="due-in-countdown red">Expired</span>
+        <span v-else class="due-in-countdown red">NOT SET</span>
       </div>
       <div class="panel-body">
         <table class="table table-striped table-hover">
@@ -93,6 +93,11 @@
       // Cannot use an arrow fn because 'this' wouldn't be Vue instance
       appInitialized: function() {
         this.load()
+      },
+      now() {
+        if(this.now >= this.dueDate){
+          this.load()
+        }
       }
     },
     methods: {

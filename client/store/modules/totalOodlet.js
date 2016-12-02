@@ -57,16 +57,20 @@ const mutations = {
   
   oodletAdd(state, pendingOodlet) {
     if(pushOodletId(state, pendingOodlet)) {
-      for(let quantifiedThingy of pendingOodlet.quantifiedThingies) {
-        thingyAdd(state, quantifiedThingy);
+      if(pendingOodlet.quantifiedThingies) {
+        for (let quantifiedThingy of pendingOodlet.quantifiedThingies) {
+          thingyAdd(state, quantifiedThingy);
+        }
       }
     }
   },
   
   oodletRemove(state, pendingOodlet) {
     if(popOodletId(state, pendingOodlet)) {
-      for (let quantifiedThingy of pendingOodlet.quantifiedThingies) {
-        thingyRemove(state, quantifiedThingy);
+      if(pendingOodlet.quantifiedThingies) {
+        for (let quantifiedThingy of pendingOodlet.quantifiedThingies) {
+          thingyRemove(state, quantifiedThingy);
+        }
       }
     }
   },
