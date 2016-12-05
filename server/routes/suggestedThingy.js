@@ -65,8 +65,8 @@ function save(request, reply) {
   suggestedThingyUtil.get(request.params.id)
     .then(suggestedThingy => {
       suggestedThingyUtil.remove(request.params.id)
-        .then(() => thingyUtil.save(request.payload.name, request.payload.unit, request.payload.pictureUrl))
-        .then(() => mail.sendThingyApproval(suggestedThingy.suggestedBy.email, suggestedThingy.name, request.auth.credentials))
+        .then(thingyUtil.save(request.payload.name, request.payload.unit, request.payload.pictureUrl))
+        .then(mail.sendThingyApproval(suggestedThingy.suggestedBy.email, suggestedThingy.name, request.auth.credentials))
         .then(thingy => reply(thingy).code(201));
     });
 }

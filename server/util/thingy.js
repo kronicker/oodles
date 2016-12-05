@@ -9,12 +9,11 @@ function get(id) {
 
 function save(name, unit, pictureUrl) {
   return Thingy({
-    name: name,
-    unit: unit,
-    pictureUrl: pictureUrl
-  })
-    .save()
-    .run();
+      name: name,
+      unit: unit,
+      pictureUrl: pictureUrl
+    })
+    .save();
 }
 
 function filterByName(name) {
