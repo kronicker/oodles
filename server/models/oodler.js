@@ -17,7 +17,7 @@ const schema = {
 };
 
 module.exports = (() => {
-  var model = thinky.createModel("Oodler", schema);
+  let model = thinky.createModel("Oodler", schema);
 
   model.schema = schema;
 

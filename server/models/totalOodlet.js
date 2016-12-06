@@ -18,7 +18,7 @@ const schema = {
 };
 
 module.exports = (() => {
-  var model = thinky.createModel("TotalOodlet", schema);
+  let model = thinky.createModel("TotalOodlet", schema);
   
   model.ensureIndex('orderedAt');
   model.schema = schema;

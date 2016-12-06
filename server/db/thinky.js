@@ -3,7 +3,7 @@
  */
 const databaseConfig = require('../config').database;
 
-var thinky = require('thinky')({
+let thinky = require('thinky')({
   db: databaseConfig.name,
   host: databaseConfig.host,
   port: databaseConfig.port,

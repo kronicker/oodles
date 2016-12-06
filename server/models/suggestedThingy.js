@@ -13,7 +13,7 @@ const schema = {
 };
 
 module.exports = (() => {
-  var model = thinky.createModel("SuggestedThingy", schema);
+  let model = thinky.createModel("SuggestedThingy", schema);
   
   model.schema = schema;
   
