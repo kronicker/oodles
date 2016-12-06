@@ -135,25 +135,17 @@
           scope: this.newOodler.scope
         }).then(
           response => {
-            this.newOodler = {
-              firstName: '',
-              lastName: '',
-              email: '',
-              office: '',
-              scope: 'user'
-            };
+            for(let property in this.newOodler) {
+              this.newOodler[property] = '';
+            }
             this.flashMessage = 'Success! New user added!';
             this.flashType = 'success';
             this.load();
           },
           response => {
-            this.newOodler = {
-              firstName: '',
-              lastName: '',
-              email: '',
-              office: '',
-              scope: 'user'
-            };
+            for(let property in this.newOodler) {
+              this.newOodler[property] = '';
+            }
             this.flashMessage = 'Oops! Something went wrong! Please, try again!';
             this.flashType = 'danger';
             this.load();

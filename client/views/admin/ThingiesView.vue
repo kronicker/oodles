@@ -114,21 +114,17 @@
           pictureUrl: this.newThingy.pictureUrl
         }).then(
           response => {
-            this.newThingy = {
-              name: '',
-              unit: '',
-              pictureUrl: ''
-            };
+            for(let property in this.newThingy) {
+              this.newThingy[property] = '';
+            }
             this.flashMessage = 'Success! New item added!';
             this.flashType = 'success';
             this.load();
           },
           response => {
-            this.newThingy = {
-              name: '',
-              unit: '',
-              pictureUrl: ''
-            };
+            for(let property in this.newThingy) {
+              this.newThingy[property] = '';
+            }
             this.flashMessage = 'Oops! Something went wrong! Please, try again!';
             this.flashType = 'danger';
             this.load();

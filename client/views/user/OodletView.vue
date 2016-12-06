@@ -125,20 +125,16 @@
           
         }).then(
           response => {
-            this.suggestedThingy = {
-              name: '',
-              unit: '',
-              pictureUrl: ''
-            };
+            for(let property in this.suggestedThingy) {
+              this.suggestedThingy[property] = '';
+            }
             this.flashMessage = 'Your suggestion has been submitted!';
             this.flashType = 'info';
           },
           response => {
-            this.suggestedThingy = {
-              name: '',
-              unit: '',
-              pictureUrl: ''
-            };
+            for(let property in this.suggestedThingy) {
+              this.suggestedThingy[property] = '';
+            }
             this.flashMessage = 'Incorrect suggestion! Please try again';
             this.flashType = 'danger';
           });
