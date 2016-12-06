@@ -58,7 +58,7 @@
 
     watch: {
       // Cannot use an arrow fn because 'this' wouldn't be Vue instance
-      appInitialized: function() {
+      appInitialized() {
         this.load()
       }
     },

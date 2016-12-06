@@ -61,7 +61,7 @@
 
     computed: {
       added() {
-        return this.$store.getters.totalOodlet.oodletIds ? this.$store.getters.totalOodlet.oodletIds.indexOf(this.pendingOodlet.id) > -1 : false;
+        return this.$store.getters.totalOodlet.oodletIds.includes(this.pendingOodlet.id);
       },
       updatedAt() {
         return moment(this.pendingOodlet.updatedAt).locale('hr').format('LL');

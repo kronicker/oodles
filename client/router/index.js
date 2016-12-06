@@ -16,6 +16,7 @@ import TotalOodletView from '../views/admin/TotalOodletView.vue';
 import AdminHistoryView from '../views/admin/AdminHistoryView.vue';
 import ThingiesView from '../views/admin/ThingiesView.vue';
 import OodlersView from '../views/admin/OodlersView.vue';
+import SuggestionsView from '../views/admin/SuggestionsView.vue';
 
 const routes = [
   {
@@ -60,6 +61,10 @@ const routes = [
   {
     path: '/admin/oodlers',
     component: OodlersView
+  },
+  {
+    path: '/admin/suggestions',
+    component: SuggestionsView
   }
 ];
 

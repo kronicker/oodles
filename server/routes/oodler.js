@@ -6,8 +6,8 @@ function list(request, reply) {
   let limit = request.query.limit || 20;
   let offset = request.query.offset || 0;
 
-  return Oodler.skip(parseInt(offset))
-    .limit(parseInt(limit))
+  return Oodler.skip(Number(offset))
+    .limit(Number(limit))
     .run()
     .then(result => {
       reply(result).code(200);

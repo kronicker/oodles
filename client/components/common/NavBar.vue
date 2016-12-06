@@ -5,6 +5,7 @@
       <li><router-link v-show="user" to="/history"><span class="glyphicon glyphicon-time"></span></router-link></li>
       <li><router-link v-show="admin" to="/admin" :exact="admin"><span class="glyphicon glyphicon-shopping-cart"></span></router-link></li>
       <li><router-link v-show="admin" to="/admin/history"><span class="glyphicon glyphicon-time"></span></router-link></li>
+      <li><router-link v-show="admin" to="/admin/suggestions"><span class="glyphicon glyphicon-question-sign"></span></router-link></li>
       <li><router-link v-show="admin" to="/admin/thingies"><span class="glyphicon glyphicon-glass"></span></router-link></li>
       <li><router-link v-show="admin" to="/admin/oodlers"><span class="glyphicon glyphicon-user"></span></router-link></li>
       <li><router-link to="/settings"><span class="glyphicon glyphicon-cog"></span></router-link></li>

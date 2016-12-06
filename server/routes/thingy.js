@@ -1,13 +1,14 @@
 'use strict';
 const Joi = require('joi');
 const Thingy = require('../models/thingy');
+const thingyUtil = require('../util/thingy');
 
 function list(request, reply) {
   let limit = request.query.limit || 50;
   let offset = request.query.offset || 0;
 
-  return Thingy.skip(parseInt(offset))
-    .limit(parseInt(limit))
+  return Thingy.skip(Number(offset))
+    .limit(Number(limit))
     .run()
     .then(result => {
       reply(result).code(200);
@@ -15,23 +16,13 @@ function list(request, reply) {
 }
 
 function get(request, reply) {
-  return Thingy.get(request.params.id)
-    .run()
-    .then(result => {
-      reply(result).code(200);
-    });
+  thingyUtil.get(request.params.id)
+    .then(result => reply(result).code(200));
 }
 
 function create(request, reply) {
-  return Thingy({
-      name: request.payload.name,
-      unit: request.payload.unit,
-      pictureUrl: request.payload.pictureUrl
-    })
-    .save()
-    .then(result => {
-      reply(result).code(201);
-    });
+  thingyUtil.save(request.payload.name, request.payload.unit, request.payload.pictureUrl)
+    .then(result => reply(result).code(201));
 }
 
 function update(request, reply) {
