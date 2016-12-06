@@ -1,15 +1,51 @@
 <template>
   <div id="navBar">
     <ul class="nav nav-tabs nav-stacked">
-      <li><router-link v-show="user" to="/" :exact="user"><span class="glyphicon glyphicon-shopping-cart"></span></router-link></li>
-      <li><router-link v-show="user" to="/history"><span class="glyphicon glyphicon-time"></span></router-link></li>
-      <li><router-link v-show="admin" to="/admin" :exact="admin"><span class="glyphicon glyphicon-shopping-cart"></span></router-link></li>
-      <li><router-link v-show="admin" to="/admin/history"><span class="glyphicon glyphicon-time"></span></router-link></li>
-      <li><router-link v-show="admin" to="/admin/suggestions"><span class="glyphicon glyphicon-question-sign"></span></router-link></li>
-      <li><router-link v-show="admin" to="/admin/thingies"><span class="glyphicon glyphicon-glass"></span></router-link></li>
-      <li><router-link v-show="admin" to="/admin/oodlers"><span class="glyphicon glyphicon-user"></span></router-link></li>
-      <li><router-link to="/settings"><span class="glyphicon glyphicon-cog"></span></router-link></li>
-      <li><a @click="logout"><span class="glyphicon glyphicon-off"></span></a></li>
+      <li>
+        <router-link v-show="user" to="/" :exact="user" data-toggle="tooltip" data-placement="right" title="Home">
+          <span class="glyphicon glyphicon-shopping-cart"></span>
+        </router-link>
+      </li>
+      <li>
+        <router-link v-show="user" to="/history" data-toggle="tooltip" data-placement="right" title="History">
+          <span class="glyphicon glyphicon-time"></span>
+        </router-link>
+      </li>
+      <li>
+        <router-link v-show="admin" to="/admin" :exact="admin" data-toggle="tooltip" data-placement="right" title="Home">
+          <span class="glyphicon glyphicon-shopping-cart"></span>
+        </router-link>
+      </li>
+      <li>
+        <router-link v-show="admin" to="/admin/history" data-toggle="tooltip" data-placement="right" title="History">
+          <span class="glyphicon glyphicon-time"></span>
+        </router-link>
+      </li>
+      <li>
+        <router-link v-show="admin" to="/admin/suggestions" data-toggle="tooltip" data-placement="right" title="Suggestions">
+          <span class="glyphicon glyphicon-question-sign"></span>
+        </router-link>
+      </li>
+      <li>
+        <router-link v-show="admin" to="/admin/thingies" data-toggle="tooltip" data-placement="right" title="Items">
+          <span class="glyphicon glyphicon-glass"></span>
+        </router-link>
+      </li>
+      <li>
+        <router-link v-show="admin" to="/admin/oodlers" data-toggle="tooltip" data-placement="right" title="Users">
+          <span class="glyphicon glyphicon-user"></span>
+        </router-link>
+      </li>
+      <li>
+        <router-link to="/settings" data-toggle="tooltip" data-placement="right" title="Settings">
+          <span class="glyphicon glyphicon-cog"></span>
+        </router-link>
+      </li>
+      <li>
+        <a @click="logout" data-toggle="tooltip" data-placement="right" title="Home">
+          <span class="glyphicon glyphicon-off"></span>
+        </a>
+      </li>
     </ul>
   </div>
 </template>
