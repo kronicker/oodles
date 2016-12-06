@@ -1,5 +1,8 @@
 <template>
   <div id="thingiesView">
+  
+    <flash-message @dismissed="dismissed" :message="flashMessage" :type="flashType" ></flash-message>
+  
     <div class="header page-header">
       <div class="row">
         <div class="col-md-3">
@@ -55,6 +58,7 @@
 
 <script>
   import SearchBar from '../../components/common/SearchBar.vue'
+  import FlashMessage from '../../components/common/FlashMessage.vue'
   import ThingyEditTile from '../../components/admin/ThingyEditTile.vue'
   
   export default{
@@ -62,6 +66,8 @@
       return {
         searchString: '',
         thingies: [],
+        flashMessage: '',
+        flashType: '',
         newThingy: {
           name: '',
           unit: '',
@@ -106,16 +112,30 @@
           name: this.newThingy.name,
           unit: this.newThingy.unit,
           pictureUrl: this.newThingy.pictureUrl
-        }).then(response => {
-          if(response.ok) {
+        }).then(
+          response => {
             this.newThingy = {
               name: '',
               unit: '',
               pictureUrl: ''
             };
+            this.flashMessage = 'Success! New item added!';
+            this.flashType = 'success';
             this.load();
-          }
-        });
+          },
+          response => {
+            this.newThingy = {
+              name: '',
+              unit: '',
+              pictureUrl: ''
+            };
+            this.flashMessage = 'Oops! Something went wrong! Please, try again!';
+            this.flashType = 'danger';
+            this.load();
+         });
+      },
+      dismissed() {
+        this.flashMessage = '';
       }
     },
   
@@ -133,7 +153,8 @@
     
     components: {
       SearchBar,
-      ThingyEditTile
+      ThingyEditTile,
+      FlashMessage
     }
   }
 </script>

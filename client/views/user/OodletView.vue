@@ -1,5 +1,8 @@
 <template>
   <div id="oodletView">
+  
+    <flash-message @dismissed="dismissed" :message="flashMessage" :type="flashType" ></flash-message>
+    
     <div class="header page-header">
       <div class="row">
         <div class="col-md-3">
@@ -59,8 +62,9 @@
 </template>
 
 <script>
-  import Oodlet from '../../components/user/Oodlet.vue'
   import SearchBar from '../../components/common/SearchBar.vue'
+  import FlashMessage from '../../components/common/FlashMessage.vue'
+  import Oodlet from '../../components/user/Oodlet.vue'
   import ThingyTile from '../../components/user/ThingyTile.vue'
 
   export default{
@@ -72,6 +76,8 @@
           unit: '',
           pictureUrl: ''
         },
+        flashMessage: '',
+        flashType: '',
         thingies: []
       }
     },
@@ -117,15 +123,28 @@
           pictureUrl: this.suggestedThingy.pictureUrl,
           oodler: this.oodler
           
-        }).then(response => {
-          if(response.ok) {
+        }).then(
+          response => {
             this.suggestedThingy = {
               name: '',
               unit: '',
               pictureUrl: ''
             };
-          }
-        });
+            this.flashMessage = 'Your suggestion has been submitted!';
+            this.flashType = 'info';
+          },
+          response => {
+            this.suggestedThingy = {
+              name: '',
+              unit: '',
+              pictureUrl: ''
+            };
+            this.flashMessage = 'Incorrect suggestion! Please try again';
+            this.flashType = 'danger';
+          });
+      },
+      dismissed() {
+        this.flashMessage = '';
       }
     },
     
@@ -145,6 +164,7 @@
       Oodlet,
       SearchBar,
       ThingyTile,
+      FlashMessage
     }
   }
 </script>

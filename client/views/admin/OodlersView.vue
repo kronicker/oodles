@@ -1,5 +1,8 @@
 <template>
   <div id="oodlersView">
+  
+    <flash-message @dismissed="dismissed" :message="flashMessage" :type="flashType" ></flash-message>
+  
     <div class="header page-header">
       <div class="row">
         <div class="col-md-3">
@@ -72,6 +75,7 @@
 
 <script>
   import SearchBar from '../../components/common/SearchBar.vue'
+  import FlashMessage from '../../components/common/FlashMessage.vue'
   import OodlerEditTile from '../../components/admin/OodlerEditTile.vue'
   
   export default{
@@ -79,6 +83,8 @@
       return {
         searchString: '',
         oodlers: [],
+        flashMessage: '',
+        flashType: '',
         newOodler: {
           firstName: '',
           lastName: '',
@@ -127,8 +133,8 @@
           email: this.newOodler.email,
           office: this.newOodler.office,
           scope: this.newOodler.scope
-        }).then(response => {
-          if (response.ok) {
+        }).then(
+          response => {
             this.newOodler = {
               firstName: '',
               lastName: '',
@@ -136,9 +142,25 @@
               office: '',
               scope: 'user'
             };
+            this.flashMessage = 'Success! New user added!';
+            this.flashType = 'success';
             this.load();
-          }
-        });
+          },
+          response => {
+            this.newOodler = {
+              firstName: '',
+              lastName: '',
+              email: '',
+              office: '',
+              scope: 'user'
+            };
+            this.flashMessage = 'Oops! Something went wrong! Please, try again!';
+            this.flashType = 'danger';
+            this.load();
+          });
+      },
+      dismissed() {
+        this.flashMessage = '';
       }
     },
   
@@ -156,7 +178,8 @@
     
     components: {
       SearchBar,
-      OodlerEditTile
+      OodlerEditTile,
+      FlashMessage
     }
   }
 </script>

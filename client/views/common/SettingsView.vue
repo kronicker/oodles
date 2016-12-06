@@ -1,5 +1,7 @@
 <template>
   <div id="settingsView">
+    <flash-message @dismissed="dismissed" :message="flashMessage" :type="flashType" ></flash-message>
+  
     <div class="page-header">
       <h1 class="text-info">Settings</h1>
     </div>
@@ -12,19 +14,18 @@
           <a @click="resetPassword" class="btn btn-danger">Reset password</a>
         </div>
       </div>
-      <div id="message" v-show="message" class="col-md-4 col-md-offset-3 alert alert-dismissible">
-        <button @click="closeMessage" type="button" class="close">&times;</button>
-        {{ message }}
-      </div>
     </div>
   </div>
 </template>
 
 <script>
+  import FlashMessage from '../../components/common/FlashMessage.vue'
+  
   export default {
     data() {
       return {
-        message : ''
+        flashMessage: '',
+        flashType: ''
       }
     },
     
@@ -41,20 +42,20 @@
           })
           .then(
             response => {
-              this.message = 'Please check your email for password reset link!';
-              document.getElementById('message').classList.add('alert-info');
-              document.getElementById('message').classList.remove('alert-danger');
+              this.flashMessage = 'Your suggestion has been submitted!';
+              this.flashType = 'info';
             },
             response => {
-              this.message = 'Oops! Something went wrong! Please try again!';
-              document.getElementById('message').classList.add('alert-danger');
-              document.getElementById('message').classList.remove('alert-info');
+              this.flashMessage = 'Oops! Something went wrong! Please, try again!';
+              this.flashType = 'danger';
             });
       },
-      closeMessage() {
-        this.message = '';
+      dismissed() {
+        this.flashMessage = '';
       }
-    }
+    },
+  
+    components: { FlashMessage }
   }
 </script>
 
@@ -62,9 +63,6 @@
   #settingsView {
     .page-header { margin: 0px 0 10px; }
 
-    .jumbotron {
-      margin-top: 200px;
-    }
-
+    .jumbotron { margin-top: 200px; }
   }
 </style>
