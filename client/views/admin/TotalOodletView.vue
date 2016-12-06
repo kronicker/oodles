@@ -70,7 +70,7 @@
             <div class="row">
               <form class="form-horizontal col-md-10 col-md-offset-1">
                 <div class="form-group col-md-6">
-                  <flatpickr :message="message" :options="options" @update="changeDueDate"/>
+                  <flatpickr :placeholder="message" :options="flatpickrOptions" @update="changeDueDate"/>
                 </div>
                 <div class="form-group col-md-12">
                   <div class="row">
@@ -111,12 +111,14 @@
   export default {
     data() {
       return {
-        message: ' Click here to pick a date',
-        options: {
-          locale: 'hr',
+        message: 'Click here to pick a date',
+        flatpickrOptions: {
           time_24hr: true,
           enableTime: true,
-          minDate: new Date()
+          minDate: new Date(),
+          altInput: true,
+          altFormat: "j. n. Y. H:i",
+          altInputClass: 'form-control'
         },
         dueDate: '',
         oodlers: [],
@@ -191,7 +193,11 @@
       }
     },
     
-    components: { PendingOodlet, TotalOodlet, Flatpickr }
+    components: {
+      PendingOodlet,
+      TotalOodlet,
+      Flatpickr
+    }
   }
 
 </script>

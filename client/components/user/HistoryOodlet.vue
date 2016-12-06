@@ -2,8 +2,8 @@
   <div class="history-oodlet">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <strong>Created: </strong>
-        <span>{{ createdAt }}</span>
+        <strong>Due date: </strong>
+        <span>{{ dueDate }}</span>
       </div>
       <div class="panel-body">
         <table class="table table-striped table-hover">
@@ -55,8 +55,8 @@
     props: ['oodlet'],
 
     computed: {
-      createdAt() {
-        return moment(this.oodlet.createdAt).locale('hr').format('LL');
+      dueDate() {
+        return moment(this.oodlet.dueDate).locale('hr').format('LL');
       }
     },
 

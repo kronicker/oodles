@@ -8,13 +8,13 @@
         <div class="form-group col-md-offset-5 col-md-2">
           <div class="input-group">
             <span class="input-group-addon">From: </span>
-            <input type="date" class="form-control" @change="load" v-model="fromDate">
+            <flatpickr :value="fromDate" :options="flatpickrOptions" @update="changeFromDate"/>
           </div>
         </div>
         <div class="form-group col-md-2">
           <div class="input-group">
             <span class="input-group-addon">To: </span>
-            <input type="date" class="form-control" @change="load" :max="maxDate" v-model="toDate">
+            <flatpickr :value="toDate" :options="flatpickrOptions" @update="changeToDate"/>
           </div>
         </div>
       </div>
@@ -35,15 +35,21 @@
 
 <script>
   import HistoryOodlet from '../../components/user/HistoryOodlet.vue';
+  import Flatpickr from '../../../node_modules/vue-flatpickr/vue-flatpickr-dark.vue';
   import moment from 'moment';
 
   export default{
     data() {
-      return{
+      return {
+        flatpickrOptions: {
+          maxDate: 'today',
+          altInput: true,
+          altFormat: "j. n. Y.",
+          altInputClass: 'form-control'
+        },
         oodlets: [],
         fromDate: moment().subtract(3, 'months').format('YYYY-MM-DD'),
-        toDate: moment().format('YYYY-MM-DD'),
-        maxDate: moment().format('YYYY-MM-DD')
+        toDate: moment().format('YYYY-MM-DD')
       }
     },
 
@@ -60,6 +66,12 @@
       // Cannot use an arrow fn because 'this' wouldn't be Vue instance
       appInitialized() {
         this.load()
+      },
+      fromDate() {
+        this.load()
+      },
+      toDate() {
+        this.load()
       }
     },
 
@@ -74,6 +86,12 @@
           .then(response => {
             this.oodlets = response.body;
           });
+      },
+      changeFromDate(fromDate) {
+        this.fromDate = moment(fromDate).toDate();
+      },
+      changeToDate(toDate) {
+        this.toDate = moment(toDate).toDate();
       }
     },
   
@@ -89,7 +107,10 @@
       }
     },
 
-    components: { HistoryOodlet }
+    components: {
+      HistoryOodlet,
+      Flatpickr
+    }
   }
 </script>
 
