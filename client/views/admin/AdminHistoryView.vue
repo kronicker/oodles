@@ -66,7 +66,7 @@
     
     watch: {
       // Cannot use an arrow fn because 'this' wouldn't be Vue instance
-      appInitialized: function () {
+      appInitialized() {
         this.load()
       }
     },
@@ -101,7 +101,7 @@
         
         this.$http.get('/oodler').then(response => {
           for(let oodler of response.body) {
-            if(this.offices.indexOf(oodler.office) < 0) {
+            if(!this.offices.includes(oodler.office)) {
               this.offices.push(oodler.office)
             }
           }

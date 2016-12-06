@@ -1,8 +1,9 @@
-/**
- * Created by toma on 02.12.16..
- */
-exports.resetPassword = require('./resetPassword');
-exports.dueDate = require('./dueDate');
-exports.thingySuggestion = require('./thingySuggestion');
-exports.thingyApproval = require('./thingyApproval');
-exports.thingyRejection = require('./thingyRejection');
+let templates = {
+  resetPassword: require('./resetPassword'),
+  dueDate: require('./dueDate'),
+  thingySuggestion: require('./resetPassword'),
+  thingyApproval: require('./thingyApproval'),
+  thingyRejection: require('./thingyRejection')
+};
+
+module.exports = templates;

@@ -12,8 +12,8 @@ function list(request, reply) {
   let limit = request.query.limit || 50;
   let offset = request.query.offset || 0;
   
-  return SuggestedThingy.skip(parseInt(offset))
-    .limit(parseInt(limit))
+  return SuggestedThingy.skip(Number(offset))
+    .limit(Number(limit))
     .run()
     .then(result => {
       reply(result).code(200);

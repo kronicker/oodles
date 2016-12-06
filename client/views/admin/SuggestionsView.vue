@@ -40,14 +40,12 @@
         }
         
         let searchString = this.searchString.toLowerCase();
-        return this.suggestions.filter(item => {
-          return item.name.toLowerCase().indexOf(searchString) !== -1
-        });
+        return this.suggestions.filter(item => item.name.toLowerCase().includes(searchString));
       }
     },
     
     watch: {
-      appInitialized: function() { //Cannot be arrow fn cause that way 'this' wouldn't be Vue instance
+      appInitialized() { //Cannot be arrow fn cause that way 'this' wouldn't be Vue instance
         this.load()
       }
     },

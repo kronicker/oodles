@@ -35,13 +35,12 @@
             this.$store.dispatch('initStore', oodler);
             
             if (oodler.scope === 'admin') {
-              if(['/admin', '/admin/history', '/admin/thingies', '/admin/oodlers', '/admin/suggestions', '/settings'].indexOf(this.$route.path) < 0) {
-                console.log(this.$route.path);
+              if(!['/admin', '/admin/history', '/admin/thingies', '/admin/oodlers', '/admin/suggestions', '/settings'].includes(this.$route.path)) {
                 this.$router.replace({ path: '/admin' });
               }
             }
             else {
-              if(['/', '/history', '/settings'].indexOf(this.$route.path) < 0) {
+              if(!['/', '/history', '/settings'].includes(this.$route.path)) {
                 this.$router.replace({ path: '/' });
               }
             }
