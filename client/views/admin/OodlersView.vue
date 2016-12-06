@@ -6,7 +6,7 @@
     <div class="header page-header">
       <div class="row">
         <div class="col-md-3">
-          <h1 class="text-info">Oodlers</h1>
+          <h1 class="text-info">Users</h1>
         </div>
         <div class="add-button col-md-offset-8 col-md-1">
           <button class="btn btn-block btn-success" data-toggle="modal" data-target="#newOodler"><span class="glyphicon glyphicon-plus"></span> Add</button>
@@ -14,7 +14,7 @@
       </div>
     </div>
     <div class="row">
-        <search-bar class="col-md-12" subject="oodler by first name, last name or office" @searchBarUpdate="searchBarUpdate"></search-bar>
+        <search-bar class="col-md-12" subject="user by first name, last name or office" @searchBarUpdate="searchBarUpdate"></search-bar>
     </div>
     <div class="row filtered-oodlers">
       <div v-for="oodler in filteredOodlers" class="col-md-3">
@@ -27,7 +27,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title">Add new oodler</h4>
+            <h4 class="modal-title">Add new user</h4>
           </div>
           <div class="modal-body">
             <div class="row">
