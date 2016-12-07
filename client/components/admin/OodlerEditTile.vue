@@ -97,6 +97,44 @@
             </tbody>
           </table>
         </div>
+        <div class="form-group col-md-12">
+          <div class="btn-group btn-group-justified">
+            <a type="button" data-toggle="modal" :data-target="'#' + oodler.id + 'delete'" class="btn btn-xs btn-danger">Delete</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="modal fade" data-backdrop="static" data-keyboard="false" :id="oodler.id + 'delete'">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Do you really want to remove this user?</h4>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <tbody>
+              <tr>
+                <td class="col-md-4">Name</td>
+                <td class="col-md-8">{{ oodler.firstName }} {{ oodler.lastName }}</td>
+              </tr>
+              <tr>
+                <td class="col-md-4">Unit</td>
+                <td class="col-md-8">{{ oodler.email }}</td>
+              </tr>
+              <tr>
+                <td class="col-md-4">Office</td>
+                <td class="col-md-8">{{ oodler.office }}</td>
+              </tr>
+              </tbody>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal" @click="removeOodler">Delete</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -129,16 +167,23 @@
             office: this.editedOodler.office,
             scope: this.editedOodler.scope
           })
-          .then( response => {
+          .then(
+            response => {
               this.$emit('oodlerUpdate');
               for (let property in this.editing) {
                 this.$set(this.editing, property, false);
               }
-            })
-          .catch( () => {
-            for(let property in this.editing) {
-              this.$set(this.editing, property, false);
-            }
+            },
+            response => {
+              for(let property in this.editing) {
+                this.$set(this.editing, property, false);
+              }
+            });
+      },
+      removeOodler() {
+        this.$http.delete('/oodler/' + this.oodler.id)
+          .then(response => {
+            this.$emit('oodlerUpdate');
           });
       },
       edit(el) {

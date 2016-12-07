@@ -74,6 +74,44 @@
             </tbody>
           </table>
         </div>
+        <div class="form-group col-md-12">
+          <div class="btn-group btn-group-justified">
+            <a type="button" data-toggle="modal" :data-target="'#' + thingy.id + 'delete'" class="btn btn-xs btn-danger">Delete</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="modal fade" data-backdrop="static" data-keyboard="false" :id="thingy.id + 'delete'">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Do you really want to remove this user?</h4>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <tbody>
+              <tr>
+                <td class="col-md-4">Name</td>
+                <td class="col-md-8">{{ thingy.name }}</td>
+              </tr>
+              <tr>
+                <td class="col-md-4">Unit</td>
+                <td class="col-md-8">{{ thingy.unit }}</td>
+              </tr>
+              <tr>
+                <td class="col-md-4">Picture Url</td>
+                <td class="col-md-8">{{ thingy.pictureUrl }}</td>
+              </tr>
+              </tbody>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal" @click="removeThingy">Delete</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -110,6 +148,12 @@
                 this.$set(this.editing, property, false);
               }
             }
+          });
+      },
+      removeThingy() {
+        this.$http.delete('/thingy/' + this.thingy.id)
+          .then(response => {
+            this.$emit('thingyUpdate');
           });
       },
       edit(el) {
