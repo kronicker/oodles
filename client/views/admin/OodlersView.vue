@@ -146,7 +146,7 @@
             for(let property in this.newOodler) {
               this.newOodler[property] = '';
             }
-            this.flashMessage = 'Oops! Something went wrong! Please, try again!';
+            this.flashMessage = response.body;
             this.flashType = 'danger';
             this.load();
           });
