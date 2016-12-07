@@ -6,14 +6,29 @@ const mailgun = require('mailgun-js')(config.mailgun.options);
 const oodlerUtil = require('./oodler');
 const templates = require('./mailTemplates');
 
-const fromMail = `Oodles <no-reply@${config.server.host}>`
+const fromMail = `Oodles <no-reply@${config.server.host}>`;
+
+function sendNewOodler (token, oodler) {
+  let data = {
+    from: fromMail,
+    to: oodler.email,
+    subject: 'Welcome to Oodles!',
+    html: templates.newOodler(token, oodler)
+  };
+  
+  console.log(data);
+  
+  mailgun.messages().send(data, (err, body) => {
+    if(err) throw err;
+  });
+}
 
 function sendReset (token, email) {
   let data = {
     from: fromMail,
     to: email,
     subject: 'Password reset',
-    html: templates.resetPassword(config.server.host, config.server.port, token)
+    html: templates.resetPassword(token)
   };
 
   console.log(data);
@@ -88,6 +103,7 @@ function sendThingyRejection (email, thingyName, admin) {
 }
 
 module.exports = {
+  sendNewOodler,
   sendReset,
   sendDueDate,
   sendThingySuggestion,

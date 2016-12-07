@@ -1,6 +1,8 @@
 'use strict';
 const Joi = require('joi');
 const Oodler = require('../models/oodler');
+const token = require('../util/token');
+const mail = require('../util/mail');
 
 function list(request, reply) {
   let limit = request.query.limit || 20;
@@ -35,12 +37,16 @@ function create(request, reply) {
       firstName: request.payload.firstName,
       lastName: request.payload.lastName,
       email: request.payload.email,
-      office: request.payload.office,
+      office: request.payload.office.toUpperCase(),
       scope: request.payload.scope
       })
       .save()
-      .then(result => {
-        reply(result).code(201);
+      .then(oodler => {
+        token.create(oodler.id)
+          .then(token => {
+            mail.sendNewOodler(token, oodler);
+          });
+        reply(oodler).code(201);
       });
     });
 }
