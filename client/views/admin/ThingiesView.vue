@@ -1,9 +1,12 @@
 <template>
   <div id="thingiesView">
+  
+    <flash-message @dismissed="dismissed" :message="flashMessage" :type="flashType" ></flash-message>
+  
     <div class="header page-header">
       <div class="row">
         <div class="col-md-3">
-          <h1 class="text-info">Thingies</h1>
+          <h1 class="text-info">Items</h1>
         </div>
         <div class="add-button col-md-offset-8 col-md-1">
           <button class="btn btn-block btn-success" data-toggle="modal" data-target="#newThingy"><span class="glyphicon glyphicon-plus"></span> Add</button>
@@ -11,7 +14,7 @@
       </div>
     </div>
     <div class="row">
-      <search-bar class="col-md-12" subject="thingy" @searchBarUpdate="searchBarUpdate"></search-bar>
+      <search-bar class="col-md-12" subject="item" @searchBarUpdate="searchBarUpdate"></search-bar>
     </div>
     <div class="row filtered-thingies">
       <div v-for="thingy in filteredThingies" class="col-md-3">
@@ -24,7 +27,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title">Add new thingy</h4>
+            <h4 class="modal-title">Add new item</h4>
           </div>
           <div class="modal-body">
             <div class="row">
@@ -55,6 +58,7 @@
 
 <script>
   import SearchBar from '../../components/common/SearchBar.vue'
+  import FlashMessage from '../../components/common/FlashMessage.vue'
   import ThingyEditTile from '../../components/admin/ThingyEditTile.vue'
   
   export default{
@@ -62,6 +66,8 @@
       return {
         searchString: '',
         thingies: [],
+        flashMessage: '',
+        flashType: '',
         newThingy: {
           name: '',
           unit: '',
@@ -106,16 +112,26 @@
           name: this.newThingy.name,
           unit: this.newThingy.unit,
           pictureUrl: this.newThingy.pictureUrl
-        }).then(response => {
-          if(response.ok) {
-            this.newThingy = {
-              name: '',
-              unit: '',
-              pictureUrl: ''
-            };
+        }).then(
+          response => {
+            for(let property in this.newThingy) {
+              this.newThingy[property] = '';
+            }
+            this.flashMessage = 'Success! New item added!';
+            this.flashType = 'success';
             this.load();
-          }
-        });
+          },
+          response => {
+            for(let property in this.newThingy) {
+              this.newThingy[property] = '';
+            }
+            this.flashMessage = 'Oops! Something went wrong! Please, try again!';
+            this.flashType = 'danger';
+            this.load();
+         });
+      },
+      dismissed() {
+        this.flashMessage = '';
       }
     },
   
@@ -133,7 +149,8 @@
     
     components: {
       SearchBar,
-      ThingyEditTile
+      ThingyEditTile,
+      FlashMessage
     }
   }
 </script>

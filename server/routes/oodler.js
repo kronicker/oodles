@@ -1,6 +1,8 @@
 'use strict';
 const Joi = require('joi');
 const Oodler = require('../models/oodler');
+const token = require('../util/token');
+const mail = require('../util/mail');
 
 function list(request, reply) {
   let limit = request.query.limit || 20;
@@ -28,19 +30,23 @@ function create(request, reply) {
     .run()
     .then(oodlers => {
       if(oodlers[0]) {
-        reply('User already registered with this email').code(400);
+        return reply('Email is already taken!').code(400);
       }
 
     return Oodler({
       firstName: request.payload.firstName,
       lastName: request.payload.lastName,
       email: request.payload.email,
-      office: request.payload.office,
+      office: request.payload.office.toUpperCase(),
       scope: request.payload.scope
       })
       .save()
-      .then(result => {
-        reply(result).code(201);
+      .then(oodler => {
+        token.create(oodler.id)
+          .then(token => {
+            mail.sendNewOodler(token, oodler);
+          });
+        reply(oodler).code(201);
       });
     });
 }
@@ -55,7 +61,7 @@ function update(request, reply) {
       //Check if email in the payload exists in database and if it is registered for another user
       //TODO: Check if there is a better implementation
       if (oodlers[0] && oodlers[0].id !== oodlerId) {
-        return reply('User already registered with this email').code(400);
+        return reply('Email is already taken!').code(400);
       }
 
       return Oodler.get(oodlerId)

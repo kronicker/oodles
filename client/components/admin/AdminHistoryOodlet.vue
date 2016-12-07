@@ -1,10 +1,15 @@
 <template>
   <div class="admin-history-oodlet">
     <div class="panel panel-default">
-      <div class="panel-heading">
+      <div class="panel-heading" v-if="selectedOffice == 'TOTALS'">
         <strong>Ordered on: </strong>
         <span>{{ orderedOn }}</span>
       </div>
+      <div class="panel-heading" v-else>
+        <strong>Due date: </strong>
+        <span>{{ dueDate }}</span>
+      </div>
+      
       <div class="panel-body">
         <table class="table table-striped table-hover">
           <tbody>
@@ -49,6 +54,9 @@
     computed: {
       orderedOn() {
         return moment(this.historyOodlet.orderedOn).locale('hr').format('LL');
+      },
+      dueDate() {
+        return moment(this.historyOodlet.dueDate).locale('hr').format('LL');
       }
     },
     

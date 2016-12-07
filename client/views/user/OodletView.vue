@@ -1,19 +1,22 @@
 <template>
   <div id="oodletView">
+  
+    <flash-message @dismissed="dismissed" :message="flashMessage" :type="flashType" ></flash-message>
+    
     <div class="header page-header">
       <div class="row">
         <div class="col-md-3">
-          <h1 class="text-info">Oodlet</h1>
+          <h1 class="text-info">Order</h1>
         </div>
         <div class="add-button col-md-offset-7 col-md-2">
-          <button class="btn btn-block btn-success" data-toggle="modal" data-target="#suggestThingy"><span class="glyphicon glyphicon-plus"></span> Suggest new thingy</button>
+          <button class="btn btn-block btn-success" data-toggle="modal" data-target="#suggestThingy"><span class="glyphicon glyphicon-plus"></span> Suggest new item</button>
         </div>
       </div>
     </div>
     <div class="row">
       <div class="filtered-thingies col-md-9">
         <div class="row">
-          <search-bar class="col-md-12" subject="thingy" @searchBarUpdate="searchBarUpdate"></search-bar>
+          <search-bar class="col-md-12" subject="item" @searchBarUpdate="searchBarUpdate"></search-bar>
         </div>
         <ul class="row">
             <li v-for="thingy in filteredThingies" class="col-md-2">
@@ -29,7 +32,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title">Suggest new thingy</h4>
+            <h4 class="modal-title">Suggest new item</h4>
           </div>
           <div class="modal-body">
             <div class="row">
@@ -59,8 +62,9 @@
 </template>
 
 <script>
-  import Oodlet from '../../components/user/Oodlet.vue'
   import SearchBar from '../../components/common/SearchBar.vue'
+  import FlashMessage from '../../components/common/FlashMessage.vue'
+  import Oodlet from '../../components/user/Oodlet.vue'
   import ThingyTile from '../../components/user/ThingyTile.vue'
 
   export default{
@@ -72,6 +76,8 @@
           unit: '',
           pictureUrl: ''
         },
+        flashMessage: '',
+        flashType: '',
         thingies: []
       }
     },
@@ -117,15 +123,24 @@
           pictureUrl: this.suggestedThingy.pictureUrl,
           oodler: this.oodler
           
-        }).then(response => {
-          if(response.ok) {
-            this.suggestedThingy = {
-              name: '',
-              unit: '',
-              pictureUrl: ''
-            };
-          }
-        });
+        }).then(
+          response => {
+            for(let property in this.suggestedThingy) {
+              this.suggestedThingy[property] = '';
+            }
+            this.flashMessage = 'Your suggestion has been submitted!';
+            this.flashType = 'info';
+          },
+          response => {
+            for(let property in this.suggestedThingy) {
+              this.suggestedThingy[property] = '';
+            }
+            this.flashMessage = 'Incorrect suggestion! Please try again';
+            this.flashType = 'danger';
+          });
+      },
+      dismissed() {
+        this.flashMessage = '';
       }
     },
     
@@ -145,6 +160,7 @@
       Oodlet,
       SearchBar,
       ThingyTile,
+      FlashMessage
     }
   }
 </script>

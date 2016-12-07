@@ -35,7 +35,7 @@
         <table class="table table-striped table-hover">
           <thead>
           <tr>
-            <th>Thingy</th>
+            <th>Item</th>
             <th class="col-md-2">Quantity</th>
             <th class="col-md-2">Unit</th>
           </tr>

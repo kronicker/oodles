@@ -1,4 +1,5 @@
 let templates = {
+  newOodler: require('./newOodler'),
   resetPassword: require('./resetPassword'),
   dueDate: require('./dueDate'),
   thingySuggestion: require('./resetPassword'),
