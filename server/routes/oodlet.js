@@ -40,7 +40,7 @@ function setActive(request, reply) {
   oodlerUtil.get(request.payload.id)
     .then(oodler => {
       oodletUtil.findActive(oodler.office).then(oodlets => {
-        if(oodlets.length) reply(oodlets[0]).code(400);
+        if(oodlets.length) return reply(oodlets[0]).code(400);
   
         oodletUtil.create(oodler, request.payload.dueDate)
           .then(result => {
