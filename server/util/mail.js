@@ -43,7 +43,7 @@ function sendDueDate (email, dueDate) {
     from: fromMail,
     to: email,
     subject: 'New due date set',
-    html: templates.dueDate(config.server.host, config.server.port, dueDate)
+    html: templates.dueDate(dueDate)
   };
 
   console.log(data);
@@ -61,7 +61,7 @@ function sendThingySuggestion (suggestedThingy) {
           from: fromMail,
           to: admin.email,
           subject: 'New thingy suggestion',
-          html: templates.thingySuggestion(config.server.host, config.server.port, suggestedThingy)
+          html: templates.thingySuggestion(suggestedThingy)
         };
         console.log(data);
   
@@ -77,7 +77,7 @@ function sendThingyApproval (email, thingyName, admin) {
     from: fromMail,
     to: email,
     subject: 'Suggestion approved',
-    html: templates.thingyApproval(config.server.host, config.server.port, thingyName, admin)
+    html: templates.thingyApproval(thingyName, admin)
   };
   
   console.log(data);
@@ -92,7 +92,7 @@ function sendThingyRejection (email, thingyName, admin) {
     from: fromMail,
     to: email,
     subject: 'Suggestion rejected',
-    html: templates.thingyRejection(config.server.host, config.server.port, thingyName, admin)
+    html: templates.thingyRejection(thingyName, admin)
   };
   
   console.log(data);

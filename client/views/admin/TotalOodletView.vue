@@ -1,5 +1,9 @@
 <template>
   <div id="totalOodletView">
+  
+    <flash-message @dismissed="dismissed('success')" :message="successFlashMessage" :type="'success'" ></flash-message>
+    <flash-message @dismissed="dismissed('fail')" :message="failFlashMessage" :type="'danger'" ></flash-message>
+  
     <div class="header page-header">
       <div class="row">
         <div class="col-md-3">
@@ -81,7 +85,7 @@
                   <div class="row">
                     <div class="radio col-md-6" v-for="oodler in oodlers">
                       <label>
-                        <input type="checkbox" :value="oodler.id" v-model="checkedOodlers">
+                        <input type="checkbox" :value="oodler" v-model="checkedOodlers">
                         {{oodler.office}} - {{oodler.firstName}} {{oodler.lastName}}
                       </label>
                     </div>
@@ -103,6 +107,7 @@
 <script>
   import PendingOodlet from '../../components/admin/PendingOodlet.vue';
   import TotalOodlet from '../../components/admin/TotalOodlet.vue';
+  import FlashMessage from '../../components/common/FlashMessage.vue'
   import Flatpickr from '../../../node_modules/vue-flatpickr/vue-flatpickr-dark.vue';
   import moment from 'moment';
   import object from 'lodash/object';
@@ -122,7 +127,9 @@
         },
         dueDate: '',
         oodlers: [],
-        checkedOodlers: []
+        checkedOodlers: [],
+        successFlashMessage: '',
+        failFlashMessage: ''
       }
     },
     
@@ -152,7 +159,7 @@
               .sort((a,b) => {
                 return a.office < b.office ? -1 : 1;
               });
-            this.oodlers.forEach(oodler => this.checkedOodlers.push(oodler.id));
+            this.oodlers.forEach(oodler => this.checkedOodlers.push(oodler));
           });
       },
       changeDueDate(newDate) {
@@ -160,8 +167,8 @@
       },
       selectAll() {
         for(let oodler of this.oodlers) {
-          if(this.checkedOodlers.indexOf(oodler.id) < 0) {
-            this.checkedOodlers.push(oodler.id)
+          if(this.checkedOodlers.indexOf(oodler) < 0) {
+            this.checkedOodlers.push(oodler)
           }
         }
       },
@@ -172,11 +179,45 @@
         if(this.dueDate === '') {
           return event.stopPropagation();
         }
-        for(let oodlerId of this.checkedOodlers) {
-          this.$http.post('/oodlet/active', {
-            id: oodlerId,
+  
+        let promises = this.checkedOodlers.map(
+          oodler => this.$http.post('/oodlet/active', {
+            id: oodler.id,
             dueDate: this.dueDate
+          }).then(() => true)
+            .catch(() => false)
+            .then((success) => {
+              return { success, oodler };
+            })
+        );
+        
+        Promise.all(promises).then(
+          promises => {
+            let success = [];
+            let failed = [];
+            for(let promise of promises) {
+              if(promise.success) {
+                success.push(promise.oodler.office);
+              }
+              else {
+                failed.push(promise.oodler.office);
+              }
+            }
+            
+            if(success.length) {
+              this.successFlashMessage = 'Due date set for ' + success + '.';
+            }
+            if(failed.length) {
+              this.failFlashMessage = 'Offices ' + failed + ' already have set due date!';
+            }
           });
+      },
+      dismissed(type) {
+        if(type === 'success') {
+          this.successFlashMessage = '';
+        }
+        else {
+          this.failFlashMessage = '';
         }
       }
     },
@@ -196,6 +237,7 @@
     components: {
       PendingOodlet,
       TotalOodlet,
+      FlashMessage,
       Flatpickr
     }
   }

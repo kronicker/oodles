@@ -53,7 +53,7 @@
     
     computed: {
       orderedOn() {
-        return moment(this.historyOodlet.orderedOn).locale('hr').format('LL');
+        return moment(this.historyOodlet.orderedAt).locale('hr').format('LL');
       },
       dueDate() {
         return moment(this.historyOodlet.dueDate).locale('hr').format('LL');

@@ -160,7 +160,7 @@
         this.$set(this.editing, el, true);
       },
       cancel(el) {
-        Object.assign(this.editedThingy, this.thingy);
+        this.$set(this.editedThingy, el, this.thingy[el]);
         this.$set(this.editing, el, false);
       }
     },

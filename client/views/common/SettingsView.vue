@@ -42,7 +42,7 @@
           })
           .then(
             response => {
-              this.flashMessage = 'Your suggestion has been submitted!';
+              this.flashMessage = 'Please check your email for password reset link!';
               this.flashType = 'info';
             },
             response => {

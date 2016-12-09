@@ -190,7 +190,7 @@
         this.$set(this.editing, el, true);
       },
       cancel(el) {
-        Object.assign(this.editedOodler, this.oodler);
+        this.$set(this.editedOodler, el, this.oodler[el]);
         this.$set(this.editing, el, false);
       }
     },

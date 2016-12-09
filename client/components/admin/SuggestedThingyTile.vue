@@ -226,7 +226,7 @@
         this.$set(this.editing, el, true);
       },
       cancel(el) {
-        Object.assign(this.editedThingy, this.suggestedThingy);
+        this.$set(this.editedSuggestedThingy, el, this.suggestedThingy[el]);
         this.$set(this.editing, el, false);
       }
     },
