@@ -84,7 +84,9 @@
             office: this.oodler.office
           }})
           .then(response => {
-            this.oodlets = response.body;
+            let oodlets = response.body;
+            oodlets.sort((a,b) => (a.dueDate > b.dueDate) ? -1 : 1);
+            this.oodlets = oodlets;
           });
       },
       changeFromDate(fromDate) {

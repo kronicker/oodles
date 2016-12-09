@@ -108,7 +108,14 @@
         
         this.$http.get(endpoint, options)
           .then(response => {
-            this.historyOodlets = response.body;
+            let oodlets = response.body;
+            if(this.selectedOffice === 'TOTALS') {
+              oodlets.sort((a,b) => (a.orderedAt > b.orderedAt) ? -1 : 1);
+            }
+            else {
+              oodlets.sort((a,b) => (a.dueDate > b.dueDate) ? -1 : 1);
+            }
+            this.historyOodlets = oodlets;
           });
         
         this.$http.get('/oodler').then(response => {
