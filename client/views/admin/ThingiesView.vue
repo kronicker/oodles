@@ -104,7 +104,9 @@
       },
       load() {
         this.$http.get('/thingy').then((response) => {
-          this.thingies = response.body;
+          let thingies = response.body;
+          thingies.sort((a,b) => (a.name.toLowerCase() < b.name.toLowerCase()) ? -1 : 1);
+          this.thingies = thingies;
         });
       },
       save() {
