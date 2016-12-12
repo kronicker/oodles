@@ -123,7 +123,9 @@
       },
       load() {
         this.$http.get('/oodler').then(response => {
-          this.oodlers = response.body;
+          let oodlers = response.body;
+          oodlers.sort((a,b) => (a.lastName.toLowerCase() < b.lastName.toLowerCase()) ? -1 : 1);
+          this.oodlers = oodlers;
         });
       },
       save() {
