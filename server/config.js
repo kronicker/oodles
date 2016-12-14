@@ -44,7 +44,7 @@ let config = {
   mailgun: {
     options: {
       apiKey: 'key-73db2b70c2c5fda574df5e2fd938504f',
-      domain: 'sandbox629530a6164643d28eb2f1767607d8db.mailgun.org'
+      domain: 'mailgun.ee-oodles.me'
     }
   }
 };
