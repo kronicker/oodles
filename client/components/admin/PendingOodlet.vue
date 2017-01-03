@@ -83,8 +83,8 @@
           </div>
           <div class="modal-footer">
             <div class="info">
-              <span>Office: {{ pendingOodlet.oodler.office }}</span>
-              <span>Submitted by: {{ pendingOodlet.oodler.firstName }} {{ pendingOodlet.oodler.lastName }}</span>
+              <span><strong>Office:</strong> {{ pendingOodlet.oodler.office }}&nbsp</span>
+              <span><strong>Submitted by:</strong> {{ pendingOodlet.oodler.firstName }} {{ pendingOodlet.oodler.lastName }}</span>
             </div>
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             <button type="button" class="btn btn-danger" data-dismiss="modal" @click="deleteOodlet">Delete</button>
