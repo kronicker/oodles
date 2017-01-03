@@ -8,22 +8,22 @@
           <button class="btn btn-sm btn-success" v-show="!added" @click.prevent.stop="addPendingOodlet">Add</button>
         </div>
         <div class="col-md-2">
-          <h2 class="panel-title">
+          <h2 class="panel-title" :class="{ empty: !pendingOodlet.quantifiedThingies.length }">
             {{ pendingOodlet.oodler.office }}
           </h2>
         </div>
         <div class="col-md-3">
-          <h2 class="panel-title">
+          <h2 class="panel-title" :class="{ empty: !pendingOodlet.quantifiedThingies.length }">
             {{ updatedAt }}
           </h2>
         </div>
         <div class="col-md-3">
-          <h2 class="panel-title">
+          <h2 class="panel-title" :class="{ empty: !pendingOodlet.quantifiedThingies.length }">
             {{ dueDate }}
           </h2>
         </div>
-        <div class="col-md-3">
-          <h2 class="panel-title">
+        <div class="col-md-2">
+          <h2 class="panel-title" :class="{ empty: !pendingOodlet.quantifiedThingies.length }">
             {{ pendingOodlet.oodler.firstName }} {{ pendingOodlet.oodler.lastName }}
           </h2>
         </div>
