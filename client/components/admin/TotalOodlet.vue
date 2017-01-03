@@ -19,7 +19,9 @@
         </table>
       </div>
       <div class="panel-footer">
-        <button class="btn btn-success" data-toggle="modal" data-target="#totalOodletReview">Order</button>
+        <span data-toggle="tooltip" data-placement="right" title="Total order review">
+          <button class="btn btn-success" data-toggle="modal" data-target="#totalOodletReview">Order</button>
+        </span>
       </div>
     </div>
 
@@ -44,7 +46,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-success" data-dismiss="modal" @click="order($event)">Order</button>
+            <button type="button" class="btn btn-success" data-dismiss="modal" @click="order($event)" data-toggle="tooltip" data-placement="right" title="Finalize total order">Order</button>
           </div>
         </div>
       </div>
