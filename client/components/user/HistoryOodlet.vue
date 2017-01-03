@@ -17,7 +17,9 @@
         </table>
       </div>
       <div class="panel-footer">
-        <button class="btn btn-success push-right" data-toggle="modal" data-target="#historyOodletLoad">Load</button>
+        <span data-toggle="tooltip" data-placement="bottom" title="Copy and paste over current order">
+          <button class="btn btn-success push-right" data-toggle="modal" data-target="#historyOodletLoad">Copy/Paste</button>
+        </span>
       </div>
     </div>
     <div class="modal fade" data-backdrop="static" data-keyboard="false" id="historyOodletLoad">
@@ -40,7 +42,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
-            <router-link to="/"><button type="button" class="btn btn-danger" data-dismiss="modal" @click="load">Load</button></router-link>
+            <router-link to="/"><button type="button" class="btn btn-danger" data-dismiss="modal" @click="load">Copy/Paste</button></router-link>
           </div>
         </div>
       </div>
