@@ -30,9 +30,7 @@
         <div class="panel panel-default">
           <div class="panel-heading">
             <div class="row panel-title">
-              <div class="col-md-1">
-              </div>
-              <div class="col-md-2">
+              <div class="col-md-2 col-md-offset-2">
                 <h3 class="panel-title">
                   <strong>Office</strong>
                 </h3>
@@ -47,9 +45,9 @@
                   <strong>Due date</strong>
                 </h3>
               </div>
-              <div class="col-md-3">
+              <div class="col-md-2">
                 <h3 class="panel-title">
-                  <strong>Submited by</strong>
+                  <strong>Submitted by</strong>
                 </h3>
               </div>
             </div>
