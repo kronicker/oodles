@@ -3,9 +3,12 @@
     <div class="panel-heading" role="tab" :id="'heading'+pendingOodlet.id">
       <div class="row panel-title" role="button" data-toggle="collapse" data-parent="#accordion" :href="'#colllapse'+pendingOodlet.id"
            aria-expanded="false" :aria-controls="'colllapse'+pendingOodlet.id">
-        <div class="col-md-1">
-          <button class="btn btn-sm btn-danger" v-show="added" @click.prevent.stop="removePendingOodlet">Remove</button>
-          <button class="btn btn-sm btn-success" v-show="!added" @click.prevent.stop="addPendingOodlet">Add</button>
+        <div class="col-md-2">
+          <button class="btn btn-sm btn-warning" v-show="added" @click.prevent.stop="removePendingOodlet" data-toggle="tooltip" data-placement="right" title="Remove from total order">Remove</button>
+          <button class="btn btn-sm btn-success" v-show="!added" @click.prevent.stop="addPendingOodlet" data-toggle="tooltip" data-placement="right" title="Add to total order">Add</button>
+          <span data-toggle="modal" :data-target="'#' + pendingOodlet.id + 'delete'">
+            <button class="btn btn-sm btn-danger" data-toggle="tooltip" data-placement="right" title="Delete order">Delete</button>
+          </span>
         </div>
         <div class="col-md-2">
           <h2 class="panel-title" :class="{ empty: !pendingOodlet.quantifiedThingies.length }">
@@ -50,6 +53,45 @@
         </table>
       </div>
     </div>
+    
+    <div class="modal fade" data-backdrop="static" data-keyboard="false" :id="pendingOodlet.id + 'delete'">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Do you really want to delete this order?</h4>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <table class="table table-striped table-hover">
+                <thead>
+                <tr>
+                  <th>Item</th>
+                  <th class="col-md-2">Quantity</th>
+                  <th class="col-md-2">Unit</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="quantifiedThingy in pendingOodlet.quantifiedThingies">
+                  <td>{{ quantifiedThingy.name }}</td>
+                  <td class="col-md-2 right">{{ quantifiedThingy.qty }}</td>
+                  <td class="col-md-2">{{ quantifiedThingy.unit }}</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <div class="info">
+              <span>Office: {{ pendingOodlet.oodler.office }}</span>
+              <span>Submitted by: {{ pendingOodlet.oodler.firstName }} {{ pendingOodlet.oodler.lastName }}</span>
+            </div>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal" @click="deleteOodlet">Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -77,6 +119,12 @@
       },
       removePendingOodlet() {
         this.$store.dispatch('pendingOodletRemove', this.pendingOodlet);
+      },
+      deleteOodlet() {
+        this.$http.delete('/oodlet/' + this.pendingOodlet.id)
+          .then(response => {
+          this.$emit('oodletDeleted');
+        });
       }
     }
   }
@@ -86,5 +134,9 @@
 <style lang="sass" scoped>
   .pending-oodlet {
     .panel-title { text-align: center; }
+    .empty { color: #c9302c; }
+    .modal-footer .info {
+      float: left;
+    }
   }
 </style>

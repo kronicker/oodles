@@ -54,7 +54,7 @@
           </div>
           <div class="panel-body">
             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-              <pending-oodlet v-for="pendingOodlet in pendingOodlets" :pendingOodlet="pendingOodlet"></pending-oodlet>
+              <pending-oodlet @oodletDeleted="load" v-for="pendingOodlet in pendingOodlets" :pendingOodlet="pendingOodlet"></pending-oodlet>
             </div>
           </div>
         </div>
