@@ -42,7 +42,7 @@
         </router-link>
       </li>
       <li>
-        <a @click="logout" data-toggle="tooltip" data-placement="right" title="Home">
+        <a @click="logout" data-toggle="tooltip" data-placement="right" title="Log out">
           <span class="glyphicon glyphicon-off"></span>
         </a>
       </li>

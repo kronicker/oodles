@@ -30,9 +30,7 @@
         <div class="panel panel-default">
           <div class="panel-heading">
             <div class="row panel-title">
-              <div class="col-md-1">
-              </div>
-              <div class="col-md-2">
+              <div class="col-md-2 col-md-offset-2">
                 <h3 class="panel-title">
                   <strong>Office</strong>
                 </h3>
@@ -47,16 +45,16 @@
                   <strong>Due date</strong>
                 </h3>
               </div>
-              <div class="col-md-3">
+              <div class="col-md-2">
                 <h3 class="panel-title">
-                  <strong>Submited by</strong>
+                  <strong>Submitted by</strong>
                 </h3>
               </div>
             </div>
           </div>
           <div class="panel-body">
             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-              <pending-oodlet v-for="pendingOodlet in pendingOodlets" :pendingOodlet="pendingOodlet"></pending-oodlet>
+              <pending-oodlet @oodletDeleted="load" v-for="pendingOodlet in pendingOodlets" :pendingOodlet="pendingOodlet"></pending-oodlet>
             </div>
           </div>
         </div>

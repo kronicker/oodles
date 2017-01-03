@@ -120,7 +120,7 @@
                 <td class="col-md-8">{{ oodler.firstName }} {{ oodler.lastName }}</td>
               </tr>
               <tr>
-                <td class="col-md-4">Unit</td>
+                <td class="col-md-4">Email</td>
                 <td class="col-md-8">{{ oodler.email }}</td>
               </tr>
               <tr>

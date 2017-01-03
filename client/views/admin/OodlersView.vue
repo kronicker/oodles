@@ -140,6 +140,7 @@
             for(let property in this.newOodler) {
               this.newOodler[property] = '';
             }
+            this.newOodler.scope = 'user';
             this.flashMessage = 'Success! New user added!';
             this.flashType = 'success';
             this.load();
@@ -148,6 +149,7 @@
             for(let property in this.newOodler) {
               this.newOodler[property] = '';
             }
+            this.newOodler.scope = 'user';
             this.flashMessage = response.body;
             this.flashType = 'danger';
             this.load();
