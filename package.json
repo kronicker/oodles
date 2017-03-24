@@ -1,6 +1,9 @@
 {
   "name": "oodles",
   "version": "0.0.1",
+  "engines": {
+    "node": "7.x"
+  },
   "scripts": {
     "start": "node app.js",
     "dev": "gulp",
