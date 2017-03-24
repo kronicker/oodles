@@ -44,7 +44,7 @@
 
 <script>
   import AdminHistoryOodlet from '../../components/admin/AdminHistoryOodlet.vue';
-  import Flatpickr from '../../../node_modules/vue-flatpickr/vue-flatpickr-dark.vue';
+  import Flatpickr from 'vue-flatpickr/vue-flatpickr-dark.vue';
   import moment from 'moment';
   
   export default{
