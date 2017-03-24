@@ -5,8 +5,8 @@ const bcrypt = require('bcrypt');
 
 let config = {
   server: {
-    port: 80,
-    host: 'ee-oodles.me'
+    port: process.env.PORT,
+    host: process.env.HOSTNAME
   },
 
   database: {
