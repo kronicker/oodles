@@ -4,7 +4,8 @@
   "scripts": {
     "start": "node app.js",
     "dev": "gulp",
-    "build": "webpack --progress --hide-modules --config config/production.webpack.config.js"
+    "build": "webpack --progress --hide-modules --config config/production.webpack.config.js",
+    "postinstall": "if [ $BUILD_ASSSETS ]; then npm run build; fi"
   },
   "description": "Ordering stuff for office",
   "main": "app.js",
