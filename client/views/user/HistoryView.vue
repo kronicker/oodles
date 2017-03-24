@@ -35,7 +35,7 @@
 
 <script>
   import HistoryOodlet from '../../components/user/HistoryOodlet.vue';
-  import Flatpickr from '../../../node_modules/vue-flatpickr/vue-flatpickr-dark.vue';
+  import Flatpickr from 'vue-flatpickr/vue-flatpickr-dark.vue';
   import moment from 'moment';
 
   export default{

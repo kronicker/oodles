@@ -106,7 +106,7 @@
   import PendingOodlet from '../../components/admin/PendingOodlet.vue';
   import TotalOodlet from '../../components/admin/TotalOodlet.vue';
   import FlashMessage from '../../components/common/FlashMessage.vue'
-  import Flatpickr from '../../../node_modules/vue-flatpickr/vue-flatpickr-dark.vue';
+  import Flatpickr from 'vue-flatpickr/vue-flatpickr-dark.vue';
   import moment from 'moment';
   import object from 'lodash/object';
   
