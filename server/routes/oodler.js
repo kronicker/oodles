@@ -26,7 +26,7 @@ function get(request, reply) {
 
 function create(request, reply) {
   return Oodler
-    .filter({ email: request.payload.email})
+    .filter({ email: request.payload.email.toLowerCase()})
     .run()
     .then(oodlers => {
       if(oodlers[0]) {
@@ -36,7 +36,7 @@ function create(request, reply) {
     return Oodler({
       firstName: request.payload.firstName,
       lastName: request.payload.lastName,
-      email: request.payload.email,
+      email: request.payload.email.toLowerCase(),
       office: request.payload.office.toUpperCase(),
       scope: request.payload.scope
       })
@@ -55,7 +55,7 @@ function update(request, reply) {
   let oodlerId = request.params.id;
 
   return Oodler
-    .filter({ email: request.payload.email})
+    .filter({ email: request.payload.email.toLowerCase()})
     .run()
     .then(oodlers => {
       //Check if email in the payload exists in database and if it is registered for another user
@@ -68,7 +68,7 @@ function update(request, reply) {
         .update({
           firstName: request.payload.firstName,
           lastName: request.payload.lastName,
-          email: request.payload.email,
+          email: request.payload.email.toLowerCase(),
           office: request.payload.office,
           scope: request.payload.scope
         })

@@ -66,7 +66,7 @@ function save(request, reply) {
     .then(suggestedThingy => {
       suggestedThingyUtil.remove(request.params.id)
         .then(thingyUtil.save(request.payload.name, request.payload.unit, request.payload.pictureUrl))
-        .then(mail.sendThingyApproval(suggestedThingy.suggestedBy.email, suggestedThingy.name, request.auth.credentials))
+        .then(mail.sendThingyApproval(suggestedThingy.suggestedBy.email.toLowerCase(), suggestedThingy.name, request.auth.credentials))
         .then(thingy => reply(thingy).code(201));
     });
 }
@@ -75,7 +75,7 @@ function remove(request, reply) {
   suggestedThingyUtil.get(request.params.id)
     .then(suggestedThingy => {
       suggestedThingyUtil.remove(request.params.id)
-        .then(() => mail.sendThingyRejection(suggestedThingy.suggestedBy.email, suggestedThingy.name, request.auth.credentials))
+        .then(() => mail.sendThingyRejection(suggestedThingy.suggestedBy.email.toLowerCase(), suggestedThingy.name, request.auth.credentials))
         .then(thingy => reply(thingy).code(201));
     });
 }
