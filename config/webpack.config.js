@@ -1,10 +1,23 @@
 'use strict';
+
 const path = require('path');
-const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { HotModuleReplacementPlugin, NoEmitOnErrorsPlugin } = require('webpack');
+
+const bubleOptions = {
+  transforms: {
+    dangerousForOf: true,
+    modules: false
+  }
+};
 
 module.exports = {
-  entry: ['bootstrap-loader', 'webpack-hot-middleware/client', './client/main.js'],
+  entry: [
+    'bootstrap-loader',
+    'webpack-hot-middleware/client',
+    // application entry
+    './client/main.js'
+  ],
   output: {
     path: path.resolve(__dirname, '../public/'),
     publicPath: '/',
@@ -19,50 +32,37 @@ module.exports = {
     }
   },
   module: {
-    loaders: [
-      {
-        test: /\.vue$/,
-        loader: 'vue'
-      },
-      {
-        test: /\.js$/,
-        loader: 'babel',
-        exclude: /node_modules/
-      },
-      {
-        test: /\.json$/,
-        loader: 'json'
-      },
-      {
-        test: /\.html$/,
-        loader: 'vue-html'
-      },
-      {
-        test:/bootstrap-sass[\/\\]assets[\/\\]javascripts[\/\\]/,
-        loader: 'imports?jQuery=jquery'
-      },
-      {
-        test: /\.(png|jpg|gif|svg)$/,
-        loader: 'url',
-        query: {
-          limit: 10000,
-          name: '[name].[ext]?[hash]'
-        }
-      },
-      {
-        test: /\.(woff2?|svg)$/,
-        loader: 'url?limit=10000'
-      },
-      {
-        test: /\.(ttf|eot)$/,
-        loader: 'file'
-      },
-    ]
+    rules: [{
+      test: /\.vue$/,
+      loader: 'vue-loader',
+      options: { buble: bubleOptions }
+    }, {
+      test: /\.js$/,
+      loader: 'buble-loader',
+      exclude: /node_modules/,
+      options: bubleOptions
+    }, {
+      test:/bootstrap-sass[\/\\]assets[\/\\]javascripts[\/\\]/,
+      loader: 'imports-loader?jQuery=jquery'
+    }, {
+      test: /\.(png|jpg|gif|svg)$/,
+      loader: 'url-loader',
+      options: {
+        limit: 10000,
+        name: '[name].[ext]?[hash]'
+      }
+    }, {
+      test: /\.(woff2?|svg)$/,
+      loader: 'url-loader',
+      options: { limit: 10000 }
+    }, {
+      test: /\.(ttf|eot)$/,
+      loader: 'file-loader'
+    }]
   },
   plugins: [
-    new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin(),
+    new HotModuleReplacementPlugin(),
+    new NoEmitOnErrorsPlugin(),
     new HtmlWebpackPlugin({
       filename: path.resolve(__dirname, '../public/index.html'),
       template: path.resolve(__dirname, '../build/index_dev.html'),

@@ -44,7 +44,7 @@ function setActive(request, reply) {
   
         oodletUtil.create(oodler, request.payload.dueDate)
           .then(result => {
-            mail.sendDueDate(oodler.email, request.payload.dueDate);
+            mail.sendDueDate(oodler.email.toLowerCase(), request.payload.dueDate);
             reply(result).code(201);
           });
       });

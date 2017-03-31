@@ -19,12 +19,12 @@ function generateToken(request, reply) {
   let email = request.payload.email;
 
   return Oodler
-    .filter({ 'email': email })
+    .filter({ 'email': email.toLowerCase() })
     .run()
     .then(result => {
       token.create(result[0].id)
         .then(result => {
-          mail.sendReset(result, email);
+          mail.sendReset(result, email.toLowerCase());
           reply({ msg: 'Email sent! Please check your email!' }).code(200);
         });
     })

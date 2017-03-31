@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt');
 
 let config = {
   server: {
-    port: process.env.PORT,
+    port: process.env.PORT || 3000,
     host: process.env.HOSTNAME
   },
 

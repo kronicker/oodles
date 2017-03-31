@@ -6,7 +6,7 @@ const Oodler = require('../models/oodler');
 function create(request, reply) {
 
   return Oodler
-    .filter({ email: request.payload.email})
+    .filter({ email: request.payload.email.toLowerCase()})
     .then(oodlers => {
       let oodler = oodlers[0];
 
