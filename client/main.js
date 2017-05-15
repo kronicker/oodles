@@ -3,14 +3,15 @@ import App from './App.vue';
 import store from './store';
 import router from './router';
 import VueResource from 'vue-resource';
+import VueFlatpickr from 'vue-flatpickr';
+import 'vue-flatpickr/theme/dark.css';
 
 Vue.use(VueResource);
+Vue.use(VueFlatpickr);
   
 new Vue({
   el: '#app',
   store,
   router,
-  components: {
-    App
-  }
+  render: h => h(App)
 });
