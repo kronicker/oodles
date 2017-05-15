@@ -72,7 +72,7 @@
             <div class="row">
               <form class="form-horizontal col-md-10 col-md-offset-1">
                 <div class="form-group col-md-6">
-                  <flatpickr :placeholder="message" :options="flatpickrOptions" @update="changeDueDate"/>
+                  <Flatpickr :placeholder="message" :options="flatpickrOptions" @update="changeDueDate"/>
                 </div>
                 <div class="form-group col-md-12">
                   <div class="row">
@@ -106,7 +106,6 @@
   import PendingOodlet from '../../components/admin/PendingOodlet.vue';
   import TotalOodlet from '../../components/admin/TotalOodlet.vue';
   import FlashMessage from '../../components/common/FlashMessage.vue'
-  import Flatpickr from 'vue-flatpickr/vue-flatpickr-dark.vue';
   import moment from 'moment';
   import object from 'lodash/object';
   
@@ -235,14 +234,13 @@
     components: {
       PendingOodlet,
       TotalOodlet,
-      FlashMessage,
-      Flatpickr
+      FlashMessage
     }
   }
 
 </script>
 
-<style lang="sass" scoped>
+<style lang="scss" scoped>
   #totalOodletView {
     .page-header {
       margin: 0px 0 10px;

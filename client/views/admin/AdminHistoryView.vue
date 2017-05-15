@@ -17,13 +17,13 @@
         <div class="form-group col-md-2">
           <div class="input-group">
             <span class="input-group-addon">From: </span>
-            <flatpickr :value="fromDate" :options="flatpickrOptions" @update="changeFromDate"/>
+            <Flatpickr :value="fromDate" :options="flatpickrOptions" @update="changeFromDate"/>
           </div>
         </div>
         <div class="form-group col-md-2">
           <div class="input-group">
             <span class="input-group-addon">To: </span>
-            <flatpickr :value="toDate" :options="flatpickrOptions" @update="changeToDate"/>
+            <Flatpickr :value="toDate" :options="flatpickrOptions" @update="changeToDate"/>
           </div>
         </div>
       </div>
@@ -44,7 +44,6 @@
 
 <script>
   import AdminHistoryOodlet from '../../components/admin/AdminHistoryOodlet.vue';
-  import Flatpickr from 'vue-flatpickr/vue-flatpickr-dark.vue';
   import moment from 'moment';
   
   export default{
@@ -149,12 +148,11 @@
     
     components: {
       AdminHistoryOodlet,
-      Flatpickr
     }
   }
 </script>
 
-<style lang="sass" scoped>
+<style lang="scss" scoped>
   #adminHistoryView {
     .page-header {
       margin: 0px 0 10px;

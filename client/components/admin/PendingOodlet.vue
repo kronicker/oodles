@@ -131,7 +131,7 @@
 
 </script>
 
-<style lang="sass" scoped>
+<style lang="scss" scoped>
   .pending-oodlet {
     .panel-title { text-align: center; }
     .empty { color: #c9302c; }

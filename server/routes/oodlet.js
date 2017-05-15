@@ -171,7 +171,7 @@ let routes = [
       validate: {
         payload: {
           oodlerId: Joi.string().required(),
-          quantifiedThingies: Joi.array(Joi.object({
+          quantifiedThingies: Joi.array().items(Joi.object({
             id: Joi.string(),
             name: Joi.string().min(1),
             unit: Joi.string(),
@@ -195,7 +195,7 @@ let routes = [
           id: Joi.string().required()
         },
         payload: {
-          quantifiedThingies: Joi.array(Joi.object({
+          quantifiedThingies: Joi.array().items(Joi.object({
             id: Joi.string(),
             name: Joi.string().min(1),
             unit: Joi.string(),

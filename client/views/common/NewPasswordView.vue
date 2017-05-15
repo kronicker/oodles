@@ -85,6 +85,6 @@
   }
 </script>
 
-<style lang="sass" scoped>
+<style lang="scss" scoped>
   #newPasswordView .form-new-password { margin-top: 200px; }
 </style>

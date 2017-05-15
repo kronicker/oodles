@@ -205,7 +205,7 @@
   }
 </script>
 
-<style lang="sass" scoped>
+<style lang="scss" scoped>
   .oodler-edit-tile .well {
     padding: 5px 10px 0;
     max-width: 100%;

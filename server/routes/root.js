@@ -8,7 +8,7 @@ let routes = [
     config: {
       auth: false,
       handler: (request, reply) => {
-        reply.file('./public/index.html');
+        reply.file('./dist/index.html');
       }
     }
   },
@@ -19,7 +19,7 @@ let routes = [
       auth: false,
       handler: {
         directory: {
-          path: path.resolve(__dirname, '../../public'),
+          path: path.resolve(__dirname, '../../dist'),
           listing: false,
           index: false
         }
@@ -28,12 +28,12 @@ let routes = [
   },
   {
     method: 'GET',
-    path: '/build/{filepath*}',
+    path: '/assets/{filepath*}',
     config: {
       auth: false,
       handler: {
         directory: {
-          path: path.resolve(__dirname, '../../public/build'),
+          path: path.resolve(__dirname, '../../dist/assets'),
           listing: false,
           index: false
         }

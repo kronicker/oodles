@@ -46,6 +46,6 @@
   }
 </script>
 
-<style lang="sass" scoped>
+<style lang="scss" scoped>
   .quantifiedThingy .right { text-align: right; }
 </style>

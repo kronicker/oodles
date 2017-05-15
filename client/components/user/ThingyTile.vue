@@ -40,7 +40,7 @@
   }
 </script>
 
-<style lang="sass" scoped>
+<style lang="scss" scoped>
   .thingy-tile .thumbnail .caption {
     h3 {
       margin-top: 0;

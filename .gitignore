@@ -1,5 +1,7 @@
 .idea/*
+.vscode/*
+.DS_Store
 node_modules/*
 rethinkdb_data/*
 npm-debug.log
-public/*
+dist/*
