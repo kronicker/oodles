@@ -2,6 +2,7 @@
 
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const projectPath = path.resolve(__dirname, '../../');
 const distPath = path.resolve(projectPath, './dist/');
@@ -53,6 +54,9 @@ module.exports = {
       filename: path.resolve(distPath, './index.html'),
       template: path.resolve(clientPath, './index.html'),
       inject: true
-    })
+    }),
+    new CopyWebpackPlugin([{
+      from: 'client/assets', to: 'assets' 
+    }])
   ]
 };

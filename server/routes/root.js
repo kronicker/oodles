@@ -8,7 +8,6 @@ let routes = [
     config: {
       auth: false,
       handler: (request, reply) => {
-        console.log('here');
         reply.file('./dist/index.html');
       }
     }

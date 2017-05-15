@@ -7,7 +7,7 @@
       </div>
     </div>
     <div class="logo">
-      <img src="./assets/ee-labs-logo.png" alt="EE Labs">
+      <img src="assets/ee-labs-logo.png" alt="EE Labs">
     </div>
   </div>
 </template>
@@ -64,6 +64,6 @@
       z-index: -1;
     }
 
-    background: url('./assets/background.png') repeat;
+    background: url('assets/background.png') repeat;
   }
 </style>
