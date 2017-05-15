@@ -2,7 +2,8 @@
 
 const baseConfig = require('./base');
 const webpackMerge = require('webpack-merge');
-const { optimize, NoEmitOnErrorsPlugin, DefinePlugin } = require('webpack');
+const { NoEmitOnErrorsPlugin, DefinePlugin, optimize } = require('webpack');
+const { UglifyJsPlugin, AggressiveMergingPlugin } = optimize;
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
@@ -45,10 +46,10 @@ module.exports = webpackMerge(baseConfig, {
     }),
     new ExtractTextPlugin('style.css'),
     new NoEmitOnErrorsPlugin(),
-    new optimize.UglifyJsPlugin({
+    new UglifyJsPlugin({
       compress: { warnings: false }
     }),
-    new optimize.AggressiveMergingPlugin()
+    new AggressiveMergingPlugin()
   ],
   devtool: '#source-map'
 });
