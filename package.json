@@ -6,7 +6,7 @@
   },
   "scripts": {
     "start": "node app.js",
-    "dev": "export NODE_ENV=development && nodemon app.js & webpack-dev-server --config config/webpack/development.js",
+    "dev": "nodemon app.js & webpack-dev-server --config config/webpack/development.js",
     "build:dev": "webpack --config config/webpack/development.js",
     "build": "webpack --progress --hide-modules --config config/webpack/production.js",
     "postinstall": "if [ $BUILD_ASSSETS ]; then npm run build; fi"
@@ -40,11 +40,9 @@
     "white-out": "^2.0.0"
   },
   "devDependencies": {
-    "babel-core": "^6.24.1",
-    "babel-loader": "^7.0.0",
-    "babel-preset-es2015": "^6.24.1",
     "bootstrap-loader": "^2.1.0",
     "bootstrap-sass": "^3.3.7",
+    "buble-loader": "^0.4.1",
     "copy-webpack-plugin": "^4.0.1",
     "css-loader": "^0.28.1",
     "extract-text-webpack-plugin": "^2.1.0",

@@ -26,10 +26,16 @@ module.exports = {
     }
   },
   module: {
-    rules:[{
+    rules: [{
       test: /\.js$/,
-      loader: 'babel-loader',
-      exclude: /node_modules/
+      loader: 'buble-loader',
+      exclude: /node_modules/,
+      options: {
+        transforms: {
+          dangerousForOf: true,
+          modules: false
+        }
+      }
     }, {
       test: /bootstrap-sass[\/\\]assets[\/\\]javascripts[\/\\]/,
       loader: 'imports-loader?jQuery=jquery'
@@ -56,7 +62,7 @@ module.exports = {
       inject: true
     }),
     new CopyWebpackPlugin([{
-      from: 'client/assets', to: 'assets' 
+      from: 'client/assets', to: 'assets'
     }])
   ]
 };

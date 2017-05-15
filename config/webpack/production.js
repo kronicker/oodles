@@ -25,6 +25,12 @@ module.exports = webpackMerge(baseConfig, {
       test: /\.vue$/,
       loader: 'vue-loader',
       options: {
+        buble: {
+          transforms: {
+            dangerousForOf: true,
+            modules: false
+          }
+        },
         loaders: {
           css: ExtractTextPlugin.extract('css-loader'),
           scss: ExtractTextPlugin.extract('css-loader!sass-loader'),
