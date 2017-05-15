@@ -22,7 +22,7 @@
   }
 </script>
 
-<style lang="sass" scoped>
+<style lang="scss" scoped>
   .search-bar input {
     width: 100%;
     height: 50px;

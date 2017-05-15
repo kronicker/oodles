@@ -241,7 +241,7 @@
   }
 </script>
 
-<style lang="sass" scoped>
+<style lang="scss" scoped>
   .suggested-thingy-tile  .thumbnail {
     padding: 5px 10px 0;
     max-width: 100%;

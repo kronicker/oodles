@@ -167,7 +167,7 @@
   }
 </script>
 
-<style lang="sass" scoped>
+<style lang="scss" scoped>
   #oodletView {
     .page-header {
       margin: 0px 0 10px;

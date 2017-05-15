@@ -70,6 +70,6 @@
   }
 </script>
 
-<style lang="sass" scoped>
+<style lang="scss" scoped>
   #resetPasswordView .form-reset-password { margin-top: 200px; }
 </style>

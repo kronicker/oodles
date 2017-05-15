@@ -55,7 +55,7 @@
   }
 </script>
 
-<style lang="sass">
+<style lang="scss">
   body {
     .logo {
       position: fixed;

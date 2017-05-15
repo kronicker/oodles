@@ -80,7 +80,7 @@
   }
 </script>
 
-<style lang="sass" scoped>
+<style lang="scss" scoped>
   #suggestionsView {
     .page-header {
       margin: 0px 0 10px;

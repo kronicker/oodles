@@ -125,7 +125,7 @@
   }
 </script>
 
-<style lang="sass" scoped>
+<style lang="scss" scoped>
   .oodlet {
     margin-top: 10px;
 

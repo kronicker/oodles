@@ -78,7 +78,7 @@
   }
 </script>
 
-<style lang="sass" scoped>
+<style lang="scss" scoped>
   .admin-history-oodlet {
     width: 100%;
     .col-md-2 {

@@ -70,7 +70,7 @@
   }
 </script>
 
-<style lang="sass" scoped>
+<style lang="scss" scoped>
   .history-oodlet {
     width: 100%;
 

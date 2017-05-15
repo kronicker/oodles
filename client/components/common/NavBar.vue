@@ -78,7 +78,7 @@
   }
 </script>
 
-<style lang="sass">
+<style lang="scss">
   #navBar {
     position: absolute;
     top: 280px;
