@@ -16,34 +16,6 @@ const routes = require('./server/routes/');
 const boomErrors = require('./server/extensions/boomErrors');
 const monitor = require('./server/monitor');
 
-if (process.env.NODE_ENV !== 'production') {
-  
-  const WebpackConfig = require('./config/webpack.config.js'); // Webpack config
-  const HapiWebpackDevMiddleware = require('hapi-webpack-dev-middleware');
-  const HapiWebpackHotMiddleware = require('hapi-webpack-hot-middleware');
-  
-  server.register([{
-    register: HapiWebpackDevMiddleware,
-    options: {
-      config: WebpackConfig,
-      options: {
-        noInfo: true,
-        publicPath: WebpackConfig.output.publicPath,
-        stats: {
-          colors: true
-        }
-      }
-    }
-  }, {
-    register: HapiWebpackHotMiddleware
-  },
-  ], function (err) {
-    if (err) {
-      throw err;
-    }
-  });
-  
-}
 
 server.register([Inert, db, boomErrors, routes, monitor], (err) => {
 
