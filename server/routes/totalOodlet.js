@@ -165,14 +165,14 @@ let routes = [
           id: Joi.string().required()
         },
         payload: {
-          quantifiedThingies: Joi.array(Joi.object({
+          quantifiedThingies: Joi.array().items(Joi.object({
             id: Joi.string(),
             name: Joi.string().min(1),
             unit: Joi.string(),
             pictureUrl: Joi.string().uri(),
             qty: Joi.number().min(1)
           }).required()),
-          oodletIds: Joi.array(Joi.string()).required()
+          oodletIds: Joi.array().items(Joi.string()).required()
         }
       }
     }
