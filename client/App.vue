@@ -21,7 +21,6 @@
         return this.$store.getters.oodler.id ? true : false;
       }
     },
-
     beforeCreate() {
       if(['/password/reset', '/password/new'].indexOf(this.$route.path) > -1) {
         return;
@@ -50,20 +49,19 @@
           this.$router.replace({ path: '/login' });
         });
     },
-
     components: { NavBar }
   }
 </script>
 
 <style lang="scss">
   body {
+    background: url('assets/background.png') repeat;
+
     .logo {
       position: fixed;
       bottom: 0;
       left: 0;
       z-index: -1;
     }
-
-    background: url('assets/background.png') repeat;
   }
 </style>

@@ -29,7 +29,6 @@
         suggestions: [],
       }
     },
-    
     computed: {
       appInitialized() {
         return this.$store.getters.appInitialized;
@@ -43,13 +42,11 @@
         return this.suggestions.filter(item => item.name.toLowerCase().includes(searchString));
       }
     },
-    
     watch: {
       appInitialized() { //Cannot be arrow fn cause that way 'this' wouldn't be Vue instance
         this.load()
       }
     },
-    
     methods: {
       searchBarUpdate(query) {
         this.searchString = query;
@@ -60,19 +57,16 @@
         });
       }
     },
-    
     beforeCreate() {
       if(this.$store.getters.oodler.scope === 'user') {
         this.$router.replace({ path: '/' });
       }
     },
-    
     mounted() {
       if(this.appInitialized) {
         this.load();
       }
     },
-    
     components: {
       SearchBar,
       SuggestedThingyTile

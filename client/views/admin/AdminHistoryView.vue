@@ -43,8 +43,9 @@
 </template>
 
 <script>
-  import AdminHistoryOodlet from '../../components/admin/AdminHistoryOodlet.vue';
   import moment from 'moment';
+  
+  import AdminHistoryOodlet from '../../components/admin/AdminHistoryOodlet.vue';
   
   export default{
     data() {
@@ -62,15 +63,12 @@
         selectedOffice: 'TOTALS'
       }
     },
-    
     computed: {
       appInitialized() {
         return this.$store.getters.appInitialized;
       }
     },
-    
     watch: {
-      // Cannot use an arrow fn because 'this' wouldn't be Vue instance
       appInitialized() {
         this.load()
       },
@@ -81,7 +79,6 @@
         this.load()
       }
     },
-    
     methods: {
       load() {
         let options = (() => {
@@ -133,19 +130,16 @@
         this.toDate = moment(toDate).toDate();
       }
     },
-  
     beforeCreate() {
       if(this.$store.getters.oodler.scope === 'user') {
         this.$router.replace({ path: '/' });
       }
     },
-    
     mounted() {
       if (this.appInitialized) {
         this.load()
       }
     },
-    
     components: {
       AdminHistoryOodlet,
     }

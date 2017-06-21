@@ -100,7 +100,6 @@
 
   export default{
     props: ['pendingOodlet'],
-
     computed: {
       added() {
         return this.$store.getters.totalOodlet.oodletIds.includes(this.pendingOodlet.id);
@@ -112,7 +111,6 @@
         return moment(this.pendingOodlet.dueDate).locale('hr').format('LL');
       }
     },
-
     methods: {
       addPendingOodlet() {
         this.$store.dispatch('pendingOodletAdd', this.pendingOodlet);
@@ -128,7 +126,6 @@
       }
     }
   }
-
 </script>
 
 <style lang="scss" scoped>

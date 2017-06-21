@@ -24,7 +24,6 @@
         </span>
       </div>
     </div>
-
     <div class="modal fade" data-backdrop="static" data-keyboard="false" id="totalOodletReview">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -55,7 +54,6 @@
 </template>
 
 <script>
-
   export default {
     data() {
       return {
@@ -70,7 +68,6 @@
         return this.$store.getters.totalOodletOffices;
       }
     },
-
     methods: {
       order(event) {
         if(this.checkedQuantifiedThingies.length !== this.quantifiedThingies.length) {

@@ -42,13 +42,11 @@
         message: ''
       }
     },
-
     computed: {
       token() {
         return this.$route.query.token;
       }
     },
-
     methods: {
       updatePassword() {
         this.$http.put('/password/update', {

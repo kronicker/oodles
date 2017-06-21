@@ -66,10 +66,10 @@
       },
       dueIn() {
         return(
-              Math.trunc(this.dueDate.diff(this.now, 'days')) + 'd ' +
-              Math.trunc(this.dueDate.diff(this.now, 'hours')%24) + 'h ' +
-              Math.trunc(this.dueDate.diff(this.now, 'minutes')%60) + 'm ' +
-              Math.trunc(this.dueDate.diff(this.now, 'seconds')%60) + 's'
+          Math.trunc(this.dueDate.diff(this.now, 'days')) + 'd ' +
+          Math.trunc(this.dueDate.diff(this.now, 'hours')%24) + 'h ' +
+          Math.trunc(this.dueDate.diff(this.now, 'minutes')%60) + 'm ' +
+          Math.trunc(this.dueDate.diff(this.now, 'seconds')%60) + 's'
         );
       },
       dueInClass() {
@@ -88,7 +88,6 @@
         return this.$store.getters.appInitialized;
       }
     },
-  
     watch: {
       // Cannot use an arrow fn because 'this' wouldn't be Vue instance
       appInitialized() {
@@ -108,19 +107,16 @@
         this.$store.dispatch('oodletReset');
       }
     },
-  
     mounted() {
       if(this.appInitialized) {
         this.load()
       }
     },
-
     created() {
       window.setInterval(() => {
         this.now = moment();
       }, 1000);
     },
-
     components: { QuantifiedThingy }
   }
 </script>

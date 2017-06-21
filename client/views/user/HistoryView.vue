@@ -51,7 +51,6 @@
         toDate: moment().format('YYYY-MM-DD')
       }
     },
-
     computed: {
       oodler() {
         return this.$store.getters.oodler;
@@ -60,7 +59,6 @@
         return this.$store.getters.appInitialized;
       }
     },
-
     watch: {
       // Cannot use an arrow fn because 'this' wouldn't be Vue instance
       appInitialized() {
@@ -73,7 +71,6 @@
         this.load()
       }
     },
-
     methods: {
       load() {
         this.$http.get('/oodlet', {
@@ -95,19 +92,16 @@
         this.toDate = moment(toDate).toDate();
       }
     },
-  
     beforeCreate() {
       if(this.$store.getters.oodler.scope === 'admin') {
         this.$router.replace({ path: '/admin' });
       }
     },
-
     mounted() {
       if(this.appInitialized) {
         this.load()
       }
     },
-
     components: {
       HistoryOodlet
     }

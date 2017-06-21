@@ -55,13 +55,11 @@
 
   export default{
     props: ['oodlet'],
-
     computed: {
       dueDate() {
         return moment(this.oodlet.dueDate).locale('hr').format('LL');
       }
     },
-
     methods: {
       load() {
         this.$store.dispatch('historyOodletLoad', this.oodlet);

@@ -14,7 +14,6 @@
 <script>
   export default{
     props: ['quantifiedThingy'],
-
     methods: {
       remove() {
         let payload = {
@@ -24,7 +23,6 @@
 
         this.$store.dispatch('quantifiedThingyChange', payload);
       },
-
       increment() {
         let payload = {
           id: this.quantifiedThingy.id,
@@ -33,7 +31,6 @@
 
         this.$store.dispatch('quantifiedThingyChange', payload);
       },
-
       decrement() {
         let payload = {
           id: this.quantifiedThingy.id,

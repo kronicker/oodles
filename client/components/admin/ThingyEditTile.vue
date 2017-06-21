@@ -26,7 +26,6 @@
             </tbody>
           </table>
         </div>
-        
         <form @submit="updateThingy" class="form-horizontal col-md-12">
           <div v-show="editing.unit" class="form-group form-group-sm">
             <label for="unit" class="col-md-2 control-label">Unit</label>
@@ -50,7 +49,6 @@
             </tbody>
           </table>
         </div>
-        
         <form @submit="updateThingy" class="form-horizontal col-md-12">
           <div v-show="editing.pictureUrl" class="form-group form-group-sm">
             <label for="name" class="col-md-2 control-label">Picture Url</label>
@@ -81,7 +79,6 @@
         </div>
       </div>
     </div>
-  
     <div class="modal fade" data-backdrop="static" data-keyboard="false" :id="thingy.id + 'delete'">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -118,8 +115,8 @@
 </template>
 
 <script>
-  
   export default {
+    props: ['thingy'],
     data() {
       return {
         editedThingy: {},
@@ -130,9 +127,6 @@
         }
       }
     },
-  
-    props: ['thingy'],
-    
     methods: {
       updateThingy() {
         this.$http.put('/thingy/' + this.thingy.id,
@@ -164,11 +158,9 @@
         this.$set(this.editing, el, false);
       }
     },
-  
     mounted() {
       Object.assign(this.editedThingy, this.thingy);
     },
-    
     beforeUpdate() {
       Object.assign(this.editedThingy, this.thingy);
     }

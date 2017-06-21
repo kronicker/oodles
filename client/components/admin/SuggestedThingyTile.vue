@@ -26,7 +26,6 @@
             </tbody>
           </table>
         </div>
-        
         <form @submit="updateSuggestedThingy" class="form-horizontal col-md-12">
           <div v-show="editing.unit" class="form-group form-group-sm">
             <label for="unit" class="col-md-2 control-label">Unit</label>
@@ -50,7 +49,6 @@
             </tbody>
           </table>
         </div>
-        
         <form @submit="updateSuggestedThingy" class="form-horizontal col-md-12">
           <div v-show="editing.pictureUrl" class="form-group form-group-sm">
             <label for="name" class="col-md-2 control-label">Picture Url</label>
@@ -74,7 +72,6 @@
             </tbody>
           </table>
         </div>
-  
         <div class="col-md-12">
           <table class="table table-striped table-hover col-md-12">
             <tbody>
@@ -89,7 +86,6 @@
             </tbody>
           </table>
         </div>
-        
         <div class="form-group col-md-12">
           <div class="btn-group btn-group-justified">
             <a type="button" data-toggle="modal" :data-target="'#' + suggestedThingy.id + 'suggestionRejection'" class="btn btn-danger">Reject</a>
@@ -98,7 +94,6 @@
         </div>
       </div>
     </div>
-  
     <div class="modal fade" data-backdrop="static" data-keyboard="false" :id="suggestedThingy.id + 'suggestionApproval'">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -131,7 +126,6 @@
         </div>
       </div>
     </div>
-  
     <div class="modal fade" data-backdrop="static" data-keyboard="false" :id="suggestedThingy.id + 'suggestionRejection'">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -164,13 +158,12 @@
         </div>
       </div>
     </div>
-    
   </div>
 </template>
 
 <script>
-  
   export default {
+    props: ['suggestedThingy'],
     data() {
       return {
         editedSuggestedThingy: {},
@@ -181,9 +174,6 @@
         }
       }
     },
-  
-    props: ['suggestedThingy'],
-    
     methods: {
       updateSuggestedThingy() {
         this.$http.put('/suggestedThingy/' + this.suggestedThingy.id,
@@ -230,11 +220,9 @@
         this.$set(this.editing, el, false);
       }
     },
-  
     mounted() {
       Object.assign(this.editedSuggestedThingy, this.suggestedThingy);
     },
-    
     beforeUpdate() {
       Object.assign(this.editedSuggestedThingy, this.suggestedThingy);
     }

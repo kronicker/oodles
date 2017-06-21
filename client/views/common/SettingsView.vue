@@ -1,7 +1,6 @@
 <template>
   <div id="settingsView">
     <flash-message @dismissed="dismissed" :message="flashMessage" :type="flashType" ></flash-message>
-  
     <div class="page-header">
       <h1 class="text-info">Settings</h1>
     </div>
@@ -28,13 +27,11 @@
         flashType: ''
       }
     },
-    
     computed: {
       oodler() {
         return this.$store.getters.oodler;
       }
     },
-    
     methods: {
       resetPassword() {
         this.$http.post('/password/reset', {
@@ -54,7 +51,6 @@
         this.flashMessage = '';
       }
     },
-  
     components: { FlashMessage }
   }
 </script>

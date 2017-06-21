@@ -1,8 +1,6 @@
 <template>
   <div id="oodlersView">
-  
     <flash-message @dismissed="dismissed" :message="flashMessage" :type="flashType" ></flash-message>
-  
     <div class="header page-header">
       <div class="row">
         <div class="col-md-3">
@@ -21,7 +19,6 @@
         <oodler-edit-tile @oodlerUpdate="load" :oodler="oodler"></oodler-edit-tile>
       </div>
     </div>
-  
     <div class="modal fade" data-backdrop="static" data-keyboard="false" id="newOodler">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -159,19 +156,16 @@
         this.flashMessage = '';
       }
     },
-  
     beforeCreate() {
       if(this.$store.getters.oodler.scope === 'user') {
         this.$router.replace({ path: '/' });
       }
     },
-    
     mounted() {
       if(this.appInitialized) {
         this.load();
       }
     },
-    
     components: {
       SearchBar,
       OodlerEditTile,

@@ -6,14 +6,12 @@
 
 <script>
   export default{
+    props: ['subject'],
     data() {
       return {
         searchString: ''
       }
     },
-    
-    props: ['subject'],
-
     methods: {
       updateQuery() {
         this.$emit('searchBarUpdate', this.searchString);

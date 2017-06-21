@@ -1,8 +1,6 @@
 <template>
   <div id="thingiesView">
-  
     <flash-message @dismissed="dismissed" :message="flashMessage" :type="flashType" ></flash-message>
-  
     <div class="header page-header">
       <div class="row">
         <div class="col-md-3">
@@ -21,7 +19,6 @@
         <thingy-edit-tile  @thingyUpdate="load" :thingy="thingy"></thingy-edit-tile>
       </div>
     </div>
-  
     <div class="modal fade" data-backdrop="static" data-keyboard="false" id="newThingy">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -75,7 +72,6 @@
         }
       }
     },
-    
     computed: {
       appInitialized() {
         return this.$store.getters.appInitialized;
@@ -91,13 +87,11 @@
         });
       }
     },
-    
     watch: {
       appInitialized() { //Cannot be arrow fn cause that way 'this' wouldn't be Vue instance
         this.load()
       }
     },
-    
     methods: {
       searchBarUpdate(query) {
         this.searchString = query;
@@ -136,19 +130,16 @@
         this.flashMessage = '';
       }
     },
-  
     beforeCreate() {
       if(this.$store.getters.oodler.scope === 'user') {
         this.$router.replace({ path: '/' });
       }
     },
-    
     mounted() {
       if(this.appInitialized) {
         this.load();
       }
     },
-    
     components: {
       SearchBar,
       ThingyEditTile,
@@ -168,7 +159,6 @@
       }
     }
     
-
     .filtered-thingies {
       padding-left: 0;
       display: -webkit-flex;

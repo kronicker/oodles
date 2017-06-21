@@ -25,7 +25,6 @@
             </tbody>
           </table>
         </div>
-  
         <form @submit="updateOodler" class="form-horizontal col-md-12">
           <div v-show="editing.lastName" class="form-group form-group-sm">
             <label for="lastName" class="col-md-3 control-label">Last Name</label>
@@ -49,7 +48,6 @@
             </tbody>
           </table>
         </div>
-        
         <form @submit="updateOodler" class="form-horizontal col-md-12">
           <div v-show="editing.email" class="form-group form-group-sm">
             <label for="email" class="col-md-3 control-label">Email</label>
@@ -73,7 +71,6 @@
             </tbody>
           </table>
         </div>
-  
         <form @submit="updateOodler" class="form-horizontal col-md-12">
           <div v-show="editing.office" class="form-group form-group-sm">
             <label for="office" class="col-md-3 control-label">Office</label>
@@ -104,7 +101,6 @@
         </div>
       </div>
     </div>
-  
     <div class="modal fade" data-backdrop="static" data-keyboard="false" :id="oodler.id + 'delete'">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -141,8 +137,8 @@
 </template>
 
 <script>
-  
   export default {
+    props: ['oodler'],
     data() {
       return {
         editedOodler: {},
@@ -154,9 +150,6 @@
         }
       }
     },
-    
-    props: ['oodler'],
-    
     methods: {
       updateOodler() {
         this.$http.put('/oodler/' + this.oodler.id,
@@ -194,11 +187,9 @@
         this.$set(this.editing, el, false);
       }
     },
-  
     mounted() {
       Object.assign(this.editedOodler, this.oodler);
     },
-  
     beforeUpdate() {
       Object.assign(this.editedOodler, this.oodler);
     }

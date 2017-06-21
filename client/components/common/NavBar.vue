@@ -60,7 +60,6 @@
         return this.$store.getters.oodler.scope === 'user'
       }
     },
-    
     methods: {
       logout() {
         this.$http.delete('/session/destroy')
@@ -74,7 +73,6 @@
             });
       }
     }
-
   }
 </script>
 
@@ -96,5 +94,4 @@
       color: #2b3e50;
     }
   }
-
 </style>

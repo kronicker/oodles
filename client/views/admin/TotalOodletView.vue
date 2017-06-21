@@ -1,9 +1,7 @@
 <template>
   <div id="totalOodletView">
-  
     <flash-message @dismissed="dismissed('success')" :message="successFlashMessage" :type="'success'" ></flash-message>
     <flash-message @dismissed="dismissed('fail')" :message="failFlashMessage" :type="'danger'" ></flash-message>
-  
     <div class="header page-header">
       <div class="row">
         <div class="col-md-3">
@@ -21,12 +19,10 @@
         </div>
         <total-oodlet></total-oodlet>
       </div>
-  
       <div class="pending-oodlets col-md-8">
         <div class="page-header">
           <h3 class="text-info">Pending orders</h3>
         </div>
-        
         <div class="panel panel-default">
           <div class="panel-heading">
             <div class="row panel-title">
@@ -60,7 +56,6 @@
         </div>
       </div>
     </div>
-  
     <div class="modal fade" data-backdrop="static" data-keyboard="false" id="newDueDate">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -129,7 +124,6 @@
         failFlashMessage: ''
       }
     },
-    
     computed: {
       pendingOodlets() {
         return this.$store.getters.pendingOodlets;
@@ -138,14 +132,12 @@
         return this.$store.getters.appInitialized;
       }
     },
-  
     watch: {
       // Cannot use an arrow fn because 'this' wouldn't be Vue instance
       appInitialized() {
         this.load();
       }
     },
-    
     methods: {
       load() {
         this.$store.dispatch('totalOodletLoad');
@@ -218,26 +210,22 @@
         }
       }
     },
-  
     beforeCreate() {
       if(this.$store.getters.oodler.scope === 'user') {
         this.$router.replace({ path: '/' });
       }
     },
-  
     mounted() {
       if (this.appInitialized) {
         this.load();
       }
     },
-    
     components: {
       PendingOodlet,
       TotalOodlet,
       FlashMessage
     }
   }
-
 </script>
 
 <style lang="scss" scoped>

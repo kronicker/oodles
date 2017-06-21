@@ -1,8 +1,6 @@
 <template>
   <div id="oodletView">
-  
     <flash-message @dismissed="dismissed" :message="flashMessage" :type="flashType" ></flash-message>
-    
     <div class="header page-header">
       <div class="row">
         <div class="col-md-3">
@@ -26,7 +24,6 @@
       </div>
       <oodlet class="col-md-3"></oodlet>
     </div>
-    
     <div class="modal fade" data-backdrop="static" data-keyboard="false" id="suggestThingy">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -145,19 +142,16 @@
         this.flashMessage = '';
       }
     },
-    
     beforeCreate() {
       if(this.$store.getters.oodler.scope === 'admin') {
         this.$router.replace({ path: '/admin' });
       }
     },
-
     mounted() {
       if(this.appInitialized) {
         this.load();
       }
     },
-
     components: {
       Oodlet,
       SearchBar,

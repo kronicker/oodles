@@ -43,7 +43,6 @@
         warning: false
       }
     },
-
     methods: {
       login() {
         this.$http.post('/session/create', {

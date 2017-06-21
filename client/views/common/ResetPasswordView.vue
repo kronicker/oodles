@@ -38,7 +38,6 @@
         message: ''
       }
     },
-
     methods: {
       resetPassword() {
         this.$http.post('/password/reset', {

@@ -9,7 +9,6 @@
         <strong>Due date: </strong>
         <span>{{ dueDate }}</span>
       </div>
-      
       <div class="panel-body">
         <table class="table table-striped table-hover">
           <tbody>
@@ -43,14 +42,12 @@
   import moment from 'moment';
   
   export default {
+    props: ['historyOodlet', 'selectedOffice'],
     data() {
       return {
         offices: []
       }
     },
-    
-    props: ['historyOodlet', 'selectedOffice'],
-    
     computed: {
       orderedOn() {
         return moment(this.historyOodlet.orderedAt).locale('hr').format('LL');
@@ -59,7 +56,6 @@
         return moment(this.historyOodlet.dueDate).locale('hr').format('LL');
       }
     },
-    
     methods: {
       getOffices() {
         if(this.selectedOffice !== 'TOTALS') { return; }
@@ -71,7 +67,6 @@
         }
       }
     },
-    
     mounted() {
       this.getOffices();
     }

@@ -20,14 +20,12 @@
   import object from 'lodash/object';
 
   export default{
+    props: ['thingy'],
     data() {
       return {
         qty: 1
       }
     },
-
-    props: ['thingy'],
-
     methods: {
       addThingy() {
         // GOTCHA:
@@ -48,5 +46,4 @@
     }
     .input-group-addon { background-color: #2b3e50; }
   }
-
 </style>

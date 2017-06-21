@@ -8,7 +8,6 @@
 <script>
   export default {
     props: ['message', 'type'],
-    
     methods: {
       dismiss() {
         this.$emit('dismissed');
