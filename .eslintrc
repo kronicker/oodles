@@ -18,5 +18,8 @@
     }],
     "quotes": ["error", "single"],
     "require-jsdoc": 0
-  }
+  },
+  "plugins": [
+    "html"
+  ]
 }
