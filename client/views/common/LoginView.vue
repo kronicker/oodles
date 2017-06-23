@@ -38,32 +38,28 @@
   export default {
     data() {
       return {
-        email:'',
+        email: '',
         password: '',
         warning: false
-      }
+      };
     },
     methods: {
       login() {
-        this.$http.post('/session/create', {
+        const credentials = {
           email: this.email,
           password: this.password
-        })
-        .then(
-          response => {
-            if(response.ok) {
-              let oodler = response.body;
-              this.$store.dispatch('initStore', oodler);
-  
-              if (oodler.scope === 'admin') {
-                this.$router.replace({ path: '/admin' });
-              }
-              else {
-                this.$router.replace({ path: '/' });
-              }
+        };
+        this.$http.post('/session/create', credentials)
+          .then(response => {
+            if (!response.ok) {
+              return;
             }
-          },
-          response => {
+            const oodler = response.body;
+            this.$store.dispatch('initStore', oodler);
+
+            const path = oodler.scope === 'admin' ? '/admin' : '/';
+            this.$router.replace({ path });
+          }, () => {
             this.email = '';
             this.password = '';
             this.warning = true;
@@ -73,7 +69,7 @@
         this.warning = false;
       }
     }
-  }
+  };
 </script>
 
 <style lang="scss" scoped>

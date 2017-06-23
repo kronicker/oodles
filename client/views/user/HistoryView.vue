@@ -23,7 +23,7 @@
       <div class="col-md-12">
         <div class="row">
           <ul class="oodlets-list">
-            <li class="col-md-2" v-for="oodlet in oodlets">
+            <li class="col-md-2" v-for="oodlet in oodlets" :key="oodlet.id">
               <history-oodlet :oodlet="oodlet"></history-oodlet>
             </li>
           </ul>
@@ -37,19 +37,19 @@
   import HistoryOodlet from '../../components/user/HistoryOodlet.vue';
   import moment from 'moment';
 
-  export default{
+  export default {
     data() {
       return {
         flatpickrOptions: {
           maxDate: 'today',
           altInput: true,
-          altFormat: "j. n. Y.",
+          altFormat: 'j. n. Y.',
           altInputClass: 'form-control'
         },
         oodlets: [],
         fromDate: moment().subtract(3, 'months').format('YYYY-MM-DD'),
         toDate: moment().format('YYYY-MM-DD')
-      }
+      };
     },
     computed: {
       oodler() {
@@ -60,29 +60,27 @@
       }
     },
     watch: {
-      // Cannot use an arrow fn because 'this' wouldn't be Vue instance
       appInitialized() {
-        this.load()
+        this.load();
       },
       fromDate() {
-        this.load()
+        this.load();
       },
       toDate() {
-        this.load()
+        this.load();
       }
     },
     methods: {
       load() {
-        this.$http.get('/oodlet', {
-          params: {
-            fromDate: moment(this.fromDate).format(),
-            toDate: moment(this.toDate).format(),
-            office: this.oodler.office
-          }})
+        const params = {
+          fromDate: moment(this.fromDate).format(),
+          toDate: moment(this.toDate).format(),
+          office: this.oodler.office
+        };
+        this.$http.get('/oodlet', { params })
           .then(response => {
-            let oodlets = response.body;
-            oodlets.sort((a,b) => (a.dueDate > b.dueDate) ? -1 : 1);
-            this.oodlets = oodlets;
+            this.oodlets = response.body
+              .sort((prev, next) => next.dueDate.getTime() - prev.dueDate.getTime());
           });
       },
       changeFromDate(fromDate) {
@@ -93,19 +91,19 @@
       }
     },
     beforeCreate() {
-      if(this.$store.getters.oodler.scope === 'admin') {
+      if (this.$store.getters.oodler.scope === 'admin') {
         this.$router.replace({ path: '/admin' });
       }
     },
     mounted() {
-      if(this.appInitialized) {
-        this.load()
+      if (this.appInitialized) {
+        this.load();
       }
     },
     components: {
       HistoryOodlet
     }
-  }
+  };
 </script>
 
 <style lang="scss" scoped>

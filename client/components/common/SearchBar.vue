@@ -1,6 +1,6 @@
 <template>
   <div class="search-bar">
-    <input @keyup="updateQuery" v-model="searchString" type="text" :placeholder="'Find '+subject"/>
+    <input @keyup="updateQuery" v-model="searchString" type="text" :placeholder="`Find ${subject}`">
   </div>
 </template>
 
@@ -10,14 +10,14 @@
     data() {
       return {
         searchString: ''
-      }
+      };
     },
     methods: {
       updateQuery() {
         this.$emit('searchBarUpdate', this.searchString);
       }
     }
-  }
+  };
 </script>
 
 <style lang="scss" scoped>

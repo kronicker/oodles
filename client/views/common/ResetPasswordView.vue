@@ -36,7 +36,7 @@
       return {
         email: '',
         message: ''
-      }
+      };
     },
     methods: {
       resetPassword() {
@@ -66,7 +66,7 @@
         this.message = '';
       }
     }
-  }
+  };
 </script>
 
 <style lang="scss" scoped>

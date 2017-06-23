@@ -1,6 +1,6 @@
 <template>
   <div id="settingsView">
-    <flash-message @dismissed="dismissed" :message="flashMessage" :type="flashType" ></flash-message>
+    <flash-message v-if="flashMessage" @dismissed="dismissed" :message="flashMessage" :type="flashType" ></flash-message>
     <div class="page-header">
       <h1 class="text-info">Settings</h1>
     </div>
@@ -18,14 +18,14 @@
 </template>
 
 <script>
-  import FlashMessage from '../../components/common/FlashMessage.vue'
-  
+  import FlashMessage from '../../components/common/FlashMessage.vue';
+
   export default {
     data() {
       return {
         flashMessage: '',
         flashType: ''
-      }
+      };
     },
     computed: {
       oodler() {
@@ -34,25 +34,22 @@
     },
     methods: {
       resetPassword() {
-        this.$http.post('/password/reset', {
-            email: this.oodler.email
-          })
-          .then(
-            response => {
-              this.flashMessage = 'Please check your email for password reset link!';
-              this.flashType = 'info';
-            },
-            response => {
-              this.flashMessage = 'Oops! Something went wrong! Please, try again!';
-              this.flashType = 'danger';
-            });
+        const { email } = this.oodler;
+        this.$http.post('/password/reset', { email })
+        .then(() => {
+          this.flashMessage = 'Please check your email for password reset link!';
+          this.flashType = 'info';
+        }, () => {
+          this.flashMessage = 'Oops! Something went wrong! Please, try again!';
+          this.flashType = 'danger';
+        });
       },
       dismissed() {
         this.flashMessage = '';
       }
     },
     components: { FlashMessage }
-  }
+  };
 </script>
 
 <style lang="scss" scoped>

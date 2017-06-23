@@ -9,7 +9,8 @@
       <div class="panel-body">
         <table class="table table-striped table-hover">
           <tbody>
-            <quantified-thingy v-for="quantifiedThingy in quantifiedThingies" :quantifiedThingy="quantifiedThingy"></quantified-thingy>
+            <quantified-thingy v-for="quantifiedThingy in quantifiedThingies" :quantifiedThingy="quantifiedThingy" :key="quantifiedThingy.id">
+            </quantified-thingy>
           </tbody>
         </table>
       </div>
@@ -26,7 +27,7 @@
             <div class="modal-body">
               <table class="table table-striped table-hover">
                 <tbody>
-                <tr v-for="quantifiedThingy in quantifiedThingies">
+                <tr v-for="quantifiedThingy in quantifiedThingies" :key="quantifiedThingy.id">
                   <td>{{ quantifiedThingy.name }}</td>
                   <td class="col-md-2 right">{{ quantifiedThingy.qty }}</td>
                   <td class="col-md-2">{{ quantifiedThingy.unit }}</td>
@@ -46,56 +47,55 @@
 </template>
 
 <script>
-  import QuantifiedThingy from './QuantifiedThingy.vue';
   import moment from 'moment';
+
+  import QuantifiedThingy from './QuantifiedThingy.vue';
 
   export default {
     data() {
       return {
-        now : moment()
-      }
+        now: moment()
+      };
     },
     computed: {
       quantifiedThingies() {
         return this.$store.getters.quantifiedThingies;
       },
       dueDate() {
-        if(this.$store.getters.dueDate) {
-          return moment(this.$store.getters.dueDate);
-        }
+        return this.$store.getters.dueDate;
       },
       dueIn() {
-        return(
-          Math.trunc(this.dueDate.diff(this.now, 'days')) + 'd ' +
-          Math.trunc(this.dueDate.diff(this.now, 'hours')%24) + 'h ' +
-          Math.trunc(this.dueDate.diff(this.now, 'minutes')%60) + 'm ' +
-          Math.trunc(this.dueDate.diff(this.now, 'seconds')%60) + 's'
-        );
+        if (!this.dueDate) {
+          return '';
+        }
+
+        const dueDate = moment(this.dueDate);
+        const days = Math.trunc(dueDate.diff(this.now, 'days'));
+        const hours = Math.trunc(dueDate.diff(this.now, 'hours') % 24);
+        const minutes = Math.trunc(dueDate.diff(this.now, 'minutes') % 60);
+        const seconds = Math.trunc(dueDate.diff(this.now, 'seconds') % 60);
+        return `${days}d ${hours}h ${minutes}m ${seconds}s`;
       },
       dueInClass() {
-        let diff = this.dueDate.diff(this.now, 'days');
-        if(diff >= 2) {
+        const diff = moment(this.dueDate).diff(this.now, 'days');
+        if (diff >= 2) {
           return 'green';
-        }
-        else if(diff < 2 && diff >= 1) {
+        } else if (diff < 2 && diff >= 1) {
           return 'orange';
         }
-        else {
-          return 'red';
-        }
+        return 'red';
       },
       appInitialized() {
         return this.$store.getters.appInitialized;
       }
     },
     watch: {
-      // Cannot use an arrow fn because 'this' wouldn't be Vue instance
       appInitialized() {
-        this.load()
+        this.load();
       },
       now() {
-        if(this.now >= this.dueDate){
-          this.load()
+        if (this.now >= this.dueDate) {
+          this.load();
         }
       }
     },
@@ -108,17 +108,17 @@
       }
     },
     mounted() {
-      if(this.appInitialized) {
-        this.load()
+      if (this.appInitialized) {
+        this.load();
       }
     },
     created() {
-      window.setInterval(() => {
+      setInterval(() => {
         this.now = moment();
       }, 1000);
     },
     components: { QuantifiedThingy }
-  }
+  };
 </script>
 
 <style lang="scss" scoped>

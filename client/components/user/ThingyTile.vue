@@ -17,25 +17,24 @@
 </template>
 
 <script>
-  import object from 'lodash/object';
+  import merge from 'lodash/merge';
 
-  export default{
+  export default {
     props: ['thingy'],
     data() {
       return {
         qty: 1
-      }
+      };
     },
     methods: {
-      addThingy() {
-        // GOTCHA:
+      addThingy() { // GOTCHA:
         // The object payload gets saved as a reference,
         // so we have to commit a new object, else we
         // mutate the Vuex store directly
-        this.$store.dispatch('thingyTileAdd', object.merge({}, this.thingy, { qty : this.qty }));
+        this.$store.dispatch('thingyTileAdd', merge({}, this.thingy, { qty: this.qty }));
       }
     }
-  }
+  };
 </script>
 
 <style lang="scss" scoped>

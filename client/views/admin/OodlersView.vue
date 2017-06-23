@@ -1,6 +1,6 @@
 <template>
   <div id="oodlersView">
-    <flash-message @dismissed="dismissed" :message="flashMessage" :type="flashType" ></flash-message>
+    <flash-message v-if="flashMessage" @dismissed="dismissed" :message="flashMessage" :type="flashType" ></flash-message>
     <div class="header page-header">
       <div class="row">
         <div class="col-md-3">
@@ -15,7 +15,7 @@
         <search-bar class="col-md-12" subject="user by first name, last name or office" @searchBarUpdate="searchBarUpdate"></search-bar>
     </div>
     <div class="row filtered-oodlers">
-      <div v-for="oodler in filteredOodlers" class="col-md-3">
+      <div v-for="oodler in filteredOodlers" :key="oodler.id" class="col-md-3">
         <oodler-edit-tile @oodlerUpdate="load" :oodler="oodler"></oodler-edit-tile>
       </div>
     </div>
@@ -71,10 +71,12 @@
 </template>
 
 <script>
-  import SearchBar from '../../components/common/SearchBar.vue'
-  import FlashMessage from '../../components/common/FlashMessage.vue'
-  import OodlerEditTile from '../../components/admin/OodlerEditTile.vue'
-  
+  import sortBy from 'lodash/sortBy';
+
+  import FlashMessage from '../../components/common/FlashMessage.vue';
+  import OodlerEditTile from '../../components/admin/OodlerEditTile.vue';
+  import SearchBar from '../../components/common/SearchBar.vue';
+
   export default{
     data() {
       return {
@@ -89,50 +91,41 @@
           office: '',
           scope: 'user'
         }
-      }
+      };
     },
-    
     computed: {
       appInitialized() {
         return this.$store.getters.appInitialized;
       },
       filteredOodlers() {
-        if(this.searchString.length < 1) {
+        if (this.searchString.length < 1) {
           return this.oodlers;
         }
-        
-        let searchString = this.searchString.toLowerCase();
-        return this.oodlers.filter(oodler => {
-          return (`${oodler.firstName} ${oodler.lastName} ${oodler.office}`).toLowerCase().indexOf(searchString) !== -1
-        });
+
+        const searchString = this.searchString.toLowerCase();
+        return this.oodlers.filter(oodler => `${oodler.firstName} ${oodler.lastName} ${oodler.office}`)
+          .toLowerCase()
+          .includes(searchString) !== -1;
       }
     },
-    
     watch: {
-      appInitialized: function() { //Cannot be arrow fn cause that way 'this' wouldn't be Vue instance
-        this.load()
+      appInitialized() {
+        this.load();
       }
     },
-    
     methods: {
       searchBarUpdate(query) {
         this.searchString = query;
       },
       load() {
         this.$http.get('/oodler').then(response => {
-          let oodlers = response.body;
-          oodlers.sort((a,b) => (a.lastName.toLowerCase() < b.lastName.toLowerCase()) ? -1 : 1);
-          this.oodlers = oodlers;
+          this.oodlers = sortBy(response.body, 'lastName');
         });
       },
+
+      // TODO: Refactor and solve this mess :O
       save() {
-        this.$http.post('/oodler', {
-          firstName: this.newOodler.firstName,
-          lastName: this.newOodler.lastName,
-          email: this.newOodler.email,
-          office: this.newOodler.office,
-          scope: this.newOodler.scope
-        }).then(
+        this.$http.post('/oodler', this.newOodler).then(
           response => {
             for(let property in this.newOodler) {
               this.newOodler[property] = '';
@@ -157,12 +150,12 @@
       }
     },
     beforeCreate() {
-      if(this.$store.getters.oodler.scope === 'user') {
+      if (this.$store.getters.oodler.scope === 'user') {
         this.$router.replace({ path: '/' });
       }
     },
     mounted() {
-      if(this.appInitialized) {
+      if (this.appInitialized) {
         this.load();
       }
     },
@@ -171,14 +164,14 @@
       OodlerEditTile,
       FlashMessage
     }
-  }
+  };
 </script>
 
 <style lang="scss" scoped>
   #oodlersView {
     .page-header {
       margin: 0px 0 10px;
-  
+
       h1, .add-button {
         margin-top: 20px;
         margin-bottom: 10px;

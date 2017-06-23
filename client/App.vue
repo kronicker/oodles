@@ -16,41 +16,44 @@
   import NavBar from './components/common/NavBar.vue';
 
   export default {
+    data() {
+      return {
+        publicRoutes: ['/password/reset', '/password/new'],
+        adminRoutes: ['/admin', '/admin/history', '/admin/thingies', '/admin/oodlers', '/admin/suggestions', '/settings']
+      };
+    },
     computed: {
       loggedIn() {
-        return this.$store.getters.oodler.id ? true : false;
+        return !!this.$store.getters.oodler.id;
       }
     },
     beforeCreate() {
-      if(['/password/reset', '/password/new'].indexOf(this.$route.path) > -1) {
+      if (this.publicRoutes.includes(this.$route.path)) {
         return;
       }
 
       this.$http.get('/session')
-      .then(
-        response => {
-          if (response.ok) {
-            let oodler = response.body;
-            this.$store.dispatch('initStore', oodler);
-
-            if (oodler.scope === 'admin') {
-              if(!['/admin', '/admin/history', '/admin/thingies', '/admin/oodlers', '/admin/suggestions', '/settings'].includes(this.$route.path)) {
-                this.$router.replace({ path: '/admin' });
-              }
-            }
-            else {
-              if(!['/', '/history', '/settings'].includes(this.$route.path)) {
-                this.$router.replace({ path: '/' });
-              }
-            }
+        .then(response => {
+          if (!response.ok) {
+            return;
           }
-        },
-        response => {
+          const oodler = response.body;
+          this.$store.dispatch('initStore', oodler);
+
+          if (oodler.scope === 'admin' && !this.adminRoutes.includes(this.$route.path)) {
+            this.$router.replace({ path: '/admin' });
+            return;
+          }
+
+          if (oodler.scope === 'user' && !['/', '/history', '/settings'].includes(this.$route.path)) {
+            this.$router.replace({ path: '/' });
+          }
+        }, () => {
           this.$router.replace({ path: '/login' });
         });
     },
     components: { NavBar }
-  }
+  };
 </script>
 
 <style lang="scss">

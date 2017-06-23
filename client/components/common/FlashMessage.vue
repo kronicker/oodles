@@ -1,5 +1,5 @@
 <template>
-  <div class="flash-message" v-if="message" :class="'alert alert-dismissible alert-' + type">
+  <div class="flash-message" :class="`alert alert-dismissible alert-${type}`">
     <button @click="dismiss" type="button" data-dismiss="alert" class="close">&times;</button>
     {{ message }}
   </div>
@@ -13,5 +13,5 @@
         this.$emit('dismissed');
       }
     }
-  }
+  };
 </script>

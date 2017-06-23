@@ -11,7 +11,7 @@
       <search-bar class="col-md-12" subject="suggestion" @searchBarUpdate="searchBarUpdate"></search-bar>
     </div>
     <div class="row filtered-suggestions">
-      <div v-for="suggestedThingy in filteredSuggestions" class="col-md-3">
+      <div v-for="suggestedThingy in filteredSuggestions" :key="suggestedThingy.id" class="col-md-3">
         <suggested-thingy-tile  @suggestionUpdate="load" :suggestedThingy="suggestedThingy"></suggested-thingy-tile>
       </div>
     </div>
@@ -19,32 +19,32 @@
 </template>
 
 <script>
-  import SearchBar from '../../components/common/SearchBar.vue'
-  import SuggestedThingyTile from '../../components/admin/SuggestedThingyTile.vue'
-  
+  import SearchBar from '../../components/common/SearchBar.vue';
+  import SuggestedThingyTile from '../../components/admin/SuggestedThingyTile.vue';
+
   export default{
     data() {
       return {
         searchString: '',
-        suggestions: [],
-      }
+        suggestions: []
+      };
     },
     computed: {
       appInitialized() {
         return this.$store.getters.appInitialized;
       },
       filteredSuggestions() {
-        if(this.searchString.length < 1) {
+        if (this.searchString.length < 1) {
           return this.suggestions;
         }
-        
-        let searchString = this.searchString.toLowerCase();
+
+        const searchString = this.searchString.toLowerCase();
         return this.suggestions.filter(item => item.name.toLowerCase().includes(searchString));
       }
     },
     watch: {
-      appInitialized() { //Cannot be arrow fn cause that way 'this' wouldn't be Vue instance
-        this.load()
+      appInitialized() {
+        this.load();
       }
     },
     methods: {
@@ -58,12 +58,12 @@
       }
     },
     beforeCreate() {
-      if(this.$store.getters.oodler.scope === 'user') {
+      if (this.$store.getters.oodler.scope === 'user') {
         this.$router.replace({ path: '/' });
       }
     },
     mounted() {
-      if(this.appInitialized) {
+      if (this.appInitialized) {
         this.load();
       }
     },
@@ -71,7 +71,7 @@
       SearchBar,
       SuggestedThingyTile
     }
-  }
+  };
 </script>
 
 <style lang="scss" scoped>
@@ -84,7 +84,7 @@
         margin-bottom: 10px;
       }
     }
-  
+
     .suggested-thingies {
       padding-left: 0;
       display: -webkit-flex;
@@ -93,7 +93,7 @@
       -webkit-flex-wrap: wrap;
       -ms-flex-wrap: wrap;
       flex-wrap: wrap;
-    
+
       .suggested-thingy-tile {
         display: -webkit-flex;
         display: -ms-flexbox;
