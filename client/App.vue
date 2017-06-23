@@ -32,7 +32,7 @@
           if (response.ok) {
             let oodler = response.body;
             this.$store.dispatch('initStore', oodler);
-            
+
             if (oodler.scope === 'admin') {
               if(!['/admin', '/admin/history', '/admin/thingies', '/admin/oodlers', '/admin/suggestions', '/settings'].includes(this.$route.path)) {
                 this.$router.replace({ path: '/admin' });

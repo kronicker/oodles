@@ -148,34 +148,24 @@
           email: false,
           office: false
         }
-      }
+      };
     },
     methods: {
       updateOodler() {
-        this.$http.put('/oodler/' + this.oodler.id,
-          {
-            firstName: this.editedOodler.firstName,
-            lastName: this.editedOodler.lastName,
-            email: this.editedOodler.email,
-            office: this.editedOodler.office,
-            scope: this.editedOodler.scope
-          })
+        this.$http.put(`/oodler/${this.oodler.id}`, this.editedOodler)
           .then(
-            response => {
+            () => {
               this.$emit('oodlerUpdate');
-              for (let property in this.editing) {
-                this.$set(this.editing, property, false);
-              }
+              this.blurInputs();
             },
-            response => {
-              for(let property in this.editing) {
-                this.$set(this.editing, property, false);
-              }
-            });
+            () => this.blurInputs());
+      },
+      blurInputs() {
+        this.editing.forEach(property => this.$set(this.editing, property, false));
       },
       removeOodler() {
-        this.$http.delete('/oodler/' + this.oodler.id)
-          .then(response => {
+        this.$http.delete(`/oodler/${this.oodler.id}`)
+          .then(() => {
             this.$emit('oodlerUpdate');
           });
       },
@@ -193,31 +183,35 @@
     beforeUpdate() {
       Object.assign(this.editedOodler, this.oodler);
     }
-  }
+  };
 </script>
 
 <style lang="scss" scoped>
   .oodler-edit-tile .well {
     padding: 5px 10px 0;
     max-width: 100%;
-  
+
     .control-label { padding-left: 21px; }
-    
+
     .form-horizontal .control-label { text-align: left; }
-    
+
     .table {
       table-layout:fixed;
       margin-bottom: 15px;
+
       tr {
         cursor: text;
+
         td {overflow: hidden; overflow-wrap: break-word;}
+
         .hover-btn {
           position: absolute;
           right: 15px;
           display: none;
         }
+
+        &:hover .hover-btn { display: block; }
       }
-      tr:hover .hover-btn { display: block; }
     }
   }
 </style>

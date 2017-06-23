@@ -125,30 +125,23 @@
           unit: false,
           pictureUrl: false
         }
-      }
+      };
     },
     methods: {
       updateThingy() {
-        this.$http.put('/thingy/' + this.thingy.id,
-          {
-            name: this.editedThingy.name,
-            unit: this.editedThingy.unit,
-            pictureUrl: this.editedThingy.pictureUrl
-          })
+        this.$http.put(`/thingy/${this.thingy.id}`, this.editedThingy.name)
           .then(response => {
-            if(response.ok) {
-              this.$emit('thingyUpdate');
-              for(let property in this.editing) {
-                this.$set(this.editing, property, false);
-              }
+            if (!response.ok) {
+              return;
             }
+
+            this.$emit('thingyUpdate');
+            this.editing.forEach(property => this.$set(this.editing, property, false));
           });
       },
       removeThingy() {
-        this.$http.delete('/thingy/' + this.thingy.id)
-          .then(response => {
-            this.$emit('thingyUpdate');
-          });
+        this.$http.delete(`/thingy/${this.thingy.id}`)
+          .then(() => this.$emit('thingyUpdate'));
       },
       edit(el) {
         this.$set(this.editing, el, true);
@@ -164,32 +157,36 @@
     beforeUpdate() {
       Object.assign(this.editedThingy, this.thingy);
     }
-  }
+  };
 </script>
 
 <style lang="scss" scoped>
   .thingy-edit-tile  .thumbnail {
     padding: 5px 10px 0;
     max-width: 100%;
-  
+
     .control-label { padding-left: 21px }
-  
+
     img { margin-bottom: 5px; }
-    
+
     .form-horizontal .control-label { text-align: left; }
-    
+
     .table {
-      table-layout:fixed;
+      table-layout: fixed;
       margin-bottom: 15px;
+
       tr {
         cursor: text;
-        td {overflow: hidden; overflow-wrap: break-word;}
+
+        td { overflow: hidden; overflow-wrap: break-word; }
+
         .hover-btn {
           position: absolute;
           right: 15px;
           display: none;
         }
       }
+
       tr:hover .hover-btn { display: block; }
     }
   }

@@ -44,7 +44,7 @@
           </tr>
           </thead>
           <tbody>
-          <tr v-for="quantifiedThingy in pendingOodlet.quantifiedThingies">
+          <tr v-for="quantifiedThingy in pendingOodlet.quantifiedThingies" :key="quantifiedThingy.id">
             <td>{{ quantifiedThingy.name }}</td>
             <td class="col-md-2 right">{{ quantifiedThingy.qty }}</td>
             <td class="col-md-2">{{ quantifiedThingy.unit }}</td>
@@ -53,7 +53,7 @@
         </table>
       </div>
     </div>
-    
+
     <div class="modal fade" data-backdrop="static" data-keyboard="false" :id="pendingOodlet.id + 'delete'">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -72,7 +72,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="quantifiedThingy in pendingOodlet.quantifiedThingies">
+                <tr v-for="quantifiedThingy in pendingOodlet.quantifiedThingies" :key="quantifiedThingy.id">
                   <td>{{ quantifiedThingy.name }}</td>
                   <td class="col-md-2 right">{{ quantifiedThingy.qty }}</td>
                   <td class="col-md-2">{{ quantifiedThingy.unit }}</td>
@@ -119,19 +119,19 @@
         this.$store.dispatch('pendingOodletRemove', this.pendingOodlet);
       },
       deleteOodlet() {
-        this.$http.delete('/oodlet/' + this.pendingOodlet.id)
-          .then(response => {
-          this.$emit('oodletDeleted');
-        });
+        this.$http.delete(`/oodlet/'${this.pendingOodlet.id}`)
+          .then(() => this.$emit('oodletDeleted'));
       }
     }
-  }
+  };
 </script>
 
 <style lang="scss" scoped>
   .pending-oodlet {
     .panel-title { text-align: center; }
+
     .empty { color: #c9302c; }
+
     .modal-footer .info {
       float: left;
     }
