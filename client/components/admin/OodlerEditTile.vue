@@ -137,6 +137,10 @@
 </template>
 
 <script>
+  import omit from 'lodash/omit';
+
+  const immutableProps = ['id', 'password'];
+
   export default {
     props: ['oodler'],
     data() {
@@ -153,15 +157,10 @@
     methods: {
       updateOodler() {
         this.$http.put(`/oodler/${this.oodler.id}`, this.editedOodler)
-          .then(
-            () => {
-              this.$emit('oodlerUpdate');
-              this.blurInputs();
-            },
-            () => this.blurInputs());
-      },
-      blurInputs() {
-        this.editing.forEach(property => this.$set(this.editing, property, false));
+          .then(() => {
+            this.$emit('oodlerUpdate');
+            Object.keys(this.editing).forEach(property => this.$set(this.editing, property, false));
+          });
       },
       removeOodler() {
         this.$http.delete(`/oodler/${this.oodler.id}`)
@@ -178,10 +177,10 @@
       }
     },
     mounted() {
-      Object.assign(this.editedOodler, this.oodler);
+      Object.assign(this.editedOodler, omit(this.oodler, immutableProps));
     },
     beforeUpdate() {
-      Object.assign(this.editedOodler, this.oodler);
+      Object.assign(this.editedOodler, omit(this.oodler, immutableProps));
     }
   };
 </script>

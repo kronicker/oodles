@@ -104,7 +104,7 @@
       save() {
         this.$http.post('/thingy', this.newThingy).then(
           () => {
-            this.newThingy.keys().forEach(key => {
+            Object.keys(this.newThingy).forEach(key => {
               this.newThingy[key] = '';
             });
             this.flashMessage = 'Success! New item added!';
@@ -112,7 +112,7 @@
             this.load();
           },
           () => {
-            this.newThingy.keys().forEach(key => {
+            Object.keys(this.newThingy).forEach(key => {
               this.newThingy[key] = '';
             });
             this.flashMessage = 'Oops! Something went wrong! Please, try again!';

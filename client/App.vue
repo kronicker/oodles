@@ -15,20 +15,20 @@
 <script>
   import NavBar from './components/common/NavBar.vue';
 
+  const routes = {
+    public: ['/password/reset', '/password/new'],
+    admin: ['/admin', '/admin/history', '/admin/thingies', '/admin/oodlers', '/admin/suggestions', '/settings'],
+    user: ['/', '/history', '/settings']
+  };
+
   export default {
-    data() {
-      return {
-        publicRoutes: ['/password/reset', '/password/new'],
-        adminRoutes: ['/admin', '/admin/history', '/admin/thingies', '/admin/oodlers', '/admin/suggestions', '/settings']
-      };
-    },
     computed: {
       loggedIn() {
         return !!this.$store.getters.oodler.id;
       }
     },
     beforeCreate() {
-      if (this.publicRoutes.includes(this.$route.path)) {
+      if (routes.public.includes(this.$route.path)) {
         return;
       }
 
@@ -40,12 +40,12 @@
           const oodler = response.body;
           this.$store.dispatch('initStore', oodler);
 
-          if (oodler.scope === 'admin' && !this.adminRoutes.includes(this.$route.path)) {
+          if (oodler.scope === 'admin' && !routes.admin.includes(this.$route.path)) {
             this.$router.replace({ path: '/admin' });
             return;
           }
 
-          if (oodler.scope === 'user' && !['/', '/history', '/settings'].includes(this.$route.path)) {
+          if (oodler.scope === 'user' && !routes.user.includes(this.$route.path)) {
             this.$router.replace({ path: '/' });
           }
         }, () => {

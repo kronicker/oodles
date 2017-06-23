@@ -1,6 +1,6 @@
 <template>
   <div id="oodletView">
-    <flash-message v-if="failFlashMessage" @dismissed="dismissed" :message="flashMessage" :type="flashType" ></flash-message>
+    <flash-message v-if="flashMessage" @dismissed="dismissed" :message="flashMessage" :type="flashType" ></flash-message>
     <div class="header page-header">
       <div class="row">
         <div class="col-md-3">
@@ -59,7 +59,7 @@
 </template>
 
 <script>
-  import sortBy from 'lodash/sprtBy';
+  import sortBy from 'lodash/sortBy';
 
   import FlashMessage from '../../components/common/FlashMessage.vue';
   import Oodlet from '../../components/user/Oodlet.vue';
@@ -119,13 +119,13 @@
         };
         this.$http.post('/suggestedThingy', thingy)
           .then(() => {
-            this.suggestedThingy.keys().forEach(key => {
+            Object.keys(this.suggestedThingy).forEach(key => {
               this.suggestedThingy[key] = '';
             });
             this.flashMessage = 'Your suggestion has been submitted!';
             this.flashType = 'info';
           }, () => {
-            this.suggestedThingy.keys().forEach(key => {
+            Object.keys(this.suggestedThingy).forEach(key => {
               this.suggestedThingy[key] = '';
             });
             this.flashMessage = 'Incorrect suggestion! Please try again';

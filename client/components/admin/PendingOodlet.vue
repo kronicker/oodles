@@ -119,7 +119,7 @@
         this.$store.dispatch('pendingOodletRemove', this.pendingOodlet);
       },
       deleteOodlet() {
-        this.$http.delete(`/oodlet/'${this.pendingOodlet.id}`)
+        this.$http.delete(`/oodlet/${this.pendingOodlet.id}`)
           .then(() => this.$emit('oodletDeleted'));
       }
     }

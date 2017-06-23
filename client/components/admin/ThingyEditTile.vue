@@ -115,6 +115,10 @@
 </template>
 
 <script>
+  import omit from 'lodash/omit';
+
+  const immutableProps = ['id'];
+
   export default {
     props: ['thingy'],
     data() {
@@ -129,14 +133,14 @@
     },
     methods: {
       updateThingy() {
-        this.$http.put(`/thingy/${this.thingy.id}`, this.editedThingy.name)
+        this.$http.put(`/thingy/${this.thingy.id}`, this.editedThingy)
           .then(response => {
             if (!response.ok) {
               return;
             }
 
             this.$emit('thingyUpdate');
-            this.editing.forEach(property => this.$set(this.editing, property, false));
+            Object.keys(this.editing).forEach(property => this.$set(this.editing, property, false));
           });
       },
       removeThingy() {
@@ -152,10 +156,10 @@
       }
     },
     mounted() {
-      Object.assign(this.editedThingy, this.thingy);
+      Object.assign(this.editedThingy, omit(this.thingy, immutableProps));
     },
     beforeUpdate() {
-      Object.assign(this.editedThingy, this.thingy);
+      Object.assign(this.editedThingy, omit(this.thingy, immutableProps));
     }
   };
 </script>

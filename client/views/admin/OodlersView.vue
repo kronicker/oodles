@@ -103,9 +103,9 @@
         }
 
         const searchString = this.searchString.toLowerCase();
-        return this.oodlers.filter(oodler => `${oodler.firstName} ${oodler.lastName} ${oodler.office}`)
+        return this.oodlers.filter(oodler => `${oodler.firstName} ${oodler.lastName} ${oodler.office}`
           .toLowerCase()
-          .includes(searchString) !== -1;
+          .includes(searchString));
       }
     },
     watch: {
