@@ -165,11 +165,11 @@
 </script>
 
 <style lang="scss" scoped>
-  .thingy-edit-tile  .thumbnail {
+  .thingy-edit-tile .thumbnail {
     padding: 5px 10px 0;
     max-width: 100%;
 
-    .control-label { padding-left: 21px }
+    .control-label { padding-left: 21px; }
 
     img { margin-bottom: 5px; }
 
@@ -182,7 +182,10 @@
       tr {
         cursor: text;
 
-        td { overflow: hidden; overflow-wrap: break-word; }
+        td {
+          overflow: hidden;
+          overflow-wrap: break-word;
+        }
 
         .hover-btn {
           position: absolute;

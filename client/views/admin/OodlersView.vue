@@ -126,19 +126,19 @@
       // TODO: Refactor and solve this mess :O
       save() {
         this.$http.post('/oodler', this.newOodler).then(
-          response => {
-            for(let property in this.newOodler) {
+          () => {
+            Object.keys(this.newOodler).forEach(property => {
               this.newOodler[property] = '';
-            }
+            });
             this.newOodler.scope = 'user';
             this.flashMessage = 'Success! New user added!';
             this.flashType = 'success';
             this.load();
           },
           response => {
-            for(let property in this.newOodler) {
+            Object.keys(this.newOodler).forEach(property => {
               this.newOodler[property] = '';
-            }
+            });
             this.newOodler.scope = 'user';
             this.flashMessage = response.body;
             this.flashType = 'danger';
@@ -170,9 +170,10 @@
 <style lang="scss" scoped>
   #oodlersView {
     .page-header {
-      margin: 0px 0 10px;
+      margin: 0 0 10px;
 
-      h1, .add-button {
+      h1,
+      .add-button {
         margin-top: 20px;
         margin-bottom: 10px;
       }
@@ -187,7 +188,7 @@
       -ms-flex-wrap: wrap;
       flex-wrap: wrap;
 
-    .oodler-edit-tile {
+      .oodler-edit-tile {
         display: -webkit-flex;
         display: -ms-flexbox;
         display: flex;

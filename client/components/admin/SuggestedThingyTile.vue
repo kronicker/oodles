@@ -224,24 +224,27 @@
 </script>
 
 <style lang="scss" scoped>
-  .suggested-thingy-tile  .thumbnail {
+  .suggested-thingy-tile .thumbnail {
     padding: 5px 10px 0;
     max-width: 100%;
 
-    .control-label { padding-left: 21px }
+    .control-label { padding-left: 21px; }
 
     img { margin-bottom: 5px; }
 
     .form-horizontal .control-label { text-align: left; }
 
     .table {
-      table-layout:fixed;
+      table-layout: fixed;
       margin-bottom: 15px;
 
       tr {
         cursor: text;
 
-        td {overflow: hidden; overflow-wrap: break-word;}
+        td {
+          overflow: hidden;
+          overflow-wrap: break-word;
+        }
 
         .hover-btn {
           position: absolute;

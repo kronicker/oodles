@@ -77,7 +77,7 @@
 <style lang="scss" scoped>
   #suggestionsView {
     .page-header {
-      margin: 0px 0 10px;
+      margin: 0 0 10px;
 
       h1 {
         margin-top: 20px;

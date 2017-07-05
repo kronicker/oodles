@@ -132,9 +132,10 @@
 <style lang="scss" scoped>
   #adminHistoryView {
     .page-header {
-      margin: 0px 0 10px;
+      margin: 0 0 10px;
 
-      h1, .form-group {
+      h1,
+      .form-group {
         margin-top: 20px;
         margin-bottom: 10px;
       }

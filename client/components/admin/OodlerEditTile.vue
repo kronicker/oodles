@@ -164,9 +164,7 @@
       },
       removeOodler() {
         this.$http.delete(`/oodler/${this.oodler.id}`)
-          .then(() => {
-            this.$emit('oodlerUpdate');
-          });
+          .then(() => this.$emit('oodlerUpdate'));
       },
       edit(el) {
         this.$set(this.editing, el, true);
@@ -195,13 +193,16 @@
     .form-horizontal .control-label { text-align: left; }
 
     .table {
-      table-layout:fixed;
+      table-layout: fixed;
       margin-bottom: 15px;
 
       tr {
         cursor: text;
 
-        td {overflow: hidden; overflow-wrap: break-word;}
+        td {
+          overflow: hidden;
+          overflow-wrap: break-word;
+        }
 
         .hover-btn {
           position: absolute;

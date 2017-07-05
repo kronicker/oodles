@@ -145,9 +145,10 @@
 <style lang="scss" scoped>
   #thingiesView {
     .page-header {
-      margin: 0px 0 10px;
+      margin: 0 0 10px;
 
-      h1, .add-button {
+      h1,
+      .add-button {
         margin-top: 20px;
         margin-bottom: 10px;
       }

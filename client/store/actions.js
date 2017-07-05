@@ -20,9 +20,8 @@ function thingyTileAdd({ commit, state }, quantifiedThingy) {
   }
 
   commit('thingyTileAdd', quantifiedThingy);
-  oodletApi.update(state.oodlet).then(oodlet => {
-    commit('oodletSet', oodlet);
-  });
+  oodletApi.update(state.oodlet)
+    .then(oodlet => commit('oodletSet', oodlet));
 }
 
 function quantifiedThingyChange({ commit, state }, payload) {
@@ -36,9 +35,8 @@ function quantifiedThingyChange({ commit, state }, payload) {
   }
 
   commit('quantifiedThingyUpdate', payload);
-  oodletApi.update(state.oodlet).then(oodlet => {
-    commit('oodletSet', oodlet);
-  });
+  oodletApi.update(state.oodlet)
+    .then(oodlet => commit('oodletSet', oodlet));
 }
 
 function historyOodletLoad({ commit, state }, historyOodlet) {
@@ -49,9 +47,7 @@ function historyOodletLoad({ commit, state }, historyOodlet) {
   oodletApi.update({
     id: state.oodlet.id,
     quantifiedThingies: historyOodlet.quantifiedThingies
-  }).then(oodlet => {
-    commit('oodletSet', oodlet);
-  });
+  }).then(oodlet => commit('oodletSet', oodlet));
 }
 
 function oodletLoad({ commit, state }) {
@@ -66,9 +62,7 @@ function oodletReset({ commit, state }) {
   oodletApi.update({
     id: state.oodlet.id,
     quantifiedThingies: []
-  }).then(response => {
-    commit('oodletSet', response.body);
-  });
+  }).then(response => commit('oodletSet', response.body));
 }
 
 function totalOodletLoad({ commit, state }) {
@@ -98,7 +92,8 @@ function pendingOodletAdd({ commit, state }, pendingOodlet) {
 
 function pendingOodletRemove({ commit, state }, pendingOodlet) {
   commit('oodletRemove', pendingOodlet);
-  totalOodletApi.update(state.totalOodlet).then(totalOodlet => commit('totalOodletSet', totalOodlet));
+  totalOodletApi.update(state.totalOodlet)
+    .then(totalOodlet => commit('totalOodletSet', totalOodlet));
 }
 
 export {

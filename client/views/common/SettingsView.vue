@@ -54,7 +54,7 @@
 
 <style lang="scss" scoped>
   #settingsView {
-    .page-header { margin: 0px 0 10px; }
+    .page-header { margin: 0 0 10px; }
 
     .jumbotron { margin-top: 200px; }
   }

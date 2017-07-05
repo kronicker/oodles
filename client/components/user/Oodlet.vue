@@ -3,7 +3,7 @@
     <div class="panel panel-default">
       <div class="panel-heading">
         <strong>Due in: </strong>
-        <span v-if="dueDate" class="due-in-countdown" :class="dueInClass">{{ dueIn }}</span>
+        <span v-if="dueDate" class="due-in-countdown" :class="timerColor">{{ dueIn }}</span>
         <span v-else class="due-in-countdown red">NOT SET</span>
       </div>
       <div class="panel-body">
@@ -76,7 +76,7 @@
         const seconds = Math.trunc(dueDate.diff(this.now, 'seconds') % 60);
         return `${days}d ${hours}h ${minutes}m ${seconds}s`;
       },
-      dueInClass() {
+      timerColor() {
         const diff = moment(this.dueDate).diff(this.now, 'days');
         if (diff >= 2) {
           return 'green';

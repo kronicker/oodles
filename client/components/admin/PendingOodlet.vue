@@ -98,7 +98,7 @@
 <script>
   import moment from 'moment';
 
-  export default{
+  export default {
     props: ['pendingOodlet'],
     computed: {
       added() {
