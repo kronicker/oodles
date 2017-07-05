@@ -1,47 +1,47 @@
-import array from 'lodash/array';
+import find from 'lodash/find';
+import remove from 'lodash/remove';
 
 const state = {
   id: '',
-  dueDate: undefined,
+  dueDate: null,
   quantifiedThingies: []
 };
 
 const mutations = {
-  thingyTileAdd(state, quantifiedThingy) {
-    let index = array.findIndex(state.quantifiedThingies, ['id', quantifiedThingy.id]);
+  thingyTileAdd(_state, quantifiedThingy) {
+    const thingy = find(_state.quantifiedThingies, ['id', quantifiedThingy.id]);
 
-    if (index > -1) {
-      state.quantifiedThingies[index].qty = quantifiedThingy.qty;
+    if (thingy) {
+      thingy.qty = quantifiedThingy.qty;
+      return;
     }
-    else {
-      state.quantifiedThingies.push(quantifiedThingy);
-    }
+
+    _state.quantifiedThingies.push(quantifiedThingy);
   },
 
-  quantifiedThingyRemove(state, id) {
-    let index = array.findIndex(state.quantifiedThingies, ['id', id]);
-    state.quantifiedThingies.splice(index, 1);
+  quantifiedThingyRemove(_state, id) {
+    remove(_state.quantifiedThingies, ['id', id]);
   },
 
-  quantifiedThingyUpdate(state, payload) {
-    let index = array.findIndex(state.quantifiedThingies, ['id', payload.id]);
-    state.quantifiedThingies[index].qty = payload.qty;
-  },
-  
-  oodletSetQuantifiedThingies(state, quantifiedThingies) {
-    state.quantifiedThingies = quantifiedThingies;
+  quantifiedThingyUpdate(_state, payload) {
+    const thingy = find(_state.quantifiedThingies, ['id', payload.id]);
+    thingy.qty = payload.qty;
   },
 
-  oodletSet(state, oodlet) {
-    state.quantifiedThingies = (() => oodlet.quantifiedThingies ? oodlet.quantifiedThingies : [])();
-    state.id =  oodlet.id;
-    state.dueDate = oodlet.dueDate;
+  oodletSetQuantifiedThingies(_state, quantifiedThingies) {
+    _state.quantifiedThingies = quantifiedThingies;
   },
 
-  oodletClear(state) {
-    state.quantifiedThingies = [];
-    state.id = '';
-    state.dueDate = undefined;
+  oodletSet(_state, oodlet) {
+    _state.quantifiedThingies = oodlet.quantifiedThingies || [];
+    _state.id = oodlet.id;
+    _state.dueDate = oodlet.dueDate;
+  },
+
+  oodletClear(_state) {
+    _state.quantifiedThingies = [];
+    _state.id = '';
+    _state.dueDate = null;
   }
 };
 

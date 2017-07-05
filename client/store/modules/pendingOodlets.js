@@ -3,11 +3,11 @@ const state = {
 };
 
 const mutations = {
-  pendingOodletsSet(state, pendingOodlets) {
-    state.pendingOodlets = pendingOodlets;
+  pendingOodletsSet(_state, pendingOodlets) {
+    _state.pendingOodlets = pendingOodlets;
   },
-  pendingOodletClear(state) {
-    state.pendingOodlets = [];
+  pendingOodletClear(_state) {
+    _state.pendingOodlets = [];
   }
 };
 

@@ -1,6 +1,3 @@
-/**
- * Created by toma on 09.11.16..
- */
 import Vue from 'vue';
 
 function active(oodler) {
@@ -8,18 +5,20 @@ function active(oodler) {
     params: {
       oodlerId: oodler.id
     }
-  });
+  })
+  .then(response => response.body);
 }
 
 function update(totalOodlet) {
-  return Vue.http.put('/totalOodlet/' + totalOodlet.id, {
+  return Vue.http.put(`/totalOodlet/${totalOodlet.id}`, {
     quantifiedThingies: totalOodlet.quantifiedThingies,
     oodletIds: totalOodlet.oodletIds
-  });
+  })
+  .then(response => response.body);
 }
 
 function finalize(totalOodlet) {
-  return Vue.http.post('/totalOodlet/' + totalOodlet.id);
+  return Vue.http.post(`/totalOodlet/${totalOodlet.id}`);
 }
 
 export default {

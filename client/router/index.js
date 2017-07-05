@@ -1,6 +1,3 @@
-/**
- * Created by toma on 05.10.16..
- */
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
@@ -26,7 +23,7 @@ const routes = [
   },
   {
     path: '/login',
-    component: LoginView,
+    component: LoginView
   },
   {
     path: '/history',

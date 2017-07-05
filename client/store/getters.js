@@ -14,13 +14,9 @@ export const pendingOodlets = state => sortBy(state.pendingOodlets.pendingOodlet
 
 export const totalOodlet = state => state.totalOodlet;
 
-export const totalOodletOffices = state => {
-  let offices = [];
-  for(let id of state.totalOodlet.oodletIds) {
-    let oodlet = state.pendingOodlets.pendingOodlets.find(pendingOodlet => pendingOodlet.id === id);
-    if(oodlet) {
-      offices.push(oodlet.oodler.office);
-    }
-  }
-  return offices.sort();
-};
+export function totalOodletOffices(state) {
+  return state.pendingOodlets.pendingOodlets
+    .filter(oodlet => state.totalOodlet.oodletIds.includes(oodlet.id))
+    .map(oodlet => oodlet.oodler.office)
+    .sort();
+}
