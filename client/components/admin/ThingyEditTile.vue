@@ -26,7 +26,6 @@
             </tbody>
           </table>
         </div>
-        
         <form @submit="updateThingy" class="form-horizontal col-md-12">
           <div v-show="editing.unit" class="form-group form-group-sm">
             <label for="unit" class="col-md-2 control-label">Unit</label>
@@ -50,7 +49,6 @@
             </tbody>
           </table>
         </div>
-        
         <form @submit="updateThingy" class="form-horizontal col-md-12">
           <div v-show="editing.pictureUrl" class="form-group form-group-sm">
             <label for="name" class="col-md-2 control-label">Picture Url</label>
@@ -81,7 +79,6 @@
         </div>
       </div>
     </div>
-  
     <div class="modal fade" data-backdrop="static" data-keyboard="false" :id="thingy.id + 'delete'">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -118,8 +115,12 @@
 </template>
 
 <script>
-  
+  import omit from 'lodash/omit';
+
+  const immutableProps = ['id'];
+
   export default {
+    props: ['thingy'],
     data() {
       return {
         editedThingy: {},
@@ -128,33 +129,23 @@
           unit: false,
           pictureUrl: false
         }
-      }
+      };
     },
-  
-    props: ['thingy'],
-    
     methods: {
       updateThingy() {
-        this.$http.put('/thingy/' + this.thingy.id,
-          {
-            name: this.editedThingy.name,
-            unit: this.editedThingy.unit,
-            pictureUrl: this.editedThingy.pictureUrl
-          })
+        this.$http.put(`/thingy/${this.thingy.id}`, this.editedThingy)
           .then(response => {
-            if(response.ok) {
-              this.$emit('thingyUpdate');
-              for(let property in this.editing) {
-                this.$set(this.editing, property, false);
-              }
+            if (!response.ok) {
+              return;
             }
+
+            this.$emit('thingyUpdate');
+            Object.keys(this.editing).forEach(property => this.$set(this.editing, property, false));
           });
       },
       removeThingy() {
-        this.$http.delete('/thingy/' + this.thingy.id)
-          .then(response => {
-            this.$emit('thingyUpdate');
-          });
+        this.$http.delete(`/thingy/${this.thingy.id}`)
+          .then(() => this.$emit('thingyUpdate'));
       },
       edit(el) {
         this.$set(this.editing, el, true);
@@ -164,40 +155,45 @@
         this.$set(this.editing, el, false);
       }
     },
-  
     mounted() {
-      Object.assign(this.editedThingy, this.thingy);
+      Object.assign(this.editedThingy, omit(this.thingy, immutableProps));
     },
-    
     beforeUpdate() {
-      Object.assign(this.editedThingy, this.thingy);
+      Object.assign(this.editedThingy, omit(this.thingy, immutableProps));
     }
-  }
+  };
 </script>
 
 <style lang="scss" scoped>
-  .thingy-edit-tile  .thumbnail {
+  .thingy-edit-tile .thumbnail {
     padding: 5px 10px 0;
     max-width: 100%;
-  
-    .control-label { padding-left: 21px }
-  
+
+    .control-label { padding-left: 21px; }
+
     img { margin-bottom: 5px; }
-    
+
     .form-horizontal .control-label { text-align: left; }
-    
+
     .table {
-      table-layout:fixed;
+      table-layout: fixed;
       margin-bottom: 15px;
+
       tr {
         cursor: text;
-        td {overflow: hidden; overflow-wrap: break-word;}
+
+        td {
+          overflow: hidden;
+          overflow-wrap: break-word;
+        }
+
         .hover-btn {
           position: absolute;
           right: 15px;
           display: none;
         }
       }
+
       tr:hover .hover-btn { display: block; }
     }
   }

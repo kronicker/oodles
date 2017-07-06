@@ -8,7 +8,7 @@
       <div class="panel-body">
         <table class="table table-striped table-hover">
           <tbody>
-            <tr v-for="quantifiedThingy in oodlet.quantifiedThingies">
+            <tr v-for="quantifiedThingy in oodlet.quantifiedThingies" :key="quantifiedThingy.id">
               <td>{{ quantifiedThingy.name }}</td>
               <td class="col-md-2 right">{{ quantifiedThingy.qty }}</td>
               <td class="col-md-2">{{ quantifiedThingy.unit }}</td>
@@ -32,7 +32,7 @@
           <div class="modal-body">
             <table class="table table-striped table-hover">
               <tbody>
-              <tr v-for="quantifiedThingy in oodlet.quantifiedThingies">
+              <tr v-for="quantifiedThingy in oodlet.quantifiedThingies" :key="quantifiedThingy.id">
                 <td>{{ quantifiedThingy.name }}</td>
                 <td class="col-md-2 right">{{ quantifiedThingy.qty }}</td>
                 <td class="col-md-2">{{ quantifiedThingy.unit }}</td>
@@ -53,29 +53,25 @@
 <script>
   import moment from 'moment';
 
-  export default{
+  export default {
     props: ['oodlet'],
-
     computed: {
       dueDate() {
         return moment(this.oodlet.dueDate).locale('hr').format('LL');
       }
     },
-
     methods: {
       load() {
         this.$store.dispatch('historyOodletLoad', this.oodlet);
       }
     }
-  }
+  };
 </script>
 
 <style lang="scss" scoped>
   .history-oodlet {
     width: 100%;
 
-    .col-md-2 {
-      &.right { text-align: right; }
-    }
+    .col-md-2.right { text-align: right; }
   }
 </style>

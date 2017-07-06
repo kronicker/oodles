@@ -40,49 +40,42 @@
         password: '',
         passwordRepeat: '',
         message: ''
-      }
+      };
     },
-
     computed: {
       token() {
         return this.$route.query.token;
       }
     },
-
     methods: {
       updatePassword() {
         this.$http.put('/password/update', {
-            password: this.password,
-            passwordRepeat: this.passwordRepeat,
-            value: this.token
-          })
-          .then(
-            response => {
-              if(response.ok) {
-                let oodler = response.body;
-                this.$store.dispatch('initStore', oodler);
-  
-                if (oodler.scope === 'admin') {
-                  this.$router.replace({ path: '/admin' });
-                }
-                else {
-                  this.$router.replace({ path: '/' });
-                }
-              }
-            },
-            response => {
-              this.password = '';
-              this.passwordRepeat = '';
-              this.message = response.body.msg;
-              document.getElementById('message').classList.add('alert-danger');
-              this.message = '';
-            });
+          password: this.password,
+          passwordRepeat: this.passwordRepeat,
+          value: this.token
+        })
+        .then(
+          response => {
+            if (!response.ok) {
+              return;
+            }
+            const oodler = response.body;
+            this.$store.dispatch('initStore', oodler);
+            const path = oodler.scope === 'admin' ? '/admin' : '/';
+            this.$router.replace({ path });
+          },
+          response => {
+            this.password = '';
+            this.passwordRepeat = '';
+            this.message = response.body.msg;
+            document.getElementById('message').classList.add('alert-danger');
+          });
       },
       closeMessage() {
         this.message = '';
       }
     }
-  }
+  };
 </script>
 
 <style lang="scss" scoped>

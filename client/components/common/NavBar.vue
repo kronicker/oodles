@@ -54,28 +54,22 @@
   export default {
     computed: {
       admin() {
-        return this.$store.getters.oodler.scope === 'admin'
+        return this.$store.getters.oodler.scope === 'admin';
       },
       user() {
-        return this.$store.getters.oodler.scope === 'user'
+        return this.$store.getters.oodler.scope === 'user';
       }
     },
-    
     methods: {
       logout() {
         this.$http.delete('/session/destroy')
-          .then(
-            response => {
-              this.$store.dispatch('clearStore');
-              this.$router.replace({ path: '/login' });
-            },
-            response => {
-              //TODO: Add flash message
-            });
+          .then(() => {
+            this.$store.dispatch('clearStore');
+            this.$router.replace({ path: '/login' });
+          });
       }
     }
-
-  }
+  };
 </script>
 
 <style lang="scss">
@@ -96,5 +90,4 @@
       color: #2b3e50;
     }
   }
-
 </style>

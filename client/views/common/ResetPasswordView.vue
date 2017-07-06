@@ -36,9 +36,8 @@
       return {
         email: '',
         message: ''
-      }
+      };
     },
-
     methods: {
       resetPassword() {
         this.$http.post('/password/reset', {
@@ -67,7 +66,7 @@
         this.message = '';
       }
     }
-  }
+  };
 </script>
 
 <style lang="scss" scoped>

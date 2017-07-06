@@ -15,55 +15,56 @@
 <script>
   import NavBar from './components/common/NavBar.vue';
 
+  const routes = {
+    public: ['/password/reset', '/password/new'],
+    admin: ['/admin', '/admin/history', '/admin/thingies', '/admin/oodlers', '/admin/suggestions', '/settings'],
+    user: ['/', '/history', '/settings']
+  };
+
   export default {
     computed: {
       loggedIn() {
-        return this.$store.getters.oodler.id ? true : false;
+        return !!this.$store.getters.oodler.id;
       }
     },
-
     beforeCreate() {
-      if(['/password/reset', '/password/new'].indexOf(this.$route.path) > -1) {
+      if (routes.public.includes(this.$route.path)) {
         return;
       }
 
       this.$http.get('/session')
-      .then(
-        response => {
-          if (response.ok) {
-            let oodler = response.body;
-            this.$store.dispatch('initStore', oodler);
-            
-            if (oodler.scope === 'admin') {
-              if(!['/admin', '/admin/history', '/admin/thingies', '/admin/oodlers', '/admin/suggestions', '/settings'].includes(this.$route.path)) {
-                this.$router.replace({ path: '/admin' });
-              }
-            }
-            else {
-              if(!['/', '/history', '/settings'].includes(this.$route.path)) {
-                this.$router.replace({ path: '/' });
-              }
-            }
+        .then(response => {
+          if (!response.ok) {
+            return;
           }
-        },
-        response => {
+          const oodler = response.body;
+          this.$store.dispatch('initStore', oodler);
+
+          if (oodler.scope === 'admin' && !routes.admin.includes(this.$route.path)) {
+            this.$router.replace({ path: '/admin' });
+            return;
+          }
+
+          if (oodler.scope === 'user' && !routes.user.includes(this.$route.path)) {
+            this.$router.replace({ path: '/' });
+          }
+        }, () => {
           this.$router.replace({ path: '/login' });
         });
     },
-
     components: { NavBar }
-  }
+  };
 </script>
 
 <style lang="scss">
   body {
+    background: url('assets/background.png') repeat;
+
     .logo {
       position: fixed;
       bottom: 0;
       left: 0;
       z-index: -1;
     }
-
-    background: url('assets/background.png') repeat;
   }
 </style>

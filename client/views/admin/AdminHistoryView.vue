@@ -10,7 +10,7 @@
             <span class="input-group-addon">Office: </span>
             <select class="form-control" @change="load" v-model="selectedOffice">
               <option>TOTALS</option>
-              <option v-for="office in offices">{{ office }}</option>
+              <option v-for="office in offices" :key="`${_uid}_office_${office}`">{{ office }}</option>
             </select>
           </div>
         </div>
@@ -32,7 +32,7 @@
       <div class="col-md-12">
         <div class="row">
           <ul class="total-oodlets-list">
-            <li class="col-md-2" v-for="historyOodlet in historyOodlets">
+            <li class="col-md-2" v-for="historyOodlet in historyOodlets" :key="historyOodlet.id">
               <admin-history-oodlet :selectedOffice="selectedOffice" :historyOodlet="historyOodlet"></admin-history-oodlet>
             </li>
           </ul>
@@ -43,16 +43,17 @@
 </template>
 
 <script>
-  import AdminHistoryOodlet from '../../components/admin/AdminHistoryOodlet.vue';
   import moment from 'moment';
-  
-  export default{
+
+  import AdminHistoryOodlet from '../../components/admin/AdminHistoryOodlet.vue';
+
+  export default {
     data() {
       return {
         flatpickrOptions: {
           maxDate: 'today',
           altInput: true,
-          altFormat: "j. n. Y.",
+          altFormat: 'j. n. Y.',
           altInputClass: 'form-control'
         },
         historyOodlets: [],
@@ -60,71 +61,50 @@
         toDate: moment().format('YYYY-MM-DD'),
         offices: [],
         selectedOffice: 'TOTALS'
-      }
+      };
     },
-    
     computed: {
       appInitialized() {
         return this.$store.getters.appInitialized;
       }
     },
-    
     watch: {
-      // Cannot use an arrow fn because 'this' wouldn't be Vue instance
       appInitialized() {
-        this.load()
+        this.load();
       },
       fromDate() {
-        this.load()
+        this.load();
       },
       toDate() {
-        this.load()
+        this.load();
       }
     },
-    
     methods: {
       load() {
-        let options = (() => {
-          if (this.selectedOffice === 'TOTALS') {
-            return {
-              params: {
-                fromDate: moment(this.fromDate).format(),
-                toDate: moment(this.toDate).format()
-              }
-            }
-          }
-          else {
-            return {
-              params: {
-                fromDate: moment(this.fromDate).format(),
-                toDate: moment(this.toDate).format(),
-                office: this.selectedOffice
-              }
-            }
-          }
-        })();
-        let endpoint = this.selectedOffice === 'TOTALS' ? '/totalOodlet' : '/oodlet';
-        
-        this.$http.get(endpoint, options)
+        const params = {
+          fromDate: moment(this.fromDate).format(),
+          toDate: moment(this.toDate).format()
+        };
+
+        if (this.selectedOffice !== 'TOTALS') {
+          params.office = this.selectedOffice;
+        }
+        const oodletsEndpoint = this.selectedOffice === 'TOTALS' ? '/totalOodlet' : '/oodlet';
+
+        this.$http.get(oodletsEndpoint, { params })
           .then(response => {
-            let oodlets = response.body;
-            if(this.selectedOffice === 'TOTALS') {
-              oodlets.sort((a,b) => (a.orderedAt > b.orderedAt) ? -1 : 1);
-            }
-            else {
-              oodlets.sort((a,b) => (a.dueDate > b.dueDate) ? -1 : 1);
-            }
-            this.historyOodlets = oodlets;
+            const sortKey = this.selectedOffice === 'TOTALS' ? 'orderedAt' : 'dueDate';
+            this.historyOodlets = response.body
+              .sort((prev, next) => next[sortKey] - prev[sortKey]);
           });
-        
         this.$http.get('/oodler').then(response => {
-          for(let oodler of response.body) {
-            if(!this.offices.includes(oodler.office)) {
-              this.offices.push(oodler.office)
-            }
-          }
-          this.offices.sort();
-        })
+          const offices = response.body
+            .map(oodler => oodler.office)
+            .filter(office => !this.offices.includes(office));
+          this.offices = this.offices
+            .concat(offices)
+            .sort();
+        });
       },
       changeFromDate(fromDate) {
         this.fromDate = moment(fromDate).toDate();
@@ -133,36 +113,34 @@
         this.toDate = moment(toDate).toDate();
       }
     },
-  
     beforeCreate() {
-      if(this.$store.getters.oodler.scope === 'user') {
+      if (this.$store.getters.oodler.scope === 'user') {
         this.$router.replace({ path: '/' });
       }
     },
-    
     mounted() {
       if (this.appInitialized) {
-        this.load()
+        this.load();
       }
     },
-    
     components: {
-      AdminHistoryOodlet,
+      AdminHistoryOodlet
     }
-  }
+  };
 </script>
 
 <style lang="scss" scoped>
   #adminHistoryView {
     .page-header {
-      margin: 0px 0 10px;
+      margin: 0 0 10px;
 
-      h1, .form-group {
+      h1,
+      .form-group {
         margin-top: 20px;
         margin-bottom: 10px;
       }
     }
-    
+
     ul.total-oodlets-list {
       padding-left: 0;
       list-style: none;
@@ -172,7 +150,7 @@
       -webkit-flex-wrap: wrap;
       -ms-flex-wrap: wrap;
       flex-wrap: wrap;
-    
+
       li {
         display: -webkit-flex;
         display: -ms-flexbox;

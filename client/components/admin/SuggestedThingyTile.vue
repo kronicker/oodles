@@ -26,7 +26,6 @@
             </tbody>
           </table>
         </div>
-        
         <form @submit="updateSuggestedThingy" class="form-horizontal col-md-12">
           <div v-show="editing.unit" class="form-group form-group-sm">
             <label for="unit" class="col-md-2 control-label">Unit</label>
@@ -50,7 +49,6 @@
             </tbody>
           </table>
         </div>
-        
         <form @submit="updateSuggestedThingy" class="form-horizontal col-md-12">
           <div v-show="editing.pictureUrl" class="form-group form-group-sm">
             <label for="name" class="col-md-2 control-label">Picture Url</label>
@@ -74,7 +72,6 @@
             </tbody>
           </table>
         </div>
-  
         <div class="col-md-12">
           <table class="table table-striped table-hover col-md-12">
             <tbody>
@@ -89,7 +86,6 @@
             </tbody>
           </table>
         </div>
-        
         <div class="form-group col-md-12">
           <div class="btn-group btn-group-justified">
             <a type="button" data-toggle="modal" :data-target="'#' + suggestedThingy.id + 'suggestionRejection'" class="btn btn-danger">Reject</a>
@@ -98,7 +94,6 @@
         </div>
       </div>
     </div>
-  
     <div class="modal fade" data-backdrop="static" data-keyboard="false" :id="suggestedThingy.id + 'suggestionApproval'">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -131,7 +126,6 @@
         </div>
       </div>
     </div>
-  
     <div class="modal fade" data-backdrop="static" data-keyboard="false" :id="suggestedThingy.id + 'suggestionRejection'">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -164,13 +158,12 @@
         </div>
       </div>
     </div>
-    
   </div>
 </template>
 
 <script>
-  
   export default {
+    props: ['suggestedThingy'],
     data() {
       return {
         editedSuggestedThingy: {},
@@ -179,47 +172,38 @@
           unit: false,
           pictureUrl: false
         }
-      }
+      };
     },
-  
-    props: ['suggestedThingy'],
-    
     methods: {
       updateSuggestedThingy() {
-        this.$http.put('/suggestedThingy/' + this.suggestedThingy.id,
-          {
-            name: this.editedSuggestedThingy.name,
-            unit: this.editedSuggestedThingy.unit,
-            pictureUrl: this.editedSuggestedThingy.pictureUrl
-          })
+        this.$http.put(`/suggestedThingy/${this.suggestedThingy.id}`, this.editedSuggestedThingy)
           .then(response => {
-            if(response.ok) {
-              this.$emit('suggestionUpdate');
-              for(let property in this.editing) {
-                this.$set(this.editing, property, false);
-              }
+            if (!response.ok) {
+              return;
             }
+
+            this.$emit('suggestionUpdate');
+            this.editing.forEach(property => this.$set(this.editing, property, false));
           });
       },
       approveSuggestion() {
-        this.$http.post('/suggestedThingy/' + this.suggestedThingy.id,
-          {
-            name: this.editedSuggestedThingy.name,
-            unit: this.editedSuggestedThingy.unit,
-            pictureUrl: this.editedSuggestedThingy.pictureUrl
-          })
+        this.$http.post(`/suggestedThingy/${this.suggestedThingy.id}`, this.editedSuggestedThingy)
           .then(response => {
-            if(response.ok) {
-              this.$emit('suggestionUpdate');
+            if (!response.ok) {
+              return;
             }
+
+            this.$emit('suggestionUpdate');
           });
       },
       rejectSuggestion() {
-        this.$http.delete('/suggestedThingy/' + this.suggestedThingy.id)
+        this.$http.delete(`/suggestedThingy/${this.suggestedThingy.id}`)
           .then(response => {
-            if(response.ok) {
-              this.$emit('suggestionUpdate');
+            if (!response.ok) {
+              return;
             }
+
+            this.$emit('suggestionUpdate');
           });
       },
       edit(el) {
@@ -230,40 +214,45 @@
         this.$set(this.editing, el, false);
       }
     },
-  
     mounted() {
       Object.assign(this.editedSuggestedThingy, this.suggestedThingy);
     },
-    
     beforeUpdate() {
       Object.assign(this.editedSuggestedThingy, this.suggestedThingy);
     }
-  }
+  };
 </script>
 
 <style lang="scss" scoped>
-  .suggested-thingy-tile  .thumbnail {
+  .suggested-thingy-tile .thumbnail {
     padding: 5px 10px 0;
     max-width: 100%;
-  
-    .control-label { padding-left: 21px }
-  
+
+    .control-label { padding-left: 21px; }
+
     img { margin-bottom: 5px; }
-    
+
     .form-horizontal .control-label { text-align: left; }
-    
+
     .table {
-      table-layout:fixed;
+      table-layout: fixed;
       margin-bottom: 15px;
+
       tr {
         cursor: text;
-        td {overflow: hidden; overflow-wrap: break-word;}
+
+        td {
+          overflow: hidden;
+          overflow-wrap: break-word;
+        }
+
         .hover-btn {
           position: absolute;
           right: 15px;
           display: none;
         }
       }
+
       tr:hover .hover-btn { display: block; }
     }
   }

@@ -15,94 +15,85 @@ function clearStore({ commit }) {
 }
 
 function thingyTileAdd({ commit, state }, quantifiedThingy) {
-  if(!state.oodlet.id) { return false; }
-  commit('thingyTileAdd', quantifiedThingy);
+  if (!state.oodlet.id) {
+    return;
+  }
 
-  oodletApi.update(state.oodlet).then(response => {
-    commit('oodletSet', response.body);
-  });
+  commit('thingyTileAdd', quantifiedThingy);
+  oodletApi.update(state.oodlet)
+    .then(oodlet => commit('oodletSet', oodlet));
 }
 
 function quantifiedThingyChange({ commit, state }, payload) {
-  if(!state.oodlet.id) { return false; }
-  if (payload.qty === 0) {
-    commit('quantifiedThingyRemove', payload.id);
-  }
-  else {
-    commit('quantifiedThingyUpdate', payload);
+  if (!state.oodlet.id) {
+    return;
   }
 
-  oodletApi.update(state.oodlet).then(response => {
-    commit('oodletSet', response.body);
-  });
+  if (payload.qty === 0) {
+    commit('quantifiedThingyRemove', payload.id);
+    return;
+  }
+
+  commit('quantifiedThingyUpdate', payload);
+  oodletApi.update(state.oodlet)
+    .then(oodlet => commit('oodletSet', oodlet));
 }
 
 function historyOodletLoad({ commit, state }, historyOodlet) {
-  if(!state.oodlet.id) { return false; }
+  if (!state.oodlet.id) {
+    return;
+  }
+
   oodletApi.update({
-      id: state.oodlet.id,
-      quantifiedThingies: historyOodlet.quantifiedThingies
-    })
-    .then(response => {
-      commit('oodletSet', response.body);
-    });
+    id: state.oodlet.id,
+    quantifiedThingies: historyOodlet.quantifiedThingies
+  }).then(oodlet => commit('oodletSet', oodlet));
 }
 
 function oodletLoad({ commit, state }) {
-  oodletApi.active(state.oodler.oodler).then(response => {
-    if(response.body) {
-      commit('oodletSet', response.body);
-    }
-  });
+  oodletApi.active(state.oodler.oodler).then(oodlet => commit('oodletSet', oodlet));
 }
 
 function oodletReset({ commit, state }) {
-  if(!state.oodlet.id) { return false; }
+  if (!state.oodlet.id) {
+    return;
+  }
+
   oodletApi.update({
-      id: state.oodlet.id,
-      quantifiedThingies: []
-    })
-    .then(response => {
-      commit('oodletSet', response.body);
-    });
+    id: state.oodlet.id,
+    quantifiedThingies: []
+  }).then(response => commit('oodletSet', response.body));
 }
 
 function totalOodletLoad({ commit, state }) {
-  totalOodletApi.active(state.oodler.oodler).then(response => {
-    commit('totalOodletSet', response.body);
-    
-    oodletApi.pending().then(response => {
-      commit('pendingOodletsSet', response.body);
-      
-      for(let pendingOodlet of response.body) {
-        commit('oodletAdd', pendingOodlet);
-      }
+  totalOodletApi.active(state.oodler.oodler)
+    .then(totalOodlet => commit('totalOodletSet', totalOodlet))
+    .then(() => oodletApi.pending())
+    .then(pendingOodles => {
+      commit('pendingOodletsSet', pendingOodles);
+      pendingOodles.forEach(pendingOodlet => commit('oodletAdd', pendingOodlet));
       totalOodletApi.update(state.totalOodlet);
     });
-  });
 }
 
 function totalOodletFinalize({ commit, state }) {
   totalOodletApi.finalize(state.totalOodlet).then(() => {
     commit('totalOodletClear');
     commit('pendingOodletClear');
-    
     totalOodletLoad({ commit, state });
   });
 }
 
 function pendingOodletAdd({ commit, state }, pendingOodlet) {
   commit('oodletAdd', pendingOodlet);
-  totalOodletApi.update(state.totalOodlet).then(response => {
-    commit('totalOodletSet', response.body)
-  });
+  totalOodletApi.update(state.totalOodlet)
+    .then(totalOodlet => commit('totalOodletSet', totalOodlet));
 }
 
 function pendingOodletRemove({ commit, state }, pendingOodlet) {
   commit('oodletRemove', pendingOodlet);
-  totalOodletApi.update(state.totalOodlet).then(response => {
-    commit('totalOodletSet', response.body)
-  });
+  totalOodletApi.update(state.totalOodlet)
+    .then(totalOodlet => commit('totalOodletSet', totalOodlet));
 }
 
 export {

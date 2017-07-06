@@ -12,38 +12,29 @@
 </template>
 
 <script>
-  export default{
+  export default {
     props: ['quantifiedThingy'],
-
     methods: {
-      remove() {
-        let payload = {
-          id: this.quantifiedThingy.id,
-          qty: 0
-        };
-
-        this.$store.dispatch('quantifiedThingyChange', payload);
-      },
-
       increment() {
-        let payload = {
+        this.$store.dispatch('quantifiedThingyChange', {
           id: this.quantifiedThingy.id,
           qty: ++this.quantifiedThingy.qty
-        };
-
-        this.$store.dispatch('quantifiedThingyChange', payload);
+        });
       },
-
       decrement() {
-        let payload = {
+        this.$store.dispatch('quantifiedThingyChange', {
           id: this.quantifiedThingy.id,
           qty: --this.quantifiedThingy.qty
-        };
-
-        this.$store.dispatch('quantifiedThingyChange', payload);
+        });
+      },
+      remove() {
+        this.$store.dispatch('quantifiedThingyChange', {
+          id: this.quantifiedThingy.id,
+          qty: 0
+        });
       }
     }
-  }
+  };
 </script>
 
 <style lang="scss" scoped>

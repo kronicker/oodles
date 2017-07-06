@@ -1,8 +1,6 @@
 <template>
   <div id="oodletView">
-  
-    <flash-message @dismissed="dismissed" :message="flashMessage" :type="flashType" ></flash-message>
-    
+    <flash-message v-if="flashMessage" @dismissed="dismissed" :message="flashMessage" :type="flashType" ></flash-message>
     <div class="header page-header">
       <div class="row">
         <div class="col-md-3">
@@ -19,14 +17,13 @@
           <search-bar class="col-md-12" subject="item" @searchBarUpdate="searchBarUpdate"></search-bar>
         </div>
         <ul class="row">
-            <li v-for="thingy in filteredThingies" class="col-md-2">
+            <li v-for="thingy in filteredThingies" :key="thingy.id" class="col-md-2">
               <thingy-tile :thingy="thingy"></thingy-tile>
             </li>
           </ul>
       </div>
       <oodlet class="col-md-3"></oodlet>
     </div>
-    
     <div class="modal fade" data-backdrop="static" data-keyboard="false" id="suggestThingy">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -62,10 +59,12 @@
 </template>
 
 <script>
-  import SearchBar from '../../components/common/SearchBar.vue'
-  import FlashMessage from '../../components/common/FlashMessage.vue'
-  import Oodlet from '../../components/user/Oodlet.vue'
-  import ThingyTile from '../../components/user/ThingyTile.vue'
+  import sortBy from 'lodash/sortBy';
+
+  import FlashMessage from '../../components/common/FlashMessage.vue';
+  import Oodlet from '../../components/user/Oodlet.vue';
+  import SearchBar from '../../components/common/SearchBar.vue';
+  import ThingyTile from '../../components/user/ThingyTile.vue';
 
   export default{
     data() {
@@ -79,9 +78,8 @@
         flashMessage: '',
         flashType: '',
         thingies: []
-      }
+      };
     },
-
     computed: {
       appInitialized() {
         return this.$store.getters.appInitialized;
@@ -90,53 +88,46 @@
         return this.$store.getters.oodler;
       },
       filteredThingies() {
-        if(this.searchString.length < 1) {
+        if (this.searchString.length < 1) {
           return this.thingies;
         }
 
-        let searchString = this.searchString.toLowerCase();
-        return this.thingies.filter(item => {
-          return item.name.toLowerCase().indexOf(searchString) !== -1
-        });
+        const searchString = this.searchString.toLowerCase();
+        return this.thingies.filter(item => item.name.toLowerCase().includes(searchString));
       }
     },
-
     watch: {
-      appInitialized() { //Cannot be arrow fn cause that way 'this' wouldn't be Vue instance
-        this.load()
+      appInitialized() {
+        this.load();
       }
     },
-
     methods: {
       searchBarUpdate(query) {
         this.searchString = query;
       },
       load() {
-        this.$http.get('/thingy').then((response) => {
-          let thingies = response.body;
-          thingies.sort((a,b) => (a.name.toLowerCase() < b.name.toLowerCase()) ? -1 : 1);
-          this.thingies = thingies;
+        this.$http.get('/thingy').then(response => {
+          this.thingies = sortBy(response.body, thingy => thingy.name.toLowerCase());
         });
       },
       suggestThingy() {
-        this.$http.post('/suggestedThingy', {
+        const thingy = {
           name: this.suggestedThingy.name,
           unit: this.suggestedThingy.unit,
           pictureUrl: this.suggestedThingy.pictureUrl,
           oodler: this.oodler
-          
-        }).then(
-          response => {
-            for(let property in this.suggestedThingy) {
-              this.suggestedThingy[property] = '';
-            }
+        };
+        this.$http.post('/suggestedThingy', thingy)
+          .then(() => {
+            Object.keys(this.suggestedThingy).forEach(key => {
+              this.suggestedThingy[key] = '';
+            });
             this.flashMessage = 'Your suggestion has been submitted!';
             this.flashType = 'info';
-          },
-          response => {
-            for(let property in this.suggestedThingy) {
-              this.suggestedThingy[property] = '';
-            }
+          }, () => {
+            Object.keys(this.suggestedThingy).forEach(key => {
+              this.suggestedThingy[key] = '';
+            });
             this.flashMessage = 'Incorrect suggestion! Please try again';
             this.flashType = 'danger';
           });
@@ -145,33 +136,30 @@
         this.flashMessage = '';
       }
     },
-    
     beforeCreate() {
-      if(this.$store.getters.oodler.scope === 'admin') {
+      if (this.$store.getters.oodler.scope === 'admin') {
         this.$router.replace({ path: '/admin' });
       }
     },
-
     mounted() {
-      if(this.appInitialized) {
+      if (this.appInitialized) {
         this.load();
       }
     },
-
     components: {
       Oodlet,
       SearchBar,
       ThingyTile,
       FlashMessage
     }
-  }
+  };
 </script>
 
 <style lang="scss" scoped>
   #oodletView {
     .page-header {
       margin: 0px 0 10px;
-  
+
       h1, .add-button {
         margin-top: 20px;
         margin-bottom: 10px;
@@ -187,7 +175,7 @@
       -webkit-flex-wrap: wrap;
       -ms-flex-wrap: wrap;
       flex-wrap: wrap;
-  
+
       li {
         display: -webkit-flex;
         display: -ms-flexbox;

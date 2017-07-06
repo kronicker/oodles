@@ -9,11 +9,10 @@
         <strong>Due date: </strong>
         <span>{{ dueDate }}</span>
       </div>
-      
       <div class="panel-body">
         <table class="table table-striped table-hover">
           <tbody>
-          <tr v-for="quantifiedThingy in historyOodlet.quantifiedThingies">
+          <tr v-for="quantifiedThingy in historyOodlet.quantifiedThingies" :key="quantifiedThingy.id">
             <td>{{ quantifiedThingy.name }}</td>
             <td class="col-md-2 right">{{ quantifiedThingy.qty }}</td>
             <td class="col-md-2">{{ quantifiedThingy.unit }}</td>
@@ -24,7 +23,7 @@
       <div class="panel-footer" v-if="selectedOffice == 'TOTALS'">
         <strong>Offices: </strong>
         <ul class="list-inline">
-          <li v-for="office in offices">{{ office }}</li>
+          <li v-for="office in offices" :key="`${_uid}_office_${office}`">{{ office }}</li>
         </ul>
       </div>
       <div class="panel-footer" v-else>
@@ -41,16 +40,14 @@
 
 <script>
   import moment from 'moment';
-  
+
   export default {
+    props: ['historyOodlet', 'selectedOffice'],
     data() {
       return {
         offices: []
-      }
+      };
     },
-    
-    props: ['historyOodlet', 'selectedOffice'],
-    
     computed: {
       orderedOn() {
         return moment(this.historyOodlet.orderedAt).locale('hr').format('LL');
@@ -59,30 +56,30 @@
         return moment(this.historyOodlet.dueDate).locale('hr').format('LL');
       }
     },
-    
     methods: {
       getOffices() {
-        if(this.selectedOffice !== 'TOTALS') { return; }
-        for(let oodletId of this.historyOodlet.oodletIds) {
+        if (this.selectedOffice !== 'TOTALS') {
+          return;
+        }
+
+        this.historyOodlet.oodletIds.forEach(oodletId => {
           this.$http.get(`/oodlet/${oodletId}`)
             .then(response => {
               this.offices.push(response.body.oodler.office);
             });
-        }
+        });
       }
     },
-    
     mounted() {
       this.getOffices();
     }
-  }
+  };
 </script>
 
 <style lang="scss" scoped>
   .admin-history-oodlet {
     width: 100%;
-    .col-md-2 {
-      &.right { text-align: right; }
-    }
+
+    .col-md-2 .right { text-align: right; }
   }
 </style>

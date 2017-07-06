@@ -1,8 +1,6 @@
 <template>
   <div id="thingiesView">
-  
-    <flash-message @dismissed="dismissed" :message="flashMessage" :type="flashType" ></flash-message>
-  
+    <flash-message v-if="flashMessage" @dismissed="dismissed" :message="flashMessage" :type="flashType" ></flash-message>
     <div class="header page-header">
       <div class="row">
         <div class="col-md-3">
@@ -17,11 +15,10 @@
       <search-bar class="col-md-12" subject="item" @searchBarUpdate="searchBarUpdate"></search-bar>
     </div>
     <div class="row filtered-thingies">
-      <div v-for="thingy in filteredThingies" class="col-md-3">
+      <div v-for="thingy in filteredThingies" :key="thingy.id" class="col-md-3">
         <thingy-edit-tile  @thingyUpdate="load" :thingy="thingy"></thingy-edit-tile>
       </div>
     </div>
-  
     <div class="modal fade" data-backdrop="static" data-keyboard="false" id="newThingy">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -57,10 +54,12 @@
 </template>
 
 <script>
-  import SearchBar from '../../components/common/SearchBar.vue'
-  import FlashMessage from '../../components/common/FlashMessage.vue'
-  import ThingyEditTile from '../../components/admin/ThingyEditTile.vue'
-  
+  import sortBy from 'lodash/sortBy';
+
+  import FlashMessage from '../../components/common/FlashMessage.vue';
+  import SearchBar from '../../components/common/SearchBar.vue';
+  import ThingyEditTile from '../../components/admin/ThingyEditTile.vue';
+
   export default{
     data() {
       return {
@@ -73,60 +72,49 @@
           unit: '',
           pictureUrl: ''
         }
-      }
+      };
     },
-    
     computed: {
       appInitialized() {
         return this.$store.getters.appInitialized;
       },
       filteredThingies() {
-        if(this.searchString.length < 1) {
+        if (this.searchString.length < 1) {
           return this.thingies;
         }
-        
-        let searchString = this.searchString.toLowerCase();
-        return this.thingies.filter(item => {
-          return item.name.toLowerCase().indexOf(searchString) !== -1
-        });
+
+        const searchString = this.searchString.toLowerCase();
+        return this.thingies.filter(item => item.name.toLowerCase().includes(searchString));
       }
     },
-    
     watch: {
-      appInitialized() { //Cannot be arrow fn cause that way 'this' wouldn't be Vue instance
-        this.load()
+      appInitialized() {
+        this.load();
       }
     },
-    
     methods: {
       searchBarUpdate(query) {
         this.searchString = query;
       },
       load() {
-        this.$http.get('/thingy').then((response) => {
-          let thingies = response.body;
-          thingies.sort((a,b) => (a.name.toLowerCase() < b.name.toLowerCase()) ? -1 : 1);
-          this.thingies = thingies;
+        this.$http.get('/thingy').then(response => {
+          this.thingies = sortBy(response.body, thingy => thingy.name.toLowerCase());
         });
       },
       save() {
-        this.$http.post('/thingy', {
-          name: this.newThingy.name,
-          unit: this.newThingy.unit,
-          pictureUrl: this.newThingy.pictureUrl
-        }).then(
-          response => {
-            for(let property in this.newThingy) {
-              this.newThingy[property] = '';
-            }
+        this.$http.post('/thingy', this.newThingy).then(
+          () => {
+            Object.keys(this.newThingy).forEach(key => {
+              this.newThingy[key] = '';
+            });
             this.flashMessage = 'Success! New item added!';
             this.flashType = 'success';
             this.load();
           },
-          response => {
-            for(let property in this.newThingy) {
-              this.newThingy[property] = '';
-            }
+          () => {
+            Object.keys(this.newThingy).forEach(key => {
+              this.newThingy[key] = '';
+            });
             this.flashMessage = 'Oops! Something went wrong! Please, try again!';
             this.flashType = 'danger';
             this.load();
@@ -136,38 +124,35 @@
         this.flashMessage = '';
       }
     },
-  
     beforeCreate() {
-      if(this.$store.getters.oodler.scope === 'user') {
+      if (this.$store.getters.oodler.scope === 'user') {
         this.$router.replace({ path: '/' });
       }
     },
-    
     mounted() {
-      if(this.appInitialized) {
+      if (this.appInitialized) {
         this.load();
       }
     },
-    
     components: {
       SearchBar,
       ThingyEditTile,
       FlashMessage
     }
-  }
+  };
 </script>
 
 <style lang="scss" scoped>
   #thingiesView {
     .page-header {
-      margin: 0px 0 10px;
+      margin: 0 0 10px;
 
-      h1, .add-button {
+      h1,
+      .add-button {
         margin-top: 20px;
         margin-bottom: 10px;
       }
     }
-    
 
     .filtered-thingies {
       padding-left: 0;
@@ -177,7 +162,7 @@
       -webkit-flex-wrap: wrap;
       -ms-flex-wrap: wrap;
       flex-wrap: wrap;
-  
+
       .thingy-edit-tile {
         display: -webkit-flex;
         display: -ms-flexbox;

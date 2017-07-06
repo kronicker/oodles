@@ -25,7 +25,6 @@
             </tbody>
           </table>
         </div>
-  
         <form @submit="updateOodler" class="form-horizontal col-md-12">
           <div v-show="editing.lastName" class="form-group form-group-sm">
             <label for="lastName" class="col-md-3 control-label">Last Name</label>
@@ -49,7 +48,6 @@
             </tbody>
           </table>
         </div>
-        
         <form @submit="updateOodler" class="form-horizontal col-md-12">
           <div v-show="editing.email" class="form-group form-group-sm">
             <label for="email" class="col-md-3 control-label">Email</label>
@@ -73,7 +71,6 @@
             </tbody>
           </table>
         </div>
-  
         <form @submit="updateOodler" class="form-horizontal col-md-12">
           <div v-show="editing.office" class="form-group form-group-sm">
             <label for="office" class="col-md-3 control-label">Office</label>
@@ -104,7 +101,6 @@
         </div>
       </div>
     </div>
-  
     <div class="modal fade" data-backdrop="static" data-keyboard="false" :id="oodler.id + 'delete'">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -141,8 +137,12 @@
 </template>
 
 <script>
-  
+  import omit from 'lodash/omit';
+
+  const immutableProps = ['id', 'password'];
+
   export default {
+    props: ['oodler'],
     data() {
       return {
         editedOodler: {},
@@ -152,39 +152,19 @@
           email: false,
           office: false
         }
-      }
+      };
     },
-    
-    props: ['oodler'],
-    
     methods: {
       updateOodler() {
-        this.$http.put('/oodler/' + this.oodler.id,
-          {
-            firstName: this.editedOodler.firstName,
-            lastName: this.editedOodler.lastName,
-            email: this.editedOodler.email,
-            office: this.editedOodler.office,
-            scope: this.editedOodler.scope
-          })
-          .then(
-            response => {
-              this.$emit('oodlerUpdate');
-              for (let property in this.editing) {
-                this.$set(this.editing, property, false);
-              }
-            },
-            response => {
-              for(let property in this.editing) {
-                this.$set(this.editing, property, false);
-              }
-            });
+        this.$http.put(`/oodler/${this.oodler.id}`, this.editedOodler)
+          .then(() => {
+            this.$emit('oodlerUpdate');
+            Object.keys(this.editing).forEach(property => this.$set(this.editing, property, false));
+          });
       },
       removeOodler() {
-        this.$http.delete('/oodler/' + this.oodler.id)
-          .then(response => {
-            this.$emit('oodlerUpdate');
-          });
+        this.$http.delete(`/oodler/${this.oodler.id}`)
+          .then(() => this.$emit('oodlerUpdate'));
       },
       edit(el) {
         this.$set(this.editing, el, true);
@@ -194,39 +174,44 @@
         this.$set(this.editing, el, false);
       }
     },
-  
     mounted() {
-      Object.assign(this.editedOodler, this.oodler);
+      Object.assign(this.editedOodler, omit(this.oodler, immutableProps));
     },
-  
     beforeUpdate() {
-      Object.assign(this.editedOodler, this.oodler);
+      Object.assign(this.editedOodler, omit(this.oodler, immutableProps));
     }
-  }
+  };
 </script>
 
 <style lang="scss" scoped>
   .oodler-edit-tile .well {
     padding: 5px 10px 0;
     max-width: 100%;
-  
+
     .control-label { padding-left: 21px; }
-    
+
     .form-horizontal .control-label { text-align: left; }
-    
+
     .table {
-      table-layout:fixed;
+      table-layout: fixed;
       margin-bottom: 15px;
+
       tr {
         cursor: text;
-        td {overflow: hidden; overflow-wrap: break-word;}
+
+        td {
+          overflow: hidden;
+          overflow-wrap: break-word;
+        }
+
         .hover-btn {
           position: absolute;
           right: 15px;
           display: none;
         }
+
+        &:hover .hover-btn { display: block; }
       }
-      tr:hover .hover-btn { display: block; }
     }
   }
 </style>

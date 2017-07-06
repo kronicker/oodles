@@ -4,13 +4,13 @@
       <div class="panel-heading">
         <strong>Offices: </strong>
         <ul class="list-inline">
-          <li v-for="office in offices">{{ office }}</li>
+          <li v-for="office in offices" :key="`${_uid}_office_${office}`">{{ office }}</li>
         </ul>
       </div>
       <div class="panel-body">
         <table class="table table-striped table-hover">
           <tbody>
-            <tr v-for="quantifiedThingy in quantifiedThingies">
+            <tr v-for="quantifiedThingy in quantifiedThingies" :key="quantifiedThingy.id">
               <td>{{ quantifiedThingy.name }}</td>
               <td class="col-md-2 right">{{ quantifiedThingy.qty }}</td>
               <td class="col-md-2">{{ quantifiedThingy.unit }}</td>
@@ -24,7 +24,6 @@
         </span>
       </div>
     </div>
-
     <div class="modal fade" data-backdrop="static" data-keyboard="false" id="totalOodletReview">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -35,7 +34,7 @@
           <div class="modal-body">
             <table class="table table-striped table-hover">
               <tbody>
-              <tr v-for="quantifiedThingy in quantifiedThingies">
+              <tr v-for="quantifiedThingy in quantifiedThingies"  :key="quantifiedThingy.id">
                 <td class="col-md-1"><input type="checkbox" :value="quantifiedThingy.id" v-model="checkedQuantifiedThingies"></td>
                 <td>{{ quantifiedThingy.name }}</td>
                 <td class="col-md-2 right">{{ quantifiedThingy.qty }}</td>
@@ -55,12 +54,11 @@
 </template>
 
 <script>
-
   export default {
     data() {
       return {
         checkedQuantifiedThingies: []
-      }
+      };
     },
     computed: {
       quantifiedThingies() {
@@ -70,18 +68,15 @@
         return this.$store.getters.totalOodletOffices;
       }
     },
-
     methods: {
-      order(event) {
-        if(this.checkedQuantifiedThingies.length !== this.quantifiedThingies.length) {
-          return event.stopPropagation();
+      order(e) {
+        if (this.checkedQuantifiedThingies.length !== this.quantifiedThingies.length) {
+          e.stopPropagation();
+          return;
         }
+
         this.$store.dispatch('totalOodletFinalize');
       }
     }
-  }
-
+  };
 </script>
-
-<style lang="scss" scoped>
-</style>
