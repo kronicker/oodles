@@ -8,8 +8,8 @@ import 'vue-flatpickr/theme/dark.css';
 
 Vue.use(VueResource);
 Vue.use(VueFlatpickr);
-  
-new Vue({
+
+module.exports = new Vue({
   el: '#app',
   store,
   router,
