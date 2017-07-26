@@ -5,7 +5,7 @@
         <div class="col-md-3">
           <h1 class="text-info">History</h1>
         </div>
-        <div class="form-group col-md-offset-3 col-md-2">
+        <div class="form-group col-md-offset-4 col-md-2">
           <div class="input-group">
             <span class="input-group-addon">Office: </span>
             <select class="form-control" @change="load" v-model="selectedOffice">
@@ -14,16 +14,10 @@
             </select>
           </div>
         </div>
-        <div class="form-group col-md-2">
+        <div class="form-group col-md-3">
           <div class="input-group">
-            <span class="input-group-addon">From: </span>
-            <Flatpickr :value="fromDate" :options="flatpickrOptions" @update="changeFromDate"/>
-          </div>
-        </div>
-        <div class="form-group col-md-2">
-          <div class="input-group">
-            <span class="input-group-addon">To: </span>
-            <Flatpickr :value="toDate" :options="flatpickrOptions" @update="changeToDate"/>
+            <span class="input-group-addon">Range: </span>
+            <flat-pickr v-model="range" :config="flatpickrOptions"></flat-pickr>
           </div>
         </div>
       </div>
@@ -51,14 +45,19 @@
     data() {
       return {
         flatpickrOptions: {
-          maxDate: 'today',
+          mode: 'range',
+          maxDate: new Date(),
           altInput: true,
           altFormat: 'j. n. Y.',
           altInputClass: 'form-control'
         },
         historyOodlets: [],
-        fromDate: moment().subtract(3, 'months').format('YYYY-MM-DD'),
-        toDate: moment().format('YYYY-MM-DD'),
+        defaultDates: {
+          from: moment().subtract(2, 'months').format('YYYY-MM-DD'),
+          to: moment().format('YYYY-MM-DD')
+        },
+        selectedDates: {},
+        range: '',
         offices: [],
         selectedOffice: 'TOTALS'
       };
@@ -70,25 +69,33 @@
     },
     watch: {
       appInitialized() {
+        debugger;
         this.load();
       },
-      fromDate() {
-        this.load();
-      },
-      toDate() {
+      range() {
+        const range = this.range.split(' to ');
+        if (!range[1]) {
+          return;
+        }
+
+        this.selectedDates = {
+          from: moment(range[0]).format(),
+          to: moment(range[1]).format()
+        };
         this.load();
       }
     },
     methods: {
       load() {
-        const params = {
-          fromDate: moment(this.fromDate).format(),
-          toDate: moment(this.toDate).format()
-        };
-
-        if (this.selectedOffice !== 'TOTALS') {
-          params.office = this.selectedOffice;
+        if (!this.selectedDates.from || !this.selectedDates.to) {
+          return;
         }
+
+        const params = {
+          fromDate: this.selectedDates.from,
+          toDate: this.selectedDates.to,
+          office: this.selectedOffice !== 'TOTALS' ? this.selectedOffice : undefined
+        };
         const oodletsEndpoint = this.selectedOffice === 'TOTALS' ? '/totalOodlet' : '/oodlet';
 
         this.$http.get(oodletsEndpoint, { params })
@@ -105,12 +112,6 @@
             .concat(offices)
             .sort();
         });
-      },
-      changeFromDate(fromDate) {
-        this.fromDate = moment(fromDate).toDate();
-      },
-      changeToDate(toDate) {
-        this.toDate = moment(toDate).toDate();
       }
     },
     beforeCreate() {
@@ -119,9 +120,7 @@
       }
     },
     mounted() {
-      if (this.appInitialized) {
-        this.load();
-      }
+      this.range = `${this.defaultDates.from} to ${this.defaultDates.to}`;
     },
     components: {
       AdminHistoryOodlet
