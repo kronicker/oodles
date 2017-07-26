@@ -1,10 +1,5 @@
-/**
- * Created by toma on 21.09.16..
- */
-'use strict';
-
 const thinky = require('../db/thinky');
-const type = thinky.type;
+const { type } = thinky;
 
 const schema = {
   id: type.string(),
@@ -16,11 +11,8 @@ const schema = {
   office: type.string().min(1)
 };
 
-module.exports = (() => {
-  let model = thinky.createModel("Oodler", schema);
+const model = thinky.createModel('Oodler', schema);
+model.schema = schema;
 
-  model.schema = schema;
-
-  return model;
-})();
+module.exports = model;
 

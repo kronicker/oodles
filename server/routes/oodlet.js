@@ -1,4 +1,3 @@
-'use strict';
 const Joi = require('joi');
 const moment = require('moment');
 const Oodlet = require('../models/oodlet');
@@ -7,45 +6,44 @@ const oodletUtil = require('../util/oodlet');
 const mail = require('../util/mail');
 
 function list(request, reply) {
-  let fromDate = (() => { return request.query.fromDate ? moment(request.query.fromDate).toDate() : moment().subtract(3, 'months').toDate(); })();
-  let toDate = (() => { return request.query.fromDate ? moment(request.query.toDate).add(1, 'days').toDate() : moment().toDate(); })();
-  let office = request.query.office;
+  const fromDate = request.query.fromDate ? moment(request.query.fromDate).toDate() : moment().subtract(3, 'months').toDate();
+  const toDate = request.query.fromDate ? moment(request.query.toDate).add(1, 'days').toDate() : moment().toDate();
+  const office = request.query.office;
 
   return Oodlet
-    .between(fromDate, toDate, { index : 'dueDate' })
-    .filter({ oodler: { office: office} })
+    .between(fromDate, toDate, { index: 'dueDate' })
+    .filter({ oodler: { office } })
     .run()
-    .then(result => {
-      reply(result).code(200);
-    });
+    .then(result => reply(result).code(200));
 }
 
 function get(request, reply) {
   return Oodlet
     .get(request.params.id)
     .run()
-    .then(result => {
-      reply(result).code(200);
-    });
+    .then(result => reply(result).code(200));
 }
 
 function getActive(request, reply) {
-  oodletUtil.findActive(request.query.office)
-    .then(activeOodlets => {
-      reply(activeOodlets[0]).code(200);
-    });
+  return oodletUtil
+    .findActive(request.query.office)
+    .then(activeOodlets => reply(activeOodlets[0]).code(200));
 }
 
 function setActive(request, reply) {
-  oodlerUtil.get(request.payload.id)
+  return oodlerUtil
+    .get(request.payload.id)
     .then(oodler => {
-      oodletUtil.findActive(oodler.office).then(oodlets => {
-        if(oodlets.length) return reply(oodlets[0]).code(400);
-  
-        oodletUtil.create(oodler, request.payload.dueDate)
+      oodletUtil.findActive(oodler.office)
+      .then(oodlets => {
+        if (oodlets.length) {
+          return reply(oodlets[0]).code(400);
+        }
+
+        return oodletUtil.create(oodler, request.payload.dueDate)
           .then(result => {
             mail.sendDueDate(oodler.email.toLowerCase(), request.payload.dueDate);
-            reply(result).code(201);
+            return reply(result).code(201);
           });
       });
     });
@@ -56,30 +54,23 @@ function pending(request, reply) {
 }
 
 function create(request, reply) {
-  oodlerUtil.get(request.payload.oodlerId)
-    .then(oodler => {
-      return Oodlet({
-        oodler: oodler,
-        quantifiedThingies: request.payload.quantifiedThingies
-      })
-        .save()
-        .then(result => {
-          reply(result).code(201);
-        });
-    });
+  const { quantifiedThingies, oodlerId } = request.payload;
+
+  return oodlerUtil
+    .get(oodlerId)
+    .then(oodler => new Oodlet({ oodler, quantifiedThingies }).save())
+    .then(newOodler => reply(newOodler).code(201));
 }
 
 function update(request, reply) {
+  const { quantifiedThingies } = request.payload;
+  const updatedAt = new Date();
+
   return Oodlet
     .get(request.params.id)
-    .update({
-      updatedAt: new Date(),
-      quantifiedThingies: request.payload.quantifiedThingies
-    })
+    .update({ updatedAt, quantifiedThingies })
     .run()
-    .then(result => {
-      reply(result).code(200);
-    });
+    .then(result => reply(result).code(200));
 }
 
 function remove(request, reply) {
@@ -87,13 +78,10 @@ function remove(request, reply) {
     .get(request.params.id)
     .delete()
     .run()
-    .then(result => {
-      reply(result).code(200);
-    });
+    .then(result => reply(result).code(200));
 }
 
-let routes = [
-  {
+const routes = [{
     method: 'GET',
     path: '/oodlet',
     config: {
@@ -109,8 +97,7 @@ let routes = [
         }
       }
     }
-  },
-  {
+  }, {
     method: 'GET',
     path: '/oodlet/{id}',
     config: {
@@ -124,8 +111,7 @@ let routes = [
         }
       }
     }
-  },
-  {
+  }, {
     method: 'GET',
     path: '/oodlet/active',
     config: {
@@ -139,8 +125,7 @@ let routes = [
         }
       }
     }
-  },
-  {
+  }, {
     method: 'POST',
     path: '/oodlet/active',
     config: {
@@ -152,15 +137,13 @@ let routes = [
         }
       }
     }
-  },
-  {
+  }, {
     method: 'GET',
     path: '/oodlet/pending',
     config: {
       handler: pending
     }
-  },
-  {
+  }, {
     method: 'POST',
     path: '/oodlet',
     config: {
@@ -181,8 +164,7 @@ let routes = [
         }
       }
     }
-  },
-  {
+  }, {
     method: 'PUT',
     path: '/oodlet/{id}',
     config: {
@@ -205,8 +187,7 @@ let routes = [
         }
       }
     }
-  },
-  {
+  }, {
     method: 'DELETE',
     path: '/oodlet/{id}',
     config: {
@@ -220,7 +201,6 @@ let routes = [
         }
       }
     }
-  }
-];
+  }];
 
 module.exports = routes;

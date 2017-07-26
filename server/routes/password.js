@@ -1,4 +1,3 @@
-'use strict';
 const Joi = require('joi');
 const Oodler = require('../models/oodler');
 const token = require('../util/token');

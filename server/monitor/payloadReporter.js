@@ -1,13 +1,8 @@
-/**
- * Created by toma on 26.10.16..
- */
-let payloadReporter = [
-  {
+const payloadReporter = [{
     module: 'good-squeeze',
     name: 'Squeeze',
-    args: [{request: '*', response: '*'}]
-  },
-  {
+    args: [{ request: '*', response: '*' }]
+  }, {
     module: 'white-out',
     args: [{
       password: 'remove',
@@ -25,14 +20,12 @@ let payloadReporter = [
       source: 'remove',
       route: 'remove',
       log: 'remove',
-      config: 'remove',
+      config: 'remove'
     }]
-  },
-  {
+  }, {
     module: 'good-squeeze',
-    name: 'SafeJson',
-  },
-  {
+    name: 'SafeJson'
+  }, {
     module: 'good-squeeze-pretty',
     args: [2]
   },

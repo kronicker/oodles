@@ -1,4 +1,3 @@
-'use strict';
 const Joi = require('joi');
 const password = require('../util/password');
 const Oodler = require('../models/oodler');

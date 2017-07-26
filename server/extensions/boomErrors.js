@@ -1,8 +1,6 @@
-'use strict';
-
 function handleBoom(server) {
   server.ext('onPreResponse', (request, reply) => {
-    let response = request.response;
+    const response = request.response;
 
     if (!response.isBoom) {
       return reply.continue();
@@ -13,15 +11,11 @@ function handleBoom(server) {
   });
 }
 
-let boomErrors = {
-  register: (server, options, next) => {
-    handleBoom(server);
-    next();
-  }
+exports.register = (server, options, next) => {
+  handleBoom(server);
+  next();
 };
 
-boomErrors.register.attributes = {
+exports.register.attributes = {
   name: 'boomErrors'
 };
-
-module.exports = boomErrors;

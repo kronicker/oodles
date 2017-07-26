@@ -1,7 +1,6 @@
-'use strict';
-
 const thinky = require('../db/thinky');
-const type = thinky.type;
+const { type } = thinky;
+
 const Oodler = require('./oodler');
 
 const schema = {
@@ -12,10 +11,7 @@ const schema = {
   suggestedBy: type.object().schema(Oodler.schema)
 };
 
-module.exports = (() => {
-  let model = thinky.createModel("SuggestedThingy", schema);
-  
-  model.schema = schema;
-  
-  return model;
-})();
+const model = thinky.createModel('SuggestedThingy', schema);
+model.schema = schema;
+
+module.exports = model;

@@ -1,9 +1,6 @@
-/**
- * Created by toma on 08.11.16..
- */
 const object = require('lodash/object');
 const thinky = require('../db/thinky');
-const type = thinky.type;
+const { type } = thinky;
 const Thingy = require('./thingy');
 const Oodler = require('./oodler');
 
@@ -17,11 +14,8 @@ const schema = {
   oodletIds: type.array(type.string()).default([])
 };
 
-module.exports = (() => {
-  let model = thinky.createModel("TotalOodlet", schema);
-  
-  model.ensureIndex('orderedAt');
-  model.schema = schema;
-  
-  return model;
-})();
+const model = thinky.createModel('TotalOodlet', schema);
+model.ensureIndex('orderedAt');
+model.schema = schema;
+
+module.exports = model;

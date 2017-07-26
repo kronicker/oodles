@@ -1,19 +1,17 @@
-'use strict';
 const faker = require('faker');
 const object = require('lodash/object');
 const collection = require('lodash/collection');
 const moment = require('moment');
 const bcrypt = require('bcrypt');
-let Thingy = require('../models/thingy');
-let Oodler = require('../models/oodler');
-let Oodlet = require('../models/oodlet');
+
+const dbConfig = require('../config').database;
+const Oodler = require('../models/oodler');
+const Oodlet = require('../models/oodlet');
+const Thingy = require('../models/thingy');
 
 const seedsQuantity = process.env.DB_SEED_QTY || 10;
 
-// Dev Accounts
-const dbConfig = require('../config').database;
-
-function* generateOodlers(quantity) {
+function *generateOodlers(quantity) {
   console.log(`Generating ${quantity} Oodlers...`);
 
   // Save devs to db

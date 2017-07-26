@@ -1,6 +1,3 @@
-/**
- * Created by toma on 19.10.16..
- */
 const bcrypt = require('bcrypt');
 const rounds = require('../config').database.defaultBcryptRounds;
 

@@ -1,6 +1,3 @@
-/**
- * Created by toma on 02.12.16..
- */
 const Thingy = require('../models/thingy');
 const SuggestedThingy = require('../models/suggestedThingy');
 

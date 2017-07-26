@@ -1,7 +1,3 @@
-/**
- * Created by toma on 02.12.16..
- */
-'use strict';
 const Joi = require('joi');
 const SuggestedThingy = require('../models/suggestedThingy');
 const suggestedThingyUtil = require('../util/suggestedThingy');
@@ -11,7 +7,7 @@ const mail = require('../util/mail');
 function list(request, reply) {
   let limit = request.query.limit || 50;
   let offset = request.query.offset || 0;
-  
+
   return SuggestedThingy.skip(Number(offset))
     .limit(Number(limit))
     .run()
@@ -32,7 +28,7 @@ function create(request, reply) {
   thingyUtil.filterByName(request.payload.name)
     .then(thingies => {
       if(thingies[0]) { return reply(thingies[0]).code(400); }
-      
+
       return SuggestedThingy({
         name: request.payload.name,
         unit: request.payload.unit,
@@ -44,7 +40,7 @@ function create(request, reply) {
           mail.sendThingySuggestion(result);
           reply(result).code(201);
         });
-      
+
     });
 }
 

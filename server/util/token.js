@@ -1,6 +1,3 @@
-/**
- * Created by toma on 13.10.16..
- */
 const Token = require('../models/token');
 const moment = require('moment');
 const crypto = require('crypto');

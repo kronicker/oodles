@@ -1,39 +1,36 @@
-'use strict';
 const Joi = require('joi');
 const Oodler = require('../models/oodler');
 const token = require('../util/token');
-const mail = require('../util/mail');
+const mailUtil = require('../util/mail');
 
 function list(request, reply) {
-  let limit = request.query.limit || 20;
-  let offset = request.query.offset || 0;
+  const limit = request.query.limit || 20;
+  const offset = request.query.offset || 0;
 
-  return Oodler.skip(Number(offset))
+  return Oodler
+    .skip(Number(offset))
     .limit(Number(limit))
     .run()
-    .then(result => {
-      reply(result).code(200);
-    });
+    .then(result => reply(result).code(200));
 }
 
 function get(request, reply) {
-  return Oodler.get(request.params.id)
+  return Oodler
+    .get(request.params.id)
     .run()
-    .then(result => {
-      reply(result).code(200);
-    });
+    .then(result => reply(result).code(200));
 }
 
 function create(request, reply) {
   return Oodler
-    .filter({ email: request.payload.email.toLowerCase()})
+    .filter({ email: request.payload.email.toLowerCase() })
     .run()
     .then(oodlers => {
-      if(oodlers[0]) {
+      if (oodlers[0]) {
         return reply('Email is already taken!').code(400);
       }
 
-    return Oodler({
+    return new Oodler({
       firstName: request.payload.firstName,
       lastName: request.payload.lastName,
       email: request.payload.email.toLowerCase(),
@@ -44,7 +41,7 @@ function create(request, reply) {
       .then(oodler => {
         token.create(oodler.id)
           .then(token => {
-            mail.sendNewOodler(token, oodler);
+            mailUtil.sendNewOodler(token, oodler);
           });
         reply(oodler).code(201);
       });
@@ -52,10 +49,10 @@ function create(request, reply) {
 }
 
 function update(request, reply) {
-  let oodlerId = request.params.id;
+  const oodlerId = request.params.id;
 
   return Oodler
-    .filter({ email: request.payload.email.toLowerCase()})
+    .filter({ email: request.payload.email.toLowerCase() })
     .run()
     .then(oodlers => {
       //Check if email in the payload exists in database and if it is registered for another user
@@ -64,7 +61,8 @@ function update(request, reply) {
         return reply('Email is already taken!').code(400);
       }
 
-      return Oodler.get(oodlerId)
+      return Oodler
+        .get(oodlerId)
         .update({
           firstName: request.payload.firstName,
           lastName: request.payload.lastName,
@@ -73,23 +71,19 @@ function update(request, reply) {
           scope: request.payload.scope
         })
         .run()
-        .then(result => {
-          reply(result).code(200);
-        });
+        .then(result => reply(result).code(200));
     });
 }
 
 function remove(request, reply) {
-  return Oodler.get(request.params.id)
+  return Oodler
+    .get(request.params.id)
     .delete()
     .run()
-    .then(result => {
-      reply(result).code(200);
-    });
+    .then(result => reply(result).code(200));
 }
 
-let routes = [
-  {
+const routes = [{
     method: 'GET',
     path: '/oodler',
     config: {
@@ -101,8 +95,7 @@ let routes = [
         }
       }
     }
-  },
-  {
+  }, {
     method: 'GET',
     path: '/oodler/{id}',
     config: {
@@ -116,8 +109,7 @@ let routes = [
         }
       }
     }
-  },
-  {
+  }, {
     method: 'POST',
     path: '/oodler',
     config: {
@@ -135,8 +127,7 @@ let routes = [
         }
       }
     }
-  },
-  {
+  }, {
     method: 'PUT',
     path: '/oodler/{id}',
     config: {
@@ -157,8 +148,7 @@ let routes = [
         }
       }
     }
-  },
-  {
+  }, {
     method: 'DELETE',
     path: '/oodler/{id}',
     config: {
@@ -169,8 +159,7 @@ let routes = [
         }
       }
     }
-  }
-];
+  }];
 
 module.exports = routes;
 

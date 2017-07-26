@@ -1,7 +1,3 @@
-/**
- * Created by toma on 08.11.16..
- */
-'use strict';
 const Joi = require('joi');
 const moment = require('moment');
 const TotalOodlet = require('../models/totalOodlet');
@@ -12,7 +8,7 @@ const totalOodletUtil = require('../util/totalOodlet');
 function list(request, reply) {
   let fromDate = (() => { return request.query.fromDate ? moment(request.query.fromDate).toDate() : moment().subtract(3, 'months').toDate(); })();
   let toDate = (() => { return request.query.fromDate ? moment(request.query.toDate).add(1, 'days').toDate() : moment().toDate(); })();
-  
+
   return TotalOodlet
     .between(fromDate, toDate, { index : 'orderedAt' })
     .filter(row => row.hasFields('orderedAt'))

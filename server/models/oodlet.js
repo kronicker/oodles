@@ -1,13 +1,8 @@
-/**
- * Created by toma on 21.09.16..
- */
-'use strict';
-
 const object = require('lodash/object');
 const thinky = require('../db/thinky');
+const { type } = thinky;
 const Thingy = require('./thingy');
 const Oodler = require('./oodler');
-const type = thinky.type;
 const dbConfig = require('../config').database;
 
 const schema = {
@@ -20,11 +15,8 @@ const schema = {
   quantifiedThingies: type.array(type.object().schema(object.merge(Thingy.schema, { qty: type.number() }))).default([])
 };
 
-module.exports = (() => {
-  let model = thinky.createModel("Oodlet", schema);
+const model = thinky.createModel('Oodlet', schema);
+model.ensureIndex('dueDate');
+model.schema = schema;
 
-  model.ensureIndex('dueDate');
-  model.schema = schema;
-
-  return model;
-})();
+module.exports = model;

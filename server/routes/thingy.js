@@ -1,4 +1,3 @@
-'use strict';
 const Joi = require('joi');
 const Thingy = require('../models/thingy');
 const thingyUtil = require('../util/thingy');

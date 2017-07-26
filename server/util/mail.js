@@ -1,6 +1,3 @@
-/**
- * Created by toma on 20.10.16..
- */
 const config = require('../config');
 const mailgun = require('mailgun-js')(config.mailgun.options);
 const oodlerUtil = require('./oodler');
@@ -15,9 +12,9 @@ function sendNewOodler (token, oodler) {
     subject: 'Welcome to Oodles!',
     html: templates.newOodler(token, oodler)
   };
-  
+
   console.log(data);
-  
+
   mailgun.messages().send(data, (err, body) => {
     if(err) throw err;
   });
@@ -64,7 +61,7 @@ function sendThingySuggestion (suggestedThingy) {
           html: templates.thingySuggestion(suggestedThingy)
         };
         console.log(data);
-  
+
         mailgun.messages().send(data, (err, body) => {
           if(err) throw err;
         });
@@ -79,9 +76,9 @@ function sendThingyApproval (email, thingyName, admin) {
     subject: 'Suggestion approved',
     html: templates.thingyApproval(thingyName, admin)
   };
-  
+
   console.log(data);
-  
+
   mailgun.messages().send(data, (err, body) => {
     if(err) throw err;
   });
@@ -94,9 +91,9 @@ function sendThingyRejection (email, thingyName, admin) {
     subject: 'Suggestion rejected',
     html: templates.thingyRejection(thingyName, admin)
   };
-  
+
   console.log(data);
-  
+
   mailgun.messages().send(data, (err, body) => {
     if(err) throw err;
   });

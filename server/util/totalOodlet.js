@@ -1,6 +1,3 @@
-/**
- * Created by toma on 09.11.16..
- */
 const TotalOodlet = require('../models/totalOodlet');
 
 function get(id) {
