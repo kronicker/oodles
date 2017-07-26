@@ -67,7 +67,7 @@
             <div class="row">
               <form class="form-horizontal col-md-10 col-md-offset-1">
                 <div class="form-group col-md-6">
-                  <Flatpickr :placeholder="message" :options="flatpickrOptions" @update="changeDueDate"/>
+                  <flat-pickr :placeholder="message" :config="flatpickrOptions" @input="changeDueDate"></flat-pickr>
                 </div>
                 <div class="form-group col-md-12">
                   <div class="row">
