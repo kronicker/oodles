@@ -46,7 +46,7 @@ function *generateThingies(quantity) {
   }
 }
 
-function generateOodlets(quantity, oodlers, quantifiedThingies) {
+function *generateOodlets(quantity, oodlers, quantifiedThingies) {
   console.log(`Generating ${quantity} Oodlets...`);
 
   for (let i = 0; i < quantity; i++) {
@@ -59,7 +59,7 @@ function generateOodlets(quantity, oodlers, quantifiedThingies) {
       quantifiedThingies
     };
 
-    new Oodlet(oodlet).save();
+    yield new Oodlet(oodlet).save();
   }
 }
 /* eslint-disable */
@@ -74,7 +74,7 @@ function seedDatabase() {
 
       collection.forEach(quantifiedThingies, thingy => object.merge(thingy, { qty: faker.random.number({ 'min': 1,'max': 30 })}));
 
-      generateOodlets(seedsQuantity, oodlers, quantifiedThingies);
+      return Promise.all(generateOodlets(seedsQuantity, oodlers, quantifiedThingies));
     });
 }
 
