@@ -26,7 +26,7 @@ function *generateOodlers(quantity) {
       scope: 'user',
       office: faker.random.word().toUpperCase().slice(-1) + faker.random.number(10)
     };
-    oodler.email = `${faker.name.firstName()}.${faker.name.firstName()}`.toLowerCase();
+    oodler.email = `${oodler.firstName}.${oodler.lastName}@mail.com`.toLowerCase();
 
     yield new Oodler(oodler).save();
   }
