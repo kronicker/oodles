@@ -11,16 +11,14 @@ const Thingy = require('../models/thingy');
 
 const seedsQuantity = process.env.DB_SEED_QTY || 10;
 
+/* eslint-disable no-console */
 function *generateOodlers(quantity) {
   console.log(`Generating ${quantity} Oodlers...`);
 
-  // Save devs to db
-  for (let i = 0; i < dbConfig.devsAccounts.length; i++) {
-    yield Oodler(dbConfig.devsAccounts[i]).save();
-  }
+  yield* dbConfig.devsAccounts.map(dev => new Oodler(dev).save()); // Save devs to db
 
   for (let i = 0; i < quantity; i++) {
-    yield Oodler({
+    yield new Oodler({
       firstName: faker.name.firstName(),
       lastName: faker.name.lastName(),
       email: faker.internet.email(),
@@ -32,11 +30,11 @@ function *generateOodlers(quantity) {
   }
 }
 
-function* generateThingies(quantity) {
+function *generateThingies(quantity) {
   console.log(`Generating ${quantity} quantifiedThingies...`);
 
   for (let i = 0; i < quantity; i++) {
-    yield Thingy({
+    yield new Thingy({
       name: faker.commerce.product(),
       unit: ['kg', 'kom'][Math.floor(Math.random() * 2)],
       pictureUrl: 'https://placeimg.com/240/200/any'
@@ -45,29 +43,28 @@ function* generateThingies(quantity) {
   }
 }
 
-
 function generateOodlets(quantity, oodlers, quantifiedThingies) {
   console.log(`Generating ${quantity} Oodlets...`);
 
   for (let i = 0; i < quantity; i++) {
-    let createDate = moment().subtract(2*i, 'weeks').toDate();
+    const createDate = moment().subtract(2 * i, 'weeks').toDate();
 
-    Oodlet({
+    new Oodlet({
       createdAt: createDate,
       updatedAt: createDate,
       dueDate: moment(createDate).add(2, 'weeks').toDate(),
       oodler: oodlers[Math.floor(Math.random() * oodlers.length)],
-      quantifiedThingies: quantifiedThingies
+      quantifiedThingies
     })
     .save();
   }
 }
+/* eslint-disable */
 
-module.exports = () => {
-
+function seedDatabase() {
   console.log('Started seeding');
 
-  Promise.all([...generateOodlers(seedsQuantity), ...generateThingies(seedsQuantity)])
+  return Promise.all([...generateOodlers(seedsQuantity), ...generateThingies(seedsQuantity)])
     .then(values => {
       let oodlers = collection.filter(values, val => val.email);
       let quantifiedThingies = collection.filter(values, val => val.name);
@@ -76,6 +73,6 @@ module.exports = () => {
 
       generateOodlets(seedsQuantity, oodlers, quantifiedThingies);
     });
-};
+}
 
-
+module.exports = seedDatabase;
