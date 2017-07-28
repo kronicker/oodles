@@ -18,15 +18,16 @@ function *generateOodlers(quantity) {
   yield* dbConfig.devsAccounts.map(dev => new Oodler(dev).save()); // Save devs to db
 
   for (let i = 0; i < quantity; i++) {
-    yield new Oodler({
+    const oodler = {
       firstName: faker.name.firstName(),
       lastName: faker.name.lastName(),
-      email: faker.internet.email(),
       password: bcrypt.hashSync(dbConfig.defaultOodlerPassword, dbConfig.defaultBcryptRounds),
       scope: 'user',
       office: faker.random.word().toUpperCase().slice(-1) + faker.random.number(10)
-    })
-    .save();
+    };
+    oodler.email = `${faker.name.firstName()}.${faker.name.firstName()}`.toLowerCase();
+
+    yield new Oodler(oodler).save();
   }
 }
 
@@ -34,12 +35,13 @@ function *generateThingies(quantity) {
   console.log(`Generating ${quantity} quantifiedThingies...`);
 
   for (let i = 0; i < quantity; i++) {
-    yield new Thingy({
+    const thingy = {
       name: faker.commerce.product(),
       unit: ['kg', 'kom'][Math.floor(Math.random() * 2)],
       pictureUrl: 'https://placeimg.com/240/200/any'
-    })
-    .save();
+    };
+
+    yield new Thingy(thingy).save();
   }
 }
 
@@ -48,15 +50,15 @@ function generateOodlets(quantity, oodlers, quantifiedThingies) {
 
   for (let i = 0; i < quantity; i++) {
     const createDate = moment().subtract(2 * i, 'weeks').toDate();
-
-    new Oodlet({
+    const oodlet = {
       createdAt: createDate,
       updatedAt: createDate,
       dueDate: moment(createDate).add(2, 'weeks').toDate(),
       oodler: oodlers[Math.floor(Math.random() * oodlers.length)],
       quantifiedThingies
-    })
-    .save();
+    };
+
+    new Oodlet(oodlet).save();
   }
 }
 /* eslint-disable */
