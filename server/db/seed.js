@@ -3,6 +3,7 @@ const object = require('lodash/object');
 const collection = require('lodash/collection');
 const moment = require('moment');
 const bcrypt = require('bcrypt');
+const uniqueString = require('unique-string');
 
 const dbConfig = require('../config').database;
 const Oodler = require('../models/oodler');
@@ -38,7 +39,7 @@ function *generateThingies(quantity) {
     const thingy = {
       name: faker.commerce.product(),
       unit: ['kg', 'kom'][Math.floor(Math.random() * 2)],
-      pictureUrl: 'https://placeimg.com/240/200/any'
+      pictureUrl: `http://lorempixel.com/240/200/food?something=${uniqueString()}`
     };
 
     yield new Thingy(thingy).save();
