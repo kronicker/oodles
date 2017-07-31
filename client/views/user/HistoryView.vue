@@ -5,16 +5,10 @@
         <div class="col-md-3">
           <h1 class="text-info">History</h1>
         </div>
-        <div class="form-group col-md-offset-5 col-md-2">
+        <div class="form-group col-md-offset-6 col-md-3">
           <div class="input-group">
             <span class="input-group-addon">From: </span>
-            <Flatpickr :value="fromDate" :options="flatpickrOptions" @update="changeFromDate"/>
-          </div>
-        </div>
-        <div class="form-group col-md-2">
-          <div class="input-group">
-            <span class="input-group-addon">To: </span>
-            <Flatpickr :value="toDate" :options="flatpickrOptions" @update="changeToDate"/>
+            <flat-pickr v-model="range" :config="flatpickrOptions"></flat-pickr>
           </div>
         </div>
       </div>
@@ -41,14 +35,19 @@
     data() {
       return {
         flatpickrOptions: {
-          maxDate: 'today',
+          mode: 'range',
+          maxDate: new Date(),
           altInput: true,
           altFormat: 'j. n. Y.',
           altInputClass: 'form-control'
         },
         oodlets: [],
-        fromDate: moment().subtract(3, 'months').format('YYYY-MM-DD'),
-        toDate: moment().format('YYYY-MM-DD')
+        defaultDates: {
+          from: moment().subtract(2, 'months').format('YYYY-MM-DD'),
+          to: moment().format('YYYY-MM-DD')
+        },
+        selectedDates: {},
+        range: ''
       };
     },
     computed: {
@@ -63,18 +62,28 @@
       appInitialized() {
         this.load();
       },
-      fromDate() {
-        this.load();
-      },
-      toDate() {
+      range() {
+        const range = this.range.split(' to ');
+        if (!range[1]) {
+          return;
+        }
+
+        this.selectedDates = {
+          from: moment(range[0]).format(),
+          to: moment(range[1]).format()
+        };
         this.load();
       }
     },
     methods: {
       load() {
+        if (!this.selectedDates.from || !this.selectedDates.to) {
+          return;
+        }
+
         const params = {
-          fromDate: moment(this.fromDate).format(),
-          toDate: moment(this.toDate).format(),
+          fromDate: this.selectedDates.from,
+          toDate: this.selectedDates.to,
           office: this.oodler.office
         };
         this.$http.get('/oodlet', { params })
@@ -96,9 +105,7 @@
       }
     },
     mounted() {
-      if (this.appInitialized) {
-        this.load();
-      }
+      this.range = `${this.defaultDates.from} to ${this.defaultDates.to}`;
     },
     components: {
       HistoryOodlet
