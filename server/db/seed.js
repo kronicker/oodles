@@ -1,8 +1,8 @@
-const faker = require('faker');
-const object = require('lodash/object');
-const collection = require('lodash/collection');
-const moment = require('moment');
 const bcrypt = require('bcrypt');
+const faker = require('faker');
+const moment = require('moment');
+const pick = require('lodash/pick');
+const times = require('lodash/times');
 const uniqueString = require('unique-string');
 
 const dbConfig = require('../config').database;
@@ -13,12 +13,12 @@ const Thingy = require('../models/thingy');
 const seedsQuantity = process.env.DB_SEED_QTY || 10;
 
 /* eslint-disable no-console */
-function *generateOodlers(quantity) {
-  console.log(`Generating ${quantity} Oodlers...`);
+function *generateOodlers(qty) {
+  console.log(`Generating ${qty} Oodlers...`);
 
   yield* dbConfig.devsAccounts.map(dev => new Oodler(dev).save()); // Save devs to db
 
-  for (let i = 0; i < quantity; i++) {
+  yield* times(qty, () => {
     const oodler = {
       firstName: faker.name.firstName(),
       lastName: faker.name.lastName(),
@@ -28,29 +28,25 @@ function *generateOodlers(quantity) {
     };
     oodler.email = `${oodler.firstName}.${oodler.lastName}@mail.com`.toLowerCase();
 
-    yield new Oodler(oodler).save();
-  }
+    return new Oodler(oodler).save();
+  });
 }
 
-function *generateThingies(quantity) {
-  console.log(`Generating ${quantity} quantifiedThingies...`);
+function *generateThingies(qty) {
+  console.log(`Generating ${qty} quantifiedThingies...`);
 
-  for (let i = 0; i < quantity; i++) {
-    const thingy = {
+  yield* times(qty, () => new Thingy({
       name: faker.commerce.product(),
       unit: ['kg', 'kom'][Math.floor(Math.random() * 2)],
       pictureUrl: `http://lorempixel.com/240/200/food?something=${uniqueString()}`
-    };
-
-    yield new Thingy(thingy).save();
-  }
+    }).save());
 }
 
-function *generateOodlets(quantity, oodlers, quantifiedThingies) {
-  console.log(`Generating ${quantity} Oodlets...`);
+function *generateOodlets(qty, oodlers, quantifiedThingies) {
+  console.log(`Generating ${qty} Oodlets...`);
 
-  for (let i = 0; i < quantity; i++) {
-    const createDate = moment().subtract(2 * i, 'weeks').toDate();
+  yield* times(qty, index => {
+    const createDate = moment().subtract(2 * index, 'weeks').toDate();
     const oodlet = {
       createdAt: createDate,
       updatedAt: createDate,
@@ -59,8 +55,8 @@ function *generateOodlets(quantity, oodlers, quantifiedThingies) {
       quantifiedThingies
     };
 
-    yield new Oodlet(oodlet).save();
-  }
+    return new Oodlet(oodlet).save();
+  });
 }
 /* eslint-disable */
 
@@ -69,10 +65,15 @@ function seedDatabase() {
 
   return Promise.all([...generateOodlers(seedsQuantity), ...generateThingies(seedsQuantity)])
     .then(values => {
-      let oodlers = collection.filter(values, val => val.email);
-      let quantifiedThingies = collection.filter(values, val => val.name);
-
-      collection.forEach(quantifiedThingies, thingy => object.merge(thingy, { qty: faker.random.number({ 'min': 1,'max': 30 })}));
+      let oodlers = values
+        .filter(val => val.email)
+        .filter(oodler => oodler.scope !== 'admin')
+        .map(oodler => pick(oodler, ['firstName', 'lastName', 'office', 'email', 'id']));
+      let quantifiedThingies = values
+        .filter(val => val.name)
+        .map(thingy => Object.assign(thingy, {
+          qty: faker.random.number({ 'min': 1,'max': 30 })
+        }));
 
       return Promise.all(generateOodlets(seedsQuantity, oodlers, quantifiedThingies));
     });
