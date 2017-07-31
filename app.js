@@ -3,7 +3,6 @@ const Inert = require('inert');
 
 const boomErrors = require('./server/extensions/boomErrors');
 const config = require('./server/config');
-const db = require('./server/db/');
 const monitor = require('./server/monitor');
 const routes = require('./server/routes/');
 
@@ -13,7 +12,7 @@ server.connection({
   port: config.server.port
 });
 
-server.register([Inert, db, boomErrors, routes, monitor], () => {
+server.register([Inert, boomErrors, routes, monitor], () => {
 
   server.start(err => {
     if (err) {

@@ -9,6 +9,9 @@
     "dev": "webpack-dev-server --config config/webpack/development.js & nodemon app.js",
     "build:dev": "webpack --config config/webpack/development.js",
     "build": "webpack --progress --hide-modules --config config/webpack/production.js",
+    "db:seed": "node -e 'require(\"./server/db\").seed().then(process.exit);'",
+    "db:flush": "node -e 'require(\"./server/db\").flush().then(process.exit);'",
+    "db:reset": "node -e 'require(\"./server/db\").reset().then(process.exit);'",
     "postinstall": "if [ $BUILD_ASSSETS ]; then npm run build; fi"
   },
   "description": "Ordering stuff for office",
@@ -61,6 +64,7 @@
     "stylelint": "^7.12.0",
     "stylelint-config-standard": "^16.0.0",
     "stylelint-processor-html": "^1.0.0",
+    "unique-string": "^1.0.0",
     "url-loader": "^0.5.9",
     "vue-loader": "^12.2.1",
     "vue-template-compiler": "^2.3.4",
