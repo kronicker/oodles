@@ -1,7 +1,20 @@
-.idea/*
-.vscode/*
-.DS_Store
-node_modules/*
-rethinkdb_data/*
-npm-debug.log
+# deps
+node_modules/
+
+# editor stuff
+.idea/
+.vscode/
+*.sublime-*
+
+# build artifacts
 dist/*
+!dist/.gitkeep
+
+# rethink data dir
+rethinkdb_data/
+
+# OS generated stuff
+.DS_Store
+.DS_Store?
+
+npm-debug.log
