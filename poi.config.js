@@ -1,5 +1,5 @@
 const rules = [{
-  test: /bootstrap-sass[\/\\]assets[\/\\]javascripts[\/\\]/,
+  test: /bootstrap-sass[/\\]assets[/\\]javascripts[/\\]/,
   loader: 'imports-loader?jQuery=jquery'
 }];
 

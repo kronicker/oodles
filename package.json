@@ -6,7 +6,9 @@
   },
   "scripts": {
     "start": "NODE_ENV=production node app.js",
-    "dev": "poi",
+    "dev:client": "poi",
+    "dev:server": "nodemon app.js",
+    "dev": "npm run dev:client & npm run dev:server",
     "build": "poi build",
     "postinstall": "if [ $BUILD_ASSSETS ]; then npm run build; fi"
   },
@@ -46,7 +48,6 @@
     "eslint-config-eslint": "^4.0.0",
     "eslint-plugin-html": "^3.0.0",
     "imports-loader": "^0.7.1",
-    "locus": "^2.0.1",
     "node-sass": "^4.5.3",
     "nodemon": "^1.11.0",
     "poi": "^9.3.4",
