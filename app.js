@@ -22,7 +22,7 @@ server.register([Inert, db, boomErrors, routes, monitor], (err) => {
   server.start(function (err) {
     if (err) { throw err; }
 
-    console.log(`Server running at : ${server.info.uri}`);
+    console.log(`Server running at: ${server.info.uri}`);
   });
 });
 
