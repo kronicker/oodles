@@ -6,13 +6,13 @@ const Joi = require('joi');
 const moment = require('moment');
 const TotalOodlet = require('../models/totalOodlet');
 const oodlerUtil = require('../util/oodler');
-const oodletUtil = require('../util/oodlet');
+const Oodlet = require('../models/oodlet');
 const totalOodletUtil = require('../util/totalOodlet');
 
 function list(request, reply) {
   let fromDate = (() => { return request.query.fromDate ? moment(request.query.fromDate).toDate() : moment().subtract(3, 'months').toDate(); })();
   let toDate = (() => { return request.query.fromDate ? moment(request.query.toDate).add(1, 'days').toDate() : moment().toDate(); })();
-  
+
   return TotalOodlet
     .between(fromDate, toDate, { index : 'orderedAt' })
     .filter(row => row.hasFields('orderedAt'))
@@ -75,12 +75,11 @@ function finalize(request, reply) {
     },
     { returnChanges: true })
     .run()
-    .then(result => {
-      Promise.all(oodletUtil.finalize(result.oodletIds))
-        .then(() => {
-          reply(result).code(200);
-        });
-    });
+    .then(result => Promise.all([
+      result,
+      Oodlet.finalize(result.oodletIds).run()
+    ]))
+    .then(([result]) => reply(result).code(200));
 }
 
 function remove(request, reply) {

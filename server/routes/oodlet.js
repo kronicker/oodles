@@ -30,7 +30,7 @@ function get(request, reply) {
 }
 
 function getActive(request, reply) {
-  oodletUtil.findActive(request.query.office)
+  Oodlet.findActive(request.query.office).run()
     .then(activeOodlets => {
       reply(activeOodlets[0]).code(200);
     });
@@ -38,21 +38,24 @@ function getActive(request, reply) {
 
 function setActive(request, reply) {
   oodlerUtil.get(request.payload.id)
-    .then(oodler => {
-      oodletUtil.findActive(oodler.office).then(oodlets => {
-        if(oodlets.length) return reply(oodlets[0]).code(400);
-  
-        oodletUtil.create(oodler, request.payload.dueDate)
-          .then(result => {
-            mail.sendDueDate(oodler.email.toLowerCase(), request.payload.dueDate);
-            reply(result).code(201);
-          });
-      });
+    .then(oodler => Promise.all([
+      oodler,
+      Oodlet.findActive(oodler.office).run()
+    ]))
+    .then(([oodler, oodlets]) => {
+      if(oodlets.length) return reply(oodlets[0]).code(400);
+
+      oodletUtil.create(oodler, request.payload.dueDate)
+        .then(result => {
+          mail.sendDueDaste(oodler.email.toLowerCase(), request.payload.dueDate);
+          reply(result).code(201);
+        });
     });
 }
 
 function pending(request, reply) {
-  reply(oodletUtil.findPending()).code(200);
+  Oodlet.findPending().run()
+    .then(oodlets => reply(oodlets).code(200));
 }
 
 function create(request, reply) {
