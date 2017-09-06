@@ -29,7 +29,7 @@ function get(request, reply) {
 }
 
 function getActive(request, reply) {
-  Oodlet.findActive(request.query.office).run()
+  Oodlet.findActive(request.query.office)
     .then(activeOodlets => {
       reply(activeOodlets[0]).code(200);
     });
@@ -39,7 +39,7 @@ function setActive(request, reply) {
   Oodler.get(request.payload.id).run()
     .then(oodler => Promise.all([
       oodler,
-      Oodlet.findActive(oodler.office).run()
+      Oodlet.findActive(oodler.office)
     ]))
     .then(([oodler, oodlets]) => {
       if(oodlets.length) return reply(oodlets[0]).code(400);
@@ -54,7 +54,7 @@ function setActive(request, reply) {
 }
 
 function pending(request, reply) {
-  Oodlet.findPending().run()
+  Oodlet.findPending()
     .then(oodlets => reply(oodlets).code(200));
 }
 

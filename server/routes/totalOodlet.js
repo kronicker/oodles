@@ -31,7 +31,7 @@ function create(request, reply) {
 }
 
 function getActive(request, reply) {
-  TotalOodlet.findActive().run()
+  TotalOodlet.findActive()
     .then(oodlets => {
       if (oodlets.length) {
         return reply(oodlets[0]).code(200);
@@ -67,7 +67,7 @@ function finalize(request, reply) {
     .run()
     .then(result => Promise.all([
       result,
-      Oodlet.finalize(result.oodletIds).run()
+      Oodlet.finalize(result.oodletIds)
     ]))
     .then(([result]) => reply(result).code(200));
 }

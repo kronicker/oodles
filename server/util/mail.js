@@ -54,7 +54,7 @@ function sendDueDate (email, dueDate) {
 }
 
 function sendThingySuggestion (suggestedThingy) {
-  Oodler.getAdmins().run()
+  Oodler.getAdmins()
     .then(admins => {
       for(let admin of admins) {
         let data = {
