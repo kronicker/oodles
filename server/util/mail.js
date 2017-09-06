@@ -3,7 +3,7 @@
  */
 const config = require('../config');
 const mailgun = require('mailgun-js')(config.mailgun.options);
-const oodlerUtil = require('./oodler');
+const Oodler = require('../models/oodler');
 const templates = require('./mailTemplates');
 
 const fromMail = `Oodles <no-reply@${config.server.host}>`;
@@ -15,9 +15,9 @@ function sendNewOodler (token, oodler) {
     subject: 'Welcome to Oodles!',
     html: templates.newOodler(token, oodler)
   };
-  
+
   console.log(data);
-  
+
   mailgun.messages().send(data, (err, body) => {
     if(err) throw err;
   });
@@ -54,7 +54,7 @@ function sendDueDate (email, dueDate) {
 }
 
 function sendThingySuggestion (suggestedThingy) {
-  oodlerUtil.getAdmins()
+  Oodler.getAdmins().run()
     .then(admins => {
       for(let admin of admins) {
         let data = {
@@ -64,7 +64,7 @@ function sendThingySuggestion (suggestedThingy) {
           html: templates.thingySuggestion(suggestedThingy)
         };
         console.log(data);
-  
+
         mailgun.messages().send(data, (err, body) => {
           if(err) throw err;
         });
@@ -79,9 +79,9 @@ function sendThingyApproval (email, thingyName, admin) {
     subject: 'Suggestion approved',
     html: templates.thingyApproval(thingyName, admin)
   };
-  
+
   console.log(data);
-  
+
   mailgun.messages().send(data, (err, body) => {
     if(err) throw err;
   });
@@ -94,9 +94,9 @@ function sendThingyRejection (email, thingyName, admin) {
     subject: 'Suggestion rejected',
     html: templates.thingyRejection(thingyName, admin)
   };
-  
+
   console.log(data);
-  
+
   mailgun.messages().send(data, (err, body) => {
     if(err) throw err;
   });

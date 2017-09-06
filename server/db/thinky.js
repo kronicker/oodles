@@ -1,4 +1,3 @@
-const get = require('lodash/get');
 const forEach = require('lodash/forEach');
 const isFunction = require('lodash/isFunction');
 const databaseConfig = require('../config').database;
@@ -14,8 +13,9 @@ thinky.model = function (name, props, statics = {}, options = {}) {
     return thinky.models[name];
   }
 
-  const { schema } = props;
+  const { schema, indexes = [] } = props;
   const Model = thinky.createModel(name, schema, options);
+  indexes.forEach(it => Model.ensureIndex(it));
 
   forEach(props, (prop, key) =>
     isFunction(prop) && Model.define(key, prop));
@@ -24,7 +24,7 @@ thinky.model = function (name, props, statics = {}, options = {}) {
 
   return Object.assign(Model, {
     get schema() {
-      return get(Model, '_schema._schema');
+      return schema;
     }
   });
 };

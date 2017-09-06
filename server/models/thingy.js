@@ -1,8 +1,3 @@
-/**
- * Created by toma on 21.09.16.
- */
-'use strict';
-
 const thinky = require('../db/thinky');
 const type = thinky.type;
 
@@ -13,10 +8,5 @@ const schema = {
   pictureUrl: type.string()
 };
 
-module.exports = (() => {
-  let model = thinky.createModel("Thingy", schema);
-
-  model.schema = schema;
-
-  return model;
-})();
+const Oodlet = thinky.model('Thingy', { schema });
+module.exports = Oodlet;

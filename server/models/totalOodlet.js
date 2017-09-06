@@ -1,6 +1,3 @@
-/**
- * Created by toma on 08.11.16..
- */
 const object = require('lodash/object');
 const thinky = require('../db/thinky');
 const type = thinky.type;
@@ -17,11 +14,12 @@ const schema = {
   oodletIds: type.array(type.string()).default([])
 };
 
-module.exports = (() => {
-  let model = thinky.createModel("TotalOodlet", schema);
-  
-  model.ensureIndex('orderedAt');
-  model.schema = schema;
-  
-  return model;
-})();
+const indexes = ['orderedAt'];
+
+const TotalOodlet = thinky.model('TotalOodlet', { schema, indexes }, {
+  findActive() {
+    return TotalOodlet
+      .filter(row => row.hasFields('orderedAt').not());
+  }
+});
+module.exports = TotalOodlet;

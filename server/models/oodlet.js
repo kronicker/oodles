@@ -15,7 +15,9 @@ const schema = {
   quantifiedThingies: type.array(type.object().schema(object.merge(Thingy.schema, { qty: type.number() }))).default([])
 };
 
-const Oodlet = thinky.model('Oodlet', { schema }, {
+const indexes = ['dueDate'];
+
+const Oodlet = thinky.model('Oodlet', { schema, indexes }, {
   findActive(office) {
     return Oodlet
       .filter({ oodler: { office } })
@@ -32,5 +34,4 @@ const Oodlet = thinky.model('Oodlet', { schema }, {
       .update({ orderedAt: new Date() });
   }
 });
-Oodlet.ensureIndex('dueDate');
 module.exports = Oodlet;

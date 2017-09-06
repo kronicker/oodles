@@ -5,13 +5,13 @@
 const Joi = require('joi');
 const SuggestedThingy = require('../models/suggestedThingy');
 const suggestedThingyUtil = require('../util/suggestedThingy');
-const thingyUtil = require('../util/thingy');
+const Thingy = require('../models/thingy');
 const mail = require('../util/mail');
 
 function list(request, reply) {
   let limit = request.query.limit || 50;
   let offset = request.query.offset || 0;
-  
+
   return SuggestedThingy.skip(Number(offset))
     .limit(Number(limit))
     .run()
@@ -29,10 +29,11 @@ function get(request, reply) {
 }
 
 function create(request, reply) {
-  thingyUtil.filterByName(request.payload.name)
+  Thingy
+    .filter({ name: request.payload.name }).run()
     .then(thingies => {
       if(thingies[0]) { return reply(thingies[0]).code(400); }
-      
+
       return SuggestedThingy({
         name: request.payload.name,
         unit: request.payload.unit,
@@ -44,7 +45,7 @@ function create(request, reply) {
           mail.sendThingySuggestion(result);
           reply(result).code(201);
         });
-      
+
     });
 }
 
@@ -65,7 +66,7 @@ function save(request, reply) {
   suggestedThingyUtil.get(request.params.id)
     .then(suggestedThingy => {
       suggestedThingyUtil.remove(request.params.id)
-        .then(thingyUtil.save(request.payload.name, request.payload.unit, request.payload.pictureUrl))
+        .then(() => Thingy.save(request.payload))
         .then(mail.sendThingyApproval(suggestedThingy.suggestedBy.email.toLowerCase(), suggestedThingy.name, request.auth.credentials))
         .then(thingy => reply(thingy).code(201));
     });

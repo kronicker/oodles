@@ -5,9 +5,8 @@
 const Joi = require('joi');
 const moment = require('moment');
 const TotalOodlet = require('../models/totalOodlet');
-const oodlerUtil = require('../util/oodler');
+const Oodler = require('../models/oodler');
 const Oodlet = require('../models/oodlet');
-const totalOodletUtil = require('../util/totalOodlet');
 
 function list(request, reply) {
   let fromDate = (() => { return request.query.fromDate ? moment(request.query.fromDate).toDate() : moment().subtract(3, 'months').toDate(); })();
@@ -17,40 +16,31 @@ function list(request, reply) {
     .between(fromDate, toDate, { index : 'orderedAt' })
     .filter(row => row.hasFields('orderedAt'))
     .run()
-    .then(result => {
-      reply(result).code(200);
-    });
+    .then(result => reply(result).code(200));
 }
 
 function get(request, reply) {
-  totalOodletUtil.get(request.params.id)
-    .then(result => {
-      reply(result).code(200);
-    });
+  TotalOodlet.get(request.params.id).run()
+    .then(result => reply(result).code(200));
 }
 
 function create(request, reply) {
-  oodlerUtil.get(request.payload.oodlerId)
-    .then(oodler => totalOodletUtil.create(oodler))
-    .then(result => {
-      reply(result).code(201);
-    });
+  Oodler.get(request.payload.oodlerId).run()
+    .then(oodler => TotalOodlet.save({ oodler }))
+    .then(result => reply(result).code(201));
 }
 
 function getActive(request, reply) {
-  totalOodletUtil.findActive()
-    .then((activeOodlets) => {
-      if(activeOodlets.length) {
-        reply(activeOodlets[0]).code(200);
+  TotalOodlet.findActive().run()
+    .then(oodlets => {
+      if (oodlets.length) {
+        return reply(oodlets[0]).code(200);
       }
-      else {
-        oodlerUtil.get(request.query.oodlerId)
-          .then(oodler => totalOodletUtil.create(oodler))
-          .then(result => {
-            reply(result).code(201);
-          });
-      }
-    });
+
+      return Oodler.get(request.query.oodlerId).run();
+    })
+    .then(oodler => TotalOodlet.save({ oodler }))
+    .then(result => reply(result).code(201));
 }
 
 function update(request, reply) {

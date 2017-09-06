@@ -2,8 +2,7 @@
 const Joi = require('joi');
 const moment = require('moment');
 const Oodlet = require('../models/oodlet');
-const oodlerUtil = require('../util/oodler');
-const oodletUtil = require('../util/oodlet');
+const Oodler = require('../models/oodler');
 const mail = require('../util/mail');
 
 function list(request, reply) {
@@ -37,7 +36,7 @@ function getActive(request, reply) {
 }
 
 function setActive(request, reply) {
-  oodlerUtil.get(request.payload.id)
+  Oodler.get(request.payload.id).run()
     .then(oodler => Promise.all([
       oodler,
       Oodlet.findActive(oodler.office).run()
@@ -45,9 +44,10 @@ function setActive(request, reply) {
     .then(([oodler, oodlets]) => {
       if(oodlets.length) return reply(oodlets[0]).code(400);
 
-      oodletUtil.create(oodler, request.payload.dueDate)
+      const oodlet = { oodler, dueDate: request.payload.dueDate };
+      Oodlet.save(oodlet)
         .then(result => {
-          mail.sendDueDaste(oodler.email.toLowerCase(), request.payload.dueDate);
+          mail.sendDueDate(oodler.email.toLowerCase(), request.payload.dueDate);
           reply(result).code(201);
         });
     });
@@ -59,7 +59,7 @@ function pending(request, reply) {
 }
 
 function create(request, reply) {
-  oodlerUtil.get(request.payload.oodlerId)
+  Oodler.get(request.payload.oodlerId).run()
     .then(oodler => {
       return Oodlet({
         oodler: oodler,

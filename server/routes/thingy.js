@@ -1,7 +1,6 @@
 'use strict';
 const Joi = require('joi');
 const Thingy = require('../models/thingy');
-const thingyUtil = require('../util/thingy');
 
 function list(request, reply) {
   let limit = request.query.limit || 50;
@@ -16,12 +15,12 @@ function list(request, reply) {
 }
 
 function get(request, reply) {
-  thingyUtil.get(request.params.id)
+  Thingy.get(request.params.id).run()
     .then(result => reply(result).code(200));
 }
 
 function create(request, reply) {
-  thingyUtil.save(request.payload.name, request.payload.unit, request.payload.pictureUrl)
+  Thingy.save(request.payload)
     .then(result => reply(result).code(201));
 }
 
