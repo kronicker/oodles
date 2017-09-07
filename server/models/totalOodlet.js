@@ -3,6 +3,7 @@ const thinky = require('../db/thinky');
 const type = thinky.type;
 const Thingy = require('./thingy');
 const Oodler = require('./oodler');
+const Oodlet = require('./oodlet');
 
 const schema = {
   id: type.string(),
@@ -20,6 +21,11 @@ const TotalOodlet = thinky.model('TotalOodlet', { schema, indexes }, {
   findActive() {
     return TotalOodlet
       .filter(row => row.hasFields('orderedAt').not());
+  },
+  finalize(id) {
+    return TotalOodlet.get(id)
+      .update({ orderedAt: new Date() }, { returnChanges: true })
+      .then(result => Oodlet.finalize(result.oodletIds).then(() => result));
   }
 });
 module.exports = TotalOodlet;

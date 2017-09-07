@@ -56,17 +56,8 @@ function update(request, reply) {
 }
 
 function finalize(request, reply) {
-  return TotalOodlet
-    .get(request.params.id)
-    .update({
-      orderedAt: new Date()
-    },
-    { returnChanges: true })
-    .then(result => Promise.all([
-      result,
-      Oodlet.finalize(result.oodletIds)
-    ]))
-    .then(([result]) => reply(result).code(200));
+  return TotalOodlet.finalize(request.params.id)
+    .then(result => reply(result).code(200));
 }
 
 function remove(request, reply) {
