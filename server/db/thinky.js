@@ -18,22 +18,15 @@ thinky.model = function (name, props, statics = {}, options = {}) {
   indexes.forEach(it => Model.ensureIndex(it));
 
   forEach(props, (prop, key) =>
-    isFunction(prop) && Model.define(key, autorun(prop)));
+    isFunction(prop) && Model.define(key, prop));
   forEach(statics, (prop, key) =>
-    isFunction(prop) && Model.defineStatic(key, autorun(prop)));
+    isFunction(prop) && Model.defineStatic(key, prop));
 
   return Object.assign(Model, {
     get schema() {
-      return schema;
+      return props.schema;
     }
   });
 };
-
-function autorun(fn) {
-  return function () {
-    const result = fn.apply(this, arguments);
-    return result.run ? result.run() : result;
-  };
-}
 
 module.exports = thinky;
