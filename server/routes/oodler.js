@@ -10,7 +10,6 @@ function list(request, reply) {
 
   return Oodler.skip(Number(offset))
     .limit(Number(limit))
-    .run()
     .then(result => {
       reply(result).code(200);
     });
@@ -18,7 +17,6 @@ function list(request, reply) {
 
 function get(request, reply) {
   return Oodler.get(request.params.id)
-    .run()
     .then(result => {
       reply(result).code(200);
     });
@@ -27,7 +25,6 @@ function get(request, reply) {
 function create(request, reply) {
   return Oodler
     .filter({ email: request.payload.email.toLowerCase()})
-    .run()
     .then(oodlers => {
       if(oodlers[0]) {
         return reply('Email is already taken!').code(400);
@@ -56,7 +53,6 @@ function update(request, reply) {
 
   return Oodler
     .filter({ email: request.payload.email.toLowerCase()})
-    .run()
     .then(oodlers => {
       //Check if email in the payload exists in database and if it is registered for another user
       //TODO: Check if there is a better implementation
@@ -72,7 +68,6 @@ function update(request, reply) {
           office: request.payload.office,
           scope: request.payload.scope
         })
-        .run()
         .then(result => {
           reply(result).code(200);
         });
@@ -82,7 +77,6 @@ function update(request, reply) {
 function remove(request, reply) {
   return Oodler.get(request.params.id)
     .delete()
-    .run()
     .then(result => {
       reply(result).code(200);
     });

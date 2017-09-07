@@ -13,7 +13,6 @@ function list(request, reply) {
   return Oodlet
     .between(fromDate, toDate, { index : 'dueDate' })
     .filter({ oodler: { office: office} })
-    .run()
     .then(result => {
       reply(result).code(200);
     });
@@ -22,7 +21,6 @@ function list(request, reply) {
 function get(request, reply) {
   return Oodlet
     .get(request.params.id)
-    .run()
     .then(result => {
       reply(result).code(200);
     });
@@ -36,7 +34,7 @@ function getActive(request, reply) {
 }
 
 function setActive(request, reply) {
-  Oodler.get(request.payload.id).run()
+  Oodler.get(request.payload.id)
     .then(oodler => Promise.all([
       oodler,
       Oodlet.findActive(oodler.office)
@@ -59,7 +57,7 @@ function pending(request, reply) {
 }
 
 function create(request, reply) {
-  Oodler.get(request.payload.oodlerId).run()
+  Oodler.get(request.payload.oodlerId)
     .then(oodler => {
       return Oodlet({
         oodler: oodler,
@@ -79,7 +77,6 @@ function update(request, reply) {
       updatedAt: new Date(),
       quantifiedThingies: request.payload.quantifiedThingies
     })
-    .run()
     .then(result => {
       reply(result).code(200);
     });
@@ -89,7 +86,6 @@ function remove(request, reply) {
   return Oodlet
     .get(request.params.id)
     .delete()
-    .run()
     .then(result => {
       reply(result).code(200);
     });

@@ -15,17 +15,16 @@ function list(request, reply) {
   return TotalOodlet
     .between(fromDate, toDate, { index : 'orderedAt' })
     .filter(row => row.hasFields('orderedAt'))
-    .run()
     .then(result => reply(result).code(200));
 }
 
 function get(request, reply) {
-  TotalOodlet.get(request.params.id).run()
+  TotalOodlet.get(request.params.id)
     .then(result => reply(result).code(200));
 }
 
 function create(request, reply) {
-  Oodler.get(request.payload.oodlerId).run()
+  Oodler.get(request.payload.oodlerId)
     .then(oodler => TotalOodlet.save({ oodler }))
     .then(result => reply(result).code(201));
 }
@@ -37,7 +36,7 @@ function getActive(request, reply) {
         return reply(oodlets[0]).code(200);
       }
 
-      return Oodler.get(request.query.oodlerId).run();
+      return Oodler.get(request.query.oodlerId);
     })
     .then(oodler => TotalOodlet.save({ oodler }))
     .then(result => reply(result).code(201));
@@ -51,7 +50,6 @@ function update(request, reply) {
       quantifiedThingies: request.payload.quantifiedThingies,
       oodletIds: request.payload.oodletIds
     })
-    .run()
     .then(result => {
       reply(result).code(200);
     });
@@ -64,7 +62,6 @@ function finalize(request, reply) {
       orderedAt: new Date()
     },
     { returnChanges: true })
-    .run()
     .then(result => Promise.all([
       result,
       Oodlet.finalize(result.oodletIds)
@@ -76,7 +73,6 @@ function remove(request, reply) {
   return TotalOodlet
     .get(request.params.id)
     .delete()
-    .run()
     .then(result => {
       reply(result).code(200);
     });

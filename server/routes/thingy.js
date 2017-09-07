@@ -8,14 +8,13 @@ function list(request, reply) {
 
   return Thingy.skip(Number(offset))
     .limit(Number(limit))
-    .run()
     .then(result => {
       reply(result).code(200);
     });
 }
 
 function get(request, reply) {
-  Thingy.get(request.params.id).run()
+  Thingy.get(request.params.id)
     .then(result => reply(result).code(200));
 }
 
@@ -31,7 +30,6 @@ function update(request, reply) {
       unit: request.payload.unit,
       pictureUrl: request.payload.pictureUrl
     })
-    .run()
     .then(result => {
       reply(result).code(200);
     });
@@ -40,7 +38,6 @@ function update(request, reply) {
 function remove(request, reply) {
   return Thingy.get(request.params.id)
     .delete()
-    .run()
     .then(result => {
       reply(result).code(200);
     });
